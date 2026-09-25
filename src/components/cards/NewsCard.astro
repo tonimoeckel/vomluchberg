@@ -1,16 +1,18 @@
 ---
-import { formatDatum, type NewsListItem } from '../../lib/data';
+import type { NewsListItem } from '../../lib/data';
+import { formatDatumLang } from '../../lib/domain/datum';
+import { newsUrl } from '../../lib/domain/news';
 interface Props { news: NewsListItem }
 const { news } = Astro.props;
 ---
-<a href={`/aktuelles/${news._sys.filename}`} class="card card-hover group flex h-full flex-col">
+<a href={newsUrl(news._sys.filename)} class="card card-hover group flex h-full flex-col">
 	<div class="aspect-[16/10] overflow-hidden bg-surface">
 		{news.bild
 			? <img src={news.bild} alt="" loading="lazy" decoding="async" class="size-full object-cover object-[50%_20%] transition duration-700 group-hover:scale-105" />
 			: <div class="flex size-full items-center justify-center grad-soft"><img src="/uploads/seiten/logo-kopf-dunkel.png" alt="" class="h-2/3 opacity-25" /></div>}
 	</div>
 	<div class="flex flex-1 flex-col gap-2 p-5">
-		<time class="text-sm font-semibold text-accent-ink" datetime={news.datum}>{formatDatum(news.datum, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+		<time class="text-sm font-semibold text-accent-ink" datetime={news.datum}>{formatDatumLang(news.datum)}</time>
 		<h3 class="font-display text-xl font-bold leading-snug">{news.titel}</h3>
 		{news.kurztext && <p class="line-clamp-3 text-[0.95rem] text-muted">{news.kurztext}</p>}
 	</div>

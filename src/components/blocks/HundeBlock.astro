@@ -2,14 +2,11 @@
 import { tinaField } from '@tinacms/astro/tina-field';
 import HundCard from '../cards/HundCard.astro';
 import SectionTitle from './SectionTitle.astro';
-import { listHunde, kategorieLabel, type BlockOf } from '../../lib/data';
+import { listHunde, type BlockOf } from '../../lib/data';
+import { hundeListeUrl, hundeUebersicht } from '../../lib/domain/hund';
 interface Props { data: BlockOf<'PageBlocksHunde'> }
 const { data } = Astro.props;
-const alle = await listHunde();
-const kat = data.kategorie ?? 'alle';
-const gruppen = kat === 'alle'
-	? ['zucht', 'aufzucht', 'rudel', 'erinnerung'].map((k) => ({ k, hunde: alle.filter((h) => h.kategorie === k) })).filter((g) => g.hunde.length)
-	: [{ k: kat, hunde: alle.filter((h) => h.kategorie === kat) }];
+const { gruppen, zeigeAlleLink } = hundeUebersicht(await listHunde(), data.kategorie);
 ---
 <section class="py-14 sm:py-20">
 	<div class="container-page">
@@ -17,13 +14,13 @@ const gruppen = kat === 'alle'
 		<div class="space-y-16">
 			{gruppen.map((g) => (
 				<div>
-					{kat === 'alle' && <h2 class="headline-line mb-8 text-2xl font-extrabold sm:text-3xl">{kategorieLabel[g.k]}</h2>}
+					{g.titel && <h2 class="headline-line mb-8 text-2xl font-extrabold sm:text-3xl">{g.titel}</h2>}
 					<ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 						{g.hunde.map((h) => <li><HundCard hund={h} /></li>)}
 					</ul>
 				</div>
 			))}
 		</div>
-		{kat !== 'alle' && <p class="mt-10"><a href="/hunde" class="btn-secondary">Alle unsere Hunde</a></p>}
+		{zeigeAlleLink && <p class="mt-10"><a href={hundeListeUrl} class="btn-secondary">Alle unsere Hunde</a></p>}
 	</div>
 </section>

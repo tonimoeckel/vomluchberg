@@ -1,4 +1,6 @@
 import type { Collection } from 'tinacms';
+import { newsUrl } from '../../src/lib/domain/news';
+import { slugify } from '../../src/lib/domain/slug';
 import { bildFeld } from './fields';
 
 export const NewsCollection: Collection = {
@@ -7,13 +9,9 @@ export const NewsCollection: Collection = {
   path: 'src/content/aktuelles',
   format: 'md',
   ui: {
-    router: ({ document }) => `/aktuelles/${document._sys.filename}`,
+    router: ({ document }) => newsUrl(document._sys.filename),
     filename: {
-      slugify: (values: { titel?: string }) =>
-        (values?.titel || 'neuer-beitrag')
-          .toLowerCase()
-          .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
-          .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      slugify: (values: { titel?: string }) => slugify(values?.titel, 'neuer-beitrag'),
     },
   },
   defaultItem: () => ({ datum: new Date().toISOString() }),

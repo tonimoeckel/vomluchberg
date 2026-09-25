@@ -2,15 +2,17 @@
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import DetailHead from './DetailHead.astro';
-import { formatDatum, type CmsNews } from '../../lib/data';
+import type { CmsNews } from '../../lib/data';
+import { formatDatumLang } from '../../lib/domain/datum';
+import { newsListeUrl } from '../../lib/domain/news';
 interface Props { data?: CmsNews | null }
 const { data } = Astro.props;
 ---
 {data && (
 	<article>
-		<DetailHead zurueck="/aktuelles" zurueckLabel="Alle Beiträge" />
+		<DetailHead zurueck={newsListeUrl} zurueckLabel="Alle Beiträge" />
 		<header class="container-page max-w-3xl py-8 text-center">
-			<time data-tina-field={tinaField(data, 'datum')} class="kicker" datetime={data.datum}>{formatDatum(data.datum, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+			<time data-tina-field={tinaField(data, 'datum')} class="kicker" datetime={data.datum}>{formatDatumLang(data.datum)}</time>
 			<h1 data-tina-field={tinaField(data, 'titel')} class="mt-5 text-4xl font-extrabold sm:text-5xl">{data.titel}</h1>
 		</header>
 		{data.bild && (

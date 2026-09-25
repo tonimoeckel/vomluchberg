@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import HundBody from '../../components/islands/HundBody.astro';
 import { getHund, listHunde } from '../../lib/data';
+import { hundSeo } from '../../lib/domain/hund';
 import { islands } from '../../lib/islands';
 
 export async function getStaticPaths() {
@@ -12,7 +13,7 @@ const slug = String(Astro.params.slug);
 const data = (await getHund(slug)).data?.hund;
 if (!data) return new Response('Not Found', { status: 404 });
 ---
-<Base title={data.name} description={`${data.name}${data.eltern ? ' – ' + data.eltern : ''}. Rottweiler vom Luchberg.`} image={data.bild}>
+<Base {...hundSeo(data)}>
 	<TinaIsland name="hund" wrapper={islands.hund.wrapper} params={{ slug }} primary>
 		<HundBody data={data} />
 	</TinaIsland>

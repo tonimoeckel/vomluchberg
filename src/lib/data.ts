@@ -6,6 +6,9 @@
 import type { TinaRichTextContent } from '@tinacms/astro';
 import { requestWithMetadata } from '@tinacms/astro/data';
 import client from '../../tina/__generated__/client';
+import { sortiereHunde } from './domain/hund';
+import { sortiereNews } from './domain/news';
+import { sortiereWuerfe } from './domain/wurf';
 
 export const getConfig = () =>
   requestWithMetadata(client.queries.config({ relativePath: 'config.json' }));
@@ -32,24 +35,17 @@ export async function listPages() {
 
 export async function listHunde() {
   const r = await client.queries.hundConnection({ first: 100 });
-  return nodes(r.data.hundConnection.edges).sort((a, b) => (a.reihenfolge ?? 99) - (b.reihenfolge ?? 99));
+  return sortiereHunde(nodes(r.data.hundConnection.edges));
 }
 
-const statusOrder: Record<string, number> = { aktuell: 0, geplant: 1, vergangen: 2 };
 export async function listWuerfe() {
   const r = await client.queries.wurfConnection({ first: 100 });
-  return nodes(r.data.wurfConnection.edges).sort(
-    (a, b) =>
-      (statusOrder[a.status ?? 'vergangen'] ?? 3) - (statusOrder[b.status ?? 'vergangen'] ?? 3) ||
-      (b.buchstabe ?? '').localeCompare(a.buchstabe ?? ''),
-  );
+  return sortiereWuerfe(nodes(r.data.wurfConnection.edges));
 }
 
 export async function listNews() {
   const r = await client.queries.newsConnection({ first: 500 });
-  return nodes(r.data.newsConnection.edges).sort(
-    (a, b) => new Date(b.datum ?? 0).valueOf() - new Date(a.datum ?? 0).valueOf(),
-  );
+  return sortiereNews(nodes(r.data.newsConnection.edges));
 }
 
 export type CmsConfig = Awaited<ReturnType<typeof getConfig>>['data']['config'];
@@ -65,20 +61,3 @@ export type PageBlock = NonNullable<NonNullable<CmsPage['blocks']>[number]>;
 export type BlockOf<T extends PageBlock['__typename']> = Extract<PageBlock, { __typename: T }>;
 
 export type RichText = TinaRichTextContent;
-
-/** Datum im deutschen Format, z. B. 10.03.2024 */
-export const formatDatum = (d?: string | null, opts: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' }) =>
-  d ? new Date(d).toLocaleDateString('de-DE', { timeZone: 'Europe/Berlin', ...opts }) : '';
-
-export const kategorieLabel: Record<string, string> = {
-  zucht: 'Unsere Rottweiler',
-  aufzucht: 'Zur Aufzucht bei uns',
-  rudel: 'Weitere Rudelmitglieder',
-  erinnerung: 'In Erinnerung',
-};
-
-export const statusLabel: Record<string, string> = {
-  geplant: 'In Planung',
-  aktuell: 'Welpen sind da',
-  vergangen: 'Abgeschlossen',
-};
