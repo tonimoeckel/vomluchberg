@@ -1,0 +1,55 @@
+{
+  "website": {
+    "name": "Rottweiler vom Luchberg",
+    "untertitel": "ADRK-Zuchtstätte in Glashütte OT Luchau",
+    "beschreibung": "Rottweiler aus Liebe und Leidenschaft: Unsere ADRK-Zuchtstätte \"vom Luchberg\" in Glashütte OT Luchau (Sachsen) – gesunde, wesensfeste Familien- und Sporthunde.",
+    "logo": "/uploads/seiten/logo-kopf-dunkel.png",
+    "teilenBild": "/uploads/header/header-0.jpg"
+  },
+  "farbschema": "sonnenuntergang",
+  "kontakt": {
+    "zwinger": "ADRK Rottweilerzwinger vom Luchberg",
+    "zuechterin": "Karolin Riesing",
+    "strasse": "Dorfstr. 2d",
+    "ort": "01768 Glashütte OT Luchau",
+    "telefon": "0173 3665494",
+    "email": "luchberg.rottweiler@gmail.com"
+  },
+  "social": {
+    "facebook": "https://www.facebook.com/LuchbergRottis",
+    "instagram": "https://instagram.com/luchberg_rottis",
+    "workingDog": "https://www.working-dog.com/breed/vom-Luchberg-258275",
+    "verband": "Mitglied im ADRK · Zwingernummer 2461",
+    "verbandLink": "https://www.adrk.de"
+  },
+  "nav": [
+    {
+      "titel": "Start",
+      "link": "/"
+    },
+    {
+      "titel": "Über uns",
+      "link": "/zucht"
+    },
+    {
+      "titel": "Unsere Hunde",
+      "link": "/hunde"
+    },
+    {
+      "titel": "Würfe",
+      "link": "/wuerfe"
+    },
+    {
+      "titel": "Aktuelles",
+      "link": "/aktuelles"
+    },
+    {
+      "titel": "Galerie",
+      "link": "/galerie"
+    },
+    {
+      "titel": "Kontakt",
+      "link": "/kontakt"
+    }
+  ]
+}

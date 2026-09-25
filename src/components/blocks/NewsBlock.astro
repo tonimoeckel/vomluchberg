@@ -1,0 +1,19 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import NewsCard from '../cards/NewsCard.astro';
+import SectionTitle from './SectionTitle.astro';
+import { listNews, type BlockOf } from '../../lib/data';
+interface Props { data: BlockOf<'PageBlocksNews'> }
+const { data } = Astro.props;
+const alle = await listNews();
+const news = data.anzahl ? alle.slice(0, data.anzahl) : alle;
+---
+<section class="py-14 sm:py-20">
+	<div class="container-page">
+		<SectionTitle title={data.ueberschrift} field={tinaField(data, 'ueberschrift')} />
+		<ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{news.map((n) => <li><NewsCard news={n} /></li>)}
+		</ul>
+		{data.anzahl && alle.length > news.length && <p class="mt-10"><a href="/aktuelles" class="btn-secondary">Alle Beiträge</a></p>}
+	</div>
+</section>

@@ -1,0 +1,19 @@
+---
+import Base from '../../layouts/Base.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import WurfBody from '../../components/islands/WurfBody.astro';
+import { getWurf, listWuerfe } from '../../lib/data';
+import { islands } from '../../lib/islands';
+
+export async function getStaticPaths() {
+	return (await listWuerfe()).map((w) => ({ params: { slug: w._sys.filename } }));
+}
+const slug = String(Astro.params.slug);
+const data = (await getWurf(slug)).data?.wurf;
+if (!data) return new Response('Not Found', { status: 404 });
+---
+<Base title={`${data.titel} vom Luchberg`} description={data.kurztext} image={data.bild}>
+	<TinaIsland name="wurf" wrapper={islands.wurf.wrapper} params={{ slug }} primary>
+		<WurfBody data={data} />
+	</TinaIsland>
+</Base>

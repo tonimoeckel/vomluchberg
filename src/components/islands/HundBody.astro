@@ -1,0 +1,51 @@
+---
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import Galerie from '../Galerie.astro';
+import Icon from '../ui/Icon.astro';
+import DetailHead from './DetailHead.astro';
+import { formatDatum, kategorieLabel, type CmsHund } from '../../lib/data';
+interface Props { data?: CmsHund | null }
+const { data } = Astro.props;
+const fakten = data ? [
+	{ key: 'geboren', label: 'Wurftag', icon: 'cake', value: data.geboren ? formatDatum(data.geboren) + (data.verstorben ? ` – ${data.verstorben}` : '') : null },
+	{ key: 'eltern', label: 'Eltern', icon: 'git-merge', value: data.eltern },
+	{ key: 'gesundheit', label: 'Gesundheit', icon: 'heart-rate-monitor', value: data.gesundheit },
+	{ key: 'leistungen', label: 'Prüfungen & Titel', icon: 'trophy', value: data.leistungen },
+].filter((f) => f.value) : [];
+const erinnerung = data?.kategorie === 'erinnerung';
+---
+{data && (
+	<>
+		<DetailHead zurueck="/hunde" zurueckLabel="Alle Hunde" />
+		<section class="container-page grid gap-10 py-8 lg:grid-cols-[1fr_1.1fr] lg:gap-16 lg:py-12">
+			<div class="relative self-start" data-tina-field={tinaField(data, 'bild')}>
+				<div class="absolute -inset-3 -rotate-2 rounded-[calc(var(--radius)+0.8rem)] grad-bg opacity-85"></div>
+				{data.bild && <a href={data.bild} data-lightbox="hund" class="relative block"><img src={data.bild} alt={data.name} fetchpriority="high" class:list={['aspect-[4/5] w-full rounded-card border-4 border-bg object-cover shadow-2xl', erinnerung && 'grayscale-[30%]']} /></a>}
+			</div>
+			<div>
+				<p class="kicker mb-5">{erinnerung ? 'In Erinnerung' : kategorieLabel[data.kategorie ?? 'zucht']}{data.geschlecht && data.kategorie !== 'rudel' && ` · ${data.geschlecht === 'ruede' ? 'Rüde' : 'Hündin'}`}</p>
+				<h1 data-tina-field={tinaField(data, 'rufname')} class="text-5xl font-extrabold sm:text-6xl"><span class="grad-text">{data.rufname || data.name}</span></h1>
+				{data.rufname && <p data-tina-field={tinaField(data, 'name')} class="mt-2 text-xl font-semibold text-muted">{data.name}</p>}
+				{fakten.length > 0 && (
+					<dl class="mt-8 divide-y divide-border rounded-card border border-border bg-surface/50">
+						{fakten.map((f) => (
+							<div data-tina-field={tinaField(data, f.key as any)} class="flex gap-4 px-5 py-4">
+								<dt class="flex w-36 shrink-0 items-center gap-2 text-sm font-bold text-accent-ink"><Icon name={f.icon} class="size-5" />{f.label}</dt>
+								<dd class="font-medium">{f.value}</dd>
+							</div>
+						))}
+					</dl>
+				)}
+				{data.body && <div data-tina-field={tinaField(data, 'body')} class="prose prose-lg prose-luchberg mt-8"><TinaMarkdown content={data.body} /></div>}
+				{data.workingDog && <p class="mt-8"><a data-tina-field={tinaField(data, 'workingDog')} href={data.workingDog} target="_blank" rel="noopener" class="btn-secondary">Ahnentafel auf working-dog.com ↗</a></p>}
+			</div>
+		</section>
+		{(data.galerie ?? []).length > 0 && (
+			<section class="container-page py-12" data-tina-field={tinaField(data, 'galerie')}>
+				<h2 class="headline-line mb-8 text-3xl font-extrabold">Bildergalerie</h2>
+				<Galerie items={data.galerie ?? []} gruppe="hund-galerie" alt={data.rufname ?? data.name} />
+			</section>
+		)}
+	</>
+)}

@@ -1,0 +1,85 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Icon from '../ui/Icon.astro';
+import { getConfig, type BlockOf } from '../../lib/data';
+interface Props { data: BlockOf<'PageBlocksKontakt'> }
+const { data } = Astro.props;
+const config = (await getConfig()).data?.config;
+const k = config?.kontakt;
+const s = config?.social;
+// Formular-Versand: mit PUBLIC_WEB3FORMS_KEY über web3forms.com, sonst öffnet sich das Mailprogramm.
+const web3key = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+---
+<section class="py-14 sm:py-20">
+	<div class="container-page grid gap-10 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+		<div>
+			{data.ueberschrift && <h2 data-tina-field={tinaField(data, 'ueberschrift')} class="headline-line mb-6 text-3xl font-extrabold">{data.ueberschrift}</h2>}
+			{data.text && <p data-tina-field={tinaField(data, 'text')} class="text-lg text-muted">{data.text}</p>}
+			{k && (
+				<ul class="mt-8 space-y-4">
+					<li class="flex gap-4"><span class="flex size-12 shrink-0 items-center justify-center rounded-2xl grad-bg text-white"><Icon name="home-heart" class="size-6" /></span>
+						<address class="not-italic"><strong class="font-display">{k.zwinger}</strong><br />{k.zuechterin}<br />{k.strasse}, {k.ort}</address></li>
+					{k.telefon && <li class="flex items-center gap-4"><span class="flex size-12 shrink-0 items-center justify-center rounded-2xl grad-bg text-white"><Icon name="phone" class="size-6" /></span>
+						<a href={`tel:${k.telefon.replace(/[^+\d]/g, '')}`} class="text-lg font-semibold hover:text-accent-ink">{k.telefon}</a></li>}
+					{k.email && <li class="flex items-center gap-4"><span class="flex size-12 shrink-0 items-center justify-center rounded-2xl grad-bg text-white"><Icon name="mail" class="size-6" /></span>
+						<a href={`mailto:${k.email}`} class="break-all text-lg font-semibold hover:text-accent-ink">{k.email}</a></li>}
+					{s?.instagram && <li class="flex items-center gap-4"><span class="flex size-12 shrink-0 items-center justify-center rounded-2xl grad-bg text-white"><Icon name="brand-instagram" class="size-6" /></span>
+						<a href={s.instagram} target="_blank" rel="noopener" class="text-lg font-semibold hover:text-accent-ink">@luchberg_rottis</a></li>}
+				</ul>
+			)}
+		</div>
+		{data.formular && (
+			<form id="kontaktformular" method="post" action={web3key ? 'https://api.web3forms.com/submit' : undefined}
+				data-mail={k?.email} class="card space-y-5 p-6 shadow-[var(--glow)] sm:p-8">
+				{web3key && <input type="hidden" name="access_key" value={web3key} />}
+				{web3key && <input type="hidden" name="subject" value="Neue Nachricht über vomluchberg.de" />}
+				<input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+				<div class="grid gap-5 sm:grid-cols-2">
+					<label class="block"><span class="mb-1.5 block text-sm font-semibold">Name *</span>
+						<input required name="name" autocomplete="name" class="w-full rounded-xl border border-border bg-surface/60 px-4 py-3 outline-none transition focus:border-accent focus:bg-bg" /></label>
+					<label class="block"><span class="mb-1.5 block text-sm font-semibold">E-Mail *</span>
+						<input required type="email" name="email" autocomplete="email" class="w-full rounded-xl border border-border bg-surface/60 px-4 py-3 outline-none transition focus:border-accent focus:bg-bg" /></label>
+				</div>
+				<label class="block"><span class="mb-1.5 block text-sm font-semibold">Worum geht es?</span>
+					<select name="thema" class="w-full rounded-xl border border-border bg-surface/60 px-4 py-3 outline-none transition focus:border-accent focus:bg-bg">
+						<option>Anfrage zu einem Welpen</option><option>Frage zu unseren Hunden</option><option>Sonstiges</option>
+					</select></label>
+				<label class="block"><span class="mb-1.5 block text-sm font-semibold">Nachricht *</span>
+					<textarea required name="nachricht" rows="6" class="w-full rounded-xl border border-border bg-surface/60 px-4 py-3 outline-none transition focus:border-accent focus:bg-bg"
+						placeholder="Erzählt uns gern etwas über euch und eure Vorstellungen …"></textarea></label>
+				<label class="flex gap-3 text-sm text-muted"><input required type="checkbox" name="datenschutz" class="mt-1 size-4 accent-[var(--accent)]" />
+					<span>Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verwendet werden. Mehr in der <a href="/datenschutz" class="font-semibold text-accent-ink underline">Datenschutzerklärung</a>. *</span></label>
+				<button type="submit" class="btn-primary w-full sm:w-auto">Nachricht senden</button>
+				<p id="kontakt-status" role="status" class="text-sm font-semibold empty:hidden"></p>
+			</form>
+		)}
+	</div>
+</section>
+<script is:inline>
+	(() => {
+		const f = document.getElementById('kontaktformular');
+		if (!f || f.dataset.bound) return;
+		f.dataset.bound = '1';
+		const status = document.getElementById('kontakt-status');
+		f.addEventListener('submit', async (e) => {
+			e.preventDefault();
+			const d = new FormData(f);
+			if (!f.action || !f.getAttribute('action')) {
+				// Fallback ohne Formular-Dienst: Mailprogramm öffnen
+				const body = `${d.get('nachricht')}\n\n— ${d.get('name')} (${d.get('email')})`;
+				location.href = `mailto:${f.dataset.mail}?subject=${encodeURIComponent(d.get('thema'))}&body=${encodeURIComponent(body)}`;
+				return;
+			}
+			status.textContent = 'Wird gesendet …';
+			try {
+				const r = await fetch(f.action, { method: 'POST', headers: { Accept: 'application/json' }, body: d });
+				const j = await r.json();
+				if (!j.success) throw new Error();
+				f.reset();
+				status.textContent = 'Danke! Deine Nachricht ist angekommen – wir melden uns bald.';
+			} catch {
+				status.textContent = `Das hat leider nicht geklappt. Schreib uns bitte direkt an ${f.dataset.mail}.`;
+			}
+		});
+	})();
+</script>

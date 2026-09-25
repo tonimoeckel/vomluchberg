@@ -1,0 +1,57 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FarbVorschau from '../components/FarbVorschau.astro';
+import Lightbox from '../components/Lightbox.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import { getConfig } from '../lib/data';
+import { islands } from '../lib/islands';
+
+interface Props {
+	title?: string | null;
+	description?: string | null;
+	image?: string | null;
+}
+
+const config = (await getConfig()).data?.config ?? null;
+const siteName = config?.website?.name ?? 'Rottweiler vom Luchberg';
+const { title, description, image } = Astro.props;
+const fullTitle = title && title !== siteName && !title.includes(siteName) ? `${title} | ${siteName}` : title || siteName;
+const farbe = config?.farbschema ?? 'sonnenuntergang';
+const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
+---
+
+<!doctype html>
+<html lang="de" data-farbe={farbe} data-farbe-standard={farbe}>
+	<head>
+		<BaseHead
+			title={fullTitle}
+			description={description || config?.website?.beschreibung || ''}
+			image={image || config?.website?.teilenBild}
+		/>
+		<script is:inline>
+			// Farbvorschau: ?farbe=neon in der URL merkt sich die Auswahl (nur für die Abstimmung mit Karo)
+			try {
+				const p = new URLSearchParams(location.search).get('farbe');
+				if (p) localStorage.setItem('farbe', p);
+				const f = localStorage.getItem('farbe');
+				if (f) document.documentElement.dataset.farbe = f;
+			} catch (e) {}
+		</script>
+	</head>
+	<body class="min-h-dvh flex flex-col">
+		<a href="#inhalt" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 btn-primary">Zum Inhalt springen</a>
+		<TinaIsland name="global" wrapper={islands.global.wrapper}>
+			<Header config={config} />
+		</TinaIsland>
+		<div id="inhalt" class="flex-1">
+			<slot />
+		</div>
+		<TinaIsland name="global-footer" wrapper={islands['global-footer'].wrapper}>
+			<Footer config={config} />
+		</TinaIsland>
+		<Lightbox />
+		<FarbVorschau force={showSwitcher} />
+	</body>
+</html>

@@ -1,0 +1,513 @@
+{
+ "map": {
+  "attachments/Image/Picsart_22-07-19_10-29-21-327.jpg": "/uploads/seiten/picsart_22-07-19_10-29-21-327.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/42226e53-6936-b2ac-5b91-f6e6f95b0fb5.jpg": "/uploads/seiten/42226e53-6936-b2ac-5b91-f6e6f95b0fb5.jpg",
+  "attachments/Image/Picsart_22-07-19_10-43-34-5111_1.jpg": "/uploads/seiten/picsart_22-07-19_10-43-34-5111_1.jpg",
+  "attachments/Image/20180804_182737.jpg": "/uploads/news/20180804_182737.jpg",
+  "attachments/Image/IMG-20260426-WA0047.jpg": "/uploads/news/img-20260426-wa0047.jpg",
+  "attachments/Image/1DX_9302.jpeg": "/uploads/news/1dx_9302.jpg",
+  "attachments/Image/DSC_0370.JPG": "/uploads/news/dsc_0370.jpg",
+  "attachments/Image/photo_2024-11-24_06-10-32.png": "/uploads/news/photo_2024-11-24_06-10-32.jpg",
+  "attachments/Image/DSC02430.jpg": "/uploads/news/dsc02430.jpg",
+  "attachments/Image/IMG-20250309-WA0011.jpg": "/uploads/news/img-20250309-wa0011.jpg",
+  "attachments/Image/DSC_0096.JPG": "/uploads/news/dsc_0096.jpg",
+  "attachments/Image/Picsart_23-11-05_19-12-05-363.jpg": "/uploads/news/picsart_23-11-05_19-12-05-363.jpg",
+  "attachments/Image/1DX_0680.jpeg": "/uploads/news/1dx_0680.jpg",
+  "attachments/Image/IMG_6322.JPG": "/uploads/news/img_6322.jpg",
+  "attachments/Image/IMG_4625.JPG": "/uploads/news/img_4625.jpg",
+  "attachments/Image/20180819_214337.jpg": "/uploads/news/20180819_214337.jpg",
+  "attachments/Image/DSC_0224.JPG": "/uploads/news/dsc_0224.jpg",
+  "attachments/Image/Karo_OGBaerenstein-4425.jpg": "/uploads/news/karo_ogbaerenstein-4425.jpg",
+  "attachments/Image/DSC_0014.JPG": "/uploads/news/dsc_0014.jpg",
+  "attachments/Image/Picsart_22-07-19_10-29-21-327_1.jpg": "/uploads/news/picsart_22-07-19_10-29-21-327_1.jpg",
+  "attachments/Image/1DX_8414.jpeg": "/uploads/news/1dx_8414.jpg",
+  "attachments/Image/58e91b9eeb97430e81906506.png": "/uploads/seiten/58e91b9eeb97430e81906506.jpg",
+  "attachments/Image/images.jpg": "/uploads/seiten/images.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/272c82ae-9222-4f78-4154-e04c3da2b3d4.jpg": "/uploads/galerie/272c82ae-9222-4f78-4154-e04c3da2b3d4.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/ca1ac26c-1ea6-3aef-035b-7deac100704a.jpg": "/uploads/galerie/ca1ac26c-1ea6-3aef-035b-7deac100704a.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/618b1b8e-9c59-fca9-a112-e0dc656b49cd.jpg": "/uploads/galerie/618b1b8e-9c59-fca9-a112-e0dc656b49cd.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/c1750967-b8c8-bf61-3300-3d4dfbc00a6d.jpg": "/uploads/galerie/c1750967-b8c8-bf61-3300-3d4dfbc00a6d.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/600d8f4d-700d-bd71-599a-ac9dbbd89316.jpg": "/uploads/galerie/600d8f4d-700d-bd71-599a-ac9dbbd89316.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/e427cbb0-5315-8d67-ff6f-9df7c3470051.jpg": "/uploads/galerie/e427cbb0-5315-8d67-ff6f-9df7c3470051.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/555138cc-b525-30ae-9653-60066b628b38.jpg": "/uploads/galerie/555138cc-b525-30ae-9653-60066b628b38.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/3dbd91e8-a731-5d1f-f31d-eda9e55c543f.jpg": "/uploads/galerie/3dbd91e8-a731-5d1f-f31d-eda9e55c543f.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/05cbc65a-03e8-6122-eb97-26cd6c505780.jpg": "/uploads/galerie/05cbc65a-03e8-6122-eb97-26cd6c505780.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/3fda3ea1-450e-306d-814e-8f330fd633fe.jpg": "/uploads/galerie/3fda3ea1-450e-306d-814e-8f330fd633fe.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/c76adda9-c985-a62c-a571-739ed7b872e8.jpg": "/uploads/galerie/c76adda9-c985-a62c-a571-739ed7b872e8.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/3dc2cffa-2a52-7f3a-3f8c-6921eefc6128.jpg": "/uploads/galerie/3dc2cffa-2a52-7f3a-3f8c-6921eefc6128.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/51d96514-0b29-9232-5f38-061152dbc164.jpg": "/uploads/galerie/51d96514-0b29-9232-5f38-061152dbc164.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/0ebb576e-acf3-546d-d103-bca86e561c6b.jpg": "/uploads/galerie/0ebb576e-acf3-546d-d103-bca86e561c6b.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/35103f16-1e4e-fcaa-0900-956b6c28bfc8.jpg": "/uploads/galerie/35103f16-1e4e-fcaa-0900-956b6c28bfc8.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/3f3fa78d-8c79-a67b-85c8-cd94d51164db.jpg": "/uploads/galerie/3f3fa78d-8c79-a67b-85c8-cd94d51164db.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/b5de4ff4-7303-1d1f-ff3d-b48877114bf0.jpg": "/uploads/galerie/b5de4ff4-7303-1d1f-ff3d-b48877114bf0.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/4e82b8cd-1945-df59-ea7a-2511f63d175f.jpg": "/uploads/galerie/4e82b8cd-1945-df59-ea7a-2511f63d175f.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/9818d83e-5a5c-94c0-f61f-a5d8e43d3ba5.jpg": "/uploads/galerie/9818d83e-5a5c-94c0-f61f-a5d8e43d3ba5.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/5263c238-5caa-775e-dfe2-b9a9d6689577.jpg": "/uploads/galerie/5263c238-5caa-775e-dfe2-b9a9d6689577.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/1b972fc3-1fd3-62b5-3061-1d0ac36680bf.jpg": "/uploads/galerie/1b972fc3-1fd3-62b5-3061-1d0ac36680bf.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/a4675107-993a-278e-137f-f2897f4c6834.jpg": "/uploads/galerie/a4675107-993a-278e-137f-f2897f4c6834.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/76e1cec0-e5b1-e39c-b3e4-57782be3ed9a.jpg": "/uploads/galerie/76e1cec0-e5b1-e39c-b3e4-57782be3ed9a.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/93713f54-0429-458a-b483-51cdd8c3f50e.jpg": "/uploads/galerie/93713f54-0429-458a-b483-51cdd8c3f50e.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/9e747f62-9d2e-43cb-e7a1-3837cb4a1b0b.jpg": "/uploads/galerie/9e747f62-9d2e-43cb-e7a1-3837cb4a1b0b.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/be374efa-9457-649f-468c-3ba8875c07d5.jpg": "/uploads/galerie/be374efa-9457-649f-468c-3ba8875c07d5.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/4e474b0a-9448-8413-9309-21f944869f2b.jpg": "/uploads/galerie/4e474b0a-9448-8413-9309-21f944869f2b.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/8249ec81-8dfd-746c-6ad6-ff548ffbd3a6.jpg": "/uploads/galerie/8249ec81-8dfd-746c-6ad6-ff548ffbd3a6.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/faa7e3a0-f825-34b6-bc82-6cd0301ccabd.jpg": "/uploads/galerie/faa7e3a0-f825-34b6-bc82-6cd0301ccabd.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/9de1d1e0-ecf2-f4a0-4a17-e967fed7921c.jpg": "/uploads/galerie/9de1d1e0-ecf2-f4a0-4a17-e967fed7921c.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/b4af5277-5fc4-9cbf-47b4-c9af62be2c94.jpg": "/uploads/galerie/b4af5277-5fc4-9cbf-47b4-c9af62be2c94.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/425d46e7-5b72-35ce-d097-4ac67dbb0be4.jpg": "/uploads/galerie/425d46e7-5b72-35ce-d097-4ac67dbb0be4.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/0ad053e7-527b-9b95-05e8-c69b4ad875fd.jpg": "/uploads/galerie/0ad053e7-527b-9b95-05e8-c69b4ad875fd.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/5c34fbb6-56ac-0274-7a15-88d7618e6d80.jpg": "/uploads/galerie/5c34fbb6-56ac-0274-7a15-88d7618e6d80.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/f8f3341d-e892-b861-1ab7-bf8dedab796e.jpg": "/uploads/galerie/f8f3341d-e892-b861-1ab7-bf8dedab796e.jpg",
+  "data/imagegallery/fb19658a-0e8c-3ad1-72fc-34ee93e32f09/0f125987-339b-9e86-2f73-36a839739e19.jpg": "/uploads/galerie/0f125987-339b-9e86-2f73-36a839739e19.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/297fd6eb-77e2-37f5-e858-b15e33369228.jpg": "/uploads/hunde/harley/297fd6eb-77e2-37f5-e858-b15e33369228.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/5b843477-2d04-b68e-9493-f86a7c7e3fde.jpg": "/uploads/hunde/harley/5b843477-2d04-b68e-9493-f86a7c7e3fde.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/65907207-e8bd-e15a-61d6-f72229a826ed.jpg": "/uploads/hunde/harley/65907207-e8bd-e15a-61d6-f72229a826ed.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/bf080178-7e8e-ce37-47c3-8447d81396e7.jpg": "/uploads/hunde/harley/bf080178-7e8e-ce37-47c3-8447d81396e7.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/f07860a7-3e4f-7510-e503-e47a405ada53.jpg": "/uploads/hunde/harley/f07860a7-3e4f-7510-e503-e47a405ada53.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/dd8f6c4b-3cbc-8d16-d956-ecea9fc929f1.jpg": "/uploads/hunde/harley/dd8f6c4b-3cbc-8d16-d956-ecea9fc929f1.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/7527e720-f9d1-7200-0989-438f80acb4fc.jpg": "/uploads/hunde/harley/7527e720-f9d1-7200-0989-438f80acb4fc.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/242383e9-6338-8f61-3db3-26d5ff4efa41.jpg": "/uploads/hunde/harley/242383e9-6338-8f61-3db3-26d5ff4efa41.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/95134fea-155a-d443-d7ce-49d82ab55681.jpg": "/uploads/hunde/harley/95134fea-155a-d443-d7ce-49d82ab55681.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/a4268369-ac7f-3dd2-04e1-d79b507dda1d.jpg": "/uploads/hunde/harley/a4268369-ac7f-3dd2-04e1-d79b507dda1d.jpg",
+  "data/imagegallery/13dc29fe-eba8-e63d-573e-f4e60f435047/540aa137-2c03-336b-e2be-d396a3341267.jpg": "/uploads/hunde/harley/540aa137-2c03-336b-e2be-d396a3341267.jpg",
+  "attachments/Image/1624867522VP-Logo-200.png": "/uploads/seiten/1624867522vp-logo-200.jpg",
+  "attachments/Image/Rottweiler_de_Banner_400x67.jpg": "/uploads/seiten/rottweiler_de_banner_400x67.jpg",
+  "attachments/Image/Unbenannt.png": "/uploads/seiten/unbenannt.jpg",
+  "attachments/Image/DSC_0551.JPG": "/uploads/hunde/baja/dsc_0551.jpg",
+  "attachments/Image/DSC_1326.JPG": "/uploads/hunde/baja/dsc_1326.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/13072427-56dc-79f5-a067-7dad1a419d88.jpg": "/uploads/hunde/baja/13072427-56dc-79f5-a067-7dad1a419d88.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/53cff7e3-eae5-4ed0-e0ca-de7c998907c3.jpg": "/uploads/hunde/baja/53cff7e3-eae5-4ed0-e0ca-de7c998907c3.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/74e22571-3cfc-d82e-05f6-a31618016c75.jpg": "/uploads/hunde/baja/74e22571-3cfc-d82e-05f6-a31618016c75.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/869034a1-2bd9-2cde-4ae4-81779e2ecb32.jpg": "/uploads/hunde/baja/869034a1-2bd9-2cde-4ae4-81779e2ecb32.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/a43c86d3-ae36-0d34-36c0-d73f7d5ab639.jpg": "/uploads/hunde/baja/a43c86d3-ae36-0d34-36c0-d73f7d5ab639.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/393aa9d5-9abe-f92c-fa57-fd0cfde91a22.jpg": "/uploads/hunde/baja/393aa9d5-9abe-f92c-fa57-fd0cfde91a22.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/73f742f2-49f1-84f7-9adc-c6e5301b3ceb.jpg": "/uploads/hunde/baja/73f742f2-49f1-84f7-9adc-c6e5301b3ceb.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/f7aee783-d3ec-f61e-396a-9e5d8e4e9c27.jpg": "/uploads/hunde/baja/f7aee783-d3ec-f61e-396a-9e5d8e4e9c27.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/f5eea64f-89b9-c150-627a-cc9f6f806bce.jpg": "/uploads/hunde/baja/f5eea64f-89b9-c150-627a-cc9f6f806bce.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/5c30ce75-3cca-13e9-868b-1fb3acf8d906.jpg": "/uploads/hunde/baja/5c30ce75-3cca-13e9-868b-1fb3acf8d906.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/80620167-1142-e041-fa6f-d32e1c5445e6.jpg": "/uploads/hunde/baja/80620167-1142-e041-fa6f-d32e1c5445e6.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/d4c86b8e-2185-a9fa-74f6-5b5d1e8c068a.jpg": "/uploads/hunde/baja/d4c86b8e-2185-a9fa-74f6-5b5d1e8c068a.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/beab0532-b72e-fb4a-6695-9dd4e2190ae7.jpg": "/uploads/hunde/baja/beab0532-b72e-fb4a-6695-9dd4e2190ae7.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/4200cbf0-4811-a309-0ad3-00b80630ea27.jpg": "/uploads/hunde/baja/4200cbf0-4811-a309-0ad3-00b80630ea27.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/c737a3f1-76cd-8482-524e-1ff1489b4a91.jpg": "/uploads/hunde/baja/c737a3f1-76cd-8482-524e-1ff1489b4a91.jpg",
+  "data/imagegallery/42cfeba8-c761-c75c-dcf9-7ec65b2f4c67/e1e947b6-3555-2c0c-2792-40204a830f59.jpg": "/uploads/hunde/baja/e1e947b6-3555-2c0c-2792-40204a830f59.jpg",
+  "attachments/Image/photo_2022-11-24_09-47-27_1.png": "/uploads/hunde/donna/photo_2022-11-24_09-47-27_1.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/9af35c80-a3df-34f3-4832-bee22aae267a.jpg": "/uploads/hunde/donna/9af35c80-a3df-34f3-4832-bee22aae267a.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/79cf364b-d491-f78e-92ee-9ff189b436d9.jpg": "/uploads/hunde/donna/79cf364b-d491-f78e-92ee-9ff189b436d9.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/6acf7645-34b9-8281-4fd5-52bd8872ecdd.jpg": "/uploads/hunde/donna/6acf7645-34b9-8281-4fd5-52bd8872ecdd.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/047ee0cf-956b-bd8c-af38-09e90f1ed196.jpg": "/uploads/hunde/donna/047ee0cf-956b-bd8c-af38-09e90f1ed196.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/cf160516-0c62-ba09-6271-cf25e9025e45.jpg": "/uploads/hunde/donna/cf160516-0c62-ba09-6271-cf25e9025e45.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/d7a7941f-223d-dec2-522f-211e238db698.jpg": "/uploads/hunde/donna/d7a7941f-223d-dec2-522f-211e238db698.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/079f9636-f4f9-7a39-357e-bdcf424563ad.jpg": "/uploads/hunde/donna/079f9636-f4f9-7a39-357e-bdcf424563ad.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/c11cb544-2b6a-cc7c-535f-ccdfd7898d89.jpg": "/uploads/hunde/donna/c11cb544-2b6a-cc7c-535f-ccdfd7898d89.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/ef25e151-a4c1-c17d-c9ee-e24655bd6325.jpg": "/uploads/hunde/donna/ef25e151-a4c1-c17d-c9ee-e24655bd6325.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/6ae8650e-a27c-9ed8-2d8d-765f92b39092.jpg": "/uploads/hunde/donna/6ae8650e-a27c-9ed8-2d8d-765f92b39092.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/a6d95dc0-acb6-a110-93f5-5c69ec568854.jpg": "/uploads/hunde/donna/a6d95dc0-acb6-a110-93f5-5c69ec568854.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/a8337035-4ff3-0cb0-0f92-5198fb22b6bb.jpg": "/uploads/hunde/donna/a8337035-4ff3-0cb0-0f92-5198fb22b6bb.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/5465309a-d5e7-1b9a-d81c-d890fc7304e4.jpg": "/uploads/hunde/donna/5465309a-d5e7-1b9a-d81c-d890fc7304e4.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/076a89e5-b551-85ad-d6ca-3e653a5e9dca.jpg": "/uploads/hunde/donna/076a89e5-b551-85ad-d6ca-3e653a5e9dca.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/d8956096-345a-cb3e-ec26-45d4428759f5.jpg": "/uploads/hunde/donna/d8956096-345a-cb3e-ec26-45d4428759f5.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/3e13a5a7-dd72-b7db-64a5-5324625db169.jpg": "/uploads/hunde/donna/3e13a5a7-dd72-b7db-64a5-5324625db169.jpg",
+  "attachments/Image/DSC_0864.JPG": "/uploads/seiten/dsc_0864.jpg",
+  "attachments/Image/IMG_20230210_192629_802.jpg": "/uploads/hunde/aaron/img_20230210_192629_802.jpg",
+  "attachments/Image/DSC_0437-1.JPG": "/uploads/hunde/aaron/dsc_0437-1.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/95515ffd-e09e-9693-3c64-1814b4d2643f.jpg": "/uploads/hunde/aaron/95515ffd-e09e-9693-3c64-1814b4d2643f.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/c937d57f-c416-3deb-f05d-8a5a09ddd6fe.jpg": "/uploads/hunde/aaron/c937d57f-c416-3deb-f05d-8a5a09ddd6fe.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/0d43f578-0225-5a01-e7df-81a537f76fa3.jpg": "/uploads/hunde/aaron/0d43f578-0225-5a01-e7df-81a537f76fa3.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/bfd523c8-37ea-d3e4-2607-48b2284cb587.jpg": "/uploads/hunde/aaron/bfd523c8-37ea-d3e4-2607-48b2284cb587.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/2a9f1e6e-a369-7d40-8709-4c0a79378099.jpg": "/uploads/hunde/aaron/2a9f1e6e-a369-7d40-8709-4c0a79378099.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/34e2c3a4-6043-7332-8b55-ef1476524695.jpg": "/uploads/hunde/aaron/34e2c3a4-6043-7332-8b55-ef1476524695.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/34494c46-484d-ea77-94ab-9ff0163c6043.jpg": "/uploads/hunde/aaron/34494c46-484d-ea77-94ab-9ff0163c6043.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/7f789efa-67b3-2a8c-5286-781c64d1c651.jpg": "/uploads/hunde/aaron/7f789efa-67b3-2a8c-5286-781c64d1c651.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/4b01c1b5-4bac-360b-d676-9b0150b8843b.jpg": "/uploads/hunde/aaron/4b01c1b5-4bac-360b-d676-9b0150b8843b.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/7367abdf-a95b-c662-ce8f-24c1e083b007.jpg": "/uploads/hunde/aaron/7367abdf-a95b-c662-ce8f-24c1e083b007.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/0058b669-6561-8fc5-b684-4e419d004f5f.jpg": "/uploads/hunde/aaron/0058b669-6561-8fc5-b684-4e419d004f5f.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/e76580c1-76e5-b1d7-1926-acf1a5cd5d30.jpg": "/uploads/hunde/aaron/e76580c1-76e5-b1d7-1926-acf1a5cd5d30.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/4fb1fcb2-2390-be0a-3d78-b57badcfbcd2.jpg": "/uploads/hunde/aaron/4fb1fcb2-2390-be0a-3d78-b57badcfbcd2.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/5b98c54e-b849-3ab7-8fef-042147bff8ca.jpg": "/uploads/hunde/aaron/5b98c54e-b849-3ab7-8fef-042147bff8ca.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/448808b6-664a-8911-f02e-fe30093423fa.jpg": "/uploads/hunde/aaron/448808b6-664a-8911-f02e-fe30093423fa.jpg",
+  "data/imagegallery/82976ce9-850f-8b4c-921b-110473ee28ac/d7276405-0ab1-d8c5-1c1f-d530e29cca45.jpg": "/uploads/hunde/aaron/d7276405-0ab1-d8c5-1c1f-d530e29cca45.jpg",
+  "attachments/Image/DSC_0380-2.JPG": "/uploads/hunde/hunter/dsc_0380-2.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/6d21f215-f50b-ec55-d5e3-55c2576fa8be.jpg": "/uploads/hunde/hunter/6d21f215-f50b-ec55-d5e3-55c2576fa8be.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/b9ab6ef3-5679-979c-a02f-00ede41029db.jpg": "/uploads/hunde/hunter/b9ab6ef3-5679-979c-a02f-00ede41029db.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/83b789a6-e18c-a717-c74f-3f6cfae97707.jpg": "/uploads/hunde/hunter/83b789a6-e18c-a717-c74f-3f6cfae97707.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/b4df7764-129c-38c9-c3d2-83c00b7143ef.jpg": "/uploads/hunde/hunter/b4df7764-129c-38c9-c3d2-83c00b7143ef.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/3dfdecec-5177-6f26-20a8-e8905e156eff.jpg": "/uploads/hunde/hunter/3dfdecec-5177-6f26-20a8-e8905e156eff.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/63f16a6c-9f5a-25a1-e7f2-cee81f0616a5.jpg": "/uploads/hunde/hunter/63f16a6c-9f5a-25a1-e7f2-cee81f0616a5.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/a7c7fd2c-21a2-b314-c885-8272ae52732a.jpg": "/uploads/hunde/hunter/a7c7fd2c-21a2-b314-c885-8272ae52732a.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/eef90343-67e1-cf9b-b1e2-e2a001a31afc.jpg": "/uploads/hunde/hunter/eef90343-67e1-cf9b-b1e2-e2a001a31afc.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/399f01c8-def5-41e8-7fbe-7f6c9e6aa53b.jpg": "/uploads/hunde/hunter/399f01c8-def5-41e8-7fbe-7f6c9e6aa53b.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/740c492d-dc7f-52a4-3ee3-a600ed262169.jpg": "/uploads/hunde/hunter/740c492d-dc7f-52a4-3ee3-a600ed262169.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/e4cdac34-8d73-bdd3-e03f-e0d4d1273a05.jpg": "/uploads/hunde/hunter/e4cdac34-8d73-bdd3-e03f-e0d4d1273a05.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/76edf964-feab-f7a4-41ae-71e3c2568fc9.jpg": "/uploads/hunde/hunter/76edf964-feab-f7a4-41ae-71e3c2568fc9.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/0f180cc1-4901-98f1-4836-021bcd6c8788.jpg": "/uploads/hunde/hunter/0f180cc1-4901-98f1-4836-021bcd6c8788.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/d4235bbd-5d6e-5db9-9b1d-ea13c9f5c50f.jpg": "/uploads/hunde/hunter/d4235bbd-5d6e-5db9-9b1d-ea13c9f5c50f.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/89d48a5c-3f96-145f-da9d-8d63b9c2ca4a.jpg": "/uploads/hunde/hunter/89d48a5c-3f96-145f-da9d-8d63b9c2ca4a.jpg",
+  "data/imagegallery/edbf0ff1-d1df-baf5-9333-34d80b07c08b/75005868-6c10-1adc-8b48-3e6cfc6330af.jpg": "/uploads/hunde/hunter/75005868-6c10-1adc-8b48-3e6cfc6330af.jpg",
+  "attachments/Image/DSC_0767.JPG": "/uploads/seiten/dsc_0767.jpg",
+  "attachments/Image/Picsart_23-04-25_20-23-31-458.jpg": "/uploads/rudel/picsart_23-04-25_20-23-31-458.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/b54bf685-fb00-c043-bea9-2d43d3cc844f.jpg": "/uploads/rudel/b54bf685-fb00-c043-bea9-2d43d3cc844f.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/40284e94-0100-58c6-4f3c-b4957fe6757a.jpg": "/uploads/rudel/40284e94-0100-58c6-4f3c-b4957fe6757a.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/bd027694-485b-3d68-aeee-96b07b5afaa4.jpg": "/uploads/rudel/bd027694-485b-3d68-aeee-96b07b5afaa4.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/fb4dde59-b4a5-ff8a-33a1-d5431aa6af98.jpg": "/uploads/rudel/fb4dde59-b4a5-ff8a-33a1-d5431aa6af98.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/37a167b9-6a39-b71a-76da-8f1fb8d95bf2.jpg": "/uploads/rudel/37a167b9-6a39-b71a-76da-8f1fb8d95bf2.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/a6c05c2e-ff84-1732-3d06-6d5b165a50a7.jpg": "/uploads/rudel/a6c05c2e-ff84-1732-3d06-6d5b165a50a7.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/47a0c15d-f106-c5ed-1cc5-a2b6fd99d1f9.jpg": "/uploads/rudel/47a0c15d-f106-c5ed-1cc5-a2b6fd99d1f9.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/b494242a-0447-fea9-7f3f-be98986a336c.jpg": "/uploads/rudel/b494242a-0447-fea9-7f3f-be98986a336c.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/fde9e25e-f0fd-ca34-9e32-085422803bc7.jpg": "/uploads/rudel/fde9e25e-f0fd-ca34-9e32-085422803bc7.jpg",
+  "data/imagegallery/3429412f-3acb-15ac-a79f-8b21d2cad3b4/674f29bc-3e93-319e-71af-318f61d36ece.jpg": "/uploads/rudel/674f29bc-3e93-319e-71af-318f61d36ece.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/c3b66134-8be9-44da-b2ec-5831581ad930.jpg": "/uploads/rudel/dackel/c3b66134-8be9-44da-b2ec-5831581ad930.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/c3dfdb93-b889-2476-cad5-f1f983e4a5fa.jpg": "/uploads/rudel/dackel/c3dfdb93-b889-2476-cad5-f1f983e4a5fa.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/fd61d309-3527-cf91-0a33-c7926781635e.jpg": "/uploads/rudel/dackel/fd61d309-3527-cf91-0a33-c7926781635e.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/a3dc82c1-2646-118b-233f-77d5553854ab.jpg": "/uploads/rudel/dackel/a3dc82c1-2646-118b-233f-77d5553854ab.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/2b8a30f9-cd18-0503-f5f2-47ee1990488a.jpg": "/uploads/rudel/dackel/2b8a30f9-cd18-0503-f5f2-47ee1990488a.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/6eb1a73e-7f10-d59f-3150-09d7701a5c41.jpg": "/uploads/rudel/dackel/6eb1a73e-7f10-d59f-3150-09d7701a5c41.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/e7431914-ddaa-cf72-1fdd-652bf8946dfd.jpg": "/uploads/rudel/dackel/e7431914-ddaa-cf72-1fdd-652bf8946dfd.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/90917126-70ff-ccad-b72e-6be98c7b55b2.jpg": "/uploads/rudel/dackel/90917126-70ff-ccad-b72e-6be98c7b55b2.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/53add332-b7ff-2b5f-d118-81e15aafe02d.jpg": "/uploads/rudel/dackel/53add332-b7ff-2b5f-d118-81e15aafe02d.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/ed953edf-7ead-47d2-461e-1b57fad27b70.jpg": "/uploads/rudel/dackel/ed953edf-7ead-47d2-461e-1b57fad27b70.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/46f3610e-2020-ce61-e3ac-116b8bdde077.jpg": "/uploads/rudel/dackel/46f3610e-2020-ce61-e3ac-116b8bdde077.jpg",
+  "data/imagegallery/2125234f-2e31-c59d-6cea-4981983dfb79/2197dacd-32de-56b0-80d3-880dee9c7648.jpg": "/uploads/rudel/dackel/2197dacd-32de-56b0-80d3-880dee9c7648.jpg",
+  "attachments/Image/DSC_0244.JPG": "/uploads/wuerfe/b-wurf/dsc_0244.jpg",
+  "attachments/Image/DSC_0316.JPG": "/uploads/wuerfe/b-wurf/dsc_0316.jpg",
+  "attachments/Image/DSC_0293.JPG": "/uploads/wuerfe/b-wurf/dsc_0293.jpg",
+  "attachments/Image/DSC_279.JPG": "/uploads/wuerfe/b-wurf/dsc_279.jpg",
+  "attachments/Image/DSC_0263.JPG": "/uploads/wuerfe/b-wurf/dsc_0263.jpg",
+  "attachments/Image/Picsart_24-01-09_19-04-13-4391657.jpg": "/uploads/wuerfe/b-wurf/picsart_24-01-09_19-04-13-4391657.jpg",
+  "data/imagegallery/f2e5efe1-8bbe-0239-f427-27a4addfbfe3/7b159ba8-79c6-7dab-ad5a-7ac71cf00a58.jpg": "/uploads/wuerfe/b-wurf/7b159ba8-79c6-7dab-ad5a-7ac71cf00a58.jpg",
+  "attachments/Image/Screenshot_20240110_190138_Samsung-Internet1656_1.jpg": "/uploads/wuerfe/b-wurf/screenshot_20240110_190138_samsung-inter.jpg",
+  "data/imagegallery/ff5cac1c-a3be-54e9-8a61-a7690b85dff6/ea4dccb5-c05d-9454-4bf1-b4c79f2a7ad0.jpg": "/uploads/wuerfe/b-wurf/ea4dccb5-c05d-9454-4bf1-b4c79f2a7ad0.jpg",
+  "attachments/Image/IMG_20221126_101441_898.jpg": "/uploads/seiten/img_20221126_101441_898.jpg",
+  "data/imagegallery/f2e5efe1-8bbe-0239-f427-27a4addfbfe3/7410335b-a58d-edcc-c02f-dd5ee1ee224c.jpg": "/uploads/wuerfe/a-wurf/7410335b-a58d-edcc-c02f-dd5ee1ee224c.jpg",
+  "data/imagegallery/f2e5efe1-8bbe-0239-f427-27a4addfbfe3/4acc89a8-cb68-1177-81b0-721e82763e81.jpg": "/uploads/wuerfe/a-wurf/4acc89a8-cb68-1177-81b0-721e82763e81.jpg",
+  "data/imagegallery/f2e5efe1-8bbe-0239-f427-27a4addfbfe3/5851e3f5-5e1f-312c-21d6-39b2d3309190.jpg": "/uploads/wuerfe/a-wurf/5851e3f5-5e1f-312c-21d6-39b2d3309190.jpg",
+  "data/imagegallery/f2e5efe1-8bbe-0239-f427-27a4addfbfe3/17510b90-3a5a-6db2-f4ca-c1553d88984c.jpg": "/uploads/wuerfe/a-wurf/17510b90-3a5a-6db2-f4ca-c1553d88984c.jpg",
+  "data/imagegallery/f2e5efe1-8bbe-0239-f427-27a4addfbfe3/7da4049f-bb29-e1cb-df51-e300b491f17b.jpg": "/uploads/wuerfe/a-wurf/7da4049f-bb29-e1cb-df51-e300b491f17b.jpg",
+  "data/imagegallery/f2e5efe1-8bbe-0239-f427-27a4addfbfe3/0d2903e8-894a-c69c-2cd1-dd87ff1cb2e0.jpg": "/uploads/wuerfe/a-wurf/0d2903e8-894a-c69c-2cd1-dd87ff1cb2e0.jpg",
+  "attachments/Image/Screenshot_20220213_101607_com.android.chrome.jpg": "/uploads/wuerfe/a-wurf/screenshot_20220213_101607_com.android.c.jpg",
+  "attachments/Image/Picsart_22-06-12_20-05-03-144.jpg": "/uploads/wuerfe/a-wurf/picsart_22-06-12_20-05-03-144.jpg",
+  "attachments/Image/Picsart_22-11-24_22-09-10-940.jpg": "/uploads/seiten/picsart_22-11-24_22-09-10-940.jpg",
+  "attachments/Image/photo_2023-06-06_08-16-00.png": "/uploads/seiten/photo_2023-06-06_08-16-00.jpg",
+  "attachments/Image/20221217_113107.jpg": "/uploads/seiten/20221217_113107.jpg",
+  "attachments/Header/image_0": "/uploads/header/header-0.jpg",
+  "attachments/Header/image_1": "/uploads/header/header-1.jpg",
+  "attachments/Header/image_2": "/uploads/header/header-2.jpg",
+  "attachments/Header/image_3": "/uploads/header/header-3.jpg",
+  "attachments/Header/image_4": "/uploads/header/header-4.jpg",
+  "attachments/Header/image_5": "/uploads/header/header-5.jpg"
+ },
+ "pages": {
+  "about-me/index.html": [
+   "/uploads/seiten/picsart_22-07-19_10-29-21-327.jpg",
+   "/uploads/seiten/42226e53-6936-b2ac-5b91-f6e6f95b0fb5.jpg"
+  ],
+  "about-me/leistungen/index.html": [
+   "/uploads/seiten/picsart_22-07-19_10-43-34-5111_1.jpg"
+  ],
+  "aktuelles/die-hundebox-sicherer-ort-und-tolles-hilfsmittel/index.html": [
+   "/uploads/news/20180804_182737.jpg"
+  ],
+  "aktuelles/ein-erfolg-jagt-den-naechsten/index.html": [
+   "/uploads/news/img-20260426-wa0047.jpg"
+  ],
+  "aktuelles/ein-schwarzes-tuch-zum-ende-des-jahres/index.html": [
+   "/uploads/news/1dx_9302.jpg"
+  ],
+  "aktuelles/ein-welpe-zieht-ein/index.html": [
+   "/uploads/news/dsc_0370.jpg"
+  ],
+  "aktuelles/erfolgreich-dem-jahresende-entgegen/index.html": [
+   "/uploads/news/photo_2024-11-24_06-10-32.jpg"
+  ],
+  "aktuelles/erfolgreicher-start/index.html": [
+   "/uploads/news/dsc02430.jpg"
+  ],
+  "aktuelles/es-gibt-neuigkeiten/index.html": [],
+  "aktuelles/gesundes-neue-jahr/index.html": [],
+  "aktuelles/happy-birthday/index.html": [
+   "/uploads/news/img-20250309-wa0011.jpg"
+  ],
+  "aktuelles/hund-allein-lassen-wie-kann-ich-ihm-das-beibringen/index.html": [
+   "/uploads/news/dsc_0096.jpg"
+  ],
+  "aktuelles/hundesportliches-wochenende/index.html": [
+   "/uploads/news/picsart_23-11-05_19-12-05-363.jpg"
+  ],
+  "aktuelles/in-naechster-zeit-keine-wuerfe/index.html": [
+   "/uploads/news/1dx_0680.jpg"
+  ],
+  "aktuelles/index.html": [],
+  "aktuelles/leinenfuehrigkeit/index.html": [
+   "/uploads/news/img_6322.jpg"
+  ],
+  "aktuelles/nachzuchtbeurteilung/index.html": [
+   "/uploads/news/img_4625.jpg"
+  ],
+  "aktuelles/runterfahren-ruhephasen-wichtiges-thema/index.html": [
+   "/uploads/news/20180819_214337.jpg"
+  ],
+  "aktuelles/sitz-platz-und-steh-aber-wie-geht-das/index.html": [
+   "/uploads/news/dsc_0224.jpg"
+  ],
+  "aktuelles/sitz-platzund-steh-aber-wie-geht-das/index.html": [
+   "/uploads/news/karo_ogbaerenstein-4425.jpg"
+  ],
+  "aktuelles/stubenreinheit-wie-kann-ich-das-vermitteln/index.html": [
+   "/uploads/news/dsc_0014.jpg"
+  ],
+  "aktuelles/willkommen-im-rudel/index.html": [],
+  "aktuelles/wir-haben-es-wiedergeschafft/index.html": [
+   "/uploads/news/picsart_22-07-19_10-29-21-327_1.jpg"
+  ],
+  "aktuelles/ziele-sind-zum-erreichen-da/index.html": [
+   "/uploads/news/1dx_8414.jpg"
+  ],
+  "contacts/index.php": [
+   "/uploads/seiten/58e91b9eeb97430e81906506.jpg",
+   "/uploads/seiten/images.jpg"
+  ],
+  "gallery/index.html": [
+   "/uploads/galerie/272c82ae-9222-4f78-4154-e04c3da2b3d4.jpg",
+   "/uploads/galerie/ca1ac26c-1ea6-3aef-035b-7deac100704a.jpg",
+   "/uploads/galerie/618b1b8e-9c59-fca9-a112-e0dc656b49cd.jpg",
+   "/uploads/galerie/c1750967-b8c8-bf61-3300-3d4dfbc00a6d.jpg",
+   "/uploads/galerie/600d8f4d-700d-bd71-599a-ac9dbbd89316.jpg",
+   "/uploads/galerie/e427cbb0-5315-8d67-ff6f-9df7c3470051.jpg",
+   "/uploads/galerie/555138cc-b525-30ae-9653-60066b628b38.jpg",
+   "/uploads/galerie/3dbd91e8-a731-5d1f-f31d-eda9e55c543f.jpg",
+   "/uploads/galerie/05cbc65a-03e8-6122-eb97-26cd6c505780.jpg",
+   "/uploads/galerie/3fda3ea1-450e-306d-814e-8f330fd633fe.jpg",
+   "/uploads/galerie/c76adda9-c985-a62c-a571-739ed7b872e8.jpg",
+   "/uploads/galerie/3dc2cffa-2a52-7f3a-3f8c-6921eefc6128.jpg",
+   "/uploads/galerie/51d96514-0b29-9232-5f38-061152dbc164.jpg",
+   "/uploads/galerie/0ebb576e-acf3-546d-d103-bca86e561c6b.jpg",
+   "/uploads/galerie/35103f16-1e4e-fcaa-0900-956b6c28bfc8.jpg",
+   "/uploads/galerie/3f3fa78d-8c79-a67b-85c8-cd94d51164db.jpg",
+   "/uploads/galerie/b5de4ff4-7303-1d1f-ff3d-b48877114bf0.jpg",
+   "/uploads/galerie/4e82b8cd-1945-df59-ea7a-2511f63d175f.jpg",
+   "/uploads/galerie/9818d83e-5a5c-94c0-f61f-a5d8e43d3ba5.jpg",
+   "/uploads/galerie/5263c238-5caa-775e-dfe2-b9a9d6689577.jpg",
+   "/uploads/galerie/1b972fc3-1fd3-62b5-3061-1d0ac36680bf.jpg",
+   "/uploads/galerie/a4675107-993a-278e-137f-f2897f4c6834.jpg",
+   "/uploads/galerie/76e1cec0-e5b1-e39c-b3e4-57782be3ed9a.jpg",
+   "/uploads/galerie/93713f54-0429-458a-b483-51cdd8c3f50e.jpg",
+   "/uploads/galerie/9e747f62-9d2e-43cb-e7a1-3837cb4a1b0b.jpg",
+   "/uploads/galerie/be374efa-9457-649f-468c-3ba8875c07d5.jpg",
+   "/uploads/galerie/4e474b0a-9448-8413-9309-21f944869f2b.jpg",
+   "/uploads/galerie/8249ec81-8dfd-746c-6ad6-ff548ffbd3a6.jpg",
+   "/uploads/galerie/faa7e3a0-f825-34b6-bc82-6cd0301ccabd.jpg",
+   "/uploads/galerie/9de1d1e0-ecf2-f4a0-4a17-e967fed7921c.jpg",
+   "/uploads/galerie/b4af5277-5fc4-9cbf-47b4-c9af62be2c94.jpg",
+   "/uploads/galerie/425d46e7-5b72-35ce-d097-4ac67dbb0be4.jpg",
+   "/uploads/galerie/0ad053e7-527b-9b95-05e8-c69b4ad875fd.jpg",
+   "/uploads/galerie/5c34fbb6-56ac-0274-7a15-88d7618e6d80.jpg",
+   "/uploads/galerie/f8f3341d-e892-b861-1ab7-bf8dedab796e.jpg",
+   "/uploads/galerie/0f125987-339b-9e86-2f73-36a839739e19.jpg"
+  ],
+  "harley-vom-auersberg/index.html": [
+   "/uploads/hunde/harley/297fd6eb-77e2-37f5-e858-b15e33369228.jpg",
+   "/uploads/hunde/harley/5b843477-2d04-b68e-9493-f86a7c7e3fde.jpg",
+   "/uploads/hunde/harley/65907207-e8bd-e15a-61d6-f72229a826ed.jpg",
+   "/uploads/hunde/harley/bf080178-7e8e-ce37-47c3-8447d81396e7.jpg",
+   "/uploads/hunde/harley/f07860a7-3e4f-7510-e503-e47a405ada53.jpg",
+   "/uploads/hunde/harley/dd8f6c4b-3cbc-8d16-d956-ecea9fc929f1.jpg",
+   "/uploads/hunde/harley/7527e720-f9d1-7200-0989-438f80acb4fc.jpg",
+   "/uploads/hunde/harley/242383e9-6338-8f61-3db3-26d5ff4efa41.jpg",
+   "/uploads/hunde/harley/95134fea-155a-d443-d7ce-49d82ab55681.jpg",
+   "/uploads/hunde/harley/a4268369-ac7f-3dd2-04e1-d79b507dda1d.jpg",
+   "/uploads/hunde/harley/540aa137-2c03-336b-e2be-d396a3341267.jpg"
+  ],
+  "index.html": [
+   "/uploads/news/img-20260426-wa0047.jpg",
+   "/uploads/news/dsc02430.jpg",
+   "/uploads/news/1dx_9302.jpg",
+   "/uploads/news/1dx_8414.jpg",
+   "/uploads/news/1dx_0680.jpg",
+   "/uploads/news/img_4625.jpg",
+   "/uploads/news/picsart_23-11-05_19-12-05-363.jpg"
+  ],
+  "links/index.html": [
+   "/uploads/seiten/58e91b9eeb97430e81906506.jpg",
+   "/uploads/seiten/images.jpg",
+   "/uploads/seiten/1624867522vp-logo-200.jpg",
+   "/uploads/seiten/rottweiler_de_banner_400x67.jpg",
+   "/uploads/seiten/unbenannt.jpg"
+  ],
+  "page/2/index.html": [
+   "/uploads/news/karo_ogbaerenstein-4425.jpg",
+   "/uploads/news/dsc_0224.jpg",
+   "/uploads/news/img-20250309-wa0011.jpg",
+   "/uploads/news/img_6322.jpg",
+   "/uploads/news/dsc_0096.jpg",
+   "/uploads/news/picsart_22-07-19_10-29-21-327_1.jpg",
+   "/uploads/news/20180819_214337.jpg",
+   "/uploads/news/20180804_182737.jpg",
+   "/uploads/news/dsc_0014.jpg"
+  ],
+  "page/3/index.html": [
+   "/uploads/news/dsc_0370.jpg"
+  ],
+  "rottweilerhuendinnen/baja-vom-luchberg/index.html": [
+   "/uploads/hunde/baja/dsc_0551.jpg",
+   "/uploads/hunde/baja/dsc_1326.jpg",
+   "/uploads/hunde/baja/13072427-56dc-79f5-a067-7dad1a419d88.jpg",
+   "/uploads/hunde/baja/53cff7e3-eae5-4ed0-e0ca-de7c998907c3.jpg",
+   "/uploads/hunde/baja/74e22571-3cfc-d82e-05f6-a31618016c75.jpg",
+   "/uploads/hunde/baja/869034a1-2bd9-2cde-4ae4-81779e2ecb32.jpg",
+   "/uploads/hunde/baja/a43c86d3-ae36-0d34-36c0-d73f7d5ab639.jpg",
+   "/uploads/hunde/baja/393aa9d5-9abe-f92c-fa57-fd0cfde91a22.jpg",
+   "/uploads/hunde/baja/73f742f2-49f1-84f7-9adc-c6e5301b3ceb.jpg",
+   "/uploads/hunde/baja/f7aee783-d3ec-f61e-396a-9e5d8e4e9c27.jpg",
+   "/uploads/hunde/baja/f5eea64f-89b9-c150-627a-cc9f6f806bce.jpg",
+   "/uploads/hunde/baja/5c30ce75-3cca-13e9-868b-1fb3acf8d906.jpg",
+   "/uploads/hunde/baja/80620167-1142-e041-fa6f-d32e1c5445e6.jpg",
+   "/uploads/hunde/baja/d4c86b8e-2185-a9fa-74f6-5b5d1e8c068a.jpg",
+   "/uploads/hunde/baja/beab0532-b72e-fb4a-6695-9dd4e2190ae7.jpg",
+   "/uploads/hunde/baja/4200cbf0-4811-a309-0ad3-00b80630ea27.jpg",
+   "/uploads/hunde/baja/c737a3f1-76cd-8482-524e-1ff1489b4a91.jpg",
+   "/uploads/hunde/baja/e1e947b6-3555-2c0c-2792-40204a830f59.jpg"
+  ],
+  "rottweilerhuendinnen/donna-von-der-staubzer-hoehe/index.html": [
+   "/uploads/hunde/donna/photo_2022-11-24_09-47-27_1.jpg",
+   "/uploads/hunde/donna/9af35c80-a3df-34f3-4832-bee22aae267a.jpg",
+   "/uploads/hunde/donna/79cf364b-d491-f78e-92ee-9ff189b436d9.jpg",
+   "/uploads/hunde/donna/6acf7645-34b9-8281-4fd5-52bd8872ecdd.jpg",
+   "/uploads/hunde/donna/047ee0cf-956b-bd8c-af38-09e90f1ed196.jpg",
+   "/uploads/hunde/donna/cf160516-0c62-ba09-6271-cf25e9025e45.jpg",
+   "/uploads/hunde/donna/d7a7941f-223d-dec2-522f-211e238db698.jpg",
+   "/uploads/hunde/donna/079f9636-f4f9-7a39-357e-bdcf424563ad.jpg",
+   "/uploads/hunde/donna/c11cb544-2b6a-cc7c-535f-ccdfd7898d89.jpg",
+   "/uploads/hunde/donna/ef25e151-a4c1-c17d-c9ee-e24655bd6325.jpg",
+   "/uploads/hunde/donna/6ae8650e-a27c-9ed8-2d8d-765f92b39092.jpg",
+   "/uploads/hunde/donna/a6d95dc0-acb6-a110-93f5-5c69ec568854.jpg",
+   "/uploads/hunde/donna/a8337035-4ff3-0cb0-0f92-5198fb22b6bb.jpg",
+   "/uploads/hunde/donna/5465309a-d5e7-1b9a-d81c-d890fc7304e4.jpg",
+   "/uploads/hunde/donna/076a89e5-b551-85ad-d6ca-3e653a5e9dca.jpg",
+   "/uploads/hunde/donna/d8956096-345a-cb3e-ec26-45d4428759f5.jpg",
+   "/uploads/hunde/donna/3e13a5a7-dd72-b7db-64a5-5324625db169.jpg"
+  ],
+  "rottweilerhuendinnen/index.html": [
+   "/uploads/seiten/dsc_0864.jpg"
+  ],
+  "rottweilerrueden/aaron-vom-luchberg/index.html": [
+   "/uploads/hunde/aaron/img_20230210_192629_802.jpg",
+   "/uploads/hunde/aaron/dsc_0437-1.jpg",
+   "/uploads/hunde/aaron/95515ffd-e09e-9693-3c64-1814b4d2643f.jpg",
+   "/uploads/hunde/aaron/c937d57f-c416-3deb-f05d-8a5a09ddd6fe.jpg",
+   "/uploads/hunde/aaron/0d43f578-0225-5a01-e7df-81a537f76fa3.jpg",
+   "/uploads/hunde/aaron/bfd523c8-37ea-d3e4-2607-48b2284cb587.jpg",
+   "/uploads/hunde/aaron/2a9f1e6e-a369-7d40-8709-4c0a79378099.jpg",
+   "/uploads/hunde/aaron/34e2c3a4-6043-7332-8b55-ef1476524695.jpg",
+   "/uploads/hunde/aaron/34494c46-484d-ea77-94ab-9ff0163c6043.jpg",
+   "/uploads/hunde/aaron/7f789efa-67b3-2a8c-5286-781c64d1c651.jpg",
+   "/uploads/hunde/aaron/4b01c1b5-4bac-360b-d676-9b0150b8843b.jpg",
+   "/uploads/hunde/aaron/7367abdf-a95b-c662-ce8f-24c1e083b007.jpg",
+   "/uploads/hunde/aaron/0058b669-6561-8fc5-b684-4e419d004f5f.jpg",
+   "/uploads/hunde/aaron/e76580c1-76e5-b1d7-1926-acf1a5cd5d30.jpg",
+   "/uploads/hunde/aaron/4fb1fcb2-2390-be0a-3d78-b57badcfbcd2.jpg",
+   "/uploads/hunde/aaron/5b98c54e-b849-3ab7-8fef-042147bff8ca.jpg",
+   "/uploads/hunde/aaron/448808b6-664a-8911-f02e-fe30093423fa.jpg",
+   "/uploads/hunde/aaron/d7276405-0ab1-d8c5-1c1f-d530e29cca45.jpg"
+  ],
+  "rottweilerrueden/hunter-vom-auersberg/index.html": [
+   "/uploads/hunde/hunter/dsc_0380-2.jpg",
+   "/uploads/hunde/hunter/6d21f215-f50b-ec55-d5e3-55c2576fa8be.jpg",
+   "/uploads/hunde/hunter/b9ab6ef3-5679-979c-a02f-00ede41029db.jpg",
+   "/uploads/hunde/hunter/83b789a6-e18c-a717-c74f-3f6cfae97707.jpg",
+   "/uploads/hunde/hunter/b4df7764-129c-38c9-c3d2-83c00b7143ef.jpg",
+   "/uploads/hunde/hunter/3dfdecec-5177-6f26-20a8-e8905e156eff.jpg",
+   "/uploads/hunde/hunter/63f16a6c-9f5a-25a1-e7f2-cee81f0616a5.jpg",
+   "/uploads/hunde/hunter/a7c7fd2c-21a2-b314-c885-8272ae52732a.jpg",
+   "/uploads/hunde/hunter/eef90343-67e1-cf9b-b1e2-e2a001a31afc.jpg",
+   "/uploads/hunde/hunter/399f01c8-def5-41e8-7fbe-7f6c9e6aa53b.jpg",
+   "/uploads/hunde/hunter/740c492d-dc7f-52a4-3ee3-a600ed262169.jpg",
+   "/uploads/hunde/hunter/e4cdac34-8d73-bdd3-e03f-e0d4d1273a05.jpg",
+   "/uploads/hunde/hunter/76edf964-feab-f7a4-41ae-71e3c2568fc9.jpg",
+   "/uploads/hunde/hunter/0f180cc1-4901-98f1-4836-021bcd6c8788.jpg",
+   "/uploads/hunde/hunter/d4235bbd-5d6e-5db9-9b1d-ea13c9f5c50f.jpg",
+   "/uploads/hunde/hunter/89d48a5c-3f96-145f-da9d-8d63b9c2ca4a.jpg",
+   "/uploads/hunde/hunter/75005868-6c10-1adc-8b48-3e6cfc6330af.jpg"
+  ],
+  "rottweilerrueden/index.html": [
+   "/uploads/seiten/dsc_0767.jpg"
+  ],
+  "weitere-rudelmitglieder/index.html": [
+   "/uploads/rudel/picsart_23-04-25_20-23-31-458.jpg",
+   "/uploads/rudel/b54bf685-fb00-c043-bea9-2d43d3cc844f.jpg",
+   "/uploads/rudel/40284e94-0100-58c6-4f3c-b4957fe6757a.jpg",
+   "/uploads/rudel/bd027694-485b-3d68-aeee-96b07b5afaa4.jpg",
+   "/uploads/rudel/fb4dde59-b4a5-ff8a-33a1-d5431aa6af98.jpg",
+   "/uploads/rudel/37a167b9-6a39-b71a-76da-8f1fb8d95bf2.jpg",
+   "/uploads/rudel/a6c05c2e-ff84-1732-3d06-6d5b165a50a7.jpg",
+   "/uploads/rudel/47a0c15d-f106-c5ed-1cc5-a2b6fd99d1f9.jpg",
+   "/uploads/rudel/b494242a-0447-fea9-7f3f-be98986a336c.jpg",
+   "/uploads/rudel/fde9e25e-f0fd-ca34-9e32-085422803bc7.jpg",
+   "/uploads/rudel/674f29bc-3e93-319e-71af-318f61d36ece.jpg"
+  ],
+  "weitere-rudelmitglieder/rauhaardackel/index.html": [
+   "/uploads/rudel/dackel/c3b66134-8be9-44da-b2ec-5831581ad930.jpg",
+   "/uploads/rudel/dackel/c3dfdb93-b889-2476-cad5-f1f983e4a5fa.jpg",
+   "/uploads/rudel/dackel/fd61d309-3527-cf91-0a33-c7926781635e.jpg",
+   "/uploads/rudel/dackel/a3dc82c1-2646-118b-233f-77d5553854ab.jpg",
+   "/uploads/rudel/dackel/2b8a30f9-cd18-0503-f5f2-47ee1990488a.jpg",
+   "/uploads/rudel/dackel/6eb1a73e-7f10-d59f-3150-09d7701a5c41.jpg",
+   "/uploads/rudel/dackel/e7431914-ddaa-cf72-1fdd-652bf8946dfd.jpg",
+   "/uploads/rudel/dackel/90917126-70ff-ccad-b72e-6be98c7b55b2.jpg",
+   "/uploads/rudel/dackel/53add332-b7ff-2b5f-d118-81e15aafe02d.jpg",
+   "/uploads/rudel/dackel/ed953edf-7ead-47d2-461e-1b57fad27b70.jpg",
+   "/uploads/rudel/dackel/46f3610e-2020-ce61-e3ac-116b8bdde077.jpg",
+   "/uploads/rudel/dackel/2197dacd-32de-56b0-80d3-880dee9c7648.jpg"
+  ],
+  "welpen/b-w/bailey/index.html": [
+   "/uploads/wuerfe/b-wurf/dsc_0244.jpg"
+  ],
+  "welpen/b-w/baja/index.html": [
+   "/uploads/wuerfe/b-wurf/dsc_0316.jpg"
+  ],
+  "welpen/b-w/baloo/index.html": [
+   "/uploads/wuerfe/b-wurf/dsc_0293.jpg"
+  ],
+  "welpen/b-w/bernd/index.html": [
+   "/uploads/wuerfe/b-wurf/dsc_279.jpg"
+  ],
+  "welpen/b-w/bronco/index.html": [
+   "/uploads/wuerfe/b-wurf/dsc_0263.jpg"
+  ],
+  "welpen/b-w/index.html": [
+   "/uploads/wuerfe/b-wurf/picsart_24-01-09_19-04-13-4391657.jpg",
+   "/uploads/wuerfe/b-wurf/7b159ba8-79c6-7dab-ad5a-7ac71cf00a58.jpg",
+   "/uploads/wuerfe/b-wurf/screenshot_20240110_190138_samsung-inter.jpg",
+   "/uploads/wuerfe/b-wurf/ea4dccb5-c05d-9454-4bf1-b4c79f2a7ad0.jpg"
+  ],
+  "welpen/index.html": [
+   "/uploads/seiten/img_20221126_101441_898.jpg"
+  ],
+  "welpen/wurf/aaron/index.html": [
+   "/uploads/wuerfe/a-wurf/7410335b-a58d-edcc-c02f-dd5ee1ee224c.jpg"
+  ],
+  "welpen/wurf/alba/index.html": [
+   "/uploads/wuerfe/a-wurf/4acc89a8-cb68-1177-81b0-721e82763e81.jpg"
+  ],
+  "welpen/wurf/alf/index.html": [
+   "/uploads/wuerfe/a-wurf/5851e3f5-5e1f-312c-21d6-39b2d3309190.jpg"
+  ],
+  "welpen/wurf/amani/index.html": [
+   "/uploads/wuerfe/a-wurf/17510b90-3a5a-6db2-f4ca-c1553d88984c.jpg"
+  ],
+  "welpen/wurf/aria/index.html": [
+   "/uploads/wuerfe/a-wurf/7da4049f-bb29-e1cb-df51-e300b491f17b.jpg"
+  ],
+  "welpen/wurf/ava/index.html": [
+   "/uploads/wuerfe/a-wurf/0d2903e8-894a-c69c-2cd1-dd87ff1cb2e0.jpg"
+  ],
+  "welpen/wurf/index.html": [
+   "/uploads/wuerfe/a-wurf/screenshot_20220213_101607_com.android.c.jpg",
+   "/uploads/wuerfe/a-wurf/picsart_22-06-12_20-05-03-144.jpg"
+  ],
+  "zuchtstaette/index.html": [
+   "/uploads/seiten/picsart_22-11-24_22-09-10-940.jpg",
+   "/uploads/seiten/photo_2023-06-06_08-16-00.jpg",
+   "/uploads/seiten/20221217_113107.jpg"
+  ]
+ }
+}

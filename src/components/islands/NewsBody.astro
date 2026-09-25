@@ -1,0 +1,27 @@
+---
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import DetailHead from './DetailHead.astro';
+import { formatDatum, type CmsNews } from '../../lib/data';
+interface Props { data?: CmsNews | null }
+const { data } = Astro.props;
+---
+{data && (
+	<article>
+		<DetailHead zurueck="/aktuelles" zurueckLabel="Alle Beiträge" />
+		<header class="container-page max-w-3xl py-8 text-center">
+			<time data-tina-field={tinaField(data, 'datum')} class="kicker" datetime={data.datum}>{formatDatum(data.datum, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
+			<h1 data-tina-field={tinaField(data, 'titel')} class="mt-5 text-4xl font-extrabold sm:text-5xl">{data.titel}</h1>
+		</header>
+		{data.bild && (
+			<div class="container-page max-w-4xl" data-tina-field={tinaField(data, 'bild')}>
+				<a href={data.bild} data-lightbox="news"><img src={data.bild} alt="" class="max-h-[34rem] w-full rounded-card object-cover shadow-xl" /></a>
+			</div>
+		)}
+		{data.body && (
+			<div data-tina-field={tinaField(data, 'body')} class="container-page max-w-3xl py-12">
+				<div class="prose prose-lg prose-luchberg"><TinaMarkdown content={data.body} /></div>
+			</div>
+		)}
+	</article>
+)}

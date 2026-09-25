@@ -1,0 +1,58 @@
+---
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import Galerie from '../Galerie.astro';
+import DetailHead from './DetailHead.astro';
+import { formatDatum, statusLabel, type CmsWurf } from '../../lib/data';
+interface Props { data?: CmsWurf | null }
+const { data } = Astro.props;
+const welpen = (data?.welpen ?? []).filter((w) => w !== null);
+---
+{data && (
+	<>
+		<DetailHead zurueck="/wuerfe" zurueckLabel="Alle Würfe" />
+		<section class="container-page py-8 lg:py-12">
+			<div class="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+				<div>
+					<p class="kicker mb-5">{statusLabel[data.status ?? 'vergangen']}</p>
+					<h1 data-tina-field={tinaField(data, 'titel')} class="text-5xl font-extrabold sm:text-7xl"><span class="grad-text">{data.titel}</span> vom Luchberg</h1>
+					<dl class="mt-8 grid gap-4 sm:grid-cols-2">
+						{data.mutter && <div class="card p-5" data-tina-field={tinaField(data, 'mutter')}><dt class="text-sm font-bold text-accent-ink">Mutter</dt><dd class="mt-1 font-display text-lg font-bold">{data.mutterLink ? <a href={data.mutterLink} target="_blank" rel="noopener" class="hover:text-accent-ink">{data.mutter} ↗</a> : data.mutter}</dd></div>}
+						{data.vater && <div class="card p-5" data-tina-field={tinaField(data, 'vater')}><dt class="text-sm font-bold text-primary-ink">Vater</dt><dd class="mt-1 font-display text-lg font-bold">{data.vaterLink ? <a href={data.vaterLink} target="_blank" rel="noopener" class="hover:text-accent-ink">{data.vater} ↗</a> : data.vater}</dd></div>}
+						{data.wurfdatum && <div class="card p-5" data-tina-field={tinaField(data, 'wurfdatum')}><dt class="text-sm font-bold text-muted">Wurftag</dt><dd class="mt-1 font-display text-lg font-bold">{formatDatum(data.wurfdatum)}</dd></div>}
+					</dl>
+					{data.body && <div data-tina-field={tinaField(data, 'body')} class="prose prose-lg prose-luchberg mt-8"><TinaMarkdown content={data.body} /></div>}
+				</div>
+				{data.bild && (
+					<div class="relative self-start" data-tina-field={tinaField(data, 'bild')}>
+						<div class="absolute -inset-3 rotate-2 rounded-[calc(var(--radius)+0.8rem)] grad-bg opacity-85"></div>
+						<img src={data.bild} alt={data.titel} class="relative w-full rounded-card border-4 border-bg object-cover shadow-2xl" />
+					</div>
+				)}
+			</div>
+		</section>
+		{welpen.length > 0 && (
+			<section class="container-page py-12" data-tina-field={tinaField(data, 'welpen')}>
+				<h2 class="headline-line mb-8 text-3xl font-extrabold">Die Welpen</h2>
+				<ul class="grid grid-cols-[repeat(auto-fill,minmax(9.5rem,1fr))] gap-5">
+					{welpen.map((w) => (
+						<li data-tina-field={tinaField(w)} class="card card-hover">
+							{w.bild && <a href={w.bild} data-lightbox="welpen" data-caption={w.name ?? ''}><img src={w.bild} alt={w.name ?? ''} loading="lazy" class="aspect-square w-full object-cover" /></a>}
+							<div class="p-4">
+								<p class="font-display text-lg font-bold leading-tight">{w.name}</p>
+								<p class="mt-1 text-sm text-muted">{w.geschlecht === 'ruede' ? 'Rüde' : w.geschlecht === 'huendin' ? 'Hündin' : ''}{w.notiz && ` · ${w.notiz}`}</p>
+								{w.link && <a href={w.link} target="_blank" rel="noopener" class="mt-2 inline-block text-sm font-bold text-primary-ink">Ahnentafel ↗</a>}
+							</div>
+						</li>
+					))}
+				</ul>
+			</section>
+		)}
+		{(data.galerie ?? []).length > 0 && (
+			<section class="container-page py-12" data-tina-field={tinaField(data, 'galerie')}>
+				<h2 class="headline-line mb-8 text-3xl font-extrabold">{data.titel} – Impressionen</h2>
+				<Galerie items={data.galerie ?? []} gruppe="wurf-galerie" alt={data.titel} />
+			</section>
+		)}
+	</>
+)}

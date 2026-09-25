@@ -1,0 +1,222 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/bricolage-grotesque';
+@plugin '@tailwindcss/typography';
+
+/* ------------------------------------------------------------------
+   Farbschemata
+   Das aktive Schema steht als data-farbe auf <html>
+   (Standard aus Tina → Einstellungen → Farbschema).
+   ------------------------------------------------------------------ */
+:root,
+[data-farbe='sonnenuntergang'] {
+	--bg: #fffaf5;
+	--surface: #fff1e6;
+	--surface-2: #ffe4d2;
+	--fg: #1f1a17;
+	--muted: #6b5d54;
+	--border: #f1dccd;
+	--primary: #ea580c; /* Orange */
+	--primary-ink: #b93f06; /* Orange für Text auf hellem Grund */
+	--accent: #db2777; /* Pink */
+	--accent-ink: #be185d;
+	--grad: linear-gradient(120deg, #f97316 0%, #ef4444 45%, #ec4899 100%);
+	--grad-soft: linear-gradient(120deg, #ffedd5 0%, #fce7f3 100%);
+	--glow: 0 18px 50px -18px rgb(236 72 153 / 0.45);
+	--dark: #1c1714;
+	--on-dark: #fff7ef;
+	--radius: 1.25rem;
+}
+
+[data-farbe='neon'] {
+	--bg: #ffffff;
+	--surface: #f8f5f3;
+	--surface-2: #f0ebe7;
+	--fg: #121212;
+	--muted: #5c5c5c;
+	--border: #ececec;
+	--primary: #ff5c00;
+	--primary-ink: #c2410c;
+	--accent: #ff1f8e;
+	--accent-ink: #c8006a;
+	--grad: linear-gradient(120deg, #ff7a00 0%, #ff1f8e 100%);
+	--grad-soft: linear-gradient(120deg, #fff1e6 0%, #ffe6f3 100%);
+	--glow: 0 0 0 2px rgb(255 31 142 / 0.15), 0 14px 44px -12px rgb(255 31 142 / 0.6);
+	--dark: #0f0f10;
+	--on-dark: #ffffff;
+	--radius: 0.9rem;
+}
+
+[data-farbe='pfirsich'] {
+	--bg: #fffbf8;
+	--surface: #fff0e8;
+	--surface-2: #ffe2d4;
+	--fg: #2b211c;
+	--muted: #75655c;
+	--border: #f3e1d6;
+	--primary: #e76f3c;
+	--primary-ink: #b0481c;
+	--accent: #e36a9a;
+	--accent-ink: #b33d6c;
+	--grad: linear-gradient(120deg, #f4a261 0%, #e76f51 50%, #e8819f 100%);
+	--grad-soft: linear-gradient(120deg, #fff1e7 0%, #fdeaf1 100%);
+	--glow: 0 18px 50px -20px rgb(231 111 60 / 0.4);
+	--dark: #2b211c;
+	--on-dark: #fff8f2;
+	--radius: 1.75rem;
+}
+
+@theme inline {
+	--font-sans: 'Inter Variable', system-ui, sans-serif;
+	--font-display: 'Bricolage Grotesque Variable', 'Inter Variable', system-ui, sans-serif;
+	--color-bg: var(--bg);
+	--color-surface: var(--surface);
+	--color-surface-2: var(--surface-2);
+	--color-fg: var(--fg);
+	--color-muted: var(--muted);
+	--color-border: var(--border);
+	--color-primary: var(--primary);
+	--color-primary-ink: var(--primary-ink);
+	--color-accent: var(--accent);
+	--color-accent-ink: var(--accent-ink);
+	--color-dark: var(--dark);
+	--color-on-dark: var(--on-dark);
+	--radius-card: var(--radius);
+}
+
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+	body {
+		@apply bg-bg text-fg font-sans antialiased;
+		font-size: 1.0625rem;
+	}
+	h1, h2, h3, h4 {
+		@apply font-display tracking-tight text-balance;
+		font-variation-settings: 'wdth' 90;
+	}
+	::selection {
+		background: var(--accent);
+		color: white;
+	}
+	:focus-visible {
+		outline: 3px solid var(--accent);
+		outline-offset: 3px;
+		border-radius: 6px;
+	}
+}
+
+@utility container-page {
+	@apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+}
+@utility grad-text {
+	background: var(--grad);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+@utility grad-bg {
+	background: var(--grad);
+}
+@utility grad-soft {
+	background: var(--grad-soft);
+}
+@utility btn {
+	@apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[1.0625rem] font-bold transition duration-200;
+}
+@utility btn-primary {
+	@apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[1.0625rem] font-bold text-white transition duration-200;
+	background: var(--grad);
+	box-shadow: var(--glow);
+	&:hover {
+		transform: translateY(-2px);
+		filter: saturate(1.15);
+	}
+}
+@utility btn-secondary {
+	@apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-fg/85 px-6 py-3 text-[1.0625rem] font-bold text-fg transition duration-200 hover:bg-fg hover:text-bg;
+}
+@utility card {
+	@apply overflow-hidden rounded-card border border-border bg-bg transition duration-300;
+}
+@utility card-hover {
+	&:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--glow);
+		border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+	}
+}
+@utility badge {
+	@apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold tracking-wide uppercase;
+}
+
+@layer components {
+	.kicker {
+		@apply inline-flex items-center gap-2 rounded-full border border-border bg-bg/70 px-3 py-1 text-sm font-semibold text-accent-ink;
+	}
+	.kicker::before {
+		content: '';
+		@apply size-2 rounded-full;
+		background: var(--grad);
+		box-shadow: 0 0 10px var(--accent);
+	}
+	/* kleine Neon-Linie als Detail unter Überschriften */
+	.headline-line {
+		@apply relative inline-block pb-3;
+	}
+	.headline-line::after {
+		content: '';
+		@apply absolute bottom-0 left-0 h-1.5 w-16 rounded-full;
+		background: var(--grad);
+		box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 60%, transparent);
+	}
+	.text-center .headline-line::after,
+	.headline-line.center::after {
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	/* Nutzung: class="prose prose-lg prose-luchberg" */
+	.prose-luchberg {
+		max-width: none;
+		--tw-prose-body: var(--fg);
+		--tw-prose-headings: var(--fg);
+		--tw-prose-links: var(--primary-ink);
+		--tw-prose-bold: var(--fg);
+		--tw-prose-bullets: var(--accent);
+		--tw-prose-quotes: var(--fg);
+		--tw-prose-quote-borders: var(--accent);
+	}
+	.prose-luchberg a {
+		@apply font-semibold decoration-2 underline-offset-4;
+		text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent);
+	}
+}
+
+/* Neon: kräftigere Leucht-Details */
+[data-farbe='neon'] .grad-text {
+	filter: drop-shadow(0 0 18px rgb(255 31 142 / 0.35));
+}
+[data-farbe='neon'] .kicker {
+	border-color: rgb(255 31 142 / 0.45);
+	box-shadow: 0 0 16px rgb(255 31 142 / 0.25);
+}
+[data-farbe='neon'] .headline-line::after {
+	height: 0.3rem;
+	box-shadow: 0 0 10px #ff1f8e, 0 0 26px #ff7a00;
+}
+[data-farbe='neon'] .card {
+	border-color: rgb(255 31 142 / 0.22);
+}
+[data-farbe='neon'] header .grad-bg,
+[data-farbe='neon'] footer .grad-bg {
+	box-shadow: 0 0 18px #ff1f8e, 0 0 40px #ff7a00;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		transition: none !important;
+		animation: none !important;
+		scroll-behavior: auto !important;
+	}
+}

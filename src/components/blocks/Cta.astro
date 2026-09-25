@@ -1,0 +1,22 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { BlockOf } from '../../lib/data';
+interface Props { data: BlockOf<'PageBlocksCta'> }
+const { data } = Astro.props;
+const buttons = (data.buttons ?? []).filter((b) => b !== null);
+---
+<section class="py-14 sm:py-20">
+	<div class="container-page">
+		<div class="relative overflow-hidden rounded-[calc(var(--radius)+1rem)] bg-dark px-6 py-14 text-center text-on-dark sm:px-12">
+			<div class="pointer-events-none absolute -left-20 -top-24 size-72 rounded-full opacity-50 blur-3xl grad-bg"></div>
+			<div class="pointer-events-none absolute -bottom-24 -right-20 size-72 rounded-full opacity-40 blur-3xl grad-bg"></div>
+			<div class="relative mx-auto max-w-2xl">
+				{data.titel && <h2 data-tina-field={tinaField(data, 'titel')} class="text-3xl font-extrabold sm:text-5xl">{data.titel}</h2>}
+				{data.text && <p data-tina-field={tinaField(data, 'text')} class="mt-4 text-lg text-on-dark/80">{data.text}</p>}
+				<div class="mt-8 flex flex-wrap justify-center gap-3">
+					{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class={b.stil === 'sekundaer' ? 'btn border-2 border-on-dark/70 hover:bg-on-dark hover:text-dark' : 'btn-primary'}>{b.label}</a>)}
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

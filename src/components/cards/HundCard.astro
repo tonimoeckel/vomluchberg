@@ -1,0 +1,29 @@
+---
+import { formatDatum, type HundListItem } from '../../lib/data';
+interface Props { hund: HundListItem }
+const { hund } = Astro.props;
+const erinnerung = hund.kategorie === 'erinnerung';
+---
+<a href={`/hunde/${hund._sys.filename}`} class="card card-hover group block h-full">
+	<div class="relative aspect-[4/5] overflow-hidden bg-surface">
+		{hund.bild && <img src={hund.bild} alt={hund.name} loading="lazy" decoding="async"
+			class:list={['size-full object-cover transition duration-700 group-hover:scale-105', erinnerung && 'grayscale-[35%]']} />}
+		<div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
+		{hund.geschlecht && hund.kategorie !== 'rudel' && (
+			<span class:list={['badge absolute left-3 top-3 text-white shadow', hund.geschlecht === 'ruede' ? 'bg-primary-ink' : 'bg-accent-ink']}>
+				{hund.geschlecht === 'ruede' ? 'Rüde' : 'Hündin'}
+			</span>
+		)}
+		<div class="absolute bottom-0 left-0 p-5 text-white">
+			<p class="font-display text-3xl font-extrabold drop-shadow">{hund.rufname || hund.name}</p>
+			{hund.rufname && hund.rufname !== hund.name && <p class="text-sm text-white/85">{hund.name}</p>}
+		</div>
+	</div>
+	<div class="flex items-center justify-between gap-3 px-5 py-4 text-sm">
+		<span class="text-muted">
+			{hund.geboren && <>WT {formatDatum(hund.geboren)}</>}
+			{hund.verstorben && <> – {hund.verstorben}</>}
+		</span>
+		<span class="font-bold text-primary-ink transition group-hover:translate-x-1">Mehr →</span>
+	</div>
+</a>

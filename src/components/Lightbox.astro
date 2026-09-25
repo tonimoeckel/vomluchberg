@@ -1,0 +1,40 @@
+---
+/** Einfache Lightbox für alle Bilder mit data-lightbox="gruppe". */
+import Icon from './ui/Icon.astro';
+---
+<dialog id="lightbox" class="m-auto max-h-none max-w-none bg-transparent p-0 backdrop:bg-black/85" aria-label="Bildansicht">
+	<figure class="relative flex h-dvh w-dvw items-center justify-center p-4 sm:p-10">
+		<img id="lightbox-img" alt="" class="max-h-full max-w-full rounded-xl object-contain shadow-2xl" />
+		<figcaption id="lightbox-cap" class="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-4 py-1.5 text-sm text-white empty:hidden"></figcaption>
+	</figure>
+	<button type="button" data-lb="close" class="absolute right-4 top-4 flex size-12 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/30" aria-label="Schließen"><Icon name="x" class="size-7" /></button>
+	<button type="button" data-lb="prev" class="absolute left-3 top-1/2 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/30" aria-label="Vorheriges Bild"><Icon name="chevron-left" class="size-7" /></button>
+	<button type="button" data-lb="next" class="absolute right-3 top-1/2 flex size-12 -translate-y-1/2 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/30" aria-label="Nächstes Bild"><Icon name="chevron-right" class="size-7" /></button>
+</dialog>
+<script is:inline>
+	(() => {
+		const dlg = document.getElementById('lightbox');
+		const img = document.getElementById('lightbox-img');
+		const cap = document.getElementById('lightbox-cap');
+		let list = [], i = 0;
+		const show = () => { const a = list[i]; img.src = a.href; img.alt = a.dataset.caption || ''; cap.textContent = a.dataset.caption || ''; };
+		document.addEventListener('click', (e) => {
+			const a = e.target.closest('a[data-lightbox]');
+			if (!a || e.metaKey || e.ctrlKey) return;
+			e.preventDefault();
+			list = [...document.querySelectorAll(`a[data-lightbox="${a.dataset.lightbox}"]`)];
+			i = list.indexOf(a); show(); dlg.showModal();
+		});
+		dlg.addEventListener('click', (e) => {
+			const b = e.target.closest('[data-lb]');
+			if (b?.dataset.lb === 'close' || e.target === dlg || e.target.tagName === 'FIGURE') dlg.close();
+			if (b?.dataset.lb === 'prev') { i = (i - 1 + list.length) % list.length; show(); }
+			if (b?.dataset.lb === 'next') { i = (i + 1) % list.length; show(); }
+		});
+		document.addEventListener('keydown', (e) => {
+			if (!dlg.open) return;
+			if (e.key === 'ArrowLeft') { i = (i - 1 + list.length) % list.length; show(); }
+			if (e.key === 'ArrowRight') { i = (i + 1) % list.length; show(); }
+		});
+	})();
+</script>

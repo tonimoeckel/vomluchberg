@@ -1,0 +1,25 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Icon from '../ui/Icon.astro';
+import SectionTitle from './SectionTitle.astro';
+import type { BlockOf } from '../../lib/data';
+interface Props { data: BlockOf<'PageBlocksHighlights'> }
+const { data } = Astro.props;
+const items = (data.items ?? []).filter((i) => i !== null);
+---
+<section class="py-14 sm:py-20">
+	<div class="container-page">
+		<SectionTitle title={data.ueberschrift} field={tinaField(data, 'ueberschrift')} center />
+		<ul class:list={['grid gap-5 sm:grid-cols-2', items.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-4']}>
+			{items.map((item) => (
+				<li data-tina-field={tinaField(item)} class="card card-hover relative p-7">
+					<span class="mb-5 flex size-14 items-center justify-center rounded-2xl text-white grad-bg shadow-[var(--glow)]">
+						<Icon name={item.icon || 'paw'} class="size-7" />
+					</span>
+					<h3 class="font-display text-xl font-bold">{item.titel}</h3>
+					{item.text && <p class="mt-2 text-muted">{item.text}</p>}
+				</li>
+			))}
+		</ul>
+	</div>
+</section>

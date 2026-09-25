@@ -1,0 +1,60 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Icon from './ui/Icon.astro';
+import type { CmsConfig } from '../lib/data';
+
+interface Props { config?: CmsConfig | null }
+const { config } = Astro.props;
+const k = config?.kontakt;
+const s = config?.social;
+const nav = (config?.nav ?? []).filter((n) => n !== null);
+const jahr = new Date().getFullYear();
+---
+<footer class="relative mt-24 bg-dark text-on-dark">
+	<div class="h-1.5 w-full grad-bg shadow-[0_0_24px_var(--accent)]"></div>
+	<div class="container-page grid gap-12 py-14 md:grid-cols-[1.3fr_1fr_1fr]">
+		<div>
+			<img src="/uploads/seiten/logo-hell.png" alt="Logo Rottweiler vom Luchberg" width="160" height="178" class="mb-5 h-36 w-auto opacity-95" loading="lazy" />
+			{s?.verband && (
+				<p class="text-sm text-on-dark/75" data-tina-field={tinaField(s, 'verband')}>
+					{s.verbandLink ? <a href={s.verbandLink} class="underline decoration-accent underline-offset-4 hover:text-white" target="_blank" rel="noopener">{s.verband}</a> : s.verband}
+				</p>
+			)}
+		</div>
+		{k && (
+			<address class="not-italic" data-tina-field={tinaField(config!, 'kontakt')}>
+				<h2 class="mb-4 font-display text-lg font-bold">Kontakt</h2>
+				<p class="leading-relaxed text-on-dark/85">
+					{k.zwinger}<br />
+					{k.zuechterin}<br />
+					{k.strasse}<br />
+					{k.ort}
+				</p>
+				<ul class="mt-4 space-y-2">
+					{k.telefon && <li><a class="inline-flex items-center gap-2 hover:text-white" href={`tel:${k.telefon.replace(/[^+\d]/g, '')}`}><Icon name="phone" class="size-4 text-primary" />{k.telefon}</a></li>}
+					{k.email && <li><a class="inline-flex items-center gap-2 break-all hover:text-white" href={`mailto:${k.email}`}><Icon name="mail" class="size-4 text-primary" />{k.email}</a></li>}
+				</ul>
+			</address>
+		)}
+		<div>
+			<h2 class="mb-4 font-display text-lg font-bold">Folgt uns</h2>
+			<ul class="flex gap-3">
+				{s?.facebook && <li><a href={s.facebook} target="_blank" rel="noopener" aria-label="Facebook" class="flex size-11 items-center justify-center rounded-full border border-on-dark/20 transition hover:border-transparent hover:grad-bg"><Icon name="brand-facebook" class="size-5" /></a></li>}
+				{s?.instagram && <li><a href={s.instagram} target="_blank" rel="noopener" aria-label="Instagram" class="flex size-11 items-center justify-center rounded-full border border-on-dark/20 transition hover:border-transparent hover:grad-bg"><Icon name="brand-instagram" class="size-5" /></a></li>}
+				{s?.workingDog && <li><a href={s.workingDog} target="_blank" rel="noopener" aria-label="Zuchtstätte auf working-dog.com" class="flex size-11 items-center justify-center rounded-full border border-on-dark/20 transition hover:border-transparent hover:grad-bg"><Icon name="dog" class="size-5" /></a></li>}
+			</ul>
+			<ul class="mt-8 grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-on-dark/75">
+				{nav.map((n) => <li><a class="hover:text-white" href={n.link}>{n.titel}</a></li>)}
+			</ul>
+		</div>
+	</div>
+	<div class="border-t border-on-dark/10">
+		<div class="container-page flex flex-col gap-3 py-6 text-sm text-on-dark/60 sm:flex-row sm:items-center sm:justify-between">
+			<p>© {jahr} {config?.website?.name}</p>
+			<ul class="flex gap-5">
+				<li><a class="hover:text-white" href="/impressum">Impressum</a></li>
+				<li><a class="hover:text-white" href="/datenschutz">Datenschutz</a></li>
+			</ul>
+		</div>
+	</div>
+</footer>

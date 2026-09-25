@@ -1,0 +1,36 @@
+---
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { BlockOf } from '../../lib/data';
+interface Props { data: BlockOf<'PageBlocksText'> }
+const { data } = Astro.props;
+const links = data.bildPosition === 'links';
+const istLogo = data.bild?.includes('/logo');
+---
+<section class:list={['py-14 sm:py-20', data.hervorheben && 'bg-surface']}>
+	<div class:list={['container-page grid items-start gap-10', data.bild && 'lg:grid-cols-[1.25fr_1fr] lg:gap-16']}>
+		<div class:list={[links && data.bild && 'lg:order-2']}>
+			{data.ueberschrift && <h2 data-tina-field={tinaField(data, 'ueberschrift')} class="headline-line mb-8 text-3xl font-extrabold sm:text-4xl">{data.ueberschrift}</h2>}
+			{data.inhalt && (
+				<div data-tina-field={tinaField(data, 'inhalt')} class="prose prose-lg prose-luchberg">
+					<TinaMarkdown content={data.inhalt} />
+				</div>
+			)}
+		</div>
+		{data.bild && (
+			<figure class:list={['relative lg:sticky lg:top-28', links && 'lg:order-1']} data-tina-field={tinaField(data, 'bild')}>
+				{istLogo ? (
+					<img src={data.bild} alt="Logo Rottweiler vom Luchberg" loading="lazy" class="mx-auto w-full max-w-sm" />
+				) : (
+					<div class="relative">
+						<div class:list={['absolute -inset-2.5 rounded-[calc(var(--radius)+0.6rem)] grad-bg opacity-80', links ? '-rotate-2' : 'rotate-2']}></div>
+						<a href={data.bild} data-lightbox="text" data-caption={data.bildunterschrift ?? ''} class="relative block">
+							<img src={data.bild} alt={data.bildunterschrift ?? ''} loading="lazy" decoding="async" class="w-full rounded-card border-4 border-bg object-cover shadow-xl" />
+						</a>
+					</div>
+				)}
+				{data.bildunterschrift && <figcaption data-tina-field={tinaField(data, 'bildunterschrift')} class="relative mt-5 text-center text-sm font-medium text-muted">{data.bildunterschrift}</figcaption>}
+			</figure>
+		)}
+	</div>
+</section>

@@ -1,0 +1,10 @@
+---
+interface Props { title?: string | null; text?: string | null; center?: boolean; field?: string; textField?: string }
+const { title, text, center = false, field, textField } = Astro.props;
+---
+{(title || text) && (
+	<div class:list={['mb-10 max-w-2xl', center && 'mx-auto text-center']}>
+		{title && <h2 data-tina-field={field} class:list={['headline-line text-3xl font-extrabold sm:text-4xl', center && 'center']}>{title}</h2>}
+		{text && <p data-tina-field={textField} class="mt-4 text-lg text-muted">{text}</p>}
+	</div>
+)}

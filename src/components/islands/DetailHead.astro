@@ -1,0 +1,7 @@
+---
+interface Props { zurueck: string; zurueckLabel: string }
+const { zurueck, zurueckLabel } = Astro.props;
+---
+<div class="container-page pt-8">
+	<a href={zurueck} class="inline-flex items-center gap-1 text-sm font-semibold text-muted hover:text-accent-ink">← {zurueckLabel}</a>
+</div>

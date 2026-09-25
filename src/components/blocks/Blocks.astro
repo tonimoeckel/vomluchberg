@@ -1,0 +1,34 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+import Hero from './Hero.astro';
+import Text from './Text.astro';
+import Highlights from './Highlights.astro';
+import GalerieBlock from './GalerieBlock.astro';
+import HundeBlock from './HundeBlock.astro';
+import WuerfeBlock from './WuerfeBlock.astro';
+import NewsBlock from './NewsBlock.astro';
+import Cta from './Cta.astro';
+import Kontakt from './Kontakt.astro';
+import type { CmsPage, CmsConfig } from '../../lib/data';
+
+interface Props { data?: CmsPage | null; config?: CmsConfig | null }
+const { data } = Astro.props;
+const blocks = (data?.blocks ?? []).filter((b) => b !== null);
+---
+{blocks.map((block) => (
+	<div data-tina-field={tinaField(block)}>
+		{(() => {
+			switch (block.__typename) {
+				case 'PageBlocksHero': return <Hero data={block} />;
+				case 'PageBlocksText': return <Text data={block} />;
+				case 'PageBlocksHighlights': return <Highlights data={block} />;
+				case 'PageBlocksGalerie': return <GalerieBlock data={block} />;
+				case 'PageBlocksHunde': return <HundeBlock data={block} />;
+				case 'PageBlocksWuerfe': return <WuerfeBlock data={block} />;
+				case 'PageBlocksNews': return <NewsBlock data={block} />;
+				case 'PageBlocksCta': return <Cta data={block} />;
+				case 'PageBlocksKontakt': return <Kontakt data={block} />;
+			}
+		})()}
+	</div>
+))}

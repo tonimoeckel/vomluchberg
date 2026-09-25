@@ -1,0 +1,20 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface Item { bild?: string | null; beschreibung?: string | null }
+interface Props { items: (Item | null)[]; gruppe: string; alt?: string }
+const { items, gruppe, alt = '' } = Astro.props;
+const bilder = items.filter((b): b is Item => !!b?.bild);
+---
+{bilder.length > 0 && (
+	<ul class="columns-2 gap-3 sm:columns-3 lg:columns-4 [&>li]:mb-3">
+		{bilder.map((b) => (
+			<li class="break-inside-avoid" data-tina-field={tinaField(b as any)}>
+				<a href={b.bild} data-lightbox={gruppe} data-caption={b.beschreibung ?? ''} class="group block overflow-hidden rounded-xl">
+					<img src={b.bild} alt={b.beschreibung || alt} loading="lazy" decoding="async"
+						class="w-full transition duration-500 group-hover:scale-105" />
+				</a>
+			</li>
+		))}
+	</ul>
+)}
