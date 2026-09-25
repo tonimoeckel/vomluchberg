@@ -14,7 +14,10 @@ const isActive = (link: string) => (link === '/' ? path === '/' : path === link 
 	<div class="container-page flex h-18 items-center justify-between gap-4 py-2">
 		<a href="/" class="group flex min-w-0 items-center gap-3" data-tina-field={config?.website ? tinaField(config.website, 'name') : undefined}>
 			{config?.website?.logo && (
-				<img src={config.website.logo} alt="" width="48" height="58" class="h-12 w-auto shrink-0 transition group-hover:-rotate-6" data-tina-field={tinaField(config.website, 'logo')} />
+				<picture class="shrink-0">
+					{config.website.logoDunkel && <source srcset={config.website.logoDunkel} media="(prefers-color-scheme: dark)" />}
+					<img src={config.website.logo} alt="" width="48" height="58" class="h-12 w-auto transition group-hover:-rotate-6" data-tina-field={tinaField(config.website, 'logo')} />
+				</picture>
 			)}
 			<span class="min-w-0 leading-tight">
 				<span class="block truncate font-display text-lg font-extrabold sm:text-xl">{config?.website?.name}</span>

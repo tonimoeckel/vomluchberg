@@ -66,6 +66,65 @@
 	--radius: 1.75rem;
 }
 
+/* ------------------------------------------------------------------
+   Dark mode: follows the system setting (prefers-color-scheme).
+   Same selector order as above, so each scheme overrides the default.
+   ------------------------------------------------------------------ */
+:root {
+	color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root,
+	[data-farbe='sonnenuntergang'] {
+		--bg: #16110e;
+		--surface: #211914;
+		--surface-2: #2c211a;
+		--fg: #f7ede4;
+		--muted: #b5a497;
+		--border: #3a2c23;
+		--primary: #f97316;
+		--primary-ink: #fb923c; /* orange for text on dark backgrounds */
+		--accent: #ec4899;
+		--accent-ink: #f472b6;
+		--grad-soft: linear-gradient(120deg, #2e1a0f 0%, #2e1424 100%);
+		--glow: 0 18px 50px -18px rgb(236 72 153 / 0.6);
+		--dark: #0d0a08;
+	}
+
+	[data-farbe='neon'] {
+		--bg: #0e0e10;
+		--surface: #18171b;
+		--surface-2: #222026;
+		--fg: #f5f5f5;
+		--muted: #a8a8a8;
+		--border: #2c2a31;
+		--primary: #ff7a1a;
+		--primary-ink: #ff9a4d;
+		--accent: #ff1f8e;
+		--accent-ink: #ff6bb5;
+		--grad-soft: linear-gradient(120deg, #2b1506 0%, #2b0a1d 100%);
+		--glow: 0 0 0 2px rgb(255 31 142 / 0.25), 0 14px 44px -12px rgb(255 31 142 / 0.75);
+		--dark: #050506;
+	}
+
+	[data-farbe='pfirsich'] {
+		--bg: #1a1512;
+		--surface: #241c18;
+		--surface-2: #30251f;
+		--fg: #f8ece4;
+		--muted: #baa89d;
+		--border: #3d2f27;
+		--primary: #f4a261;
+		--primary-ink: #f6b183;
+		--accent: #e8819f;
+		--accent-ink: #f0a3ba;
+		--grad-soft: linear-gradient(120deg, #2e1d13 0%, #2e1921 100%);
+		--glow: 0 18px 50px -20px rgb(244 162 97 / 0.45);
+		--dark: #100c0a;
+	}
+}
+
 @theme inline {
 	--font-sans: 'Inter Variable', system-ui, sans-serif;
 	--font-display: 'Bricolage Grotesque Variable', 'Inter Variable', system-ui, sans-serif;
@@ -176,21 +235,30 @@
 		left: 50%;
 		transform: translateX(-50%);
 	}
-	/* Nutzung: class="prose prose-lg prose-luchberg" */
-	.prose-luchberg {
-		max-width: none;
-		--tw-prose-body: var(--fg);
-		--tw-prose-headings: var(--fg);
-		--tw-prose-links: var(--primary-ink);
-		--tw-prose-bold: var(--fg);
-		--tw-prose-bullets: var(--accent);
-		--tw-prose-quotes: var(--fg);
-		--tw-prose-quote-borders: var(--accent);
-	}
-	.prose-luchberg a {
-		@apply font-semibold decoration-2 underline-offset-4;
-		text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent);
-	}
+}
+
+/* Nutzung: class="prose prose-lg prose-luchberg"
+   Unlayered on purpose: the typography plugin's .prose sits in the utilities
+   layer and would otherwise override these variables. */
+.prose-luchberg {
+	max-width: none;
+	--tw-prose-body: var(--fg);
+	--tw-prose-headings: var(--fg);
+	--tw-prose-links: var(--primary-ink);
+	--tw-prose-bold: var(--fg);
+	--tw-prose-bullets: var(--accent);
+	--tw-prose-quotes: var(--fg);
+	--tw-prose-quote-borders: var(--accent);
+	--tw-prose-counters: var(--muted);
+	--tw-prose-captions: var(--muted);
+	--tw-prose-code: var(--fg);
+	--tw-prose-hr: var(--border);
+	--tw-prose-th-borders: var(--border);
+	--tw-prose-td-borders: var(--border);
+}
+.prose-luchberg a {
+	@apply font-semibold decoration-2 underline-offset-4;
+	text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent);
 }
 
 /* Neon: kräftigere Leucht-Details */

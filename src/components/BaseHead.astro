@@ -19,7 +19,8 @@ const ogImage = image ? new URL(image, Astro.site ?? Astro.url) : undefined;
 <link rel="canonical" href={canonicalURL} />
 <title>{title}</title>
 <meta name="description" content={description} />
-<meta name="theme-color" content="#fffaf5" />
+<meta name="theme-color" content="#fffaf5" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#16110e" media="(prefers-color-scheme: dark)" />
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="de_DE" />
 <meta property="og:url" content={canonicalURL} />

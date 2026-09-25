@@ -14,6 +14,7 @@ export const ConfigCollection: Collection = {
         { type: 'string', name: 'untertitel', label: 'Untertitel (unter dem Namen)' },
         { type: 'string', name: 'beschreibung', label: 'Standard-Beschreibung für Google', ui: { component: 'textarea' } },
         { type: 'image', name: 'logo', label: 'Logo' },
+        { type: 'image', name: 'logoDunkel', label: 'Logo für die dunkle Ansicht', description: 'Helle Version des Logos. Wird gezeigt, wenn das Handy oder der Computer auf „Dunkel“ steht.' },
         { type: 'image', name: 'teilenBild', label: 'Bild für geteilte Links (Facebook, WhatsApp)' },
       ],
     },
