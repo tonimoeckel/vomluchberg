@@ -4,19 +4,15 @@
  * Sichtbar, wenn PUBLIC_FARBVORSCHAU=true gesetzt ist oder die URL ?farbe=… enthält.
  * Die endgültige Wahl stellt Karo in Tina unter „Einstellungen → Farbschema“ ein.
  */
+import { FARBSCHEMATA } from '../lib/farbschema';
 interface Props { force?: boolean }
 const { force = false } = Astro.props;
-const schemata = [
-	{ id: 'sonnenuntergang', label: 'Sonnenuntergang', swatch: 'linear-gradient(120deg,#f97316,#ef4444,#ec4899)' },
-	{ id: 'neon', label: 'Neon', swatch: 'linear-gradient(120deg,#ff7a00,#ff1f8e)' },
-	{ id: 'pfirsich', label: 'Pfirsich', swatch: 'linear-gradient(120deg,#f4a261,#e76f51,#e8819f)' },
-];
 ---
 <div id="farbvorschau" hidden={!force} data-force={force ? '1' : undefined}
 	class="fixed bottom-3 right-3 z-50 rounded-2xl border border-border bg-bg/95 p-2 shadow-2xl backdrop-blur">
 	<p class="mb-1 px-1 text-[0.65rem] font-bold uppercase tracking-wide text-muted">Farbvorschau</p>
 	<div class="flex gap-2">
-		{schemata.map((s) => (
+		{FARBSCHEMATA.map((s) => (
 			<button type="button" data-farbe-wahl={s.id} title={s.label}
 				class="group flex flex-col items-center gap-0.5 rounded-xl px-1.5 py-1 text-[0.65rem] font-semibold hover:bg-surface">
 				<span class="block size-6 rounded-full ring-2 ring-transparent ring-offset-2 ring-offset-bg group-aria-pressed:ring-fg" style={`background:${s.swatch}`}></span>
@@ -37,8 +33,13 @@ const schemata = [
 		box.addEventListener('click', (e) => {
 			const b = e.target.closest('[data-farbe-wahl]');
 			if (!b) return;
-			document.documentElement.dataset.farbe = b.dataset.farbeWahl;
-			try { localStorage.setItem('farbe', b.dataset.farbeWahl); } catch (err) {}
+			const html = document.documentElement;
+			html.dataset.farbe = b.dataset.farbeWahl;
+			// Picking the configured standard forgets the preview choice.
+			try {
+				if (b.dataset.farbeWahl === html.dataset.farbeStandard) localStorage.removeItem('farbe');
+				else localStorage.setItem('farbe', b.dataset.farbeWahl);
+			} catch (err) {}
 			sync();
 		});
 		sync();

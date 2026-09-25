@@ -7,7 +7,7 @@ const { news } = Astro.props;
 	<div class="aspect-[16/10] overflow-hidden bg-surface">
 		{news.bild
 			? <img src={news.bild} alt="" loading="lazy" decoding="async" class="size-full object-cover object-[50%_20%] transition duration-700 group-hover:scale-105" />
-			: <div class="flex size-full items-center justify-center grad-soft"><img src="/uploads/seiten/logo-kopf-dunkel.png" alt="" class="h-2/3 opacity-25" /></div>}
+			: <div class="flex size-full items-center justify-center grad-soft"><picture class="contents"><source srcset="/uploads/seiten/logo-kopf-hell.png" media="(prefers-color-scheme: dark)" /><img src="/uploads/seiten/logo-kopf-dunkel.png" alt="" class="h-2/3 opacity-25" /></picture></div>}
 	</div>
 	<div class="flex flex-1 flex-col gap-2 p-5">
 		<time class="text-sm font-semibold text-accent-ink" datetime={news.datum}>{formatDatum(news.datum, { day: 'numeric', month: 'long', year: 'numeric' })}</time>
