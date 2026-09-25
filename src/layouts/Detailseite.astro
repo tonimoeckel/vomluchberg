@@ -1,0 +1,13 @@
+---
+import Base from './Base.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import type { GeladeneSeite } from '../lib/detailseiten';
+
+type Props = GeladeneSeite;
+const { seo, island, Body, data } = Astro.props;
+---
+<Base {...seo}>
+	<TinaIsland {...island} primary>
+		<Body data={data} />
+	</TinaIsland>
+</Base>

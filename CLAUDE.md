@@ -19,9 +19,10 @@ npm run dev          # Tina local mode + Astro → http://localhost:4321, CMS at
 npm run build:local  # offline build, no TinaCloud creds needed – use this to verify changes
 npm run build        # production build against TinaCloud (needs PUBLIC_TINA_CLIENT_ID + TINA_TOKEN)
 npx astro check      # must stay at 0 errors / 0 warnings
+npm test             # vitest unit tests for the pure modules in src/lib
 ```
 
-Run `npm run build:local` and `npx astro check` after every change.
+Run `npm test`, `npm run build:local` and `npx astro check` after every change.
 
 ## Architecture
 
@@ -31,20 +32,24 @@ Run `npm run build:local` and `npx astro check` after every change.
 | `tina/collections/*.ts` | Collections: `page` (Seiten), `hund`, `wurf`, `news` (Aktuelles), `config` (Einstellungen, global) |
 | `tina/blocks/index.ts` | Page block templates (hero, text, highlights, galerie, hunde, wuerfe, news, cta, kontakt) |
 | `src/content/{seiten,hunde,wuerfe,aktuelles,config}` | Content (md with frontmatter; config is JSON) |
-| `src/lib/data.ts` | Tina client loaders, list helpers, derived types, `formatDatum`, label maps |
-| `src/lib/islands.ts` | Island registry for live visual editing → served by `src/pages/tina-island/[name].ts` |
+| `src/lib/data.ts` | Tina client loaders (lists sorted via the domain modules), derived types |
+| `src/lib/detailseiten.ts` | One definition per detail page collection (`seiten`, `hunde`, `wuerfe`, `aktuelles`): static paths, load + unwrap, SEO, Body, island. Page `home` is the index (served at `/`) |
+| `src/lib/islands.ts` | Island registry for live visual editing, built from `detailseiten.ts` plus the global header/footer → served by `src/pages/tina-island/[name].ts` |
+| `src/lib/domain/*` | Pure domain rules with colocated tests: `hund`, `wurf`, `news` (options/labels, sorting, grouping, URLs, SEO), `datum`, `slug`, `seo` (head meta fallbacks). Also imported by `tina/collections/*` – no Astro/Tina imports here |
+| `src/lib/farbschema.ts` | Colour scheme list (ids, labels, swatches, theme-color) for Tina, `FarbVorschau` and `BaseHead` |
 | `src/components/blocks/*` | One component per block, dispatched in `Blocks.astro` via `__typename` (`PageBlocksHero`, …) |
-| `src/components/islands/*Body.astro` | Detail bodies for page/hund/wurf/news (wrapped in `<TinaIsland>` by the page routes) |
-| `src/pages/[slug].astro`, `hunde/[slug]`, `wuerfe/[slug]`, `aktuelles/[slug]` | Routes; list pages are CMS pages built from auto-list blocks |
+| `src/components/islands/*Body.astro` | Detail bodies for hund/wurf/news (pages render `Blocks.astro` directly) |
+| `src/layouts/Detailseite.astro` | Renders a loaded detail page: `Base` + `<TinaIsland>` + Body |
+| `src/pages/index.astro`, `[slug].astro`, `hunde/[slug]`, `wuerfe/[slug]`, `aktuelles/[slug]` | Thin routes: `getStaticPaths` + `load` + 404 + `<Detailseite>`; list pages are CMS pages built from auto-list blocks |
 | `src/styles/global.css` | Design tokens + 3 colour schemes + custom utilities |
 
 **Adding a block:** add the template in `tina/blocks/index.ts`, a component in `src/components/blocks/`, and a `case` in `Blocks.astro`. Add `data-tina-field={tinaField(obj, 'field')}` to every editable element.
 
-**Adding a collection:** add a collection file, register it in `tina/config.ts`, add loaders and types in `data.ts`, add an island in `islands.ts`, then add a route.
+**Adding a collection:** add a collection file, register it in `tina/config.ts`, add loaders and types in `data.ts`, add a `detailseite(…)` definition in `detailseiten.ts`, spread it into `islands.ts`, then add a route like `hunde/[slug].astro`.
 
 ## Design system
 
-- Colour schemes are CSS variables selected by `<html data-farbe="…">`: `sonnenuntergang` (default), `neon`, `pfirsich`. The default comes from `config.farbschema`. `FarbVorschau.astro` is a review switcher, shown with `PUBLIC_FARBVORSCHAU=true` or `?farbe=…`.
+- Colour schemes are CSS variables selected by `<html data-farbe="…">`: `sonnenuntergang` (default), `neon`, `pfirsich`. The default comes from `config.farbschema`. `FarbVorschau.astro` is a review switcher, shown with `PUBLIC_FARBVORSCHAU=true` or `?farbe=…`. Adding a scheme: tokens (light + dark) in `global.css` and an entry in `src/lib/farbschema.ts`.
 - Use the semantic Tailwind colours: `bg`, `surface`, `surface-2`, `fg`, `muted`, `border`, `primary`, `primary-ink`, `accent`, `accent-ink`, `dark`, `on-dark`. Use `*-ink` variants for text on light backgrounds (contrast).
 - Custom utilities are defined with `@utility` (Tailwind v4 cannot `@apply` custom classes): `container-page`, `grad-bg`, `grad-text`, `grad-soft`, `btn`, `btn-primary`, `btn-secondary`, `card`, `card-hover`, `badge`. Component classes: `kicker`, `headline-line`, `prose-luchberg`.
 - Rich text is rendered with `class="prose prose-lg prose-luchberg"` and `<TinaMarkdown content={…} />`.
@@ -58,7 +63,7 @@ Run `npm run build:local` and `npx astro check` after every change.
 - `tina/__generated__/` and `public/admin/` are build output and gitignored.
 - Two sibling fields with different types in different block templates break Tina's GraphQL codegen. That is why the text block's rich text is called `inhalt`, while other blocks use a string `text`.
 - Tina `datetime` fields show today's date when empty. For optional dates, use a string field (see `hund.verstorben`).
-- Dates are stored as ISO strings. Display them with `formatDatum()` (`de-DE`, Europe/Berlin).
+- Dates are stored as ISO strings. Display them with `formatDatum()` / `formatDatumLang()` from `src/lib/domain/datum.ts` (`de-DE`, Europe/Berlin).
 - Old-site URLs have 301 redirects in `astro.config.mjs` (`redirects`). Keep them.
 - The contact form posts to Web3Forms when `PUBLIC_WEB3FORMS_KEY` is set, otherwise it falls back to `mailto:`.
 - The old site archive lives at `../old_archive/vomluchberg_archive` (read-only reference). `httpdocs/fb` is only a Facebook-template duplicate. `caninepure.de` and `vitale-hunde.de` are separate sites and are **out of scope**. The archive also contains a `.ssh` folder and a WordPress SQL dump: don't touch or copy them.

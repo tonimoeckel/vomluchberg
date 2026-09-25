@@ -1,20 +1,9 @@
 ---
-import Base from '../../layouts/Base.astro';
-import TinaIsland from '@tinacms/astro/TinaIsland.astro';
-import WurfBody from '../../components/islands/WurfBody.astro';
-import { getWurf, listWuerfe } from '../../lib/data';
-import { wurfSeo } from '../../lib/domain/wurf';
-import { islands } from '../../lib/islands';
+import Detailseite from '../../layouts/Detailseite.astro';
+import { wuerfe } from '../../lib/detailseiten';
 
-export async function getStaticPaths() {
-	return (await listWuerfe()).map((w) => ({ params: { slug: w._sys.filename } }));
-}
-const slug = String(Astro.params.slug);
-const data = (await getWurf(slug)).data?.wurf;
-if (!data) return new Response('Not Found', { status: 404 });
+export const getStaticPaths = wuerfe.paths;
+const wurf = await wuerfe.load(String(Astro.params.slug));
+if (!wurf) return new Response('Not Found', { status: 404 });
 ---
-<Base {...wurfSeo(data)}>
-	<TinaIsland name="wurf" wrapper={islands.wurf.wrapper} params={{ slug }} primary>
-		<WurfBody data={data} />
-	</TinaIsland>
-</Base>
+<Detailseite {...wurf} />

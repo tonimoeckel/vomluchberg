@@ -8,17 +8,12 @@ import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import { getConfig } from '../lib/data';
 import { islands } from '../lib/islands';
 import { farbschema } from '../lib/farbschema';
+import { metaDaten, type Seo } from '../lib/domain/seo';
 
-interface Props {
-	title?: string | null;
-	description?: string | null;
-	image?: string | null;
-}
+type Props = Partial<Seo>;
 
 const config = (await getConfig()).data?.config ?? null;
-const siteName = config?.website?.name ?? 'Rottweiler vom Luchberg';
-const { title, description, image } = Astro.props;
-const fullTitle = title && title !== siteName && !title.includes(siteName) ? `${title} | ${siteName}` : title || siteName;
+const meta = metaDaten(Astro.props, config?.website);
 const schema = farbschema(config?.farbschema);
 const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
 ---
@@ -26,12 +21,7 @@ const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
 <!doctype html>
 <html lang="de" data-farbe={schema.id} data-farbe-standard={schema.id}>
 	<head>
-		<BaseHead
-			title={fullTitle}
-			description={description || config?.website?.beschreibung || ''}
-			image={image || config?.website?.teilenBild}
-			farbschema={schema}
-		/>
+		<BaseHead {...meta} farbschema={schema} />
 		<script is:inline>
 			// Colour preview (for reviewing with Karo): ?farbe=neon is remembered, ?farbe=<standard> forgets it.
 			try {
