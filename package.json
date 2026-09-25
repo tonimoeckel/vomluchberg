@@ -10,7 +10,8 @@
     "build": "tinacms build --content=local -c \"astro build\"",
     "build:local": "tinacms build --local --skip-cloud-checks -c \"astro build\"",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "vitest run"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",
@@ -38,6 +39,7 @@
     "react-dom": "^19.2.7",
     "tinacms": "^3.14.0",
     "typescript": "^6.0.3",
-    "vite": "^7.3.2"
+    "vite": "^7.3.2",
+    "vitest": "^5.0.2"
   }
 }
