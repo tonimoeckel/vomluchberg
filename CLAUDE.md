@@ -45,7 +45,7 @@ Run `npm test`, `npm run build:local` and `npx astro check` after every change.
 
 **Adding a block:** add the template in `tina/blocks/index.ts`, a component in `src/components/blocks/`, and a `case` in `Blocks.astro`. Add `data-tina-field={tinaField(obj, 'field')}` to every editable element.
 
-**Adding a collection:** add a collection file, register it in `tina/config.ts`, add loaders and types in `data.ts`, add a `detailseite(…)` definition in `detailseiten.ts`, spread it into `islands.ts`, then add a route like `hunde/[slug].astro`.
+**Adding a collection:** add a collection file, register it in `tina/config.ts`, add loaders and types in `data.ts`, add a `detailseite(…)` definition in `detailseiten.ts` and list it in `detailseiten` (that also registers its island), then add a route like `hunde/[slug].astro`.
 
 ## Design system
 

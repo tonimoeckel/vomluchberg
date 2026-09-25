@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   geschlechtBadge, geschlechter, geschlechtLabel, hundeListeUrl, hundKategorien, hundUrl, istErinnerung, kategorieLabel,
-  hundeUebersicht, hundSeo, lebensdatenKarte, lebensspanne, sortiereHunde,
+  hundeBlockAuswahl, hundeUebersicht, hundSeo, lebensdatenKarte, lebensspanne, sortiereHunde,
 } from './hund';
 
 describe('hundKategorien', () => {
@@ -94,6 +94,16 @@ describe('sortiereHunde', () => {
     const hunde = [{ reihenfolge: 2 }, { reihenfolge: 1 }];
     sortiereHunde(hunde);
     expect(hunde).toEqual([{ reihenfolge: 2 }, { reihenfolge: 1 }]);
+  });
+});
+
+describe('hundeBlockAuswahl', () => {
+  it('offers all dogs grouped, or only the Rottweiler or the other pack members (CMS options)', () => {
+    expect(hundeBlockAuswahl).toEqual([
+      { value: 'alle', label: 'Alle (gruppiert)' },
+      { value: 'zucht', label: 'Unsere Rottweiler' },
+      { value: 'rudel', label: 'Weitere Rudelmitglieder' },
+    ]);
   });
 });
 

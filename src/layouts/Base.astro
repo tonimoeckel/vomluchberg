@@ -8,12 +8,12 @@ import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import { getConfig } from '../lib/data';
 import { islands } from '../lib/islands';
 import { farbschema } from '../lib/farbschema';
-import { metaDaten, type Seo } from '../lib/domain/seo';
+import { headMeta, type Seo } from '../lib/domain/seo';
 
 type Props = Partial<Seo>;
 
 const config = (await getConfig()).data?.config ?? null;
-const meta = metaDaten(Astro.props, config?.website);
+const meta = headMeta(Astro.props, config?.website);
 const schema = farbschema(config?.farbschema);
 const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
 ---

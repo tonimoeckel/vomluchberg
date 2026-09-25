@@ -1,51 +1,51 @@
 import { describe, expect, it } from 'vitest';
-import { metaDaten, seiteSeo } from './seo';
+import { headMeta, seiteSeo } from './seo';
 
 const website = { name: 'Rottweiler vom Luchberg', beschreibung: 'ADRK-Zucht in Sachsen.', teilenBild: '/uploads/teilen.jpg' };
 
-describe('metaDaten title', () => {
+describe('headMeta title', () => {
   it('appends the site name', () => {
-    expect(metaDaten({ title: 'Aaron' }, website).title).toBe('Aaron | Rottweiler vom Luchberg');
+    expect(headMeta({ title: 'Aaron' }, website).title).toBe('Aaron | Rottweiler vom Luchberg');
   });
 
   it('is the site name alone without a title', () => {
-    expect(metaDaten({}, website).title).toBe('Rottweiler vom Luchberg');
-    expect(metaDaten({ title: '' }, website).title).toBe('Rottweiler vom Luchberg');
+    expect(headMeta({}, website).title).toBe('Rottweiler vom Luchberg');
+    expect(headMeta({ title: '' }, website).title).toBe('Rottweiler vom Luchberg');
   });
 
   it('keeps a title that already contains the site name', () => {
-    expect(metaDaten({ title: 'Rottweiler vom Luchberg' }, website).title).toBe('Rottweiler vom Luchberg');
-    expect(metaDaten({ title: 'Willkommen bei den Rottweiler vom Luchberg' }, website).title).toBe(
+    expect(headMeta({ title: 'Rottweiler vom Luchberg' }, website).title).toBe('Rottweiler vom Luchberg');
+    expect(headMeta({ title: 'Willkommen bei den Rottweiler vom Luchberg' }, website).title).toBe(
       'Willkommen bei den Rottweiler vom Luchberg',
     );
   });
 
   it('uses the default site name when the config has none', () => {
-    expect(metaDaten({ title: 'Aaron' }, null).title).toBe('Aaron | Rottweiler vom Luchberg');
-    expect(metaDaten({ title: 'Aaron' }, { name: null }).title).toBe('Aaron | Rottweiler vom Luchberg');
-    expect(metaDaten({}, undefined).title).toBe('Rottweiler vom Luchberg');
+    expect(headMeta({ title: 'Aaron' }, null).title).toBe('Aaron | Rottweiler vom Luchberg');
+    expect(headMeta({ title: 'Aaron' }, { name: null }).title).toBe('Aaron | Rottweiler vom Luchberg');
+    expect(headMeta({}, undefined).title).toBe('Rottweiler vom Luchberg');
   });
 });
 
-describe('metaDaten description', () => {
+describe('headMeta description', () => {
   it('prefers the page description', () => {
-    expect(metaDaten({ description: 'Unser Rüde.' }, website).description).toBe('Unser Rüde.');
+    expect(headMeta({ description: 'Unser Rüde.' }, website).description).toBe('Unser Rüde.');
   });
 
   it('falls back to the site description, then to empty', () => {
-    expect(metaDaten({ description: null }, website).description).toBe('ADRK-Zucht in Sachsen.');
-    expect(metaDaten({ description: '' }, website).description).toBe('ADRK-Zucht in Sachsen.');
-    expect(metaDaten({}, { beschreibung: null }).description).toBe('');
-    expect(metaDaten({}, null).description).toBe('');
+    expect(headMeta({ description: null }, website).description).toBe('ADRK-Zucht in Sachsen.');
+    expect(headMeta({ description: '' }, website).description).toBe('ADRK-Zucht in Sachsen.');
+    expect(headMeta({}, { beschreibung: null }).description).toBe('');
+    expect(headMeta({}, null).description).toBe('');
   });
 });
 
-describe('metaDaten image', () => {
+describe('headMeta image', () => {
   it('prefers the page image, then the site share image, else none', () => {
-    expect(metaDaten({ image: '/uploads/aaron.jpg' }, website).image).toBe('/uploads/aaron.jpg');
-    expect(metaDaten({ image: null }, website).image).toBe('/uploads/teilen.jpg');
-    expect(metaDaten({}, { teilenBild: null }).image).toBe(null);
-    expect(metaDaten({}, null).image).toBe(null);
+    expect(headMeta({ image: '/uploads/aaron.jpg' }, website).image).toBe('/uploads/aaron.jpg');
+    expect(headMeta({ image: null }, website).image).toBe('/uploads/teilen.jpg');
+    expect(headMeta({}, { teilenBild: null }).image).toBe(null);
+    expect(headMeta({}, null).image).toBe(null);
   });
 });
 

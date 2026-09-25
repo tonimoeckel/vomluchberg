@@ -42,6 +42,14 @@ export const hundUrl = (slug: string) => `${hundeListeUrl}/${slug}`;
 export const sortiereHunde = <T extends { reihenfolge?: number | null }>(hunde: readonly T[]) =>
   [...hunde].sort((a, b) => (a.reihenfolge ?? 99) - (b.reihenfolge ?? 99));
 
+const alle = 'alle';
+
+/** Choices of the "Hunde" block: all dogs grouped by category, or a single category. */
+export const hundeBlockAuswahl = [
+  { value: alle, label: 'Alle (gruppiert)' },
+  ...hundKategorien.filter((k) => k.value === 'zucht' || k.value === 'rudel'),
+];
+
 export interface HundeGruppe<T> { kategorie: string; titel: string | null; hunde: T[] }
 
 /**
@@ -50,7 +58,7 @@ export interface HundeGruppe<T> { kategorie: string; titel: string | null; hunde
  */
 export function hundeUebersicht<T extends { kategorie?: string | null }>(hunde: readonly T[], auswahl?: string | null) {
   const inKategorie = (k: string) => hunde.filter((h) => h.kategorie === k);
-  if (auswahl && auswahl !== 'alle') {
+  if (auswahl && auswahl !== alle) {
     const gruppen: HundeGruppe<T>[] = [{ kategorie: auswahl, titel: null, hunde: inKategorie(auswahl) }];
     return { gruppen, zeigeAlleLink: true };
   }

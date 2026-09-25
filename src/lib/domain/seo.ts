@@ -4,7 +4,7 @@ export interface Seo { title: string; description: string | null; image: string 
 type Website = { name?: string | null; beschreibung?: string | null; teilenBild?: string | null } | null | undefined;
 
 /** Head meta of a page: the title gets the site name appended, missing description and image come from the site. */
-export function metaDaten(seo: Partial<Seo>, website: Website): Seo & { description: string } {
+export function headMeta(seo: Partial<Seo>, website: Website): Seo & { description: string } {
   const name = website?.name ?? 'Rottweiler vom Luchberg';
   return {
     title: seo.title && !seo.title.includes(name) ? `${seo.title} | ${name}` : seo.title || name,
