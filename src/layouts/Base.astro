@@ -7,6 +7,7 @@ import Lightbox from '../components/Lightbox.astro';
 import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import { getConfig } from '../lib/data';
 import { islands } from '../lib/islands';
+import { farbschema } from '../lib/farbschema';
 
 interface Props {
 	title?: string | null;
@@ -18,25 +19,28 @@ const config = (await getConfig()).data?.config ?? null;
 const siteName = config?.website?.name ?? 'Rottweiler vom Luchberg';
 const { title, description, image } = Astro.props;
 const fullTitle = title && title !== siteName && !title.includes(siteName) ? `${title} | ${siteName}` : title || siteName;
-const farbe = config?.farbschema ?? 'sonnenuntergang';
+const schema = farbschema(config?.farbschema);
 const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
 ---
 
 <!doctype html>
-<html lang="de" data-farbe={farbe} data-farbe-standard={farbe}>
+<html lang="de" data-farbe={schema.id} data-farbe-standard={schema.id}>
 	<head>
 		<BaseHead
 			title={fullTitle}
 			description={description || config?.website?.beschreibung || ''}
 			image={image || config?.website?.teilenBild}
+			farbschema={schema}
 		/>
 		<script is:inline>
-			// Farbvorschau: ?farbe=neon in der URL merkt sich die Auswahl (nur für die Abstimmung mit Karo)
+			// Colour preview (for reviewing with Karo): ?farbe=neon is remembered, ?farbe=<standard> forgets it.
 			try {
+				const h = document.documentElement;
 				const p = new URLSearchParams(location.search).get('farbe');
-				if (p) localStorage.setItem('farbe', p);
+				if (p === h.dataset.farbeStandard) localStorage.removeItem('farbe');
+				else if (p) localStorage.setItem('farbe', p);
 				const f = localStorage.getItem('farbe');
-				if (f) document.documentElement.dataset.farbe = f;
+				if (f) h.dataset.farbe = f;
 			} catch (e) {}
 		</script>
 	</head>

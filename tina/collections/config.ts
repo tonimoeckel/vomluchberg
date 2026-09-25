@@ -1,4 +1,5 @@
 import type { Collection } from 'tinacms';
+import { farbschemaOptions } from '../../src/lib/farbschema';
 
 export const ConfigCollection: Collection = {
   name: 'config',
@@ -20,11 +21,7 @@ export const ConfigCollection: Collection = {
     },
     {
       type: 'string', name: 'farbschema', label: 'Farbschema',
-      options: [
-        { value: 'sonnenuntergang', label: 'Sonnenuntergang (Orange → Pink)' },
-        { value: 'neon', label: 'Neon (knallige Details)' },
-        { value: 'pfirsich', label: 'Pfirsich (sanft & warm)' },
-      ],
+      options: farbschemaOptions,
     },
     {
       type: 'object', name: 'kontakt', label: 'Kontaktdaten',
