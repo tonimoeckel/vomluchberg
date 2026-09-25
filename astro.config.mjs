@@ -22,6 +22,33 @@ function getSiteUrl() {
 	return 'http://localhost:4321';
 }
 
+// Keeps syntax-highlighting grammars out of the on-demand server bundle (the
+// Cloudflare worker). The only on-demand route, /tina-island, uses
+// `astro/container`, which pulls in Astro's config schema and with it
+// `@astrojs/markdown-remark` (Shiki) and the adapter's Prism loader. Their
+// ~240 languages, ~65 themes, the Oniguruma WASM and ~290 Prism components are
+// lazy `import()`s that are never called there (islands render Tina rich text,
+// not Markdown code blocks) but would still be uploaded, pushing the worker
+// towards the 3 MiB free-plan limit. All of them resolve to one empty module
+// in the `ssr` build only; prerendered pages and dev keep full highlighting.
+/** @returns {import('vite').Plugin} */
+function stubServerHighlighters() {
+	const STUB_ID = '\0luchberg:no-highlighter';
+	const STUBBED = [/^@shikijs\/(langs|themes)\//, /^shiki\/wasm$/, /^prismjs\/components\/prism-[^/]+\.js$/];
+	return {
+		name: 'luchberg:stub-server-highlighters',
+		apply: 'build',
+		enforce: 'pre',
+		applyToEnvironment: (environment) => environment.name === 'ssr',
+		resolveId(id) {
+			if (id === STUB_ID || STUBBED.some((re) => re.test(id))) return STUB_ID;
+		},
+		load(id) {
+			if (id === STUB_ID) return 'export default [];';
+		},
+	};
+}
+
 // Alte URLs der bisherigen Website → neue Seiten (für Google & alte Links)
 const redirects = {
 	'/home': '/',
@@ -58,7 +85,7 @@ export default defineConfig({
 	integrations: [sitemap(), icon(), tina()],
 	build: { inlineStylesheets: 'always' },
 	vite: {
-		plugins: [tailwindcss(), tinaAdminDevRedirect()],
+		plugins: [tailwindcss(), tinaAdminDevRedirect(), stubServerHighlighters()],
 		ssr: { noExternal: ['@tinacms/astro', '@tinacms/bridge'] },
 		build: {
 			rollupOptions: {
