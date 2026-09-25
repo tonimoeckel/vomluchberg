@@ -15,7 +15,7 @@ const { data } = Astro.props;
 		</header>
 		{data.bild && (
 			<div class="container-page max-w-4xl" data-tina-field={tinaField(data, 'bild')}>
-				<a href={data.bild} data-lightbox="news"><img src={data.bild} alt="" class="max-h-[34rem] w-full rounded-card object-cover shadow-xl" /></a>
+				<a href={data.bild} data-lightbox="news" class="mx-auto block w-fit"><img src={data.bild} alt="" class="max-h-[34rem] w-auto max-w-full rounded-card shadow-xl" /></a>
 			</div>
 		)}
 		{data.body && (

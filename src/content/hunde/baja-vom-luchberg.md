@@ -9,8 +9,16 @@ eltern: Luis vom Eisernen Kreuz x Donna von der staubzer Höhe
 gesundheit: HD/ED frei, LÜW o.B., JLPP, DM, NAD, LEMP, XLMTM & Langhaar frei
 leistungen: 'LKZ: FCI-BH/VT, FCI-IGP I · Salzlandschau 2026: SG2'
 workingDog: https://www.working-dog.com/dogs-details/7813928/Baja-vom-Luchberg
-bild: /uploads/hunde/baja/dsc_1326.jpg
+bild: /uploads/hunde/baja/baja-portrait.jpg
 galerie:
+- bild: /uploads/hunde/baja/baja-stand.jpg
+- bild: /uploads/hunde/baja/baja-sitzend.jpg
+- bild: /uploads/hunde/baja/baja-ztp.jpg
+- bild: /uploads/hunde/baja/baja-kopf.jpg
+- bild: /uploads/hunde/baja/baja-schau.jpg
+- bild: /uploads/hunde/baja/baja-und-aaron.jpg
+  beschreibung: Baja und Aaron
+- bild: /uploads/hunde/baja/dsc_1326.jpg
 - bild: /uploads/hunde/baja/dsc_0551.jpg
 - bild: /uploads/hunde/baja/13072427-56dc-79f5-a067-7dad1a419d88.jpg
 - bild: /uploads/hunde/baja/53cff7e3-eae5-4ed0-e0ca-de7c998907c3.jpg

@@ -68,3 +68,4 @@ public/admin
 
 # macOS
 .DS_Store
+tmp/

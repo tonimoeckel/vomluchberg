@@ -7,7 +7,7 @@ blocks:
   kicker: ADRK-Zuchtstätte seit 2021
   titel: Willkommen bei den Rottweilern vom Luchberg
   untertitel: Wir züchten Rottweiler aus Liebe und Leidenschaft – gesund, wesensfest und mit Familienanschluss aufgewachsen. Familienhund und Sportpartner in einem.
-  bild: /uploads/header/header-0.jpg
+  bild: /uploads/header/rudel-liegend.jpg
   buttons:
   - label: Unsere Hunde
     link: /hunde
@@ -34,7 +34,7 @@ blocks:
 
 
     [Mehr über uns und unsere Zucht →](/zucht)'
-  bild: /uploads/seiten/picsart_22-07-19_10-43-34-5111_1.jpg
+  bild: /uploads/seiten/karo-mit-rudel.jpg
 - _template: hunde
   ueberschrift: Unsere Rottweiler
   kategorie: zucht

@@ -9,8 +9,17 @@ eltern: Josch vom Findberg x Donna von der staubzer Höhe
 gesundheit: HD/ED frei, LÜW o.B., JLPP, DM, LEMP, NAD, XLMTM & Langhaar frei
 leistungen: 'AKZ: BH/VT, IGP 1, IGP 2, IGP 3 · Salzlandschau 2026: V2'
 workingDog: https://www.working-dog.com/dogs-details/7536221/Aaron-vom-Luchberg
-bild: /uploads/hunde/aaron/dsc_0437-1.jpg
+bild: /uploads/hunde/aaron/aaron-portrait.jpg
 galerie:
+- bild: /uploads/hunde/aaron/aaron-stand.jpg
+- bild: /uploads/hunde/aaron/aaron-liegend.jpg
+- bild: /uploads/hunde/aaron/aaron-ztp.jpg
+- bild: /uploads/hunde/aaron/aaron-deckruede.jpg
+- bild: /uploads/hunde/baja/baja-und-aaron.jpg
+  beschreibung: Baja und Aaron
+- bild: /uploads/hunde/aaron/aaron-welpe.jpg
+  beschreibung: Aaron als Welpe
+- bild: /uploads/hunde/aaron/dsc_0437-1.jpg
 - bild: /uploads/hunde/aaron/img_20230210_192629_802.jpg
 - bild: /uploads/hunde/aaron/95515ffd-e09e-9693-3c64-1814b4d2643f.jpg
 - bild: /uploads/hunde/aaron/c937d57f-c416-3deb-f05d-8a5a09ddd6fe.jpg

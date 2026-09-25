@@ -2,6 +2,7 @@
 titel: Willkommen im Rudel
 datum: '2025-12-06T12:00:00.000Z'
 kurztext: Mit Blick in die Zukunft...
+bild: /uploads/news/willkommen-im-rudel.jpg
 ---
 
 Mit Blick in die Zukunft...

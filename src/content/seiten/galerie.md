@@ -8,6 +8,8 @@ blocks:
   titel: Galerie
 - _template: galerie
   bilder:
+  - bild: /uploads/galerie/rudel-rennt.jpg
+  - bild: /uploads/hunde/baja/baja-und-aaron.jpg
   - bild: /uploads/galerie/272c82ae-9222-4f78-4154-e04c3da2b3d4.jpg
   - bild: /uploads/galerie/ca1ac26c-1ea6-3aef-035b-7deac100704a.jpg
   - bild: /uploads/galerie/618b1b8e-9c59-fca9-a112-e0dc656b49cd.jpg

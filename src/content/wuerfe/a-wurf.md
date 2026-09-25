@@ -8,7 +8,7 @@ vaterLink: https://de.working-dog.com/dogs-details/3065881/Josch-vom-Findberg
 mutter: Donna von der staubzer Höhe
 mutterLink: https://de.working-dog.com/dogs-details/6471655/Donna-von-der-Staubzer-H%C3%B6he
 kurztext: Unser erster Wurf – alle Welpen sind vermittelt.
-bild: /uploads/wuerfe/a-wurf/picsart_22-06-12_20-05-03-144.jpg
+bild: /uploads/wuerfe/a-wurf/a-wurf-eltern.jpg
 welpen:
 - name: Aaron vom Luchberg
   geschlecht: ruede
@@ -35,7 +35,9 @@ welpen:
   geschlecht: huendin
   bild: /uploads/wuerfe/a-wurf/0d2903e8-894a-c69c-2cd1-dd87ff1cb2e0.jpg
   link: https://de.working-dog.com/dogs-details/7536223/Ava-vom-Luchberg
-galerie: []
+galerie:
+- bild: /uploads/wuerfe/a-wurf/picsart_22-06-12_20-05-03-144.jpg
+  beschreibung: Donna, die Mama des A-Wurfs
 ---
 
 Unser erster Wurf: Donna von der staubzer Höhe x Josch vom Findberg. Alle Welpen sind vermittelt!

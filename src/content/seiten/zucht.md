@@ -58,6 +58,10 @@ blocks:
 - _template: galerie
   ueberschrift: Zwingeranlage, Übungsplatz & Welpenzimmer
   bilder:
+  - bild: /uploads/seiten/karo-mit-rudel-stehend.jpg
+    beschreibung: Karo mit unserem Rudel
+  - bild: /uploads/seiten/karo-wird-gezogen.jpg
+    beschreibung: Karo wird vom Rudel gezogen
   - bild: /uploads/seiten/photo_2023-06-06_08-16-00.jpg
     beschreibung: Zwingeranlage und Übungsplatz
   - bild: /uploads/seiten/20221217_113107.jpg
