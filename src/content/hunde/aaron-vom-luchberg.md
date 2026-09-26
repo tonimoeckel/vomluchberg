@@ -7,7 +7,7 @@ reihenfolge: 10
 geboren: '2022-11-21T12:00:00.000Z'
 eltern: Josch vom Findberg x Donna von der staubzer Höhe
 gesundheit: HD/ED frei, LÜW o.B., JLPP, DM, LEMP, NAD, XLMTM & Langhaar frei
-leistungen: 'AKZ: BH/VT, IGP 1, IGP 2, IGP 3 · Salzlandschau 2026: V2'
+leistungen: 'AKZ: BH/VT, IGP 1, IGP 2, IGP 3 · ZTP 2026 · Salzlandschau 2026: V2'
 workingDog: https://www.working-dog.com/dogs-details/7536221/Aaron-vom-Luchberg
 bild: /uploads/hunde/aaron/aaron-portrait.jpg
 galerie:
@@ -37,4 +37,4 @@ galerie:
 - bild: /uploads/hunde/aaron/5b98c54e-b849-3ab7-8fef-042147bff8ca.jpg
 ---
 
-Aaron stammt aus unserem A-Wurf und ist bei uns geblieben. Gemeinsam mit Uli hat er die IGP 3 erfolgreich abgelegt.
+Aaron stammt aus unserem A-Wurf und ist bei uns geblieben. Gemeinsam mit Uli hat er die IGP 3 erfolgreich abgelegt. Am 28.06.2026 hat er zusammen mit Baja in Kamenz die Zuchttauglichkeitsprüfung (ZTP) bestanden, Richter war Anton Spindler.

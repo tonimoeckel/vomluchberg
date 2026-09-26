@@ -7,7 +7,7 @@ reihenfolge: 20
 geboren: '2024-03-10T12:00:00.000Z'
 eltern: Luis vom Eisernen Kreuz x Donna von der staubzer Höhe
 gesundheit: HD/ED frei, LÜW o.B., JLPP, DM, NAD, LEMP, XLMTM & Langhaar frei
-leistungen: 'LKZ: FCI-BH/VT, FCI-IGP I · Salzlandschau 2026: SG2'
+leistungen: 'LKZ: FCI-BH/VT, FCI-IGP I · ZTP 2026 · Salzlandschau 2026: SG2'
 workingDog: https://www.working-dog.com/dogs-details/7813928/Baja-vom-Luchberg
 bild: /uploads/hunde/baja/baja-portrait.jpg
 galerie:
@@ -36,4 +36,4 @@ galerie:
 - bild: /uploads/hunde/baja/e1e947b6-3555-2c0c-2792-40204a830f59.jpg
 ---
 
-Baja stammt aus unserem B-Wurf und ist unsere Nachwuchshündin. 2026 haben wir gemeinsam die IGP 1 gemeistert.
+Baja stammt aus unserem B-Wurf und ist unsere Nachwuchshündin. 2026 haben wir gemeinsam die IGP 1 gemeistert. Am 28.06.2026 hat sie zusammen mit Aaron in Kamenz die Zuchttauglichkeitsprüfung (ZTP) bestanden, Richter war Anton Spindler.
