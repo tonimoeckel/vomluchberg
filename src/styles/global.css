@@ -7,6 +7,8 @@
    Farbschemata
    Das aktive Schema steht als data-farbe auf <html>
    (Standard aus Tina → Einstellungen → Farbschema).
+   Keep ids and --bg (light + dark) in sync with src/lib/farbschema.ts
+   (Tina options, preview switcher, theme-color).
    ------------------------------------------------------------------ */
 :root,
 [data-farbe='sonnenuntergang'] {
@@ -69,6 +71,7 @@
 /* ------------------------------------------------------------------
    Dark mode: follows the system setting (prefers-color-scheme).
    Same selector order as above, so each scheme overrides the default.
+   --bg here = themeColor.dark in src/lib/farbschema.ts.
    ------------------------------------------------------------------ */
 :root {
 	color-scheme: light dark;
@@ -271,14 +274,14 @@
 }
 [data-farbe='neon'] .headline-line::after {
 	height: 0.3rem;
-	box-shadow: 0 0 10px #ff1f8e, 0 0 26px #ff7a00;
+	box-shadow: 0 0 10px var(--accent), 0 0 26px #ff7a00;
 }
 [data-farbe='neon'] .card {
 	border-color: rgb(255 31 142 / 0.22);
 }
 [data-farbe='neon'] header .grad-bg,
 [data-farbe='neon'] footer .grad-bg {
-	box-shadow: 0 0 18px #ff1f8e, 0 0 40px #ff7a00;
+	box-shadow: 0 0 18px var(--accent), 0 0 40px #ff7a00;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -3,18 +3,21 @@ import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import Galerie from '../Galerie.astro';
 import DetailHead from './DetailHead.astro';
-import { formatDatum, statusLabel, type CmsWurf } from '../../lib/data';
+import type { CmsWurf } from '../../lib/data';
+import { formatDatum } from '../../lib/domain/datum';
+import { geschlechtLabel } from '../../lib/domain/hund';
+import { statusLabel, wuerfeListeUrl } from '../../lib/domain/wurf';
 interface Props { data?: CmsWurf | null }
 const { data } = Astro.props;
 const welpen = (data?.welpen ?? []).filter((w) => w !== null);
 ---
 {data && (
 	<>
-		<DetailHead zurueck="/wuerfe" zurueckLabel="Alle Würfe" />
+		<DetailHead zurueck={wuerfeListeUrl} zurueckLabel="Alle Würfe" />
 		<section class="container-page py-8 lg:py-12">
 			<div class="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
 				<div>
-					<p class="kicker mb-5">{statusLabel[data.status ?? 'vergangen']}</p>
+					<p class="kicker mb-5">{statusLabel(data.status)}</p>
 					<h1 data-tina-field={tinaField(data, 'titel')} class="text-5xl font-extrabold sm:text-7xl"><span class="grad-text">{data.titel}</span> vom Luchberg</h1>
 					<dl class="mt-8 grid gap-4 sm:grid-cols-2">
 						{data.mutter && <div class="card p-5" data-tina-field={tinaField(data, 'mutter')}><dt class="text-sm font-bold text-accent-ink">Mutter</dt><dd class="mt-1 font-display text-lg font-bold">{data.mutterLink ? <a href={data.mutterLink} target="_blank" rel="noopener" class="hover:text-accent-ink">{data.mutter} ↗</a> : data.mutter}</dd></div>}
@@ -40,7 +43,7 @@ const welpen = (data?.welpen ?? []).filter((w) => w !== null);
 							{w.bild && <a href={w.bild} data-lightbox="welpen" data-caption={w.name ?? ''}><img src={w.bild} alt={w.name ?? ''} loading="lazy" class="aspect-square w-full object-cover" /></a>}
 							<div class="p-4">
 								<p class="font-display text-lg font-bold leading-tight">{w.name}</p>
-								<p class="mt-1 text-sm text-muted">{w.geschlecht === 'ruede' ? 'Rüde' : w.geschlecht === 'huendin' ? 'Hündin' : ''}{w.notiz && ` · ${w.notiz}`}</p>
+								<p class="mt-1 text-sm text-muted">{geschlechtLabel(w.geschlecht)}{w.notiz && ` · ${w.notiz}`}</p>
 								{w.link && <a href={w.link} target="_blank" rel="noopener" class="mt-2 inline-block text-sm font-bold text-primary-ink">Ahnentafel ↗</a>}
 							</div>
 						</li>

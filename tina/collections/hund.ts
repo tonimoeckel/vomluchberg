@@ -1,4 +1,6 @@
 import type { Collection } from 'tinacms';
+import { geschlechter, hundKategorien, hundUrl } from '../../src/lib/domain/hund';
+import { slugify } from '../../src/lib/domain/slug';
 import { bildFeld, galerieFeld } from './fields';
 
 export const HundCollection: Collection = {
@@ -7,13 +9,9 @@ export const HundCollection: Collection = {
   path: 'src/content/hunde',
   format: 'md',
   ui: {
-    router: ({ document }) => `/hunde/${document._sys.filename}`,
+    router: ({ document }) => hundUrl(document._sys.filename),
     filename: {
-      slugify: (values: { name?: string }) =>
-        (values?.name || 'neuer-hund')
-          .toLowerCase()
-          .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').replace(/ß/g, 'ss')
-          .replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, ''),
+      slugify: (values: { name?: string }) => slugify(values?.name, 'neuer-hund'),
     },
   },
   defaultItem: () => ({ kategorie: 'zucht', geschlecht: 'huendin', reihenfolge: 10 }),
@@ -22,16 +20,11 @@ export const HundCollection: Collection = {
     { type: 'string', name: 'rufname', label: 'Rufname', description: 'z. B. „Baja“ – wird groß angezeigt' },
     {
       type: 'string', name: 'geschlecht', label: 'Geschlecht',
-      options: [{ value: 'huendin', label: 'Hündin' }, { value: 'ruede', label: 'Rüde' }],
+      options: [...geschlechter],
     },
     {
       type: 'string', name: 'kategorie', label: 'Wo soll der Hund erscheinen?',
-      options: [
-        { value: 'zucht', label: 'Unsere Rottweiler' },
-        { value: 'aufzucht', label: 'Zur Aufzucht bei uns' },
-        { value: 'rudel', label: 'Weitere Rudelmitglieder' },
-        { value: 'erinnerung', label: 'In Erinnerung' },
-      ],
+      options: [...hundKategorien],
     },
     { type: 'number', name: 'reihenfolge', label: 'Reihenfolge', description: 'Kleinere Zahl = weiter vorne' },
     { type: 'datetime', name: 'geboren', label: 'Wurftag', ui: { dateFormat: 'DD.MM.YYYY' } },

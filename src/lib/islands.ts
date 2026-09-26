@@ -1,43 +1,18 @@
 /**
- * Registry aller Bereiche, die im Tina-Editor live aktualisiert werden.
- * Die Route /tina-island/[name] liefert beim Bearbeiten die neu gerenderten HTML-Teile.
+ * Registry of every region the Tina editor updates live.
+ * While editing, the route /tina-island/[name] returns the re-rendered HTML.
+ * Detail page entries come from src/lib/detailseiten.ts; header and footer are global.
  */
 import type { IslandRegistry } from '@tinacms/astro/experimental';
 import type { QueryResult } from '@tinacms/astro/data';
-import type { ConfigQuery, HundQuery, NewsQuery, PageQuery, WurfQuery } from '../../tina/__generated__/types';
-import PageBody from '../components/islands/PageBody.astro';
-import HundBody from '../components/islands/HundBody.astro';
-import WurfBody from '../components/islands/WurfBody.astro';
-import NewsBody from '../components/islands/NewsBody.astro';
+import type { ConfigQuery } from '../../tina/__generated__/types';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { getConfig, getHund, getNews, getPage, getWurf } from './data';
+import { getConfig } from './data';
+import { detailIslands } from './detailseiten';
 
-export const islands: IslandRegistry = {
-  page: {
-    fetch: (_r, params) => getPage(params.get('slug') ?? 'home'),
-    component: PageBody,
-    wrapper: { tag: 'main' },
-    propsFromData: (d) => ({ data: (d as QueryResult<PageQuery>).data?.page }),
-  },
-  hund: {
-    fetch: (_r, params) => getHund(params.get('slug') ?? ''),
-    component: HundBody,
-    wrapper: { tag: 'main' },
-    propsFromData: (d) => ({ data: (d as QueryResult<HundQuery>).data?.hund }),
-  },
-  wurf: {
-    fetch: (_r, params) => getWurf(params.get('slug') ?? ''),
-    component: WurfBody,
-    wrapper: { tag: 'main' },
-    propsFromData: (d) => ({ data: (d as QueryResult<WurfQuery>).data?.wurf }),
-  },
-  news: {
-    fetch: (_r, params) => getNews(params.get('slug') ?? ''),
-    component: NewsBody,
-    wrapper: { tag: 'main' },
-    propsFromData: (d) => ({ data: (d as QueryResult<NewsQuery>).data?.news }),
-  },
+export const islands = {
+  ...detailIslands,
   global: {
     fetch: () => getConfig(),
     component: Header,
@@ -50,4 +25,4 @@ export const islands: IslandRegistry = {
     wrapper: { tag: 'div' },
     propsFromData: (d) => ({ config: (d as QueryResult<ConfigQuery>).data?.config }),
   },
-};
+} satisfies IslandRegistry;

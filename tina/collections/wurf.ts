@@ -1,4 +1,6 @@
 import type { Collection } from 'tinacms';
+import { geschlechter } from '../../src/lib/domain/hund';
+import { wurfSlug, wurfStatus, wurfUrl } from '../../src/lib/domain/wurf';
 import { bildFeld, galerieFeld } from './fields';
 
 export const WurfCollection: Collection = {
@@ -7,10 +9,9 @@ export const WurfCollection: Collection = {
   path: 'src/content/wuerfe',
   format: 'md',
   ui: {
-    router: ({ document }) => `/wuerfe/${document._sys.filename}`,
+    router: ({ document }) => wurfUrl(document._sys.filename),
     filename: {
-      slugify: (values: { buchstabe?: string }) =>
-        `${(values?.buchstabe || 'x').toLowerCase()}-wurf`,
+      slugify: (values: { buchstabe?: string }) => wurfSlug(values?.buchstabe),
     },
   },
   defaultItem: () => ({ status: 'geplant' }),
@@ -19,11 +20,7 @@ export const WurfCollection: Collection = {
     { type: 'string', name: 'buchstabe', label: 'Buchstabe', required: true },
     {
       type: 'string', name: 'status', label: 'Status',
-      options: [
-        { value: 'geplant', label: 'In Planung' },
-        { value: 'aktuell', label: 'Welpen sind da' },
-        { value: 'vergangen', label: 'Abgeschlossen' },
-      ],
+      options: [...wurfStatus],
     },
     { type: 'datetime', name: 'wurfdatum', label: 'Wurftag (oder erwartet)', ui: { dateFormat: 'DD.MM.YYYY' } },
     { type: 'string', name: 'vater', label: 'Vater' },
@@ -40,7 +37,7 @@ export const WurfCollection: Collection = {
         { type: 'string', name: 'name', label: 'Name' },
         {
           type: 'string', name: 'geschlecht', label: 'Geschlecht',
-          options: [{ value: 'huendin', label: 'Hündin' }, { value: 'ruede', label: 'Rüde' }],
+          options: [...geschlechter],
         },
         { type: 'image', name: 'bild', label: 'Bild' },
         { type: 'string', name: 'link', label: 'Link (working-dog.com)' },

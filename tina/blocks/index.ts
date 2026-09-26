@@ -1,4 +1,5 @@
 import type { Template } from 'tinacms';
+import { hundeBlockAuswahl } from '../../src/lib/domain/hund';
 
 const buttons = {
   type: 'object', name: 'buttons', label: 'Buttons', list: true,
@@ -87,11 +88,7 @@ export const hundeBlock: Template = {
     { type: 'string', name: 'text', label: 'Einleitung', ui: { component: 'textarea' } },
     {
       type: 'string', name: 'kategorie', label: 'Welche Hunde?',
-      options: [
-        { value: 'alle', label: 'Alle (gruppiert)' },
-        { value: 'zucht', label: 'Unsere Rottweiler' },
-        { value: 'rudel', label: 'Weitere Rudelmitglieder' },
-      ],
+      options: hundeBlockAuswahl,
     },
   ],
 };

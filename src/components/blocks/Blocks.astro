@@ -9,9 +9,9 @@ import WuerfeBlock from './WuerfeBlock.astro';
 import NewsBlock from './NewsBlock.astro';
 import Cta from './Cta.astro';
 import Kontakt from './Kontakt.astro';
-import type { CmsPage, CmsConfig } from '../../lib/data';
+import type { CmsPage } from '../../lib/data';
 
-interface Props { data?: CmsPage | null; config?: CmsConfig | null }
+interface Props { data?: CmsPage | null }
 const { data } = Astro.props;
 const blocks = (data?.blocks ?? []).filter((b) => b !== null);
 ---

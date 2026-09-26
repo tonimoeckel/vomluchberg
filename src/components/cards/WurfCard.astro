@@ -1,10 +1,12 @@
 ---
-import { formatDatum, statusLabel, type WurfListItem } from '../../lib/data';
+import type { WurfListItem } from '../../lib/data';
+import { formatDatum } from '../../lib/domain/datum';
+import { statusLabel, wurfUrl } from '../../lib/domain/wurf';
 interface Props { wurf: WurfListItem }
 const { wurf } = Astro.props;
 const geplant = wurf.status === 'geplant';
 ---
-<a href={`/wuerfe/${wurf._sys.filename}`} class:list={['card card-hover group relative flex h-full flex-col !overflow-visible', geplant && 'border-2 border-dashed border-accent/60']}>
+<a href={wurfUrl(wurf._sys.filename)} class:list={['card card-hover group relative flex h-full flex-col !overflow-visible', geplant && 'border-2 border-dashed border-accent/60']}>
 	<div class="relative">
 		<div class="aspect-[16/10] overflow-hidden rounded-t-[inherit] bg-surface">
 		{wurf.bild && <img src={wurf.bild} alt={wurf.titel} loading="lazy" decoding="async" class:list={['size-full object-cover transition duration-700 group-hover:scale-105', geplant && 'opacity-80 saturate-50']} />}
@@ -13,7 +15,7 @@ const geplant = wurf.status === 'geplant';
 	</div>
 	<div class="flex flex-1 flex-col gap-2 p-5 pt-6">
 		<span class:list={['badge w-fit', geplant ? 'grad-soft text-accent-ink' : wurf.status === 'aktuell' ? 'grad-bg text-white' : 'bg-surface text-muted']}>
-			{statusLabel[wurf.status ?? 'vergangen']}
+			{statusLabel(wurf.status)}
 		</span>
 		<h3 class="font-display text-2xl font-extrabold">{wurf.titel}</h3>
 		{wurf.vater && wurf.mutter && <p class="text-sm font-medium">{wurf.mutter} × {wurf.vater}</p>}

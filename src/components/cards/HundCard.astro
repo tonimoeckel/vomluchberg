@@ -1,17 +1,20 @@
 ---
-import { formatDatum, type HundListItem } from '../../lib/data';
+import type { HundListItem } from '../../lib/data';
+import { geschlechtBadge, hundUrl, istErinnerung, lebensdatenKarte } from '../../lib/domain/hund';
 interface Props { hund: HundListItem }
 const { hund } = Astro.props;
-const erinnerung = hund.kategorie === 'erinnerung';
+const erinnerung = istErinnerung(hund);
+const badge = geschlechtBadge(hund);
+const lebensdaten = lebensdatenKarte(hund);
 ---
-<a href={`/hunde/${hund._sys.filename}`} class="card card-hover group block h-full">
+<a href={hundUrl(hund._sys.filename)} class="card card-hover group block h-full">
 	<div class="relative aspect-[4/5] overflow-hidden bg-surface">
 		{hund.bild && <img src={hund.bild} alt={hund.name} loading="lazy" decoding="async"
 			class:list={['size-full object-cover transition duration-700 group-hover:scale-105', erinnerung && 'grayscale-[35%]']} />}
 		<div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/70 to-transparent"></div>
-		{hund.geschlecht && hund.kategorie !== 'rudel' && (
-			<span class:list={['badge absolute left-3 top-3 text-white shadow', hund.geschlecht === 'ruede' ? 'bg-primary-ink' : 'bg-accent-ink']}>
-				{hund.geschlecht === 'ruede' ? 'Rüde' : 'Hündin'}
+		{badge && (
+			<span class:list={['badge absolute left-3 top-3 text-white shadow', badge.value === 'ruede' ? 'bg-primary-ink' : 'bg-accent-ink']}>
+				{badge.label}
 			</span>
 		)}
 		<div class="absolute bottom-0 left-0 p-5 text-white">
@@ -21,8 +24,8 @@ const erinnerung = hund.kategorie === 'erinnerung';
 	</div>
 	<div class="flex items-center justify-between gap-3 px-5 py-4 text-sm">
 		<span class="text-muted">
-			{hund.geboren && <>WT {formatDatum(hund.geboren)}</>}
-			{hund.verstorben && <> – {hund.verstorben}</>}
+			{lebensdaten.wurftag}
+			{lebensdaten.verstorben && <>{' '}{lebensdaten.verstorben}</>}
 		</span>
 		<span class="font-bold text-primary-ink transition group-hover:translate-x-1">Mehr →</span>
 	</div>
