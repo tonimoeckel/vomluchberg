@@ -39,7 +39,8 @@ blocks:
 
 
     Wer sich für einen Hund dieser Rasse entscheidet bzw. Interesse daran hat, darf sich gern mit uns in Verbindung setzen, wir geben Auskünfte und klären ausführlich über die Rasse auf.'
-  bild: /uploads/seiten/logo-dunkel.png
+  bild: /uploads/seiten/karo-mit-rudel-sitzend.jpg
+  bildunterschrift: Karo mit ihrem Rudel
 - _template: highlights
   ueberschrift: Das kann ich euch anbieten
   items:

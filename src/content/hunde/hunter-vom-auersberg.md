@@ -2,9 +2,10 @@
 name: Hunter vom Auersberg
 rufname: Hunter
 geschlecht: ruede
-kategorie: zucht
-reihenfolge: 30
+kategorie: erinnerung
+reihenfolge: 95
 geboren: '2022-03-16T12:00:00.000Z'
+verstorben: Januar 2024
 eltern: Elgin vom Weiltal x Santana vom Hause Neubrand
 leistungen: 'Schaubewertung: SG4 und V4'
 workingDog: https://www.working-dog.com/dogs-details/7410988/Hunter-vom-Auersberg
@@ -27,4 +28,4 @@ galerie:
 - bild: /uploads/hunde/hunter/89d48a5c-3f96-145f-da9d-8d63b9c2ca4a.jpg
 ---
 
-
+Im Januar 2024 mussten wir uns von Hunter verabschieden.

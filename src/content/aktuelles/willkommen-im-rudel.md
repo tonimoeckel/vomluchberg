@@ -7,6 +7,6 @@ bild: /uploads/news/willkommen-im-rudel.jpg
 
 Mit Blick in die Zukunft...
 
-Seit dem 06.12.2025 berecihert eine kleine junge Dame nun unser Rudel.
+Seit dem 06.12.2025 bereichert eine kleine junge Dame nun unser Rudel.
 
 Wir blicken gespannt in die Zukunft, wie sie sich entwickelt.
