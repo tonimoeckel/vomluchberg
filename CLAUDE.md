@@ -36,7 +36,7 @@ Run `npm test`, `npm run build:local` and `npx astro check` after every change.
 | `src/lib/detailseiten.ts` | One definition per detail page collection (`seiten`, `hunde`, `wuerfe`, `aktuelles`): static paths, load + unwrap, SEO, Body, island. Page `home` is the index (served at `/`) |
 | `src/lib/islands.ts` | Island registry for live visual editing, built from `detailseiten.ts` plus the global header/footer → served by `src/pages/tina-island/[name].ts` |
 | `src/lib/domain/*` | Pure domain rules with colocated tests: `hund`, `wurf`, `news` (options/labels, sorting, grouping, URLs, SEO), `datum`, `slug`, `seo` (head meta fallbacks). Also imported by `tina/collections/*` – no Astro/Tina imports here |
-| `src/lib/farbschema.ts` | Colour scheme list (ids, labels, swatches, theme-color) for Tina, `FarbVorschau` and `BaseHead` |
+| `src/lib/farbschema.ts` | Colour scheme list (ids, Tina labels, theme-color) for Tina and `BaseHead` |
 | `src/components/blocks/*` | One component per block, dispatched in `Blocks.astro` via `__typename` (`PageBlocksHero`, …) |
 | `src/components/islands/*Body.astro` | Detail bodies for hund/wurf/news (pages render `Blocks.astro` directly) |
 | `src/layouts/Detailseite.astro` | Renders a loaded detail page: `Base` + `<TinaIsland>` + Body |
@@ -49,7 +49,7 @@ Run `npm test`, `npm run build:local` and `npx astro check` after every change.
 
 ## Design system
 
-- Colour schemes are CSS variables selected by `<html data-farbe="…">`: `sonnenuntergang` (default), `neon`, `pfirsich`. The default comes from `config.farbschema`. `FarbVorschau.astro` is a review switcher, shown with `PUBLIC_FARBVORSCHAU=true` or `?farbe=…`. Adding a scheme: tokens (light + dark) in `global.css` and an entry in `src/lib/farbschema.ts`.
+- Colour schemes are CSS variables selected by `<html data-farbe="…">`: `neon` (active), `sonnenuntergang`, `pfirsich`. The active scheme comes from `config.farbschema` (fallback `STANDARD_FARBSCHEMA`). Adding a scheme: tokens (light + dark) in `global.css` and an entry in `src/lib/farbschema.ts`.
 - Use the semantic Tailwind colours: `bg`, `surface`, `surface-2`, `fg`, `muted`, `border`, `primary`, `primary-ink`, `accent`, `accent-ink`, `dark`, `on-dark`. Use `*-ink` variants for text on light backgrounds (contrast).
 - Custom utilities are defined with `@utility` (Tailwind v4 cannot `@apply` custom classes): `container-page`, `grad-bg`, `grad-text`, `grad-soft`, `btn`, `btn-primary`, `btn-secondary`, `card`, `card-hover`, `badge`. Component classes: `kicker`, `headline-line`, `prose-luchberg`.
 - Rich text is rendered with `class="prose prose-lg prose-luchberg"` and `<TinaMarkdown content={…} />`.

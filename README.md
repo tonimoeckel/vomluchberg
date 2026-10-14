@@ -49,11 +49,11 @@ Every editable region is a `<TinaIsland>` registered in `src/lib/islands.ts`; th
 
 Light and friendly, with orange → pink accents and neon details (Karo's brief). Three colour schemes are defined as CSS variables in `src/styles/global.css`:
 
-- `sonnenuntergang` (default): warm cream, orange → red → pink
-- `neon`: white, hot orange/pink with glow details
+- `sonnenuntergang`: warm cream, orange → red → pink
+- `neon` (default): white, hot orange/pink with glow details
 - `pfirsich`: softer peach/coral, rounder corners
 
-The active scheme is set in **Tina → Einstellungen → Farbschema**. For the review with Karo, set `PUBLIC_FARBVORSCHAU=true` (or add `?farbe=neon` to any URL) to show a small switcher in the bottom right.
+The active scheme is set in **Tina → Einstellungen → Farbschema**.
 
 Fonts are self-hosted via Fontsource (Bricolage Grotesque + Inter), so no Google Fonts requests are made (GDPR). There is no tracking and there are no cookies.
 

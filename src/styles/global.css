@@ -8,7 +8,7 @@
    Das aktive Schema steht als data-farbe auf <html>
    (Standard aus Tina → Einstellungen → Farbschema).
    Keep ids and --bg (light + dark) in sync with src/lib/farbschema.ts
-   (Tina options, preview switcher, theme-color).
+   (Tina options, theme-color).
    ------------------------------------------------------------------ */
 :root,
 [data-farbe='sonnenuntergang'] {

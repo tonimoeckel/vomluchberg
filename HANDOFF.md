@@ -17,9 +17,9 @@ Handoff from a Claude Cowork session to Claude Code. Read `CLAUDE.md` first for 
 
 1. **Deploy a preview** so Karo can review it this weekend:
    - TinaCloud project at app.tina.io → connect the repo, and get `PUBLIC_TINA_CLIENT_ID` + `TINA_TOKEN`.
-   - Cloudflare *Workers & Pages → Import repository*. Build: `npm run build`. Deploy: `npx wrangler deploy`. Env: Tina creds, `SITE_URL`, `PUBLIC_FARBVORSCHAU=true` for the review.
+   - Cloudflare *Workers & Pages → Import repository*. Build: `npm run build`. Deploy: `npx wrangler deploy`. Env: Tina creds, `SITE_URL`.
    - Verify that the `/admin` login and saving through TinaCloud trigger a rebuild.
-2. **Design review with Karo:** she picks a colour scheme and sets it in Tina → Einstellungen. Afterwards set `PUBLIC_FARBVORSCHAU=false`.
+2. **Design review with Karo:** done – the colour scheme is `neon` (Tina → Einstellungen → Farbschema).
 3. **Content from Karo** (still waiting): an intro text if she wants to rewrite it, her favourite photos, the logo as a vector (she may make a new silhouette logo), details on the C-Wurf, and name and photos of the new dog from 06.12.2025 ("Willkommen im Rudel").
 4. **Legal:** replace the placeholders in `src/content/seiten/impressum.md` and `datenschutz.md`. Mention Cloudflare hosting and Web3Forms.
 5. **Contact form:** get a Web3Forms access key registered to Karo's e-mail and set `PUBLIC_WEB3FORMS_KEY`.

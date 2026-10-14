@@ -4,38 +4,28 @@
 
 export interface Farbschema {
   id: string;
-  /** Short label in the preview switcher (FarbVorschau). */
-  label: string;
   /** Option label in Tina (Einstellungen → Farbschema). */
   tinaLabel: string;
-  /** Preview dot, after the scheme's --grad. */
-  swatch: string;
   /** <meta name="theme-color"> = the scheme's --bg (light / dark). */
   themeColor: { light: string; dark: string };
 }
 
-export const STANDARD_FARBSCHEMA = 'sonnenuntergang';
+export const STANDARD_FARBSCHEMA = 'neon';
 
 export const FARBSCHEMATA: readonly Farbschema[] = [
   {
     id: 'sonnenuntergang',
-    label: 'Sonnenuntergang',
     tinaLabel: 'Sonnenuntergang (Orange → Pink)',
-    swatch: 'linear-gradient(120deg,#f97316,#ef4444,#ec4899)',
     themeColor: { light: '#fffaf5', dark: '#16110e' },
   },
   {
     id: 'neon',
-    label: 'Neon',
     tinaLabel: 'Neon (knallige Details)',
-    swatch: 'linear-gradient(120deg,#ff7a00,#ff1f8e)',
     themeColor: { light: '#ffffff', dark: '#0e0e10' },
   },
   {
     id: 'pfirsich',
-    label: 'Pfirsich',
     tinaLabel: 'Pfirsich (sanft & warm)',
-    swatch: 'linear-gradient(120deg,#f4a261,#e76f51,#e8819f)',
     themeColor: { light: '#fffbf8', dark: '#1a1512' },
   },
 ];

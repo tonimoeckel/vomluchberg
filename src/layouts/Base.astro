@@ -2,7 +2,6 @@
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import FarbVorschau from '../components/FarbVorschau.astro';
 import Lightbox from '../components/Lightbox.astro';
 import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import { getConfig } from '../lib/data';
@@ -15,24 +14,12 @@ type Props = Partial<Seo>;
 const config = (await getConfig()).data?.config ?? null;
 const meta = headMeta(Astro.props, config?.website);
 const schema = farbschema(config?.farbschema);
-const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
 ---
 
 <!doctype html>
-<html lang="de" data-farbe={schema.id} data-farbe-standard={schema.id}>
+<html lang="de" data-farbe={schema.id}>
 	<head>
 		<BaseHead {...meta} farbschema={schema} />
-		<script is:inline>
-			// Colour preview (for reviewing with Karo): ?farbe=neon is remembered, ?farbe=<standard> forgets it.
-			try {
-				const h = document.documentElement;
-				const p = new URLSearchParams(location.search).get('farbe');
-				if (p === h.dataset.farbeStandard) localStorage.removeItem('farbe');
-				else if (p) localStorage.setItem('farbe', p);
-				const f = localStorage.getItem('farbe');
-				if (f) h.dataset.farbe = f;
-			} catch (e) {}
-		</script>
 	</head>
 	<body class="min-h-dvh flex flex-col">
 		<a href="#inhalt" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 btn-primary">Zum Inhalt springen</a>
@@ -46,6 +33,5 @@ const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
 			<Footer config={config} />
 		</TinaIsland>
 		<Lightbox />
-		<FarbVorschau force={showSwitcher} />
 	</body>
 </html>

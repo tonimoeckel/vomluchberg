@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { FARBSCHEMATA, farbschema, farbschemaOptions, STANDARD_FARBSCHEMA } from './farbschema';
+import { farbschema, farbschemaOptions, STANDARD_FARBSCHEMA } from './farbschema';
 
 describe('farbschema', () => {
   it('falls back to the standard scheme for unknown or empty ids', () => {
-    expect(STANDARD_FARBSCHEMA).toBe('sonnenuntergang');
+    expect(STANDARD_FARBSCHEMA).toBe('neon');
     for (const id of [undefined, null, '', 'gibtsnicht']) {
-      expect(farbschema(id).id).toBe('sonnenuntergang');
+      expect(farbschema(id).id).toBe('neon');
     }
   });
 
@@ -24,10 +24,5 @@ describe('farbschema', () => {
       { value: 'neon', label: 'Neon (knallige Details)' },
       { value: 'pfirsich', label: 'Pfirsich (sanft & warm)' },
     ]);
-  });
-
-  it('gives each scheme a short label and a swatch for the preview switcher', () => {
-    expect(FARBSCHEMATA.map((s) => s.label)).toEqual(['Sonnenuntergang', 'Neon', 'Pfirsich']);
-    expect(farbschema('neon').swatch).toBe('linear-gradient(120deg,#ff7a00,#ff1f8e)');
   });
 });
