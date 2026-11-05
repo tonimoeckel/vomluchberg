@@ -23,9 +23,7 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 | Custom domains | A Custom Domain matches one exact hostname. For `www` ↔ apex use a Redirect Rule plus a proxied placeholder record (`AAAA 100::`) for the hostname that only redirects. | …/workers/configuration/routing/custom-domains |
 | Domain availability | DENIC RDAP (`rdap.denic.de`) returned **404 = not registered** for: `alltag-kann-sport.de`, `alltagkannsport.de`, `rauhaardackel-vom-luchberg.de`, `rauhaardackelvomluchberg.de`, `dackel-vom-luchberg.de`, `teckel-vom-luchberg.de`, `luchberg-dackel.de`, `rauhaardackel-luchberg.de`, `karolin-riesing.de`, `hundetraining-riesing.de`, `hundetraining-karolin-riesing.de`. Verisign RDAP: `alltag-kann-sport.com` and `alltagkannsport.com` not registered. (Control: `vomluchberg.de` → 200.) Re-check right before ordering. | RDAP queries from this session |
 
-**Not verified:** the Pfotentermin code. `add_repo` for `tonimoeckel/pfotentermin` was refused in this
-session, so section 6 is planned against the file names from the brief and lists what Toni has to check
-in each file (task P-01). Nothing in Pfotentermin was read or changed.
+**Pfotentermin:** code checked on 2026-11-05 (`main` @ `5065503`), see 6.1. Nothing in Pfotentermin was changed.
 
 ---
 
@@ -42,7 +40,7 @@ in each file (task P-01). Nothing in Pfotentermin was read or changed.
 | O7 | **No new mailboxes.** Contact stays on the Gmail addresses. Optional: Cloudflare Email Routing for a nice receive-only address (e.g. `hallo@alltag-kann-sport.de` → Gmail). Domains without mail get anti-spoofing records (null MX, `v=spf1 -all`, DMARC `p=reject`). | Karo already uses Gmail; nothing to migrate. |
 | O8 | **One TinaCloud project**, all saves commit to `main`. No Tina editorial workflow. | D2. Rebuild routing is done by the watch paths (O3), not by Tina. |
 | O9 | **Cross-link URLs come from a site registry in code**, only rendered for sites flagged `live`. The hint text is editable in each site's Tina "Einstellungen". | A link must never point to a `*.workers.dev` URL; switching a domain is one code change, not three content edits. |
-| O10 | **Pfotentermin: redirect first, deactivate later, delete never (without export).** 301 from all tenant URLs to `www.alltag-kann-sport.de` the day the training site is live; tenant switched to inactive after ≥ 4 weeks without issues; data exported to Karo first. Redirect stays ≥ 12 months. | D9. No gap for customers or Google; reversible until the tenant is deactivated. |
+| O10 | **Pfotentermin: redirect first, deactivate later, delete never (without export).** Host/path 301s in Pfotentermin's `next.config.js` (not DB-dependent) to `www.alltag-kann-sport.de` the day the training site is live; customer `/profile` URLs go to the platform instead. Tenant stays active during a ~3-month transition (deactivation also locks Karo's admin), data exported to Karo first. Redirect stays ≥ 12 months. | D9. No gap for customers or Google; customers keep their dog data; reversible via env flag. |
 
 ---
 
@@ -255,77 +253,131 @@ The training site has no overlap with the breeding sites. The Pfotentermin texts
 
 ## 6. Pfotentermin sunset (D9)
 
-**Constraint:** no changes in `tonimoeckel/pfotentermin` during planning. The code could not be read in
-this session (access refused), so every step below that depends on Pfotentermin internals starts with a
-verification task.
+**Constraint:** no changes in `tonimoeckel/pfotentermin` during planning. P-01 (code check) was done
+on 2026-11-05 against `main` @ `5065503`; findings below. The Pfotentermin change itself is a separate
+task in that repo (P-08).
 
-### 6.1 What to check first (P-01, Toni, ~30 min)
+### 6.1 P-01 findings (verified)
 
-| File | Question |
-| --- | --- |
-| `proxy.ts` | How are tenant hosts (`<alias>.pfotentermin.eu`) and path tenants (`/s/<alias>`) resolved? Is there already an early-return hook where a per-tenant redirect could live? What happens for an inactive/unknown tenant (404, landing page)? |
-| `lib/utils/tenantUrl.ts` | Which URL variants exist for a tenant (subdomain, `/s/<alias>`, custom domain)? → list of hosts/paths that must redirect. |
-| `app/admin/tenants/[alias]/settings/domain/page.tsx` | Does Pfotentermin support a custom domain per tenant? Was one ever configured for `karolin-riesing` (then that domain must redirect too)? Is there a "redirect"/"external website" field already? |
-| `next.config.js` | Existing `redirects()`/`headers()`; is `redirects()` host-aware (`has: [{ type: 'host' }]`)? |
-| `prisma/schema.prisma` | Tenant flags: `active`/`disabled`/`published`/`deletedAt`, booking toggles, any `redirectUrl`/`website` field. Which models hang off the tenant (customers, dogs, leads/inquiries, reservations/bookings, courses, invoices)? Cascading deletes on the tenant relation (risk!)? |
-| DNS of `pfotentermin.eu` | Is the zone on Cloudflare and are the tenant hostnames **proxied** (orange cloud)? Decides option A below. |
+| Where | Finding | Consequence |
+| --- | --- | --- |
+| Hosting / DNS | Pfotentermin runs on **Vercel** (`server: Vercel`). `pfotentermin.eu` nameservers are **GoDaddy** (`ns05/ns06.domaincontrol.com`), not Cloudflare. | A Cloudflare Redirect Rule is **not possible** without moving the zone. The redirect has to live in the Next.js app. |
+| Live check | `https://karolin-riesing.pfotentermin.eu/` and `…/s/karolin-riesing` both answer **200** (storefront). | Both URL forms are in use and must redirect. |
+| `proxy.ts` | Three host classes: (a) platform host (`booking.pfotentermin.eu`, `pfotentermin.eu/.de`, `www.*`, `*.vercel.app`): `/s/<alias>/…` gets a 301 to the tenant subdomain/custom domain, **only** if `NEXT_PUBLIC_STOREFRONT_USE_SUBDOMAIN_URLS=true` in production; (b) tenant subdomain: `/admin` → 301 platform, auth paths served as is, everything else rewritten to `/s/<alias>/…`; (c) custom domain: same as (b) via `Tenant.customDomain`. Every tenant lookup filters on `isActive: true`. No per-tenant "external redirect" exists. | Setting `isActive=false` turns **every** tenant URL into a 404 – a redirect must not depend on the tenant being active. |
+| `lib/utils/tenantUrl.ts` | URL variants: `customDomain` > `subdomainOverride.<zone>` > `alias.<zone>`; legacy `${APP_URL}/s/<alias>` while the rollout flag is off. | Hosts/paths to redirect: `karolin-riesing.pfotentermin.eu/**` (+ `subdomainOverride` if set), `<platform host>/s/karolin-riesing/**`, `customDomain` if one was ever set (check in the DB). |
+| `settings/domain/page.tsx` | Custom domain = trainer enters a domain, points it to Vercel (`A 76.76.21.21`, `CNAME cname.vercel-dns.com`), Toni adds it in Vercel manually. Not a redirect feature. | **Do not** enter `alltag-kann-sport.de` as custom domain: Pfotentermin would then generate storefront links (e-mails, canonical, sitemap) to the new domain with Pfotentermin paths, and the domain points to Cloudflare, not Vercel. |
+| `next.config.js` | `redirects()` exists (`/store/:alias…` → `/s/:alias…`). Next.js runs `next.config` redirects **before** middleware (`proxy.ts`), and they support `has: [{ type: 'host' }]`. Serwist service worker with `cacheOnNavigation: true`. | Host-matched redirects here need no DB and work regardless of `isActive`. Returning visitors may see a cached page once until the service worker fetches the 301 (minor). |
+| `prisma/schema.prisma` | Only tenant flag: `isActive` (no `deletedAt`, no redirect field). `websiteUrl` exists (shown in the marketing gallery). Services have `status` `draft/active/inactive`, group events `isActive`. Tenant-owned data: bookings, `BookingReservation`, `Reservation`, `ServiceInquiry`, `GroupEventInquiry`, `PackageContingent`, reviews, services, events, locations, `TenantMedia`. Customers' dogs (`UserDog` + health, vaccinations, cycles, diary) belong to the **customer's** `UserProfile`, not to the tenant. Tenant relations are required without `onDelete` (→ Restrict), except `TenantMedia` and `AiUsageEvent` (Cascade). | A tenant delete is blocked by its bookings (good, no silent cascade). Karo's export covers her tenant data; customers' dog data stays with the customers' accounts and must stay reachable for them. |
+| `app/admin/tenants/[alias]/layout.tsx`, `tenant.getByAlias` | Inactive tenant → admin redirects to `/admin?error=tenant_inactive`; `getByAlias` throws. | **Deactivating also locks Karo out of her admin.** Deactivate only at the end of the transition. |
+| `app/sitemap.ts` | Lists all `isActive` tenants. | While the tenant stays active during the transition, its URLs stay in Pfotentermin's sitemap → exclude it explicitly (P-08). |
+| Export | Bookings page has a CSV export (client-side) and `/api/admin/export-ical`. No export for inquiries, reservations, customers. | P-03 needs a small DB export (SQL/Prisma script), not just the UI. |
 
-### 6.2 Redirect options (choose after P-01)
+### 6.2 Redirect implementation (decision)
 
-| Option | How | Pros | Cons |
-| --- | --- | --- | --- |
-| **A – Cloudflare Single Redirect (preferred if `pfotentermin.eu` is proxied by Cloudflare)** | Rule 1: `http.host eq "karolin-riesing.pfotentermin.eu"` → dynamic 301 to `https://www.alltag-kann-sport.de` + mapped path. Rule 2: any pfotentermin host with `starts_with(http.request.uri.path, "/s/karolin-riesing")` → same. Preserve query string off. | No Pfotentermin deploy, instant on/off (rollback = disable rule), lives outside the app. | Only works if traffic goes through Cloudflare; path mapping limited to a few rules. |
-| **B – Hard-coded in `next.config.js` `redirects()`** | `{ source: '/s/karolin-riesing/:path*', destination: 'https://www.alltag-kann-sport.de/…', permanent: true }` plus a host-matched rule for the subdomain. | Simple, versioned. | Needs a Pfotentermin deploy; rollback = another deploy. Does not apply if `proxy.ts` rewrites before Next's redirects run – check order. |
-| **C – Generic tenant field (nice long-term)** | New nullable `Tenant.redirectUrl` (+ admin field on the domain settings page); `proxy.ts` returns a 301 to `redirectUrl + mappedPath` for every URL variant of that tenant **before** the active/inactive check. | Reusable for any leaving tenant; Toni can toggle it in the admin UI. | Prisma migration + UI + deploy; most effort. |
+**Chosen: host- and path-matched 301s in Pfotentermin's `next.config.js` `redirects()`** (task P-08 in
+the Pfotentermin repo, Toni or Claude in a Pfotentermin session). Reasons: runs before `proxy.ts`, no DB
+lookup, independent of `isActive`, reviewable diff, rollback = revert + redeploy on Vercel (≈2 min).
 
-Recommendation: **A** if possible (zero code); otherwise **C** if Toni wants the feature in Pfotentermin
-anyway, else **B**. In all cases the redirect must win over "tenant inactive" (6.4), otherwise
-deactivation turns the redirect into a 404.
+Alternatives considered:
+- Cloudflare Redirect Rule – not possible (zone at GoDaddy, see 6.1).
+- Generic `Tenant.redirectUrl` checked in `proxy.ts` before the `isActive` filter – nicer if more tenants
+  leave later, but needs a migration, admin UI and the same path mapping. Revisit if a second tenant leaves.
+- `customDomain` – wrong tool (6.1).
+
+Sketch for P-08 (order matters; first match wins; not applied anywhere yet):
+
+```js
+const KARO = 'https://www.alltag-kann-sport.de';
+const PLATFORM = 'https://booking.pfotentermin.eu';
+const karoHost = [{ type: 'host', value: 'karolin-riesing.pfotentermin.eu' }];
+
+// 1) Tenant subdomain
+{ source: '/profile/:path*',  has: karoHost, destination: `${PLATFORM}/profile/:path*`, permanent: true },
+{ source: '/s/karolin-riesing/profile/:path*', has: karoHost, destination: `${PLATFORM}/profile/:path*`, permanent: true },
+{ source: '/:p(login|auth|reset-password|update-password)/:rest*', has: karoHost, destination: `${PLATFORM}/:p/:rest*`, permanent: false },
+// …then the mapped storefront paths from 6.3, e.g.
+{ source: '/:prefix(s/karolin-riesing)?/services/:rest*', has: karoHost, destination: `${KARO}/angebote`, permanent: true },
+{ source: '/:path((?!_next|api).*)', has: karoHost, destination: `${KARO}/`, permanent: true },
+
+// 2) Platform hosts, path form
+{ source: '/s/karolin-riesing/profile/:path*', destination: '/profile/:path*', permanent: true },
+{ source: '/s/karolin-riesing/services/:rest*', destination: `${KARO}/angebote`, permanent: true },
+{ source: '/s/karolin-riesing/:path*', destination: `${KARO}/`, permanent: true },
+{ source: '/store/karolin-riesing/:path*', destination: `${KARO}/`, permanent: true }, // before the generic /store rule
+```
+
+Plus in the same change: exclude `karolin-riesing` from `app/sitemap.ts` and from the public tenant
+listing (`tenant.list…` / marketing gallery), set `websiteUrl` to the new domain. Add the
+`subdomainOverride` host and any old `customDomain` as extra `has` entries if the DB shows they exist.
+Unit-test the rule list (pure array) in Pfotentermin's Jest setup, and smoke-test with `curl -sI` after
+deploy (expect `301`, correct `location`, no chains, `/_next/*` and `/api/*` untouched).
 
 ### 6.3 Path mapping
 
-Fill in once slice 2's routes and Pfotentermin's real tenant routes (P-01) are known. Default for
-anything unmapped: the new home page (not a 404).
+Tenant routes found in `app/s/[alias]/` (both URL forms, i.e. with and without the `/s/karolin-riesing`
+prefix on the subdomain). New targets marked *(slice 2)* depend on the final training routes.
 
 | Old (Pfotentermin) | New |
 | --- | --- |
-| `karolin-riesing.pfotentermin.eu/` and `/s/karolin-riesing` | `https://www.alltag-kann-sport.de/` |
-| tenant offer/course list pages | offers page (slice 2) |
-| single offer/course pages | offers page (or matching offer page if slice 2 has one per offer) |
-| booking / reservation / inquiry pages | inquiry form (slice 2), e.g. `/kontakt` |
-| about / team pages | about page (slice 2) |
-| imprint / privacy of the tenant | `/impressum`, `/datenschutz` |
-| everything else under the tenant | `/` |
+| `/` | `https://www.alltag-kann-sport.de/` |
+| `/services`, `/services/<id>` | offers page *(slice 2, e.g. `/angebote`)* |
+| `/events/<id>` | offers page *(slice 2)* |
+| `/book`, `/buchungen/<id>` (+ `@modal` book) | inquiry form *(slice 2, e.g. `/kontakt`)* |
+| `/ueber-uns` | about page *(slice 2, e.g. `/ueber-mich`)* |
+| `/bewertungen`, `/bewertung` | `/` (or a reviews section if slice 2 adds one) |
+| `/profile/**` (customer accounts, dogs, health data, bookings) | **`https://booking.pfotentermin.eu/profile/**`** – customers keep access to their own data on the platform |
+| `/login`, `/auth/**`, `/reset-password`, `/update-password` | same path on `booking.pfotentermin.eu` (302) |
+| `/admin/**` | unchanged (`proxy.ts` already sends it to the platform) |
+| anything else under the tenant | `/` |
 
-Use 301 (permanent). Keep the redirect for **at least 12 months**, ideally permanently (it costs nothing).
+Use 301 for content URLs. Keep the redirects **at least 12 months**, ideally permanently.
 
 ### 6.4 Data and deactivation
 
-1. **P-02 (T) Inventory** – count per model for the tenant: customers, dogs, leads/inquiries, open
-   reservations/bookings, upcoming appointments, unpaid items.
-2. **P-03 (T) Export** – export the tenant's data (CSV/JSON per model, or a `pg_dump` filtered to the
-   tenant) and hand it to Karo **securely** (not as an e-mail attachment; e.g. encrypted ZIP + password by
-   phone). Keep one encrypted copy for Toni until the retention decision. Karo is the controller of her
-   customers' data; Pfotentermin/Toni processed it on her behalf (GDPR Art. 28 – check whether an AV
-   agreement exists).
-3. **P-04 (K) Open cases** – before the redirect goes live, Karo personally contacts everyone with an
-   open reservation/inquiry/appointment: training continues as agreed, new contact = phone/e-mail/inquiry
-   form on the new site. Optional: one short e-mail to all active customers announcing the new address
-   (only to people she has a customer relationship with; no newsletter list).
-4. **P-05 (T) Freeze** – the day of the redirect, switch off online booking/inquiry for the tenant (flag
-   from P-01), so nothing new can arrive in Pfotentermin. The redirect makes the public pages unreachable
-   anyway; this also covers API/direct links.
-5. **P-06 (T) Deactivate** – after ≥ 4 weeks without problems, set the tenant inactive (soft flag, **no
-   delete**). Karo's admin login stays usable read-only for ~3 months (assumption, question for Karo).
-6. **P-07 (T+K) Retention/deletion** – after the transition: delete or anonymise the tenant data in
-   Pfotentermin unless there are retention duties (invoices: 8–10 years under German tax law – if
-   Pfotentermin generated invoices, they must be kept by Karo, so they belong in the export). Check the
-   tenant relation for cascade deletes before deleting anything. Document the date.
-7. **Search Console** – optional: if Toni has `pfotentermin.eu` in Search Console, verify the
-   `karolin-riesing.pfotentermin.eu` property and try the Change of Address tool to the new domain; if the
-   tool doesn't accept it, the 301s are enough. Remove the tenant URLs from Pfotentermin's own sitemap.
-8. **Outside links (K)** – Google Business Profile, Facebook/Instagram bio, flyers, business cards,
-   e-mail signature, dog club listings: switch to `www.alltag-kann-sport.de`.
+1. **P-02 (T) Inventory** – SQL counts for Karo's tenant: bookings (upcoming/past), `BookingReservation`,
+   `Reservation` and `ServiceInquiry`/`GroupEventInquiry` by status, `PackageContingent` with remaining
+   units, group events with future dates, reviews, customers linked to the tenant.
+2. **P-03 (T) Export** – one script (Prisma or SQL) dumping those models for `tenantId = <Karo>` to
+   CSV/JSON, plus the bookings CSV and iCal export from the admin UI. Hand it to Karo **securely**
+   (encrypted ZIP, password by phone). Customers' dog/health data is **not** part of Karo's export (it
+   belongs to the customers' accounts). Check whether an Art. 28 GDPR processing agreement Karo ↔
+   Pfotentermin exists; if not, document the roles now.
+3. **P-04 (K) Open cases** – before the redirect: Karo contacts everyone with an open reservation,
+   inquiry, future booking/event or remaining package units; training continues as agreed, new contact =
+   phone/e-mail/inquiry form. Remaining package units: Karo decides (honour offline / refund).
+4. **P-05 (T) Freeze** – on redirect day: set all of Karo's services to `status = inactive` and her group
+   events to `isActive = false`, so nothing new can be booked via the API/old links even if a redirect
+   rule is missed. The tenant itself **stays `isActive = true`** (admin access, 6.1).
+5. **Transition (~3 months, assumption)** – Karo can still log into `booking.pfotentermin.eu/admin` to
+   look things up. Customers keep their accounts and dog data on the platform.
+6. **P-06 (T) Deactivate** – at the end of the transition: final export (P-03 again), then
+   `isActive = false`. Effect: Karo's admin is locked, tenant disappears everywhere; the redirects keep
+   working because they don't depend on the tenant.
+7. **P-07 (T+K) Retention/deletion** – later, on Karo's go: anonymise or delete tenant data. A plain
+   tenant delete fails on Restrict relations (bookings etc.) – delete in dependency order in a reviewed
+   script, or anonymise customer fields instead. Invoices/payment records (if any) are Karo's to keep
+   (8–10 years under German tax law) – they must be in the export. Document the date.
+8. **Search Console (optional)** – if Toni has `pfotentermin.eu` verified, check the
+   `karolin-riesing.pfotentermin.eu` URLs drop out after the redirect; Change of Address only if the tool
+   accepts the subdomain property.
+9. **Outside links (K)** – Google Business Profile, Facebook/Instagram bio, flyers, business cards,
+    e-mail signature, dog club listings → `www.alltag-kann-sport.de`.
+10. **Reviews** – Pfotentermin holds Karo's reviews (`Review`). Re-using them on the new site is a slice 2
+    content question; only with the reviewers' consent or as anonymised quotes (legal check), and never
+    as `aggregateRating` (5.2).
+
+### 6.5 Tasks (Pfotentermin)
+
+| ID | Owner | Task | Done when |
+| --- | --- | --- | --- |
+| P-01 | C | Code check | ✅ done 2026-11-05 (6.1) |
+| P-02 | T | Inventory (SQL counts) | numbers sent to Karo |
+| P-03 | T | Export script + secure hand-over | Karo confirms she can open it |
+| P-04 | K | Contact open cases | list ticked off |
+| P-08 | T/C | Pfotentermin PR: redirects in `next.config.js` (behind an env flag, e.g. `KARO_REDIRECT=on`, so it can be merged early and switched on at C5), sitemap/listing exclusion, `websiteUrl`, Jest test for the rule list. Check the prod DB for `subdomainOverride`/`customDomain` of the tenant first. | merged, flag off, tests green |
+| P-05 | T | Freeze services/events | storefront shows no bookable offer (behind the redirect) |
+| P-06 | T | Final export + `isActive = false` | after the transition |
+| P-07 | T+K | Anonymise/delete | on Karo's go |
 
 ---
 
@@ -356,7 +408,7 @@ Each step lists its rollback. "Live check" = home, two subpages, 404, form, `rob
 | B5 | C | Registry: `dackel.live = true` → cross-links on Rottweiler (and training, if live) appear; luchberg profile shortened (S-04). One commit, so it can be reverted alone. | Revert that commit. |
 | B6 | T | Search Console property + sitemap (S-05). CF-06 for the dachshund Worker. | Re-enable the workers.dev route. |
 
-### Phase C – Training site go-live (requires P-01…P-04 done)
+### Phase C – Training site go-live (requires P-02…P-04 and P-08 done)
 
 | # | Owner | Step | Rollback |
 | --- | --- | --- | --- |
@@ -364,10 +416,10 @@ Each step lists its rollback. "Live check" = home, two subpages, 404, form, `rob
 | C2 | T | Custom Domain `www.alltag-kann-sport.de` + apex redirect (as B2). | as B2 |
 | C3 | T | `SITE_URL` set, `SITE_NOINDEX` removed, redeploy; live check; T-03. | as B3 |
 | C4 | C | Registry `training.live = true` → cross-links. | Revert commit. |
-| C5 | T | **Pfotentermin redirect on** (6.2 option chosen) + freeze bookings (P-05). Test every row of 6.3 with `curl -sI` (expect `301` + correct `location`, no chains). | Option A: disable the rule (instant). B/C: revert/unset and redeploy Pfotentermin. Bookings can be re-enabled. |
+| C5 | T | **Pfotentermin redirect on**: set the P-08 env flag in Vercel production and redeploy; freeze bookings (P-05). Test every row of 6.3 with `curl -sI` on both URL forms (expect `301` + correct `location`, no chains; `/profile/*` → platform). | Unset the flag and redeploy on Vercel (≈2 min, or promote the previous Vercel deployment instantly); set services back to `active`. |
 | C6 | T | Search Console for the new domain (+ optional Change of Address, 6.4.7). CF-06. | – |
 | C7 | K | Update outside links (6.4.8). | – |
-| C8 | T | After ≥ 4 weeks: P-06 deactivate tenant. After the agreed period: P-07. | Until P-07: re-activate the tenant flag. After P-07: only from the export. |
+| C8 | T | After the transition (~3 months, Karo's answer): P-06 final export + deactivate. Later, on Karo's go: P-07. | Until P-07: set `isActive = true` again. After P-07: only from the export. |
 
 ### Phase D – Follow-up (both sites)
 
@@ -415,8 +467,9 @@ pages, Karo confirms; **L-03 (C)** put them into each site's Tina pages (`impres
 | New site indexed on `workers.dev` before the domain | medium | duplicate URLs in Google | `SITE_NOINDEX` from day one (I-4), CF-06 after go-live. |
 | Preview build fails because branch unknown in TinaCloud | high without O4 | no previews | Preview build command `build:local` (O4). |
 | Image uploaded into another site's folder | medium | image missing on the site | `uploadDir` per field, content test (I-6), hint text in Tina. |
-| Pfotentermin redirect blocked by "inactive tenant" handling | medium | 404 instead of redirect | Redirect runs before the active check (6.2), deactivate only after 4 weeks (C8). |
-| Tenant delete cascades and wipes customer data | low | data loss | Never delete before export (P-03) and cascade check (P-07). |
+| Pfotentermin redirect tied to tenant state | low (with 6.2) | 404 instead of redirect | Redirects in `next.config.js` run before `proxy.ts` and don't read the DB; `isActive=false` only at the end (C8). |
+| Customers lose access to their dog data | medium if `/profile` is redirected away | support requests, GDPR access issue | `/profile/**` → platform `/profile/**` (6.3); customers' accounts are not touched by the sunset. |
+| Tenant data deleted too early | low | data loss | Tenant relations are Restrict (6.1), so a plain delete fails; still: never before export (P-03), deletion only via reviewed script (P-07). |
 | E-mail spoofing with the new domains | low | phishing in Karo's name | null MX / SPF `-all` / DMARC `p=reject` (O7). |
 | Legal pages incomplete (§ 11 TierSchG, Widerruf) | medium | Abmahnung risk | Section 8, human check before C1. |
 | Cloudflare product changes (Previews, Builds are recent) | medium | steps in this doc drift | Re-read the linked docs when executing CF-02…CF-04. |
@@ -428,7 +481,7 @@ pages, Karo confirms; **L-03 (C)** put them into each site's Tina pages (`impres
 
 | Phase | Toni | Karo | Claude |
 | --- | --- | --- | --- |
-| Before go-live | P-01, CF-02…CF-05, T-01…T-03, A5 | A4 (domains), fragen-an-karo, L-01 | CF-01, S-01…S-03, (I-1…I-9 with slice 0) |
+| Before go-live | CF-02…CF-05, T-01…T-03, A5 | A4 (domains), fragen-an-karo, L-01 | CF-01, S-01…S-03, (I-1…I-9 with slice 0) |
 | Dachshund go-live | B2…B4, B6, S-05 | B1, S-04 | B5 |
-| Training go-live | P-02, P-03, P-05, C2, C3, C5, C6 | P-04, C1, C7 | C4, L-03 |
+| Training go-live | P-02, P-03, P-05, P-08, C2, C3, C5, C6 | P-04, C1, C7 | C4, L-03, P-08 (if asked) |
 | After | CF-06, P-06, P-07 | P-07 | README/CLAUDE.md update |

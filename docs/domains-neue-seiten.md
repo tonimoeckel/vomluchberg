@@ -73,8 +73,10 @@ Erst wenn `www.alltag-kann-sport.de` läuft und getestet ist:
 
 - [ ] Karo: Alle offenen Anfragen, Reservierungen und Termine aus Pfotentermin persönlich kontaktieren und die neue Adresse nennen.
 - [ ] Toni: Kundendaten aus Pfotentermin exportieren und Karo sicher übergeben (nicht als normalen E-Mail-Anhang).
-- [ ] Toni: Weiterleitung einschalten: `karolin-riesing.pfotentermin.eu` und `…/s/karolin-riesing` → `www.alltag-kann-sport.de`. Online-Anfragen in Pfotentermin abschalten.
+- [ ] Toni: Weiterleitung einschalten: `karolin-riesing.pfotentermin.eu` und `…/s/karolin-riesing` → `www.alltag-kann-sport.de`. Angebote in Pfotentermin auf „inaktiv“ stellen, damit nichts Neues gebucht werden kann.
+- [ ] Deine Kundinnen und Kunden behalten ihr Pfotentermin-Konto mit den Daten ihrer Hunde; ihre Profil-Links führen weiter zu Pfotentermin.
 - [ ] Testen: alte Pfotentermin-Links landen auf der passenden neuen Seite.
 - [ ] Karo: Neue Adresse eintragen bei Google-Unternehmensprofil, Facebook, Instagram, Flyern, Visitenkarten und in der E-Mail-Signatur.
-- [ ] Nach etwa 4 Wochen ohne Probleme: Pfotentermin-Zugang deaktivieren (nicht löschen). Löschen erst nach Absprache mit Karo.
+- [ ] In der Übergangszeit (Annahme: 3 Monate) kann Karo sich weiter in Pfotentermin einloggen und nachschauen.
+- [ ] Danach: letzter Datenexport, dann den Pfotentermin-Bereich deaktivieren (nicht löschen). Ab dann ist auch Karos Login dort gesperrt. Löschen erst nach Absprache mit Karo.
 - [ ] Die Weiterleitung bleibt mindestens ein Jahr bestehen, am besten für immer.
