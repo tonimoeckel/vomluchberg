@@ -2,7 +2,7 @@
 
 Website for **Karo (Karolin Riesing)**, owner of the ADRK Rottweiler kennel "vom Luchberg" in Glashütte OT Luchau (Saxony). Toni is the technical implementer; Karo is non-technical and edits simple content herself via TinaCMS. Layout/design/structural changes are Toni's job.
 
-- Talk to Toni in **German**. Code, comments, commits and docs are in English, except `docs/domain-umzug.md`, which Karo also reads.
+- Talk to Toni in **German**. Code, comments, commits and docs are in English, except `docs/domain-umzug.md` and `docs/plan/fragen-an-karo.md`, which Karo also reads.
 - **All site content is German**, written in an informal "ihr/euch" tone.
 
 ## Stack
