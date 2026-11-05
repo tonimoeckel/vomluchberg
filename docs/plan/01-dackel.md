@@ -8,7 +8,8 @@ Design mockups (open locally in a browser, they load the real photos from `publi
 [`mockups/dackel/forsthaus.html`](mockups/dackel/forsthaus.html) – C "Forsthaus",
 [`mockups/dackel/bilderbuch.html`](mockups/dackel/bilderbuch.html) – D "Bilderbuch",
 [`mockups/dackel/lichtung.html`](mockups/dackel/lichtung.html) – E "Lichtung",
-[`mockups/dackel/dackelparade.html`](mockups/dackel/dackelparade.html) – F "Dackelparade" (animated).
+[`mockups/dackel/dackelparade.html`](mockups/dackel/dackelparade.html) – F "Dackelparade" (animated),
+[`mockups/dackel/leckerli-suche.html`](mockups/dackel/leckerli-suche.html) – G "Leckerli-Suche" (small game on top of F).
 Side-by-side overview of the heroes A–E: [`mockups/dackel/uebersicht.png`](mockups/dackel/uebersicht.png).
 
 ## 1. Decisions
@@ -241,6 +242,24 @@ Accessibility: a visible "Animationen pausieren" button (WCAG 2.2.2, choice reme
 *Risk:* the gags wear off on repeat visits and can distract from the content; for the real site
 keep the patrol, the peeking dogs and the button, and make the Flitzer rarer (e.g. once per visit).
 Implementation would be one `<Dackel>` Astro component (inline SVG) plus one small script island.
+
+### G – "Leckerli-Suche" (game prototype on top of F, mockup built)
+
+Toni's idea: an optional mini game. Same page as F (Flitzer and meadow patrol removed, so only one
+dog roams). "Leckerli verteilen" (header and hero card) turns the cursor into a bone; a click/tap
+anywhere drops a treat (max. 3 at a time, 6 per day). The dachshund runs over, sniffs the last
+stretch (nose down, zigzag, "schnüff" puffs) and eats it ("Mampf!"). If a treat is far away he dives
+into the nearest fox burrow – or digs his own hole – and comes out of the burrow closest to the
+treat; sometimes first out of the wrong one ("Huch?"). Burrows are `[data-bau]` elements inside the
+sections, so their positions follow the real layout on every screen size. After 6 treats he is
+full, lies down and snores until the next day (count per day in `localStorage`, no cookies);
+"Spiel zurücksetzen" in the review bar restarts it.
+Accessibility: off until the button is pressed, links and buttons keep working in treat mode, Esc
+or "Fertig" ends it, game graphics `aria-hidden`, status line `aria-live`. With reduced motion or
+"Animationen pausieren" he doesn't run: he fades out and reappears at the treat.
+*Risk:* on long mobile pages he can run a long way between burrows, and the HUD covers part of the
+screen. Real site: one `<LeckerliSuche>` island (≈ 250 lines, no library), burrows as a tiny
+`<Fuchsbau />` component placed in the page layout; can be combined with A as an easter egg.
 
 **Recommendation: A.** It is clearly different from the Rottweiler site in every dimension (serif vs.
 grotesk, green/rust vs. orange/pink, paper vs. white, arches vs. rounded cards, calm vs. neon), fits
