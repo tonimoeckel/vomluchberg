@@ -33,7 +33,7 @@ Run `npm test`, `npm run build:local` and `npx astro check` after every change.
 | `tina/blocks/index.ts` | Page block templates (hero, text, highlights, galerie, hunde, wuerfe, news, cta, kontakt) |
 | `src/content/{seiten,hunde,wuerfe,aktuelles,config}` | Content (md with frontmatter; config is JSON) |
 | `src/lib/data.ts` | Tina client loaders (lists sorted via the domain modules), derived types |
-| `src/lib/detailseiten.ts` | One definition per detail page collection (`seiten`, `hunde`, `wuerfe`, `aktuelles`): static paths, load + unwrap, SEO, Body, island. Page `home` is the index (served at `/`) |
+| `src/lib/detailseite.ts`, `src/lib/detailseiten.ts` | Shared factory `detailseite()`, and the luchberg list: one definition per detail page collection (`seiten`, `hunde`, `wuerfe`, `aktuelles`): static paths, load + unwrap, SEO, Body, island. Page `home` is the index (served at `/`) |
 | `src/lib/islands.ts` | Island registry for live visual editing, built from `detailseiten.ts` plus the global header/footer → served by `src/sites/luchberg/pages/tina-island/[name].ts` |
 | `src/lib/domain/*` | Pure domain rules with colocated tests: `hund`, `wurf`, `news` (options/labels, sorting, grouping, URLs, SEO), `datum`, `slug`, `seo` (head meta fallbacks). Also imported by `tina/collections/*` – no Astro/Tina imports here |
 | `src/lib/farbschema.ts` | Colour scheme list (ids, labels, swatches, theme-color) for Tina, `FarbVorschau` and `BaseHead` |
@@ -45,7 +45,7 @@ Run `npm test`, `npm run build:local` and `npx astro check` after every change.
 
 **Adding a block:** add the template in `tina/blocks/index.ts`, a component in `src/components/blocks/`, and a `case` in `Blocks.astro`. Add `data-tina-field={tinaField(obj, 'field')}` to every editable element.
 
-**Adding a collection:** add a collection file, register it in `tina/config.ts`, add loaders and types in `data.ts`, add a `detailseite(…)` definition in `detailseiten.ts` and list it in `detailseiten` (that also registers its island), then add a route like `src/sites/luchberg/pages/hunde/[slug].astro`.
+**Adding a collection:** add a collection file, register it in `tina/config.ts`, add loaders and types in `data.ts`, add a `detailseite(…)` definition (factory in `src/lib/detailseite.ts`) in `detailseiten.ts` and list it in `detailseiten` (that also registers its island), then add a route like `src/sites/luchberg/pages/hunde/[slug].astro`.
 
 ## Design system
 
