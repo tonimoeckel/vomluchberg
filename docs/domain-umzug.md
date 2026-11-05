@@ -1,5 +1,7 @@
 # Domain-Umzug vomluchberg.de
 
+Für die neuen Domains der Dackel- und der Trainingsseite gibt es eine eigene Checkliste: [`domains-neue-seiten.md`](domains-neue-seiten.md).
+
 Eigener Task, unabhängig von der Website. Die neue Seite kann schon vorher unter der Cloudflare-Adresse (`*.workers.dev`) laufen und abgestimmt werden.
 
 **Ziel:** Karo besitzt die Domain in ihrem eigenen Registrar-Account und zahlt die Rechnungen selbst. Das DNS läuft über Cloudflare (kostenlos), die Website über Cloudflare Workers.
