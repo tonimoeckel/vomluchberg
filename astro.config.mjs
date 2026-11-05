@@ -10,13 +10,16 @@ import { resolveSiteId, sites } from './src/sites/index.ts';
 
 // Which website this build produces (see docs/plan/00-multisite.md). Defaults to luchberg.
 const SITE_ID = resolveSiteId(process.env.SITE_ID);
+/** @type {import('./src/sites/index.ts').SiteDefinition} */
 const site = sites[SITE_ID];
 
 // Alle Inhaltsseiten werden statisch gebaut. Nur /tina-island (Live-Vorschau im
 // Tina-Editor) läuft on-demand. Auf Cloudflare Pages wird automatisch der
 // Cloudflare-Adapter genutzt, lokal der Node-Adapter.
 async function getAdapter() {
-	const cloudflare = async () => (await import('@astrojs/cloudflare')).default();
+	// Each site deploys to its own worker; its wrangler config sets the worker name (root wrangler.jsonc = luchberg).
+	const cloudflareOptions = site.wranglerConfig ? { configPath: site.wranglerConfig } : {};
+	const cloudflare = async () => (await import('@astrojs/cloudflare')).default(cloudflareOptions);
 	const node = async () => (await import('@astrojs/node')).default({ mode: 'standalone' });
 	if (process.env.DEPLOY_ADAPTER === 'cloudflare' || process.env.CF_PAGES || process.env.WORKERS_CI) return cloudflare();
 	return node();
