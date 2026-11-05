@@ -374,7 +374,7 @@ Use 301 for content URLs. Keep the redirects **at least 12 months**, ideally per
 | P-02 | T | Inventory (SQL counts) | numbers sent to Karo |
 | P-03 | T | Export script + secure hand-over | Karo confirms she can open it |
 | P-04 | K | Contact open cases | list ticked off |
-| P-08 | T/C | Pfotentermin PR: redirects in `next.config.js` (behind an env flag, e.g. `KARO_REDIRECT=on`, so it can be merged early and switched on at C5), sitemap/listing exclusion, `websiteUrl`, Jest test for the rule list. Check the prod DB for `subdomainOverride`/`customDomain` of the tenant first. | merged, flag off, tests green |
+| P-08 | T/C | Pfotentermin PR: draft **tonimoeckel/pfotentermin#188** (`lib/config/tenant-redirects.js`, env flag `TENANT_REDIRECT_KAROLIN_RIESING` = `off`/`on`/`final`, sitemap + listing exclusion, 64 tests). Before merge/flag-on: confirm target paths with slice 2, check prod DB for `subdomainOverride`/`customDomain`. Set `websiteUrl` in the admin by hand. | merged with flag off |
 | P-05 | T | Freeze services/events | storefront shows no bookable offer (behind the redirect) |
 | P-06 | T | Final export + `isActive = false` | after the transition |
 | P-07 | T+K | Anonymise/delete | on Karo's go |
