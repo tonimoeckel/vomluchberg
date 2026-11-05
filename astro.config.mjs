@@ -5,6 +5,11 @@ import icon from 'astro-icon';
 import tina from '@tinacms/astro/integration';
 import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
 import tailwindcss from '@tailwindcss/vite';
+import { resolveSiteId, sites } from './src/sites/index.ts';
+
+// Which website this build produces (see docs/plan/00-multisite.md). Defaults to luchberg.
+const SITE_ID = resolveSiteId(process.env.SITE_ID);
+const site = sites[SITE_ID];
 
 // Alle Inhaltsseiten werden statisch gebaut. Nur /tina-island (Live-Vorschau im
 // Tina-Editor) läuft on-demand. Auf Cloudflare Pages wird automatisch der
@@ -49,39 +54,13 @@ function stubServerHighlighters() {
 	};
 }
 
-// Alte URLs der bisherigen Website → neue Seiten (für Google & alte Links)
-const redirects = {
-	'/home': '/',
-	'/zuchtstaette': '/zucht',
-	'/about-me': '/zucht',
-	'/about-me/leistungen': '/zucht',
-	'/contacts': '/kontakt',
-	'/contacts/index.php': '/kontakt',
-	'/gallery': '/galerie',
-	'/links': '/',
-	'/page/2': '/aktuelles',
-	'/page/3': '/aktuelles',
-	'/welpen': '/wuerfe',
-	'/welpen/wurf': '/wuerfe/a-wurf',
-	'/welpen/b-w': '/wuerfe/b-wurf',
-	'/rottweilerhuendinnen': '/hunde',
-	'/rottweilerrueden': '/hunde',
-	'/weitere-rudelmitglieder': '/hunde',
-	'/weitere-rudelmitglieder/rauhaardackel': '/hunde/rauhaardackel',
-	'/rottweilerhuendinnen/baja-vom-luchberg': '/hunde/baja-vom-luchberg',
-	'/rottweilerhuendinnen/donna-von-der-staubzer-hoehe': '/hunde/donna-von-der-staubzer-hoehe',
-	'/rottweilerrueden/aaron-vom-luchberg': '/hunde/aaron-vom-luchberg',
-	'/rottweilerrueden/hunter-vom-auersberg': '/hunde/hunter-vom-auersberg',
-	'/harley-vom-auersberg': '/hunde/harley-vom-auersberg',
-	'/aktuelles/sitz-platzund-steh-aber-wie-geht-das': '/aktuelles/sitz-platz-und-steh-teil-2-platz',
-};
 
 // https://astro.build/config
 export default defineConfig({
 	site: getSiteUrl(),
 	output: 'static',
 	adapter: await getAdapter(),
-	redirects,
+	redirects: site.redirects,
 	integrations: [sitemap(), icon(), tina()],
 	build: { inlineStylesheets: 'always' },
 	vite: {
