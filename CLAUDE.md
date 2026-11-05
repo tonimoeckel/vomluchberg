@@ -35,7 +35,7 @@ Run `npm test`, `npm run build:local` and `npx astro check` after every change.
 | `src/lib/data.ts` | Tina client loaders (lists sorted via the domain modules), derived types |
 | `src/lib/detailseite.ts`, `src/lib/detailseiten.ts` | Shared factory `detailseite()`, and the luchberg list: one definition per detail page collection (`seiten`, `hunde`, `wuerfe`, `aktuelles`): static paths, load + unwrap, SEO, Body, island. Page `home` is the index (served at `/`) |
 | `src/lib/islands.ts` | Island registry for live visual editing, built from `detailseiten.ts` plus the global header/footer → served by `src/sites/luchberg/pages/tina-island/[name].ts` |
-| `src/lib/domain/*` | Pure domain rules with colocated tests: `hund`, `wurf`, `news` (options/labels, sorting, grouping, URLs, SEO), `datum`, `slug`, `seo` (head meta fallbacks). Also imported by `tina/collections/*` – no Astro/Tina imports here |
+| `src/lib/domain/*` | Pure domain rules with colocated tests: `hund`, `wurf`, `news` (options/labels, sorting, grouping, URLs, SEO), `datum`, `slug`, `seo` (head meta fallbacks; the default site name comes from `src/sites/<id>/site.ts`). Also imported by `tina/collections/*` – no Astro/Tina imports here |
 | `src/lib/farbschema.ts` | Colour scheme list (ids, labels, swatches, theme-color) for Tina, `FarbVorschau` and `BaseHead` |
 | `src/components/blocks/*` | One component per block, dispatched in `Blocks.astro` via `__typename` (`PageBlocksHero`, …) |
 | `src/components/islands/*Body.astro` | Detail bodies for hund/wurf/news (pages render `Blocks.astro` directly) |

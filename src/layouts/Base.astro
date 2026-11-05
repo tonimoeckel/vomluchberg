@@ -1,4 +1,5 @@
 ---
+import '../styles/global.css';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -9,11 +10,12 @@ import { getConfig } from '../lib/data';
 import { islands } from '../lib/islands';
 import { farbschema } from '../lib/farbschema';
 import { headMeta, type Seo } from '../lib/domain/seo';
+import { luchberg } from '../sites/luchberg/site';
 
 type Props = Partial<Seo>;
 
 const config = (await getConfig()).data?.config ?? null;
-const meta = headMeta(Astro.props, config?.website);
+const meta = headMeta(Astro.props, config?.website, luchberg.name);
 const schema = farbschema(config?.farbschema);
 const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
 ---
@@ -21,7 +23,7 @@ const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
 <!doctype html>
 <html lang="de" data-farbe={schema.id} data-farbe-standard={schema.id}>
 	<head>
-		<BaseHead {...meta} farbschema={schema} />
+		<BaseHead {...meta} themeColor={schema.themeColor} />
 		<script is:inline>
 			// Colour preview (for reviewing with Karo): ?farbe=neon is remembered, ?farbe=<standard> forgets it.
 			try {
