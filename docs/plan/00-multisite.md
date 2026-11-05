@@ -4,6 +4,21 @@ Status: **plan, ready to implement** (2026-11-05). Spikes were run on a throwawa
 committed); their results are in [Spike results](#spike-results). Slices 1 (`dackel`) and 2
 (`training`) build on the mechanism described here.
 
+## Implementation status
+
+- **PR A (steps 1–7): implemented** on `claude/plan-00-multisite` (one commit per step). Every
+  step was checked with `npm test`, `astro check` (0/0/0) and a full dist diff against the
+  pre-change build (Node and Cloudflare adapter): identical, except the new `robots.txt` from
+  step 7. Deviations from the plan text: the registry only contains `luchberg` until step 9 adds
+  the other sites (so `SITE_ID=dackel` fails fast for now); the noindex meta is
+  `noindex, nofollow`; the build's site id/noindex flag reach components via `virtual:multisite`.
+- Finding while verifying: Tailwind 4's automatic source detection also scans Markdown files
+  (`docs/**`, `CLAUDE.md`, `README.md`). Class-like words in docs end up in the CSS inlined into
+  every page – the plan commit alone changed the CSS of all 41 pages. Proposal: exclude `docs/`
+  and `migration/` via `@source not` in `src/styles/global.css` (changes the CSS once, then docs
+  edits no longer touch the site). Not done in PR A because it changes output.
+- PR B (steps 8–10) and step 12: open.
+
 ## TL;DR
 
 - **D1–D4 hold.** One Astro project builds exactly one site per `SITE_ID`
