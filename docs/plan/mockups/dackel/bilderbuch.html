@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rauhaardackel vom Luchberg – Entwurf D „Bilderbuch“</title>
+<meta name="description" content="Standard-Rauhaardackel aus Glashütte OT Luchau (Sachsen): mit Familienanschluss im Rudel aufgewachsen, mit Blick auf Gesundheit und Wesen. Anfragen nehmen wir gern entgegen.">
+<!--
+  Design mockup for slice 1 (docs/plan/01-dackel.md), direction D "Bilderbuch".
+  Soft, friendly picture-book feel for families with children: pastel sky/meadow/peach,
+  rounded type, polaroid photos with tape, wavy section edges, paw-print trail, speech bubble.
+  Self-contained: no external requests. Real site would use self-hosted Fontsource
+  (Nunito Variable + Caveat for small handwritten notes); here system fallbacks are used.
+-->
+<style>
+:root {
+	--bg: #fdf8ef;
+	--sky: #dcecf7;
+	--meadow: #e3f0d8;
+	--peach: #fde3d2;
+	--fg: #2a2838;
+	--muted: #57546a;
+	--border: #e6dccb;
+	--primary: #a23a55;     /* raspberry */
+	--on-primary: #ffffff;
+	--accent: #2f6a3a;      /* leaf, text-safe */
+	--card: #ffffff;
+	--dark: #2a2838;
+	--on-dark: #fdf8ef;
+	--tape: rgb(245 197 24 / 0.55);
+	--font-display: 'Nunito Variable', 'Nunito', ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', system-ui, sans-serif;
+	--font-hand: 'Caveat', 'Segoe Print', 'Bradley Hand', 'Comic Sans MS', cursive;
+	color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--bg: #1a1926; --sky: #22283a; --meadow: #212c22; --peach: #33242a; --fg: #f3eee4; --muted: #bdb7cc;
+		--border: #3a3850; --primary: #f39ab0; --on-primary: #1a1926; --accent: #9fd59f; --card: #262536;
+		--dark: #11101a; --on-dark: #f3eee4; --tape: rgb(245 197 24 / 0.4);
+	}
+}
+:root[data-theme='dark'] {
+	--bg: #1a1926; --sky: #22283a; --meadow: #212c22; --peach: #33242a; --fg: #f3eee4; --muted: #bdb7cc;
+	--border: #3a3850; --primary: #f39ab0; --on-primary: #1a1926; --accent: #9fd59f; --card: #262536;
+	--dark: #11101a; --on-dark: #f3eee4; --tape: rgb(245 197 24 / 0.4);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--font-display); font-size: 1.0625rem; line-height: 1.65; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3 { font-weight: 800; line-height: 1.12; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+.wrap { width: min(70rem, 100% - 2rem); margin-inline: auto; }
+.hand { font-family: var(--font-hand); font-size: 1.5rem; line-height: 1.1; color: var(--accent); font-weight: 600; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85rem 1.5rem; border-radius: 1.2rem; font-weight: 800; text-decoration: none; transition: transform .15s; border: 2px solid var(--primary); }
+.btn:hover { transform: translateY(-2px) rotate(-1deg); }
+.btn-primary { background: var(--primary); color: var(--on-primary); box-shadow: 0 6px 0 -1px rgb(0 0 0 / 0.12); }
+.btn-ghost { color: var(--primary); background: var(--card); }
+.todo { display: inline-block; font-size: 0.72rem; background: #f5c518; color: #2a2838; border-radius: 0.4rem; padding: 0 0.4rem; font-weight: 800; vertical-align: middle; }
+
+.entwurf { background: var(--dark); color: var(--on-dark); font-size: 0.85rem; text-align: center; padding: 0.45rem 1rem; }
+.entwurf button { font: inherit; background: none; border: 1px solid currentColor; color: inherit; border-radius: 999px; padding: 0.05rem 0.7rem; margin-left: 0.6rem; cursor: pointer; }
+
+/* wavy edges */
+.wave { display: block; width: 100%; height: 2.5rem; }
+.wave path { fill: currentColor; }
+
+/* Header */
+header.site { background: var(--sky); padding-block: 1.25rem 0; }
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.brand { text-decoration: none; display: flex; align-items: center; gap: 0.7rem; }
+.brand .badge { width: 3.4rem; height: 3.4rem; border-radius: 50%; background: var(--card); display: grid; place-items: center; color: var(--primary); box-shadow: 0 3px 0 rgb(0 0 0 / 0.08); flex: none; }
+.brand svg { width: 2.4rem; }
+.brand b { font-size: 1.25rem; display: block; line-height: 1.1; }
+.brand small { color: var(--muted); font-size: 0.82rem; font-weight: 600; }
+nav.main ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; font-weight: 800; }
+nav.main a { text-decoration: none; padding: 0.35rem 0.85rem; border-radius: 999px; display: block; }
+nav.main a:hover, nav.main a[aria-current] { background: var(--card); }
+
+/* Hero */
+.hero { background: var(--sky); padding-block: 2rem 1rem; position: relative; }
+.hero .wrap { display: grid; gap: 2.5rem; align-items: center; }
+@media (min-width: 52rem) { .hero .wrap { grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; } }
+.hero h1 { font-size: clamp(2.4rem, 5.6vw, 4rem); margin-top: 0.4rem; }
+.hero h1 mark { background: none; color: var(--primary); position: relative; white-space: nowrap; }
+.hero h1 mark svg { position: absolute; left: 0; right: 0; bottom: -0.25em; width: 100%; height: 0.4em; color: #f5c518; }
+.hero .lead { margin-top: 1.4rem; font-size: 1.15rem; color: var(--muted); max-width: 33rem; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+.paws { display: flex; gap: 0.6rem; margin-top: 2rem; color: var(--primary); opacity: 0.55; }
+.paws svg { width: 1.3rem; height: 1.3rem; }
+.paws svg:nth-child(odd) { transform: translateY(0.45rem) rotate(12deg); }
+.paws svg:nth-child(even) { transform: rotate(-8deg); }
+
+.polaroid { background: var(--card); padding: 0.8rem 0.8rem 0; box-shadow: 0 16px 34px -18px rgb(42 40 56 / 0.5); position: relative; border-radius: 0.3rem; }
+.polaroid::before { content: ''; position: absolute; top: -0.8rem; left: 50%; width: 6rem; height: 1.6rem; background: var(--tape); transform: translateX(-50%) rotate(-3deg); }
+.polaroid img { width: 100%; object-fit: cover; border-radius: 0.15rem; }
+.polaroid figcaption { font-family: var(--font-hand); font-size: 1.55rem; text-align: center; padding: 0.4rem 0 0.6rem; color: var(--fg); }
+.hero .polaroid { transform: rotate(2.5deg); width: min(100%, 25rem); justify-self: center; }
+.hero .polaroid img { aspect-ratio: 4 / 5; }
+.bubble { position: absolute; top: 1.5rem; left: -1.5rem; background: var(--card); border-radius: 1.2rem; padding: 0.5rem 0.9rem; font-family: var(--font-hand); font-size: 1.4rem; transform: rotate(-6deg); box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.4); color: var(--primary); }
+.bubble::after { content: ''; position: absolute; right: 1.2rem; bottom: -0.55rem; border: 0.6rem solid transparent; border-top-color: var(--card); border-bottom: 0; }
+@media (max-width: 40rem) { .bubble { left: 0.5rem; } }
+
+/* Values on meadow */
+section { padding-block: 4rem; }
+.meadow { background: var(--meadow); }
+.peach { background: var(--peach); }
+.head { max-width: 40rem; margin-bottom: 2.5rem; }
+.head.center { margin-inline: auto; text-align: center; }
+.head h2 { font-size: clamp(1.9rem, 4.2vw, 2.7rem); margin-top: 0.2rem; }
+.head p { margin-top: 0.9rem; color: var(--muted); }
+.werte { display: grid; gap: 1.25rem; }
+@media (min-width: 48rem) { .werte { grid-template-columns: repeat(3, 1fr); } }
+.wert { background: var(--card); border-radius: 1.75rem 1.75rem 1.75rem 0.5rem; padding: 1.75rem 1.5rem; box-shadow: 0 10px 24px -18px rgb(42 40 56 / 0.5); }
+.wert .ico { width: 3.2rem; height: 3.2rem; border-radius: 1rem; display: grid; place-items: center; background: var(--peach); color: var(--primary); margin-bottom: 1rem; }
+.wert:nth-child(2) .ico { background: var(--sky); }
+.wert:nth-child(3) .ico { background: var(--meadow); color: var(--accent); }
+.wert .ico svg { width: 1.7rem; height: 1.7rem; }
+.wert h3 { font-size: 1.35rem; }
+.wert p { margin-top: 0.5rem; color: var(--muted); }
+
+/* Dogs as polaroids */
+.dogs { display: grid; gap: 2.5rem 2rem; padding-top: 1rem; }
+@media (min-width: 48rem) { .dogs { grid-template-columns: repeat(3, 1fr); } }
+.dog { text-decoration: none; display: block; }
+.dog .polaroid { transition: transform .25s; }
+.dog:nth-child(1) .polaroid { transform: rotate(-2.5deg); }
+.dog:nth-child(2) .polaroid { transform: rotate(1.5deg); }
+.dog:nth-child(3) .polaroid { transform: rotate(-1deg); }
+.dog:hover .polaroid { transform: rotate(0) scale(1.02); }
+.dog .polaroid img { aspect-ratio: 1; }
+.dog .info { text-align: center; margin-top: 1rem; }
+.dog .info b { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+.dog .meta { color: var(--muted); font-size: 0.95rem; }
+
+/* Welpen */
+.welpen { display: grid; gap: 2.5rem; align-items: center; }
+@media (min-width: 52rem) { .welpen { grid-template-columns: 1fr 1fr; } }
+.welpen h2 { font-size: clamp(1.9rem, 4.2vw, 2.7rem); margin-top: 0.2rem; }
+.welpen p { margin-top: 1rem; color: var(--muted); }
+.welpen .status { display: inline-flex; align-items: center; gap: 0.6rem; margin-top: 1.5rem; background: var(--card); border-radius: 999px; padding: 0.45rem 1rem; font-weight: 700; }
+.welpen .btn { margin-top: 1.75rem; }
+.welpen .stack { position: relative; min-height: 22rem; }
+.welpen .stack .polaroid { position: absolute; width: 62%; }
+.welpen .stack .polaroid img { aspect-ratio: 4 / 3; }
+.welpen .stack .polaroid:nth-child(1) { left: 0; top: 0; transform: rotate(-5deg); }
+.welpen .stack .polaroid:nth-child(2) { right: 0; top: 2.5rem; transform: rotate(4deg); }
+.welpen .stack .polaroid:nth-child(3) { left: 18%; top: 9.5rem; transform: rotate(-1deg); }
+@media (max-width: 40rem) { .welpen .stack { min-height: 16rem; } .welpen .stack .polaroid:nth-child(3) { top: 6.5rem; } }
+
+/* About */
+.about { display: grid; gap: 2.5rem; align-items: center; }
+@media (min-width: 52rem) { .about { grid-template-columns: 0.95fr 1.05fr; gap: 4rem; } }
+.about .polaroid { transform: rotate(-2deg); }
+.about .polaroid img { aspect-ratio: 3 / 2; }
+.about blockquote { margin: 1.5rem 0 0; background: var(--card); border-radius: 1.5rem 1.5rem 1.5rem 0.3rem; padding: 1.1rem 1.4rem; font-size: clamp(1.15rem, 2.2vw, 1.35rem); font-weight: 700; position: relative; box-shadow: 0 10px 24px -18px rgb(42 40 56 / 0.5); }
+.about p { margin-top: 1.1rem; color: var(--muted); }
+.about .more { margin-top: 1.5rem; display: inline-block; font-weight: 800; color: var(--primary); text-underline-offset: 0.3em; text-decoration-thickness: 2px; }
+
+/* Contact */
+.kontakt { text-align: center; }
+.kontakt h2 { font-size: clamp(2rem, 4.5vw, 2.9rem); }
+.kontakt p { margin: 1rem auto 0; max-width: 36rem; color: var(--muted); }
+.kontakt .actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+
+/* Footer */
+footer { background: var(--dark); color: var(--on-dark); padding-block: 2.5rem 2rem; font-size: 0.95rem; }
+footer .cols { display: grid; gap: 2rem; }
+@media (min-width: 48rem) { footer .cols { grid-template-columns: 1.3fr 1fr 1.2fr; } }
+footer h2 { font-size: 1.1rem; margin-bottom: 0.6rem; }
+footer address { font-style: normal; opacity: 0.88; }
+footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.35rem; }
+footer a { text-decoration: none; opacity: 0.88; }
+footer a:hover { opacity: 1; text-decoration: underline; }
+.hinweis { display: flex; gap: 0.9rem; align-items: center; background: rgb(255 255 255 / 0.07); border-radius: 1.2rem; padding: 0.9rem 1rem; }
+.hinweis img { width: 3.25rem; height: 3.25rem; border-radius: 50%; object-fit: cover; flex: none; }
+.hinweis a { opacity: 1; font-weight: 800; text-decoration: underline; text-decoration-color: #f5c518; text-underline-offset: 0.25em; }
+footer .legal { border-top: 1px solid rgb(253 248 239 / 0.15); margin-top: 2.5rem; padding-top: 1.25rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; opacity: 0.75; font-size: 0.85rem; }
+footer .legal ul { display: flex; gap: 1.25rem; }
+</style>
+</head>
+<body>
+
+<div class="entwurf">Entwurf D „Bilderbuch“ – Inhalte aus Karos bisherigem Text, gelbe Markierungen sind noch offen.
+	<button type="button" id="theme">Hell / Dunkel</button></div>
+
+<header class="site">
+	<div class="wrap">
+		<a class="brand" href="#">
+			<span class="badge">
+				<!-- Placeholder mark (Karo may supply a logo) -->
+				<svg viewBox="0 0 64 32" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 19c2-5 6-7 11-7h24c4 0 6-3 8-6l3-2 2 3 4 2-1 3-4 1-3 3v6M17 12c-3 0-5 2-7 3M14 26v-5M20 26v-6M41 26v-6M47 26v-6M6 19l-3-1"/></svg>
+			</span>
+			<span><b>Rauhaardackel vom Luchberg</b><small>Glashütte OT Luchau · Sachsen</small></span>
+		</a>
+		<nav class="main" aria-label="Hauptmenü">
+			<ul>
+				<li><a href="#" aria-current="page">Start</a></li>
+				<li><a href="#dackel">Unsere Dackel</a></li>
+				<li><a href="#welpen">Welpen</a></li>
+				<li><a href="#ueber-uns">Über uns</a></li>
+				<li><a href="#kontakt">Kontakt</a></li>
+			</ul>
+		</nav>
+	</div>
+</header>
+
+<main>
+	<section class="hero">
+		<div class="wrap">
+			<div>
+				<p class="hand">Standard-Rauhaardackel aus Sachsen</p>
+				<h1>Rauhaardackel, <mark>groß geworden<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8c40-6 80-6 196-2" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></mark> mitten im Rudel.</h1>
+				<p class="lead">Wir züchten unsere Rauhaardackel für Liebhaber und Familien und achten dabei auf Gesundheit und Wesen. Die Kleinen wachsen mit Familienanschluss bei uns auf und lernen alles Wichtige für ihren neuen Lebensweg.</p>
+				<div class="actions">
+					<a class="btn btn-primary" href="#welpen">Welpen anfragen</a>
+					<a class="btn btn-ghost" href="#dackel">Unsere Dackel kennenlernen</a>
+				</div>
+				<div class="paws" aria-hidden="true">
+					<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5" ry="4"/><circle cx="6" cy="10" r="2.2"/><circle cx="10" cy="6" r="2.2"/><circle cx="14" cy="6" r="2.2"/><circle cx="18" cy="10" r="2.2"/></svg>
+					<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5" ry="4"/><circle cx="6" cy="10" r="2.2"/><circle cx="10" cy="6" r="2.2"/><circle cx="14" cy="6" r="2.2"/><circle cx="18" cy="10" r="2.2"/></svg>
+					<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5" ry="4"/><circle cx="6" cy="10" r="2.2"/><circle cx="10" cy="6" r="2.2"/><circle cx="14" cy="6" r="2.2"/><circle cx="18" cy="10" r="2.2"/></svg>
+					<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5" ry="4"/><circle cx="6" cy="10" r="2.2"/><circle cx="10" cy="6" r="2.2"/><circle cx="14" cy="6" r="2.2"/><circle cx="18" cy="10" r="2.2"/></svg>
+					<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="16" rx="5" ry="4"/><circle cx="6" cy="10" r="2.2"/><circle cx="10" cy="6" r="2.2"/><circle cx="14" cy="6" r="2.2"/><circle cx="18" cy="10" r="2.2"/></svg>
+				</div>
+			</div>
+			<figure class="polaroid" style="margin:0">
+				<img src="../../../../public/uploads/rudel/dackel/dackel-duo-bank.jpg" alt="Zwei Rauhaardackel sitzen nebeneinander auf einer Holzbank" width="1280" height="1600">
+				<figcaption>Hanni &amp; Bonnie</figcaption>
+				<span class="bubble">Absolute Familienhunde!</span>
+			</figure>
+		</div>
+	</section>
+	<svg class="wave" style="color:var(--sky);background:var(--meadow)" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h1440v18c-120 14-240 22-360 12S840 4 720 10 480 34 360 30 120 8 0 18z"/></svg>
+
+	<section class="meadow" style="padding-top:2.5rem">
+		<div class="wrap">
+			<div class="head center">
+				<p class="hand">Was uns wichtig ist</p>
+				<h2>Familienhunde mit Dackelkopf</h2>
+			</div>
+			<div class="werte">
+				<div class="wert">
+					<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></div>
+					<h3>Gesundheit &amp; Wesen</h3>
+					<p>Darauf achten wir bei unserer Zucht – die wir ausschließlich für Liebhaber und Familien betreiben.</p>
+				</div>
+				<div class="wert">
+					<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-5h4v5"/></svg></div>
+					<h3>Aufgewachsen im Rudel</h3>
+					<p>Die Kleinen wachsen mit Familienanschluss bei uns auf, zusammen mit unseren anderen Hunden, und lernen alles Wichtige kennen.</p>
+				</div>
+				<div class="wert">
+					<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V11M12 11c-4 0-7-3-7-7 4 0 7 3 7 7zM12 11c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></div>
+					<h3>Jagdliche Wurzeln</h3>
+					<p>Wir bilden unsere Dackel nicht zur Jagd aus – die Elterntiere haben aber jagdliche Abstammungen. Bei uns sind sie absolute Familienhunde.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+	<svg class="wave" style="color:var(--meadow)" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h1440v18c-120 14-240 22-360 12S840 4 720 10 480 34 360 30 120 8 0 18z"/></svg>
+
+	<section id="dackel">
+		<div class="wrap">
+			<div class="head">
+				<p class="hand">Unsere Dackel</p>
+				<h2>Hanni, Bonnie und der Vater unserer Dackel</h2>
+				<p>Gut sozialisiert und erzogen: Unsere Rauhaardackel helfen oft als „Lehrhund“ auf dem Hundeplatz mit – vor allem die Kinder haben daran große Freude.</p>
+			</div>
+			<div class="dogs">
+				<a class="dog" href="#">
+					<figure class="polaroid" style="margin:0"><img loading="lazy" src="../../../../public/uploads/rudel/dackel/53add332-b7ff-2b5f-d118-81e15aafe02d.jpg" alt="Rauhaardackel-Hündin liegt in der Löwenzahnwiese" width="1600" height="1060"><figcaption>Hanni <span class="todo">Foto?</span></figcaption></figure>
+					<div class="info"><b>Hündin</b><p class="meta">Wurftag, Farbe &amp; Abstammung folgen</p></div>
+				</a>
+				<a class="dog" href="#">
+					<figure class="polaroid" style="margin:0"><img loading="lazy" src="../../../../public/uploads/rudel/dackel/ed953edf-7ead-47d2-461e-1b57fad27b70.jpg" alt="Rauhaardackel-Hündin sitzt im Gras" width="1600" height="1060"><figcaption>Bonnie <span class="todo">Foto?</span></figcaption></figure>
+					<div class="info"><b>Hündin</b><p class="meta">Wurftag, Farbe &amp; Abstammung folgen</p></div>
+				</a>
+				<a class="dog" href="#">
+					<figure class="polaroid" style="margin:0"><img loading="lazy" src="../../../../public/uploads/rudel/dackel/c3b66134-8be9-44da-b2ec-5831581ad930.jpg" alt="Rotbrauner Rauhaardackel-Rüde steht im Garten" width="1600" height="1104"><figcaption>Name? <span class="todo">offen</span></figcaption></figure>
+					<div class="info"><b>Rüde · Vater unserer Dackel</b><p class="meta">Der Vater unserer Dackel</p></div>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<svg class="wave" style="color:var(--peach);transform:scaleY(-1)" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h1440v18c-120 14-240 22-360 12S840 4 720 10 480 34 360 30 120 8 0 18z"/></svg>
+	<section id="welpen" class="peach" style="padding-block:2.5rem">
+		<div class="wrap welpen">
+			<div>
+				<p class="hand">Welpen</p>
+				<h2>Ihr sucht einen Rauhaardackel?</h2>
+				<p>Bei Interesse an einem Dackel nehmen wir gern eure Anfrage entgegen und stehen euch mit Rat und Tat zur Seite.</p>
+				<span class="status">Nächster Wurf: <span class="todo">Termin offen</span></span><br>
+				<a class="btn btn-primary" href="#kontakt">Jetzt unverbindlich anfragen</a>
+			</div>
+			<div class="stack">
+				<figure class="polaroid" style="margin:0"><img loading="lazy" src="../../../../public/uploads/rudel/dackel/c3dfdb93-b889-2476-cad5-f1f983e4a5fa.jpg" alt="Dackelwelpe pirscht durchs Gras" width="1600" height="1060"></figure>
+				<figure class="polaroid" style="margin:0"><img loading="lazy" src="../../../../public/uploads/rudel/dackel/fd61d309-3527-cf91-0a33-c7926781635e.jpg" alt="Dackelwelpe mit gelbem Spielzeug" width="1600" height="1060"></figure>
+				<figure class="polaroid" style="margin:0"><img loading="lazy" src="../../../../public/uploads/rudel/dackel/2b8a30f9-cd18-0503-f5f2-47ee1990488a.jpg" alt="Dackelwelpe schaut in die Kamera" width="1600" height="1060"></figure>
+			</div>
+		</div>
+	</section>
+	<svg class="wave" style="color:var(--peach)" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h1440v18c-120 14-240 22-360 12S840 4 720 10 480 34 360 30 120 8 0 18z"/></svg>
+
+	<section id="ueber-uns">
+		<div class="wrap about">
+			<figure class="polaroid" style="margin:0">
+				<img loading="lazy" src="../../../../public/uploads/rudel/dackel/karo-mit-dackel-und-junghund.jpg" alt="Karo hockt auf einem Weg, neben ihr Dackel Bonnie und Rottweiler-Junghündin Baja" width="1600" height="1065">
+				<figcaption>Karo mit Bonnie und Baja</figcaption>
+			</figure>
+			<div>
+				<p class="hand">Über uns</p>
+				<h2 style="font-size:clamp(1.9rem,4.2vw,2.6rem);margin-top:.2rem">Ein Rudel, eine Familie</h2>
+				<blockquote>„Unsere Rauhaardackel sind absolute Familienhunde, gut sozialisiert und erzogen.“</blockquote>
+				<p>Ich bin Karo und lebe mit meiner Familie und unserem Rudel in Luchau, einem Ortsteil von Glashütte. Zu unserem Rudel gehören auch unsere beiden Rauhaardackel-Damen Hanni und Bonnie.</p>
+				<a class="more" href="#">Mehr über uns und die Aufzucht →</a>
+			</div>
+		</div>
+	</section>
+
+	<svg class="wave" style="color:var(--sky);transform:scaleY(-1)" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h1440v18c-120 14-240 22-360 12S840 4 720 10 480 34 360 30 120 8 0 18z"/></svg>
+	<section id="kontakt" class="kontakt" style="background:var(--sky);padding-block:2.5rem 4rem">
+		<div class="wrap">
+			<p class="hand">Kontakt</p>
+			<h2 style="margin-top:.2rem">Schreibt uns – wir freuen uns auf euch.</h2>
+			<p>Erzählt uns ein bisschen von euch und euren Vorstellungen. Wir melden uns gern und beantworten alle Fragen rund um den Rauhaardackel.</p>
+			<div class="actions">
+				<a class="btn btn-primary" href="#">Anfrage senden</a>
+				<a class="btn btn-ghost" href="tel:01733665494">0173 3665494</a>
+			</div>
+		</div>
+	</section>
+</main>
+
+<footer>
+	<div class="wrap">
+		<div class="cols">
+			<div>
+				<h2>Rauhaardackel vom Luchberg</h2>
+				<address>Karolin Riesing<br>Dorfstr. 2d<br>01768 Glashütte OT Luchau</address>
+			</div>
+			<div>
+				<h2>Seiten</h2>
+				<ul>
+					<li><a href="#dackel">Unsere Dackel</a></li>
+					<li><a href="#welpen">Welpen</a></li>
+					<li><a href="#ueber-uns">Über uns</a></li>
+					<li><a href="#kontakt">Kontakt</a></li>
+				</ul>
+			</div>
+			<div>
+				<h2>Auch bei uns</h2>
+				<div class="hinweis">
+					<img src="../../../../public/uploads/rudel/dackel/karo-mit-dackel-und-junghund.jpg" alt="" width="1600" height="1065" style="object-position:62% 50%">
+					<p>Wir züchten auch Rottweiler im ADRK:<br><a href="https://vomluchberg.de">Rottweiler vom Luchberg →</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="legal">
+			<p>© 2026 Rauhaardackel vom Luchberg</p>
+			<ul><li><a href="#">Impressum</a></li><li><a href="#">Datenschutz</a></li></ul>
+		</div>
+	</div>
+</footer>
+
+<script>
+	// Mockup only: light/dark toggle for the review.
+	document.getElementById('theme').addEventListener('click', () => {
+		const r = document.documentElement;
+		const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+		r.dataset.theme = dark ? 'light' : 'dark';
+	});
+</script>
+</body>
+</html>

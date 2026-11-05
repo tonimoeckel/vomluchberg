@@ -4,7 +4,11 @@ Status: **plan**, 2026-11-05. Depends on slice 0 (`00-multisite.md`) for the mul
 Open questions for Karo are in [`fragen-an-karo.md`](fragen-an-karo.md) → "Rauhaardackel-Seite".
 Design mockups (open locally in a browser, they load the real photos from `public/uploads/rudel/dackel/`):
 [`mockups/dackel/index.html`](mockups/dackel/index.html) – direction A "Wiesenweg" (recommended),
-[`mockups/dackel/loewenzahn.html`](mockups/dackel/loewenzahn.html) – direction B "Löwenzahn".
+[`mockups/dackel/loewenzahn.html`](mockups/dackel/loewenzahn.html) – direction B "Löwenzahn",
+[`mockups/dackel/forsthaus.html`](mockups/dackel/forsthaus.html) – C "Forsthaus",
+[`mockups/dackel/bilderbuch.html`](mockups/dackel/bilderbuch.html) – D "Bilderbuch",
+[`mockups/dackel/lichtung.html`](mockups/dackel/lichtung.html) – E "Lichtung".
+Side-by-side overview of all five heroes: [`mockups/dackel/uebersicht.png`](mockups/dackel/uebersicht.png).
 
 ## 1. Decisions
 
@@ -188,6 +192,32 @@ Playful, bold, poster-like – a sporty, modern take.
   band stops under `prefers-reduced-motion`.
 - **Risk:** louder and trendier; ages faster and is closer to the Rottweiler site's "energetic" feel.
 
+### C, D, E – further directions (mockups built)
+
+Built on request to give Karo a wider choice. Same content and photos as A/B, light + dark mode,
+no external requests, no horizontal overflow at 390/1366 px, all text tokens ≥ 4.5:1 (lowest values
+below). Each aims at a different part of the dachshund audience.
+
+- **C "Forsthaus"** – traditional hunting-lodge look for long-time dachshund people and those who
+  value the hunting pedigree. Loden green `#2f4a3a`, cream `#f4efe3`, brass (`#7d5310` as text,
+  `#b8893a` decoration only), deep forest `#1f2a22`. Classic serif (Cormorant Garamond) with
+  small-caps labels, double rules and outlines, centred crest header with an oak-leaf ring, photos
+  in passe-partout frames, dogs as a portrait gallery with dark name plates, Welpen as a framed
+  notice with a `dl`. Lowest contrast: brass on surface 5.3 (dark 7.1).
+  *Risk:* can feel old-fashioned and puts the hunting angle forward, while Karo stresses "absolute
+  Familienhunde"; must not suggest a hunting/club breeding that is not confirmed.
+- **D "Bilderbuch"** – soft picture-book look for families with children (Karo's "vor allem die
+  Kinder haben daran große Freude"). Pastel sky `#dcecf7`, meadow `#e3f0d8`, peach `#fde3d2`,
+  raspberry `#a23a55` buttons, leaf green `#2f6a3a` labels. Rounded type (Nunito) plus a handwritten
+  accent font (Caveat) for labels and captions only, polaroid photos with tape, wavy section edges,
+  paw-print trail, speech bubble "Absolute Familienhunde!". Lowest contrast: leaf on peach 5.3
+  (dark 7.0). *Risk:* can look childish; the handwritten font must stay for short labels.
+- **E "Lichtung"** – quiet, photo-led editorial/Nordic look for younger, design-minded families.
+  Off-white `#fafaf7`, near-black `#171716`, one terracotta accent `#a8432a`; Inter with single
+  italic serif words (Instrument Serif), numbered sections with hairline rules, a wide 21:9 hero
+  photo, asymmetric dog grid, black Welpen block with a fact list. Lowest contrast: terracotta on
+  bg 5.7 (dark 6.9). *Risk:* lives from very good photos; with few or weak photos it looks empty.
+
 **Recommendation: A.** It is clearly different from the Rottweiler site in every dimension (serif vs.
 grotesk, green/rust vs. orange/pink, paper vs. white, arches vs. rounded cards, calm vs. neon), fits
 Karo's own words (Liebhaber, Familie, Gesundheit, Wesen) and lets the meadow photos carry the page.
@@ -325,4 +355,4 @@ Tasks 1–3 can land before slice 0 (pure modules, no site wiring). 4–11 need 
 | Tina codegen conflicts from new fields | Keep same-name-same-type across collections; no new block field names that clash (`text` stays string). |
 | Two designs, shared components drift into `if (site === …)` soup | Shared components own data/logic, per-site components own markup; no site checks inside shared components. |
 | Photo identity (who is Hanni/Bonnie) wrong | Mockup marks them "Foto?"; Karo assigns before content task 5 is finalised. |
-| Karo prefers another look | Mockup is cheap to change; B documented as fallback. |
+| Karo prefers another look | Mockups are cheap to change; B–E documented as alternatives. |
