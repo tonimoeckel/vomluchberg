@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rauhaardackel vom Luchberg – Entwurf F „Dackelparade“</title>
+<meta name="description" content="Standard-Rauhaardackel aus Glashütte OT Luchau (Sachsen): mit Familienanschluss im Rudel aufgewachsen, mit Blick auf Gesundheit und Wesen. Anfragen nehmen wir gern entgegen.">
+<!--
+  Design mockup for slice 1 (docs/plan/01-dackel.md), direction F "Dackelparade".
+  Playful, animated variant: bento/sticker layout with thick outlines and offset shadows,
+  plus hand-built SVG dachshunds (wire-haired: beard + brows) animated with CSS:
+  - a dachshund in the header runs along a scroll-progress track,
+  - one patrols the hero meadow chasing a ball,
+  - "Flitzer" dash across the bottom of the screen every ~15–25 s (click one: "Wuff!"),
+  - dachshunds peek over the dog cards on hover,
+  - a very long dachshund grows with scrolling (scroll-driven animation, static fallback),
+  - puppies wander around a whelping box.
+  Accessibility: a visible "Animationen pausieren" button (WCAG 2.2.2), off by default with
+  prefers-reduced-motion, all dachshund graphics are aria-hidden decoration.
+  Self-contained: no external requests, no Lottie. Real site: Astro component <Dackel>,
+  self-hosted Fontsource (Fredoka Variable for display), animations in one small island.
+-->
+<style>
+:root {
+	--bg: #fff8e8;
+	--card: #ffffff;
+	--yellow: #ffd23f;
+	--mint: #bfe8c9;
+	--sky: #c9dcff;
+	--fg: #1e1b33;
+	--muted: #545069;
+	--muted-y: #4a4660;
+	--line: #1e1b33;
+	--primary: #b8321b;     /* tomato */
+	--on-primary: #ffffff;
+	--blue: #1f4e8c;
+	--dark: #1e1b33;
+	--on-dark: #fff8e8;
+	--grass: #5aa84f;
+	--grass-2: #3f8f3a;
+	--shadow: 5px 5px 0 var(--line);
+	--fell: #7d5c3f; --fell-d: #4b3624; --bart: #b39876;
+	--font-display: 'Fredoka Variable', 'Fredoka', ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', system-ui, sans-serif;
+	--font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--bg: #15132a; --card: #232040; --yellow: #3d3212; --mint: #1d3b2a; --sky: #1f2c4d;
+		--fg: #f7f1e3; --muted: #bab4cf; --muted-y: #d9cfb0; --line: #0a0918; --primary: #ff8f75; --on-primary: #15132a;
+		--blue: #8fb6ff; --dark: #0d0c1c; --on-dark: #f7f1e3; --grass: #2f6b33; --grass-2: #24552a;
+		--shadow: 5px 5px 0 #000;
+	}
+}
+:root[data-theme='dark'] {
+	--bg: #15132a; --card: #232040; --yellow: #3d3212; --mint: #1d3b2a; --sky: #1f2c4d;
+	--fg: #f7f1e3; --muted: #bab4cf; --muted-y: #d9cfb0; --line: #0a0918; --primary: #ff8f75; --on-primary: #15132a;
+	--blue: #8fb6ff; --dark: #0d0c1c; --on-dark: #f7f1e3; --grass: #2f6b33; --grass-2: #24552a;
+	--shadow: 5px 5px 0 #000;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 1.0625rem/1.65 var(--font-body); overflow-x: hidden; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.08; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+ul { list-style: none; margin: 0; padding: 0; }
+.wrap { width: min(1180px, 100% - 2rem); margin-inline: auto; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+
+/* review bar */
+.entwurf { background: var(--dark); color: var(--on-dark); font-size: .85rem; padding: .45rem 1rem; display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; justify-content: center; text-align: center; }
+.entwurf button { font: inherit; background: transparent; color: inherit; border: 1px solid currentColor; border-radius: 999px; padding: .1rem .7rem; cursor: pointer; }
+.todo { background: #fde68a; color: #3b2f05; padding: 0 .3em; border-radius: 4px; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; gap: .5rem; font: 600 1.02rem/1 var(--font-display); text-decoration: none; padding: .85rem 1.3rem; border-radius: 14px; border: 2.5px solid var(--line); box-shadow: 4px 4px 0 var(--line); transition: transform .15s, box-shadow .15s; cursor: pointer; }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--line); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--line); }
+.btn-primary { background: var(--primary); color: var(--on-primary); }
+.btn-plain { background: var(--card); color: var(--fg); }
+.kicker { font: 600 .82rem/1.2 var(--font-body); text-transform: uppercase; letter-spacing: .12em; color: var(--primary); }
+.sticker { background: var(--card); border: 2.5px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
+
+/* header */
+header.site { position: sticky; top: 0; z-index: 30; background: var(--bg); border-bottom: 2.5px solid var(--line); }
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 0; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
+.brand .dk { width: 64px; }
+.brand b { font: 700 1.2rem/1 var(--font-display); display: block; }
+.brand small { font-size: .78rem; color: var(--muted); }
+nav ul { display: flex; flex-wrap: wrap; gap: .35rem; }
+nav a { display: block; text-decoration: none; font: 600 .95rem/1 var(--font-display); padding: .55rem .85rem; border-radius: 999px; border: 2px solid transparent; }
+nav a:hover { border-color: var(--line); }
+nav a[aria-current='page'] { background: var(--yellow); border-color: var(--line); }
+.motion-btn { font: 600 .82rem/1 var(--font-body); background: var(--card); color: var(--fg); border: 2px solid var(--line); border-radius: 999px; padding: .5rem .8rem; cursor: pointer; display: inline-flex; gap: .4rem; align-items: center; }
+.motion-btn svg { width: 14px; height: 14px; }
+.track { position: relative; height: 34px; border-top: 2px dashed color-mix(in srgb, var(--line) 25%, transparent); }
+.track .dk { position: absolute; bottom: 2px; width: 58px; left: calc(var(--p, 0) * (100% - 58px)); transition: left .08s linear; }
+.track .bone { position: absolute; right: 8px; bottom: 6px; width: 26px; color: var(--muted); }
+@media (max-width: 760px) { header.site { position: static; } nav { order: 3; width: 100%; } nav ul { justify-content: center; } }
+
+/* ---------- dachshund (generated by JS into [data-dackel]) ---------- */
+.dk { display: inline-block; line-height: 0; }
+.dk svg { width: 100%; height: auto; overflow: visible; }
+.dk.flip svg { transform: scaleX(-1); }
+.dk .leg, .dk .tail, .dk .ear, .dk .head, .dk .all { transform-box: fill-box; }
+.dk .leg { transform-origin: 50% 6%; }
+.dk .tail { transform-origin: 100% 100%; animation: wag .28s ease-in-out infinite alternate; }
+.dk .ear { transform-origin: 70% 8%; }
+.dk .head { transform-origin: 10% 90%; animation: tilt 7s ease-in-out infinite; }
+.dk.run .leg, html.scrolling .dk.scrolly .leg { animation: leg .3s ease-in-out infinite alternate; }
+.dk.run .l1, .dk.run .l4, html.scrolling .dk.scrolly .l1, html.scrolling .dk.scrolly .l4 { animation-delay: -.3s; }
+.dk.run .all, html.scrolling .dk.scrolly .all { animation: bob .15s ease-in-out infinite alternate; }
+.dk.run .ear, html.scrolling .dk.scrolly .ear { animation: flap .3s ease-in-out infinite alternate; }
+.dk.walk .leg { animation: legw .5s ease-in-out infinite alternate; }
+.dk.walk .l1, .dk.walk .l4 { animation-delay: -.5s; }
+.dk.hop svg { animation: hop .5s cubic-bezier(.3,1.6,.6,1); }
+@keyframes leg { from { transform: rotate(-32deg); } to { transform: rotate(32deg); } }
+@keyframes legw { from { transform: rotate(-16deg); } to { transform: rotate(16deg); } }
+@keyframes wag { from { transform: rotate(-14deg); } to { transform: rotate(18deg); } }
+@keyframes flap { from { transform: rotate(-4deg); } to { transform: rotate(-40deg); } }
+@keyframes bob { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+@keyframes tilt { 0%, 78%, 100% { transform: rotate(0); } 84%, 90% { transform: rotate(-9deg); } }
+@keyframes hop { 0% { translate: 0 0; } 40% { translate: 0 -38px; } 100% { translate: 0 0; } }
+.fell-grau { --fell: #77706a; --fell-d: #48423d; --bart: #b3aca4; }
+.fell-rot { --fell: #a5592c; --fell-d: #6e3517; --bart: #c98a5c; }
+.fell-dunkel { --fell: #5b4433; --fell-d: #33241a; --bart: #9c8466; }
+.bubble { position: absolute; bottom: 100%; left: 50%; translate: -50% -4px; background: var(--card); color: var(--fg); border: 2.5px solid var(--line); border-radius: 14px; padding: .25rem .6rem; font: 700 1rem/1.2 var(--font-display); white-space: nowrap; pointer-events: none; animation: pop 1.4s ease-out forwards; }
+@keyframes pop { 0% { opacity: 0; scale: .5; } 15% { opacity: 1; scale: 1.08; } 25% { scale: 1; } 80% { opacity: 1; } 100% { opacity: 0; translate: -50% -18px; } }
+
+/* hero bento */
+.hero { padding: clamp(1.5rem, 4vw, 3rem) 0 0; }
+.bento { display: grid; gap: 1.1rem; grid-template-columns: 1.45fr 1fr .85fr; grid-template-areas: "intro photo quote" "intro photo call"; }
+.b-intro { grid-area: intro; padding: clamp(1.4rem, 3.5vw, 2.6rem); background: var(--card); }
+.b-intro h1 { font-size: clamp(2.4rem, 5vw, 3.9rem); font-weight: 700; margin: .7rem 0 1rem; }
+.b-intro h1 .wiggle { display: inline-block; color: var(--primary); animation: wiggle 2.6s ease-in-out infinite; transform-origin: 50% 80%; }
+@keyframes wiggle { 0%, 70%, 100% { transform: rotate(0); } 75% { transform: rotate(-6deg); } 82% { transform: rotate(5deg); } 89% { transform: rotate(-3deg); } }
+.b-intro .lead { color: var(--muted); font-size: 1.12rem; max-width: 34rem; }
+.b-intro .ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
+.b-photo { grid-area: photo; overflow: hidden; position: relative; padding: 0; min-height: 360px; rotate: 1.2deg; }
+.b-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.b-photo .tag { position: absolute; left: 14px; bottom: 14px; background: var(--yellow); color: var(--fg); border: 2.5px solid var(--line); border-radius: 999px; padding: .25rem .8rem; font: 700 .95rem/1.3 var(--font-display); }
+.b-quote { grid-area: quote; background: var(--yellow); padding: 1.3rem 1.3rem 1.1rem; rotate: -1.6deg; display: flex; flex-direction: column; justify-content: space-between; gap: .8rem; }
+.b-quote p { font: 700 1.45rem/1.15 var(--font-display); }
+.b-quote small { color: var(--muted-y); font-size: .88rem; }
+.b-call { grid-area: call; background: var(--sky); padding: 1.2rem; display: flex; flex-direction: column; gap: .7rem; justify-content: space-between; }
+.b-call p { font: 600 1.05rem/1.3 var(--font-display); }
+.b-call .btn { justify-content: center; }
+@media (max-width: 980px) { .bento { grid-template-columns: 1fr 1fr; grid-template-areas: "intro intro" "photo quote" "photo call"; } }
+@media (max-width: 560px) { .bento { grid-template-columns: 1fr; grid-template-areas: "intro" "photo" "quote" "call"; } .b-photo { min-height: 340px; } }
+
+/* meadow strip with patrolling dachshund */
+.wiese { position: relative; height: 130px; margin-top: 1.6rem; overflow: hidden; }
+.wiese .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 34px; background: var(--grass); border-top: 2.5px solid var(--line); }
+.wiese .ground::before { content: ''; position: absolute; left: 0; right: 0; top: -12px; height: 12px; background: radial-gradient(circle at 6px 12px, var(--grass) 6px, transparent 6.5px) 0 0 / 12px 12px repeat-x; }
+.wiese .blume { position: absolute; bottom: 30px; width: 22px; }
+.patrol { position: absolute; bottom: 26px; left: -180px; width: 150px; animation: patrol 18s linear infinite; }
+.patrol .dk { width: 150px; }
+.patrol .ball { position: absolute; left: calc(100% + 30px); bottom: 2px; width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #ff9b7d, #d2391f 70%); border: 2.5px solid var(--line); animation: ball .45s ease-in infinite alternate; }
+@keyframes ball { from { translate: 0 0; } to { translate: 0 -30px; } }
+@keyframes patrol {
+	0% { left: -180px; transform: scaleX(1); }
+	46% { left: calc(100% + 40px); transform: scaleX(1); }
+	50% { left: calc(100% + 40px); transform: scaleX(-1); }
+	96% { left: -180px; transform: scaleX(-1); }
+	100% { left: -180px; transform: scaleX(1); }
+}
+
+/* sections */
+section { padding: clamp(3rem, 7vw, 5.5rem) 0; }
+.sec-head { max-width: 46rem; margin-bottom: 2.2rem; }
+.sec-head h2 { font-size: clamp(2rem, 4.6vw, 3.1rem); margin: .5rem 0 .8rem; }
+.sec-head p { color: var(--muted); font-size: 1.1rem; }
+
+.werte { display: grid; gap: 1.2rem; grid-template-columns: repeat(3, 1fr); }
+.wert { padding: 1.6rem; transition: rotate .25s, translate .25s; }
+.wert:nth-child(1) { background: var(--mint); rotate: -1deg; }
+.wert:nth-child(2) { background: var(--card); rotate: .8deg; }
+.wert:nth-child(3) { background: var(--sky); rotate: -.5deg; }
+.wert:hover { rotate: 0deg; translate: 0 -4px; }
+.wert .ico { width: 56px; height: 56px; display: grid; place-items: center; border-radius: 16px; background: var(--yellow); border: 2.5px solid var(--line); margin-bottom: 1rem; }
+.wert .ico svg { width: 28px; height: 28px; }
+.wert h3 { font-size: 1.4rem; margin-bottom: .5rem; }
+.wert p { color: var(--muted); }
+@media (max-width: 860px) { .werte { grid-template-columns: 1fr; } }
+
+/* the long dachshund */
+.langer { --h: clamp(80px, 11vw, 130px); padding: 1rem 0 2.5rem; overflow: hidden; }
+.langer .dog { display: flex; align-items: flex-start; height: var(--h); }
+.langer .dog > .dk { width: var(--h); flex: none; }
+.langer .dog > .dk svg { height: var(--h); width: var(--h); }
+.langer .mitte { flex: 1 1 auto; margin-top: calc(var(--h) * .34); height: calc(var(--h) * .36); background: var(--fell); position: relative; margin-inline: -1px; }
+.langer .mitte::before { content: ''; position: absolute; left: 0; right: 0; top: calc(var(--h) * -.03); height: calc(var(--h) * .035); background: linear-gradient(135deg, var(--fell-d) 50%, transparent 50%) 0 0 / calc(var(--h) * .08) 100%, linear-gradient(225deg, var(--fell-d) 50%, transparent 50%) calc(var(--h) * .04) 0 / calc(var(--h) * .08) 100%; opacity: .55; }
+.langer .mitte .beine { position: absolute; inset: 0; }
+.langer p { text-align: center; font: 600 1rem/1.3 var(--font-display); color: var(--muted); margin-top: .7rem; }
+@supports (animation-timeline: view()) {
+	.langer .mitte { flex: 0 1 auto; width: 100%; animation: stretch linear both; animation-timeline: view(); animation-range: entry 10% cover 55%; }
+	@keyframes stretch { from { width: 2%; } to { width: 100%; } }
+}
+
+/* dog cards */
+.hunde { display: grid; gap: 2.2rem 1.4rem; grid-template-columns: repeat(3, 1fr); padding-top: 2.6rem; }
+.hund { position: relative; isolation: isolate; text-decoration: none; display: block; }
+.hund .peek { position: absolute; z-index: 0; right: 22px; top: -62px; width: 130px; transform: translateY(46px); transition: transform .35s cubic-bezier(.3,1.5,.6,1); }
+.hund:nth-child(2) .peek { left: 22px; right: auto; }
+.hund:hover .peek, .hund:focus-visible .peek { transform: translateY(0); }
+.hund .inner { position: relative; z-index: 1; overflow: hidden; transition: translate .2s, box-shadow .2s; }
+.hund:hover .inner { translate: -2px -2px; box-shadow: 7px 7px 0 var(--line); }
+.hund img { aspect-ratio: 4/3; object-fit: cover; width: 100%; border-bottom: 2.5px solid var(--line); }
+.hund .info { padding: 1rem 1.2rem 1.2rem; }
+.hund .info b { font: 700 1.3rem/1.2 var(--font-display); display: block; }
+.hund .meta { color: var(--muted); font-size: .95rem; margin-top: .2rem; }
+@media (hover: none) { .hund .peek { transform: translateY(0); } }
+@media (max-width: 860px) { .hunde { grid-template-columns: 1fr; max-width: 520px; } }
+
+/* welpen */
+.welpen { background: var(--yellow); border-block: 2.5px solid var(--line); padding-top: 0; }
+.band { background: var(--dark); color: var(--on-dark); overflow: hidden; border-bottom: 2.5px solid var(--line); margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+.band .lauf { display: flex; width: max-content; animation: lauf 26s linear infinite; }
+.band span { font: 700 1.25rem/1 var(--font-display); padding: .9rem 1.2rem; white-space: nowrap; display: inline-flex; gap: .9rem; align-items: center; }
+.band span svg { width: 22px; height: 22px; color: var(--yellow); }
+@keyframes lauf { to { transform: translateX(-50%); } }
+.welpen .grid { display: grid; gap: 2.2rem; grid-template-columns: 1fr 1fr; align-items: center; }
+.welpen .sec-head p, .welpen .sec-head .kicker { color: var(--muted-y); }
+.welpen dl { margin: 0 0 1.6rem; display: grid; gap: .6rem; }
+.welpen dl div { display: flex; gap: 1rem; justify-content: space-between; padding: .7rem 1rem; background: var(--card); border: 2.5px solid var(--line); border-radius: 14px; }
+.welpen dt { font-weight: 700; }
+.wurfkiste { position: relative; height: 210px; background: var(--mint); overflow: hidden; }
+.wurfkiste .label { position: absolute; left: 14px; top: 12px; font: 700 .95rem/1 var(--font-display); color: var(--fg); background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: .35rem .7rem; }
+.wurfkiste .decke { position: absolute; left: 12%; right: 12%; bottom: 18px; height: 34px; border-radius: 50%; background: repeating-linear-gradient(90deg, #f4a3a3 0 14px, #fde3d2 14px 28px); border: 2.5px solid var(--line); opacity: .9; }
+.welpe { position: absolute; bottom: 30px; width: 92px; }
+.welpe .dk { width: 92px; }
+.welpe.w1 { animation: kiste 9s linear infinite; }
+.welpe.w2 { animation: kiste 12s linear infinite -4s; bottom: 46px; z-index: -0; }
+.welpe.w3 { animation: kiste 7s linear infinite -2s; bottom: 22px; }
+@keyframes kiste {
+	0% { left: 4%; transform: scaleX(1); }
+	45% { left: calc(96% - 92px); transform: scaleX(1); }
+	50% { left: calc(96% - 92px); transform: scaleX(-1); }
+	95% { left: 4%; transform: scaleX(-1); }
+	100% { left: 4%; transform: scaleX(1); }
+}
+.welpen .fotos { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-top: 1rem; }
+.welpen .fotos img { aspect-ratio: 1; object-fit: cover; border: 2.5px solid var(--line); border-radius: 16px; }
+.welpen .fotos img:nth-child(odd) { rotate: -2deg; } .welpen .fotos img:nth-child(even) { rotate: 2deg; }
+@media (max-width: 860px) { .welpen .grid { grid-template-columns: 1fr; } }
+
+/* about */
+.about { display: grid; gap: 2.4rem; grid-template-columns: .9fr 1.1fr; align-items: center; }
+.about figure { margin: 0; overflow: hidden; position: relative; rotate: -1.5deg; }
+.about figure img { aspect-ratio: 4/3; object-fit: cover; width: 100%; }
+.about figcaption { position: absolute; right: 12px; bottom: 12px; background: var(--card); border: 2.5px solid var(--line); border-radius: 999px; padding: .25rem .8rem; font: 700 .9rem/1.3 var(--font-display); }
+.about h2 { font-size: clamp(2rem, 4.4vw, 2.9rem); margin: .5rem 0 1rem; }
+.about p { color: var(--muted); font-size: 1.1rem; }
+.about .more { display: inline-block; margin-top: 1.2rem; font: 700 1.05rem/1.2 var(--font-display); color: var(--primary); }
+@media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+
+/* contact */
+.kontakt .box { background: var(--sky); padding: clamp(1.6rem, 4vw, 3rem); display: grid; gap: 1.5rem; grid-template-columns: 1fr auto; align-items: end; position: relative; }
+.kontakt h2 { font-size: clamp(2rem, 4.6vw, 3rem); margin: .5rem 0 .8rem; }
+.kontakt p { color: var(--muted); font-size: 1.1rem; max-width: 40rem; }
+.kontakt .ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+.kontakt .warten { width: 190px; text-align: center; }
+.kontakt .warten small { display: block; font: 600 .9rem/1.3 var(--font-display); color: var(--muted); margin-top: .3rem; }
+@media (max-width: 760px) { .kontakt .box { grid-template-columns: 1fr; } .kontakt .warten { justify-self: center; } }
+
+/* footer */
+footer { background: var(--dark); color: var(--on-dark); padding: 3rem 0 2rem; margin-top: clamp(3rem, 7vw, 5rem); }
+footer .cols { display: grid; gap: 2rem; grid-template-columns: 1.3fr 1fr 1.4fr; }
+footer h2 { font-size: 1.1rem; margin-bottom: .8rem; }
+footer p, footer li { font-size: .95rem; opacity: .9; }
+footer li + li { margin-top: .35rem; }
+footer a { text-decoration: none; } footer a:hover { text-decoration: underline; }
+footer .hinweis { display: flex; gap: .9rem; align-items: center; }
+footer .hinweis img { width: 72px; height: 72px; object-fit: cover; border-radius: 14px; border: 2px solid var(--on-dark); flex: none; }
+footer .legal { border-top: 1px solid rgb(255 248 232 / .18); margin-top: 2.4rem; padding-top: 1.2rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; font-size: .85rem; opacity: .8; }
+footer .legal ul { display: flex; gap: 1.2rem; }
+@media (max-width: 860px) { footer .cols { grid-template-columns: 1fr; } }
+
+/* screen-bottom runners */
+.flitzer-bahn { position: fixed; left: 0; right: 0; bottom: 0; height: 150px; overflow: hidden; pointer-events: none; z-index: 40; }
+.flitzer { position: absolute; bottom: 4px; left: 0; display: flex; align-items: flex-end; gap: 18px; will-change: transform; }
+.flitzer .dk { pointer-events: auto; cursor: pointer; position: relative; }
+
+/* motion off: everything stands still */
+html.motion-off *, html.motion-off *::before, html.motion-off *::after { animation-play-state: paused !important; }
+html.motion-off .patrol { animation: none; left: 8%; }
+html.motion-off .welpe.w1 { animation: none; left: 8%; } html.motion-off .welpe.w2 { animation: none; left: 40%; } html.motion-off .welpe.w3 { animation: none; left: 66%; }
+html.motion-off .flitzer-bahn { display: none; }
+@supports (animation-timeline: view()) { html.motion-off .langer .mitte { animation: none; width: 100%; } }
+</style>
+</head>
+<body>
+
+<div class="entwurf">Entwurf F „Dackelparade“ – Inhalte aus Karos bisherigem Text, gelbe Markierungen sind noch offen. Tipp: auf einen flitzenden Dackel klicken.
+	<button type="button" id="theme">Hell / Dunkel</button></div>
+
+<header class="site">
+	<div class="wrap">
+		<a class="brand" href="#">
+			<span data-dackel="idle" aria-hidden="true"></span>
+			<span><b>Rauhaardackel vom Luchberg</b><small>Glashütte OT Luchau · Sachsen</small></span>
+		</a>
+		<nav aria-label="Hauptnavigation">
+			<ul>
+				<li><a href="#" aria-current="page">Start</a></li>
+				<li><a href="#dackel">Unsere Dackel</a></li>
+				<li><a href="#welpen">Welpen</a></li>
+				<li><a href="#ueber-uns">Über uns</a></li>
+				<li><a href="#kontakt">Kontakt</a></li>
+			</ul>
+		</nav>
+		<button type="button" class="motion-btn" id="motion" aria-pressed="false">
+			<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg>
+			<span>Animationen pausieren</span>
+		</button>
+	</div>
+	<div class="track wrap" aria-hidden="true">
+		<span data-dackel="idle" data-scrolly></span>
+		<svg class="bone" viewBox="0 0 32 14" fill="currentColor"><path d="M6 1a4 4 0 0 0-3 6.5A4 4 0 0 0 7 13c1.6 0 2.6-1 3-2h12c.4 1 1.4 2 3 2a4 4 0 0 0 4-5.5A4 4 0 0 0 26 1c-1.6 0-2.6 1-3 2H9C8.6 2 7.6 1 6 1z"/></svg>
+	</div>
+</header>
+
+<main>
+	<div class="hero">
+		<div class="wrap bento">
+			<div class="b-intro sticker">
+				<p class="kicker">Standard-Rauhaardackel aus Sachsen</p>
+				<h1>Kurze Beine, <span class="wiggle">großes Herz.</span></h1>
+				<p class="lead">Wir züchten unsere Rauhaardackel für Liebhaber und Familien und achten dabei auf Gesundheit und Wesen. Die Kleinen wachsen mit Familienanschluss bei uns auf und lernen alles Wichtige für ihren späteren Alltag kennen.</p>
+				<div class="ctas">
+					<a class="btn btn-primary" href="#welpen">Welpen anfragen</a>
+					<a class="btn btn-plain" href="#dackel">Unsere Dackel kennenlernen</a>
+				</div>
+			</div>
+			<figure class="b-photo sticker" style="margin:0">
+				<img src="../../../../public/uploads/rudel/dackel/dackel-duo-bank.jpg" alt="Zwei Rauhaardackel sitzen nebeneinander auf einer Holzbank" width="1280" height="1600">
+				<figcaption class="tag">Hanni &amp; Bonnie</figcaption>
+			</figure>
+			<div class="b-quote sticker">
+				<p>„Bei uns sind sie absolute Familienhunde.“</p>
+				<small>Karo über ihre Rauhaardackel</small>
+			</div>
+			<div class="b-call sticker">
+				<p>Lust auf einen kleinen Besuch?</p>
+				<span data-dackel="idle" class="fell-dunkel" aria-hidden="true" style="width:120px;align-self:center"></span>
+				<button type="button" class="btn btn-plain" id="rufen">Dackel rufen</button>
+			</div>
+		</div>
+		<div class="wiese" aria-hidden="true">
+			<svg class="blume" style="left:12%" viewBox="0 0 22 40"><path d="M11 40V16" stroke="#3f8f3a" stroke-width="2.5"/><circle cx="11" cy="11" r="8" fill="#ffd23f" stroke="#1e1b33" stroke-width="2"/><circle cx="11" cy="11" r="3" fill="#f59e0b"/></svg>
+			<svg class="blume" style="left:37%;width:18px" viewBox="0 0 22 40"><path d="M11 40V16" stroke="#3f8f3a" stroke-width="2.5"/><circle cx="11" cy="11" r="8" fill="#ffffff" stroke="#1e1b33" stroke-width="2"/><circle cx="11" cy="11" r="3" fill="#ffd23f"/></svg>
+			<svg class="blume" style="left:64%" viewBox="0 0 22 40"><path d="M11 40V16" stroke="#3f8f3a" stroke-width="2.5"/><circle cx="11" cy="11" r="8" fill="#ffd23f" stroke="#1e1b33" stroke-width="2"/><circle cx="11" cy="11" r="3" fill="#f59e0b"/></svg>
+			<svg class="blume" style="left:86%;width:18px" viewBox="0 0 22 40"><path d="M11 40V16" stroke="#3f8f3a" stroke-width="2.5"/><circle cx="11" cy="11" r="8" fill="#ffffff" stroke="#1e1b33" stroke-width="2"/><circle cx="11" cy="11" r="3" fill="#ffd23f"/></svg>
+			<div class="patrol"><span data-dackel="run" class="fell-rot"></span><span class="ball"></span></div>
+			<div class="ground"></div>
+		</div>
+	</div>
+
+	<section>
+		<div class="wrap">
+			<div class="sec-head">
+				<p class="kicker">Was uns wichtig ist</p>
+				<h2>Familienhunde mit Dackelkopf</h2>
+			</div>
+			<div class="werte">
+				<div class="wert sticker">
+					<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></div>
+					<h3>Gesundheit &amp; Wesen</h3>
+					<p>Darauf achten wir bei unserer Zucht – die wir ausschließlich für Liebhaber und Familien betreiben.</p>
+				</div>
+				<div class="wert sticker">
+					<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-5h4v5"/></svg></div>
+					<h3>Aufgewachsen im Rudel</h3>
+					<p>Die Kleinen wachsen mit Familienanschluss bei uns auf, zusammen mit unseren anderen Hunden, und lernen alles Wichtige kennen.</p>
+				</div>
+				<div class="wert sticker">
+					<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V11M12 11c-4 0-7-3-7-7 4 0 7 3 7 7zM12 11c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></div>
+					<h3>Jagdliche Wurzeln</h3>
+					<p>Wir bilden unsere Dackel nicht zur Jagd aus – die Elterntiere haben aber jagdliche Abstammungen. Bei uns sind sie absolute Familienhunde.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="langer" aria-hidden="true">
+		<div class="dog">
+			<span data-dackel="rear" data-scrolly></span>
+			<div class="mitte"></div>
+			<span data-dackel="front" data-scrolly></span>
+		</div>
+		<p>Achtung, Dackel in voller Länge. Einfach weiterscrollen.</p>
+	</div>
+
+	<section id="dackel" style="padding-top:1rem">
+		<div class="wrap">
+			<div class="sec-head">
+				<p class="kicker">Unsere Dackel</p>
+				<h2>Hanni, Bonnie und der Vater unserer Dackel</h2>
+				<p>Gut sozialisiert und erzogen: Unsere Rauhaardackel helfen oft als „Lehrhund“ auf dem Hundeplatz mit – vor allem die Kinder haben daran große Freude.</p>
+			</div>
+			<div class="hunde">
+				<a class="hund" href="#">
+					<span class="peek" aria-hidden="true"><span data-dackel="idle" class="fell-grau"></span></span>
+					<div class="inner sticker">
+						<img loading="lazy" src="../../../../public/uploads/rudel/dackel/53add332-b7ff-2b5f-d118-81e15aafe02d.jpg" alt="Rauhaardackel-Hündin liegt in der Löwenzahnwiese" width="1600" height="1067">
+						<div class="info"><b>Hündin</b><p class="meta">Wurftag, Farbe &amp; Abstammung folgen</p></div>
+					</div>
+				</a>
+				<a class="hund" href="#">
+					<span class="peek" aria-hidden="true"><span data-dackel="idle" class="fell-dunkel flip"></span></span>
+					<div class="inner sticker">
+						<img loading="lazy" src="../../../../public/uploads/rudel/dackel/ed953edf-7ead-47d2-461e-1b57fad27b70.jpg" alt="Rauhaardackel-Hündin sitzt im Gras" width="1600" height="1067">
+						<div class="info"><b>Hündin</b><p class="meta">Wurftag, Farbe &amp; Abstammung folgen</p></div>
+					</div>
+				</a>
+				<a class="hund" href="#">
+					<span class="peek" aria-hidden="true"><span data-dackel="idle" class="fell-rot"></span></span>
+					<div class="inner sticker">
+						<img loading="lazy" src="../../../../public/uploads/rudel/dackel/c3b66134-8be9-44da-b2ec-5831581ad930.jpg" alt="Rotbrauner Rauhaardackel-Rüde steht im Garten" width="1600" height="1067">
+						<div class="info"><b>Rüde · Vater unserer Dackel</b><p class="meta">Der Vater unserer Dackel</p></div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section id="welpen" class="welpen">
+		<div class="band" aria-hidden="true">
+			<div class="lauf">
+				<span>Welpen anfragen <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Kurze Beine <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Großes Herz <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Mit Familienanschluss im Rudel <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Welpen anfragen <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Kurze Beine <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Großes Herz <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Mit Familienanschluss im Rudel <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+			</div>
+		</div>
+		<div class="wrap grid">
+			<div>
+				<div class="sec-head" style="margin-bottom:1.6rem">
+					<p class="kicker">Welpen</p>
+					<h2>Ihr sucht einen Rauhaardackel?</h2>
+					<p>Bei Interesse an einem Dackel nehmen wir gern eure Anfrage entgegen und stehen euch mit Rat und Tat zur Seite.</p>
+				</div>
+				<dl>
+					<div><dt>Nächster Wurf</dt><dd style="margin:0"><span class="todo">Termin offen</span></dd></div>
+					<div><dt>Eltern</dt><dd style="margin:0"><span class="todo">folgt</span></dd></div>
+					<div><dt>Aufzucht</dt><dd style="margin:0">Mit Familienanschluss im Rudel</dd></div>
+				</dl>
+				<a class="btn btn-primary" href="#kontakt">Jetzt unverbindlich anfragen</a>
+			</div>
+			<div>
+				<div class="wurfkiste sticker" aria-hidden="true">
+					<span class="label">Die Wurfkiste</span>
+					<div class="decke"></div>
+					<div class="welpe w2"><span data-dackel="walk" class="fell-dunkel"></span></div>
+					<div class="welpe w1"><span data-dackel="walk"></span></div>
+					<div class="welpe w3"><span data-dackel="walk" class="fell-grau"></span></div>
+				</div>
+				<div class="fotos">
+					<img loading="lazy" src="../../../../public/uploads/rudel/dackel/c3dfdb93-b889-2476-cad5-f1f983e4a5fa.jpg" alt="Dackelwelpe pirscht durchs Gras" width="1600" height="1067">
+					<img loading="lazy" src="../../../../public/uploads/rudel/dackel/fd61d309-3527-cf91-0a33-c7926781635e.jpg" alt="Dackelwelpe mit gelbem Spielzeug" width="1600" height="1067">
+					<img loading="lazy" src="../../../../public/uploads/rudel/dackel/2b8a30f9-cd18-0503-f5f2-47ee1990488a.jpg" alt="Dackelwelpe schaut in die Kamera" width="1600" height="1067">
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="ueber-uns">
+		<div class="wrap about">
+			<figure class="sticker">
+				<img loading="lazy" src="../../../../public/uploads/rudel/dackel/karo-mit-dackel-und-junghund.jpg" alt="Karo hockt auf einem Weg, neben ihr Dackel Bonnie und Rottweiler-Junghündin Baja" width="1600" height="1065">
+				<figcaption>Karo mit Bonnie und Baja</figcaption>
+			</figure>
+			<div>
+				<p class="kicker">Über uns</p>
+				<h2>Ein Rudel, eine Familie</h2>
+				<p>Ich bin Karo und lebe mit meiner Familie und unserem Rudel in Luchau, einem Ortsteil von Glashütte. Zu unserem Rudel gehören auch unsere beiden Rauhaardackel-Damen Hanni und Bonnie.</p>
+				<a class="more" href="#">Mehr über uns und die Aufzucht →</a>
+			</div>
+		</div>
+	</section>
+
+	<section id="kontakt" class="kontakt" style="padding-top:0">
+		<div class="wrap">
+			<div class="box sticker">
+				<div>
+					<p class="kicker">Kontakt</p>
+					<h2>Schreibt uns – wir freuen uns auf euch.</h2>
+					<p>Erzählt uns ein bisschen von euch und euren Vorstellungen. Wir melden uns gern und beantworten alle Fragen rund um den Rauhaardackel.</p>
+					<div class="ctas">
+						<a class="btn btn-primary" href="#">Anfrage senden</a>
+						<a class="btn btn-plain" href="tel:01733665494">0173 3665494</a>
+					</div>
+				</div>
+				<div class="warten" aria-hidden="true">
+					<span data-dackel="idle" class="fell-grau"></span>
+					<small>wartet schon aufs Postfach</small>
+				</div>
+			</div>
+		</div>
+	</section>
+</main>
+
+<footer>
+	<div class="wrap">
+		<div class="cols">
+			<div>
+				<h2>Rauhaardackel vom Luchberg</h2>
+				<address style="font-style:normal">Karolin Riesing<br>Dorfstr. 2d<br>01768 Glashütte OT Luchau</address>
+			</div>
+			<div>
+				<h2>Seiten</h2>
+				<ul>
+					<li><a href="#dackel">Unsere Dackel</a></li>
+					<li><a href="#welpen">Welpen</a></li>
+					<li><a href="#ueber-uns">Über uns</a></li>
+					<li><a href="#kontakt">Kontakt</a></li>
+				</ul>
+			</div>
+			<div>
+				<h2>Auch bei uns</h2>
+				<div class="hinweis">
+					<img src="../../../../public/uploads/rudel/dackel/karo-mit-dackel-und-junghund.jpg" alt="" width="1600" height="1065" style="object-position:62% 50%">
+					<p>Wir züchten auch Rottweiler im ADRK:<br><a href="https://vomluchberg.de">Rottweiler vom Luchberg →</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="legal">
+			<p>© 2026 Rauhaardackel vom Luchberg</p>
+			<ul><li><a href="#">Impressum</a></li><li><a href="#">Datenschutz</a></li></ul>
+		</div>
+	</div>
+</footer>
+
+<div class="flitzer-bahn" aria-hidden="true"></div>
+
+<script>
+(() => {
+	// Mockup only: light/dark toggle for the review.
+	document.getElementById('theme').addEventListener('click', () => {
+		const r = document.documentElement;
+		const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+		r.dataset.theme = dark ? 'light' : 'dark';
+	});
+
+	// ---- Dachshund SVG (side view, facing right, wire-haired: beard + brows) ----
+	// viewBox 0 0 220 100; body band y 34..70 so the long dachshund can be stitched together.
+	const zigzag = (x0, x1, y) => { let d = `M${x0} ${y}`; for (let x = x0; x < x1; x += 8) d += ` l4 -3.5 l4 3.5`; return d; };
+	const leg = (cls, x, far) => `<g class="leg ${cls}"><rect x="${x}" y="56" width="12" height="27" rx="6" fill="var(${far ? '--fell-d' : '--fell'})"/><ellipse cx="${x + 8}" cy="83" rx="8.5" ry="4.5" fill="var(${far ? '--fell-d' : '--fell'})"/></g>`;
+	const rear = `
+		<g class="tail"><path d="M40 46 Q24 40 15 20" fill="none" stroke="var(--fell-d)" stroke-width="8" stroke-linecap="round"/><path d="M14 21 l-3 -7 l4 3 l1 -6 l2 6" fill="var(--fell-d)" stroke="var(--fell-d)" stroke-width="2" stroke-linejoin="round"/></g>
+		${leg('l1', 44, true)}${leg('l3', 140, true)}`;
+	const body = `
+		<rect x="34" y="34" width="132" height="36" rx="18" fill="var(--fell)"/>
+		<path d="${zigzag(46, 150, 35.5)}" fill="none" stroke="var(--fell-d)" stroke-width="2" stroke-linejoin="round" opacity=".7"/>
+		<ellipse cx="150" cy="56" rx="20" ry="16" fill="var(--fell)"/>
+`;
+	const near = `${leg('l2', 58, false)}${leg('l4', 154, false)}`;
+	const head = `
+		<rect x="146" y="22" width="24" height="34" rx="12" fill="var(--fell)" transform="rotate(28 158 39)"/>
+		<g class="head">
+			<ellipse cx="172" cy="27" rx="17" ry="14" fill="var(--fell)"/>
+			<rect x="176" y="21" width="31" height="17" rx="8" fill="var(--fell)"/>
+			<path d="M179 32 q0 8 6 10 l2 5 l3 -4 l3 5 l3 -5 l3 4 l2 -5 q6 -2 6 -10 z" fill="var(--bart)"/>
+			<circle cx="206" cy="25" r="4.5" fill="#1b1410"/>
+			<circle cx="181" cy="22" r="2.8" fill="#1b1410"/><circle cx="182" cy="21" r="1" fill="#fff"/>
+			<path d="M175 16 l10 1.5" stroke="var(--bart)" stroke-width="3.2" stroke-linecap="round"/>
+			<g class="ear"><path d="M165 15 q-11 5 -8 22 q5 6 11 0 q3 -11 -3 -22z" fill="var(--fell-d)"/></g>
+		</g>`;
+	const svg = (part) => {
+		if (part === 'rear') return `<svg viewBox="0 0 100 100"><g class="all">${rear.replace(leg('l3', 140, true), '')}<rect x="34" y="34" width="90" height="36" rx="18" fill="var(--fell)"/><path d="${zigzag(46, 100, 35.5)}" fill="none" stroke="var(--fell-d)" stroke-width="2" opacity=".7"/>${leg('l2', 58, false)}</g></svg>`;
+		if (part === 'front') return `<svg viewBox="120 0 100 100"><g class="all">${leg('l3', 140, true)}<rect x="100" y="34" width="66" height="36" rx="0" fill="var(--fell)"/><path d="${zigzag(120, 150, 35.5)}" fill="none" stroke="var(--fell-d)" stroke-width="2" opacity=".7"/><ellipse cx="150" cy="56" rx="20" ry="16" fill="var(--fell)"/>${head}${leg('l4', 154, false)}</g></svg>`;
+		return `<svg viewBox="0 0 220 100"><g class="all">${rear}${body}${head}${near}</g></svg>`;
+	};
+	const make = (el) => {
+		const mode = el.dataset.dackel;
+		el.classList.add('dk');
+		if (mode === 'run' || mode === 'walk') el.classList.add(mode);
+		if ('scrolly' in el.dataset) el.classList.add('scrolly');
+		el.innerHTML = svg(mode === 'rear' || mode === 'front' ? mode : 'full');
+	};
+	document.querySelectorAll('[data-dackel]').forEach(make);
+
+	const root = document.documentElement;
+	const bark = (dk) => {
+		dk.classList.remove('hop'); void dk.offsetWidth; dk.classList.add('hop');
+		const b = document.createElement('span');
+		b.className = 'bubble';
+		b.textContent = ['Wuff!', 'Wau!', 'Wuff wuff!', 'Hallo!'][Math.floor(Math.random() * 4)];
+		dk.appendChild(b);
+		setTimeout(() => b.remove(), 1400);
+	};
+	document.querySelector('.brand .dk').addEventListener('mouseenter', (e) => bark(e.currentTarget));
+
+	// ---- motion toggle (off by default with prefers-reduced-motion) ----
+	const btn = document.getElementById('motion');
+	let stored = null; try { stored = localStorage.getItem('dackel-motion'); } catch (e) {}
+	const setMotion = (on, save) => {
+		root.classList.toggle('motion-off', !on);
+		btn.setAttribute('aria-pressed', String(!on));
+		btn.querySelector('span').textContent = on ? 'Animationen pausieren' : 'Animationen abspielen';
+		if (save) try { localStorage.setItem('dackel-motion', on ? 'on' : 'off'); } catch (e) {}
+		if (!on) bahn.replaceChildren();
+	};
+	const bahn = document.querySelector('.flitzer-bahn');
+	setMotion(stored ? stored === 'on' : !matchMedia('(prefers-reduced-motion: reduce)').matches, false);
+	btn.addEventListener('click', () => setMotion(root.classList.contains('motion-off'), true));
+
+	// ---- scroll: progress dachshund + "legs move while scrolling" ----
+	const track = document.querySelector('.track .dk');
+	let lastY = scrollY, stop;
+	const onScroll = () => {
+		const max = document.documentElement.scrollHeight - innerHeight;
+		track.style.setProperty('--p', max > 0 ? Math.min(1, scrollY / max) : 0);
+		if (scrollY !== lastY) track.classList.toggle('flip', scrollY < lastY);
+		lastY = scrollY;
+		root.classList.add('scrolling');
+		clearTimeout(stop); stop = setTimeout(() => root.classList.remove('scrolling'), 160);
+	};
+	addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+	// ---- Flitzer: dachshunds dashing across the bottom of the screen ----
+	const felle = ['', 'fell-grau', 'fell-rot', 'fell-dunkel'];
+	const pick = (a) => a[Math.floor(Math.random() * a.length)];
+	const flitz = () => {
+		const ltr = Math.random() < .6;
+		const group = document.createElement('div');
+		group.className = 'flitzer';
+		const kind = pick(['solo', 'solo', 'familie', 'ball']);
+		const add = (w, fell) => {
+			const s = document.createElement('span');
+			s.dataset.dackel = 'run'; if (fell) s.classList.add(fell);
+			s.style.width = w + 'px'; make(s);
+			s.addEventListener('click', () => bark(s));
+			return s;
+		};
+		const big = add(innerWidth < 600 ? 110 : 150, pick(felle));
+		if (kind === 'familie') { group.append(add(innerWidth < 600 ? 62 : 80, pick(felle)), add(innerWidth < 600 ? 62 : 80, pick(felle)), big); }
+		else if (kind === 'ball') { const ball = document.createElement('span'); ball.className = 'ball'; Object.assign(ball.style, { position: 'relative', width: '26px', height: '26px', borderRadius: '50%', border: '2.5px solid var(--line)', background: 'radial-gradient(circle at 35% 35%, #ff9b7d, #d2391f 70%)', animation: 'ball .45s ease-in infinite alternate', marginLeft: '24px' }); group.append(big, ball); }
+		else group.append(big);
+		if (!ltr) group.style.flexDirection = 'row-reverse';
+		if (!ltr) group.querySelectorAll('.dk').forEach((d) => d.classList.add('flip'));
+		bahn.append(group);
+		const w = group.offsetWidth, dist = innerWidth + w + 40;
+		const from = ltr ? -w - 20 : innerWidth + 20, to = ltr ? innerWidth + 20 : -w - 20;
+		const anim = group.animate([{ transform: `translateX(${from}px)` }, { transform: `translateX(${to}px)` }], { duration: dist / (kind === 'familie' ? .35 : .55), easing: 'linear' });
+		anim.onfinish = () => group.remove();
+	};
+	const loop = () => {
+		if (!root.classList.contains('motion-off') && !document.hidden) flitz();
+		setTimeout(loop, 15000 + Math.random() * 10000);
+	};
+	setTimeout(loop, 2500);
+	document.getElementById('rufen').addEventListener('click', () => {
+		if (root.classList.contains('motion-off')) setMotion(true, true);
+		flitz();
+	});
+})();
+</script>
+</body>
+</html>

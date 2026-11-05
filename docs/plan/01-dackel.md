@@ -7,8 +7,9 @@ Design mockups (open locally in a browser, they load the real photos from `publi
 [`mockups/dackel/loewenzahn.html`](mockups/dackel/loewenzahn.html) – direction B "Löwenzahn",
 [`mockups/dackel/forsthaus.html`](mockups/dackel/forsthaus.html) – C "Forsthaus",
 [`mockups/dackel/bilderbuch.html`](mockups/dackel/bilderbuch.html) – D "Bilderbuch",
-[`mockups/dackel/lichtung.html`](mockups/dackel/lichtung.html) – E "Lichtung".
-Side-by-side overview of all five heroes: [`mockups/dackel/uebersicht.png`](mockups/dackel/uebersicht.png).
+[`mockups/dackel/lichtung.html`](mockups/dackel/lichtung.html) – E "Lichtung",
+[`mockups/dackel/dackelparade.html`](mockups/dackel/dackelparade.html) – F "Dackelparade" (animated).
+Side-by-side overview of the heroes A–E: [`mockups/dackel/uebersicht.png`](mockups/dackel/uebersicht.png).
 
 ## 1. Decisions
 
@@ -217,6 +218,29 @@ below). Each aims at a different part of the dachshund audience.
   italic serif words (Instrument Serif), numbered sections with hairline rules, a wide 21:9 hero
   photo, asymmetric dog grid, black Welpen block with a fact list. Lowest contrast: terracotta on
   bg 5.7 (dark 6.9). *Risk:* lives from very good photos; with few or weak photos it looks empty.
+
+### F – "Dackelparade" (animated, mockup built)
+
+Requested by Toni as a funny, livelier variant with a different layout. Bento/sticker layout (thick
+outlines, offset shadows, slightly tilted cards) in cream `#fff8e8`, yellow `#ffd23f`, mint, sky blue
+and tomato `#b8321b` buttons; rounded display type (Fredoka via Fontsource on the real site).
+The dachshunds are our own SVG drawings (wire-haired: beard and brows, four coat colours), animated
+with CSS only – no Lottie files, no third-party animation licences, no external requests:
+
+- a dachshund runs along a scroll-progress track under the header (legs move while scrolling),
+- one chases a ball back and forth over the hero meadow,
+- "Flitzer" dash across the bottom of the screen every 15–25 s (alone, with puppies, or after a
+  ball); clicking one makes it jump and bark ("Wuff!"); the "Dackel rufen" button calls one at once,
+- dachshunds peek over the dog cards on hover (always visible on touch devices),
+- a very long dachshund grows with scrolling (CSS scroll-driven animation, static fallback),
+- three puppies wander around a whelping box in the Welpen section, plus a running text band.
+
+Accessibility: a visible "Animationen pausieren" button (WCAG 2.2.2, choice remembered in
+`localStorage`), animations off by default with `prefers-reduced-motion`, all dachshund graphics
+`aria-hidden`. Lowest text contrast: muted on yellow 6.2, tomato on cream 5.7 (dark 7.0).
+*Risk:* the gags wear off on repeat visits and can distract from the content; for the real site
+keep the patrol, the peeking dogs and the button, and make the Flitzer rarer (e.g. once per visit).
+Implementation would be one `<Dackel>` Astro component (inline SVG) plus one small script island.
 
 **Recommendation: A.** It is clearly different from the Rottweiler site in every dimension (serif vs.
 grotesk, green/rust vs. orange/pink, paper vs. white, arches vs. rounded cards, calm vs. neon), fits
