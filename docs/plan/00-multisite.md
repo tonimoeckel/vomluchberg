@@ -14,9 +14,10 @@ committed); their results are in [Spike results](#spike-results). Slices 1 (`dac
   `noindex, nofollow`; the build's site id/noindex flag reach components via `virtual:multisite`.
 - Finding while verifying: Tailwind 4's automatic source detection also scans Markdown files
   (`docs/**`, `CLAUDE.md`, `README.md`). Class-like words in docs end up in the CSS inlined into
-  every page – the plan commit alone changed the CSS of all 41 pages. Proposal: exclude `docs/`
-  and `migration/` via `@source not` in `src/styles/global.css` (changes the CSS once, then docs
-  edits no longer touch the site). Not done in PR A because it changes output.
+  every page – the plan commit alone changed the CSS of all 41 pages. **Fixed** in a follow-up
+  commit: `src/styles/global.css` excludes `docs/`, `migration/` and the root `*.md` files via
+  `@source not`. That removed only the unused `.table` and `.visible` rules (49 bytes per page);
+  from now on docs edits don't touch the site's CSS.
 - PR B (steps 8–10) and step 12: open.
 
 ## TL;DR
