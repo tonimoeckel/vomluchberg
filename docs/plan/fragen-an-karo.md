@@ -11,6 +11,7 @@ Jede Planungs-Session ergänzt nur **ihren eigenen Abschnitt**.
 - [ ] **Ein Login für alles:** Ist es okay, wenn du alle drei Websites im selben Editor (`/admin`) pflegst? *(Annahme: ja, ein Login, die Bereiche sind klar beschriftet.)*
 - [ ] **Kontaktdaten:** Gelten Telefon, Adresse und E-Mail der Rottweiler-Seite auch für die Dackel- und die Trainingsseite, oder gibt es eigene Adressen? *(Annahme: gleiche Adresse und Telefon. E-Mail fürs Training wie bei Pfotentermin: `bruosdonnalina2018@gmail.com`.)*
 - [ ] **Querverweise:** Soll die Trainingsseite auch auf die Zuchtseiten verweisen (und umgekehrt), oder nur Rottweiler ↔ Dackel? *(Annahme: kleiner Hinweis im Footer auf allen drei Seiten.)*
+- [ ] **Bilder-Ordner:** Im Editor gibt es einen gemeinsamen Bilder-Bereich für alle drei Websites. Ist es okay, wenn du Dackel-Bilder in den Ordner „dackel“ und Trainings-Bilder in den Ordner „training“ hochlädst? Die Rottweiler-Bilder bleiben, wo sie sind. *(Annahme: ja. Falls ein Bild mal im falschen Ordner landet, geht trotzdem nichts kaputt.)*
 
 ## Rauhaardackel-Seite
 
@@ -27,5 +28,11 @@ Jede Planungs-Session ergänzt nur **ihren eigenen Abschnitt**.
 - [ ] **Pfotentermin:** Darf die alte Pfotentermin-Adresse auf die neue Seite weiterleiten, sobald diese fertig ist? *(Annahme: ja.)*
 
 ## Betrieb & Domains
+
+<!-- Slice 0 (Multi-Site-Grundlage): -->
+
+- [ ] **Bearbeiten mit Vorschau:** Jede Website hat ihren eigenen Editor unter ihrer Adresse + `/admin` (z. B. `vomluchberg.de/admin`). Dort siehst du beim Tippen die Vorschau genau dieser Website. Die Bereiche der anderen beiden Websites kannst du dort auch bearbeiten und speichern, nur ohne Live-Vorschau. Kommst du damit zurecht? *(Annahme: ja. Wir schreiben dir die drei Editor-Adressen auf einen Zettel.)*
+- [ ] **Neue Namen im Editor:** Die Rottweiler-Bereiche heißen im Editor dann „Rottweiler · Seiten“, „Rottweiler · Würfe“ usw., damit du sie von „Dackel · …“ und „Training · …“ unterscheiden kannst. Okay? *(Annahme: ja, ab dem Start der zweiten Website.)*
+- [ ] **Testadressen:** Bis die neuen Domains da sind, laufen die Dackel- und die Trainingsseite unter einer Testadresse (`….workers.dev`), die Google nicht findet. Ist es okay, wenn du sie dort schon befüllst und anschaust? *(Annahme: ja.)*
 
 <!-- Slice 3 ergänzt hier. -->
