@@ -1,6 +1,8 @@
 ---
 // Shared <head> of every site: meta, canonical, Open Graph, favicons and theme colour.
 // Each site's layout imports its own stylesheet and passes its colours.
+import { noindex } from 'virtual:multisite';
+
 interface Props {
 	title: string;
 	description: string;
@@ -21,6 +23,7 @@ const ogImage = image ? new URL(image, Astro.site ?? Astro.url) : undefined;
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <meta name="generator" content={Astro.generator} />
 <link rel="canonical" href={canonicalURL} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
 <title>{title}</title>
 <meta name="description" content={description} />
 <meta name="theme-color" content={themeColor.light} media="(prefers-color-scheme: light)" />

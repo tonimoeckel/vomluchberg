@@ -10,6 +10,7 @@ import { cpSync, createReadStream, existsSync, readdirSync, statSync } from 'nod
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contentType, sitePublicPath } from './public-files';
+import { isNoindex } from './robots';
 import { isRouteFile, routePattern } from './routes';
 
 const filesBelow = (dir: string): string[] =>
@@ -33,6 +34,20 @@ function servePublicDir(publicDir: string): Plugin {
   };
 }
 
+/** `virtual:multisite`: the build's site id and noindex flag (types in virtual.d.ts). */
+function virtualModule(values: { siteId: string; noindex: boolean }): Plugin {
+  const id = 'virtual:multisite';
+  const resolved = '\0' + id;
+  return {
+    name: 'luchberg:multisite-virtual',
+    resolveId: (source) => (source === id ? resolved : undefined),
+    load: (source) =>
+      source === resolved
+        ? Object.entries(values).map(([k, v]) => `export const ${k} = ${JSON.stringify(v)};`).join('\n')
+        : undefined,
+  };
+}
+
 export function multisite(siteId: string): AstroIntegration {
   let publicDir = '';
   return {
@@ -40,7 +55,11 @@ export function multisite(siteId: string): AstroIntegration {
     hooks: {
       'astro:config:setup': ({ config, injectRoute, updateConfig, logger }) => {
         publicDir = fileURLToPath(new URL(`./src/sites/${siteId}/public/`, config.root));
-        if (existsSync(publicDir)) updateConfig({ vite: { plugins: [servePublicDir(publicDir)] } });
+        const noindex = isNoindex(process.env.SITE_NOINDEX);
+        const plugins = [virtualModule({ siteId, noindex })];
+        if (existsSync(publicDir)) plugins.push(servePublicDir(publicDir));
+        updateConfig({ vite: { plugins } });
+        if (noindex) logger.warn(`SITE_NOINDEX is set: "${siteId}" is built with robots noindex`);
 
         const pagesDir = fileURLToPath(new URL(`./src/sites/${siteId}/pages/`, config.root));
         if (!existsSync(pagesDir)) throw new Error(`Site "${siteId}" has no pages folder (${pagesDir})`);
@@ -48,6 +67,9 @@ export function multisite(siteId: string): AstroIntegration {
           .map((file) => ({ file, rel: relative(pagesDir, file) }))
           .filter(({ rel }) => isRouteFile(rel));
         for (const { file, rel } of routes) injectRoute({ pattern: routePattern(rel), entrypoint: file });
+        if (!routes.some(({ rel }) => routePattern(rel) === '/robots.txt')) {
+          injectRoute({ pattern: '/robots.txt', entrypoint: fileURLToPath(new URL('./src/multisite/robots.txt.ts', config.root)) });
+        }
         logger.info(`Site "${siteId}": ${routes.length} routes from src/sites/${siteId}/pages`);
       },
       'astro:build:done': ({ dir, logger }) => {
