@@ -252,7 +252,9 @@ output diffed against `main` where routes/shared components change.
 | 12 | Old-path redirects on the new site | per-site `redirects`: `/services` → `/angebote`, `/ueber-uns` → `/ueber-mich`, `/book` → `/anfrage`, `/bewertungen` → `/` | build output contains redirect pages |
 | 13 | Docs | `CLAUDE.md` (training collections/blocks, design tokens), `README.md` (training worker env) | – |
 
-Tasks 1–2 have no slice-0 dependency and can land first. 3–12 need slice 0 merged.
+Tasks 1–2 have no slice-0 dependency and are **done** (`src/lib/domain/angebot.ts`, `anfrage.ts` with tests).
+Note for the form (task 7): `anfrageFelder` fixes the field names, `anfrageAusFormular` reads them, and
+`anfrageMailto` builds the fallback. 3–12 need slice 0 merged.
 
 ## 8. Dependencies on slice 0 (interface I need)
 
