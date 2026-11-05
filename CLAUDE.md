@@ -34,18 +34,18 @@ Run `npm test`, `npm run build:local` and `npx astro check` after every change.
 | `src/content/{seiten,hunde,wuerfe,aktuelles,config}` | Content (md with frontmatter; config is JSON) |
 | `src/lib/data.ts` | Tina client loaders (lists sorted via the domain modules), derived types |
 | `src/lib/detailseiten.ts` | One definition per detail page collection (`seiten`, `hunde`, `wuerfe`, `aktuelles`): static paths, load + unwrap, SEO, Body, island. Page `home` is the index (served at `/`) |
-| `src/lib/islands.ts` | Island registry for live visual editing, built from `detailseiten.ts` plus the global header/footer → served by `src/pages/tina-island/[name].ts` |
+| `src/lib/islands.ts` | Island registry for live visual editing, built from `detailseiten.ts` plus the global header/footer → served by `src/sites/luchberg/pages/tina-island/[name].ts` |
 | `src/lib/domain/*` | Pure domain rules with colocated tests: `hund`, `wurf`, `news` (options/labels, sorting, grouping, URLs, SEO), `datum`, `slug`, `seo` (head meta fallbacks). Also imported by `tina/collections/*` – no Astro/Tina imports here |
 | `src/lib/farbschema.ts` | Colour scheme list (ids, labels, swatches, theme-color) for Tina, `FarbVorschau` and `BaseHead` |
 | `src/components/blocks/*` | One component per block, dispatched in `Blocks.astro` via `__typename` (`PageBlocksHero`, …) |
 | `src/components/islands/*Body.astro` | Detail bodies for hund/wurf/news (pages render `Blocks.astro` directly) |
 | `src/layouts/Detailseite.astro` | Renders a loaded detail page: `Base` + `<TinaIsland>` + Body |
-| `src/pages/index.astro`, `[slug].astro`, `hunde/[slug]`, `wuerfe/[slug]`, `aktuelles/[slug]` | Thin routes: `getStaticPaths` + `load` + 404 + `<Detailseite>`; list pages are CMS pages built from auto-list blocks |
+| `src/sites/luchberg/pages/`: `index.astro`, `[slug].astro`, `hunde/[slug]`, `wuerfe/[slug]`, `aktuelles/[slug]` | Thin routes (injected per `SITE_ID` by `src/multisite/integration.ts`): `getStaticPaths` + `load` + 404 + `<Detailseite>`; list pages are CMS pages built from auto-list blocks |
 | `src/styles/global.css` | Design tokens + 3 colour schemes + custom utilities |
 
 **Adding a block:** add the template in `tina/blocks/index.ts`, a component in `src/components/blocks/`, and a `case` in `Blocks.astro`. Add `data-tina-field={tinaField(obj, 'field')}` to every editable element.
 
-**Adding a collection:** add a collection file, register it in `tina/config.ts`, add loaders and types in `data.ts`, add a `detailseite(…)` definition in `detailseiten.ts` and list it in `detailseiten` (that also registers its island), then add a route like `hunde/[slug].astro`.
+**Adding a collection:** add a collection file, register it in `tina/config.ts`, add loaders and types in `data.ts`, add a `detailseite(…)` definition in `detailseiten.ts` and list it in `detailseiten` (that also registers its island), then add a route like `src/sites/luchberg/pages/hunde/[slug].astro`.
 
 ## Design system
 

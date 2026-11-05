@@ -5,6 +5,7 @@ import icon from 'astro-icon';
 import tina from '@tinacms/astro/integration';
 import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
 import tailwindcss from '@tailwindcss/vite';
+import { multisite } from './src/multisite/integration.ts';
 import { resolveSiteId, sites } from './src/sites/index.ts';
 
 // Which website this build produces (see docs/plan/00-multisite.md). Defaults to luchberg.
@@ -61,7 +62,7 @@ export default defineConfig({
 	output: 'static',
 	adapter: await getAdapter(),
 	redirects: site.redirects,
-	integrations: [sitemap(), icon(), tina()],
+	integrations: [multisite(SITE_ID), sitemap(), icon(), tina()],
 	build: { inlineStylesheets: 'always' },
 	vite: {
 		plugins: [tailwindcss(), tinaAdminDevRedirect(), stubServerHighlighters()],
