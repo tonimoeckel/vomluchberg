@@ -2,8 +2,9 @@
 
 Status: **plan**, 2026-11-05. Depends on slice 0 (`00-multisite.md`) for the multi-site mechanism.
 Open questions for Karo are in [`fragen-an-karo.md`](fragen-an-karo.md) → "Rauhaardackel-Seite".
-Design mockup: [`mockups/dackel/index.html`](mockups/dackel/index.html) (open it locally in a browser,
-it loads the real photos from `public/uploads/rudel/dackel/`).
+Design mockups (open locally in a browser, they load the real photos from `public/uploads/rudel/dackel/`):
+[`mockups/dackel/index.html`](mockups/dackel/index.html) – direction A "Wiesenweg" (recommended),
+[`mockups/dackel/loewenzahn.html`](mockups/dackel/loewenzahn.html) – direction B "Löwenzahn".
 
 ## 1. Decisions
 
@@ -167,7 +168,7 @@ look: like a well-made farm journal.
   until Karo decides on a logo.
 - **Motion:** small lift/tilt on dog cards, nothing else (no parallax, respects reduced motion).
 
-### B – "Löwenzahn" (alternative)
+### B – "Löwenzahn" (alternative, mockup built)
 
 Playful, bold, poster-like – a sporty, modern take.
 
@@ -181,6 +182,10 @@ Playful, bold, poster-like – a sporty, modern take.
 - **Layout:** square corners, 2 px ink borders, hard offset shadows (`6px 6px 0 var(--fg)`),
   rotated sticker badges ("Welpen in Planung!"), photos cut out on yellow blocks, a marquee-like
   horizontally scrolling puppy strip, big numbers.
+- **Mockup notes:** same content as A for a fair comparison. Text on dandelion yellow always uses the
+  fixed ink `#13213a` (9.9:1), also in dark mode; white on the fox-orange sticker 5.2:1. Headline
+  hyphenation is manual (`&shy;`), because automatic hyphenation breaks "Rauhaarda-ckel". The ticker
+  band stops under `prefers-reduced-motion`.
 - **Risk:** louder and trendier; ages faster and is closer to the Rottweiler site's "energetic" feel.
 
 **Recommendation: A.** It is clearly different from the Rottweiler site in every dimension (serif vs.
