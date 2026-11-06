@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alltag kann Sport – Hundetraining Karolin Riesing (Mockup)</title>
+<meta name="theme-color" content="#193450">
+<!--
+  Static design mockup for slice 2 (docs/plan/02-training.md). Not production code.
+  Open from the repo (images are referenced relative to public/uploads/training/).
+  Fonts come from jsDelivr ONLY for this mockup; the real site self-hosts them via Fontsource.
+  Copy marked with data-neu="1" is new proposal text, everything else is Karo's live text.
+-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/barlow-condensed@5.2.5/600.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/barlow-condensed@5.2.5/800.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/barlow-condensed@5.2.5/800-italic.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/inter@5.2.5/index.css">
+<style>
+  :root {
+    --navy: #193450;      /* logo */
+    --navy-2: #22446a;
+    --copper: #b96637;    /* logo */
+    --copper-ink: #9a4f25;/* copper for text on light bg (AA) */
+    --mist: #c8d9e8;      /* logo background */
+    --mist-2: #e4edf5;
+    --paper: #f6f2ea;
+    --paper-2: #efe8db;
+    --ink: #14253a;
+    --muted: #4d5d70;
+    --line: #d9d0c0;
+    --radius: 6px;
+    --display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+    --sans: 'Inter Variable', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; }
+  .wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+
+  /* ---------- type ---------- */
+  .display { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: .005em; line-height: .9; }
+  .kicker { font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: .14em; font-size: .95rem; color: var(--copper-ink); display: flex; align-items: center; gap: .6rem; }
+  .kicker::before { content: ""; width: 28px; height: 3px; background: var(--copper); }
+  h2.display { font-size: clamp(2.6rem, 6vw, 4.4rem); margin: .35rem 0 1rem; }
+  .lead { font-size: 1.15rem; color: var(--muted); max-width: 60ch; }
+
+  /* ---------- buttons ---------- */
+  .btn { display: inline-flex; align-items: center; gap: .55rem; font: 600 1.15rem/1 var(--display); text-transform: uppercase; letter-spacing: .08em;
+         padding: .95rem 1.4rem; border-radius: var(--radius); text-decoration: none; border: 2px solid transparent; cursor: pointer; transition: transform .15s, background .15s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--copper); color: #fff; }
+  .btn-primary:hover { background: var(--copper-ink); }
+  .btn-navy { background: var(--navy); color: #fff; }
+  .btn-outline { border-color: var(--navy); color: var(--navy); }
+  .btn .arrow { transition: transform .15s; }
+  .btn:hover .arrow { transform: translateX(4px); }
+
+  /* ---------- header ---------- */
+  header.site { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 74px; }
+  header.site .logo img { height: 52px; width: auto; }
+  header.site nav { display: flex; align-items: center; gap: 1.8rem; font: 600 1.1rem var(--display); text-transform: uppercase; letter-spacing: .08em; }
+  header.site nav a { text-decoration: none; }
+  header.site nav a:not(.btn):hover { color: var(--copper-ink); }
+  header.site .btn { padding: .7rem 1.05rem; font-size: 1rem; }
+  @media (max-width: 760px) { header.site nav a:not(.btn) { display: none; } header.site .logo img { height: 44px; } }
+
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: clamp(2.5rem, 6vw, 5rem) 0 clamp(3rem, 7vw, 6rem); }
+  .hero .wrap { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: center; }
+  .hero h1 { font-size: clamp(4.2rem, 11vw, 8.6rem); margin: .6rem 0 1.4rem; color: var(--navy); }
+  .hero h1 em { font-style: italic; color: var(--copper); display: inline-block; position: relative; }
+  .hero h1 em::after { content: ""; position: absolute; left: .02em; right: -.05em; bottom: .02em; height: .1em; background: var(--copper); transform: skewX(-12deg); opacity: .35; }
+  .hero .lead { font-size: 1.22rem; }
+  .hero .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 2rem; }
+  .hero .note { margin-top: 1.4rem; font-size: .95rem; color: var(--muted); display: flex; gap: .55rem; align-items: baseline; }
+  .hero .note b { color: var(--navy); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--copper); flex: none; transform: translateY(-1px); box-shadow: 0 0 0 4px color-mix(in srgb, var(--copper) 22%, transparent); }
+
+  .hero-photo { position: relative; }
+  .hero-photo .frame { position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4 / 5; box-shadow: 0 30px 60px -30px rgba(20,37,58,.55); }
+  .hero-photo .frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+  /* lane lines: the "Hundeplatz" motif */
+  .lanes { position: absolute; inset: auto -12% -10% auto; width: 75%; height: 60%; z-index: -1;
+           background: repeating-linear-gradient(-58deg, transparent 0 22px, color-mix(in srgb, var(--copper) 55%, transparent) 22px 25px); opacity: .55; }
+  .lanes.mist { inset: -8% auto auto -10%; width: 55%; height: 45%; background: repeating-linear-gradient(-58deg, transparent 0 22px, var(--mist) 22px 26px); opacity: 1; }
+  .bib { position: absolute; left: -22px; bottom: 28px; background: #fff; border-radius: var(--radius); padding: 1rem 1.2rem 1.05rem; box-shadow: 0 18px 40px -18px rgba(20,37,58,.45); min-width: 230px; border-top: 5px solid var(--copper); }
+  .bib small { font: 600 .82rem var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .bib strong { display: block; font: 800 1.9rem/1 var(--display); text-transform: uppercase; color: var(--navy); margin: .2rem 0 .45rem; }
+  .bib .row { display: flex; gap: .9rem; font-size: .92rem; color: var(--muted); }
+  .bib .row b { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .hero .wrap { grid-template-columns: 1fr; }
+    .hero-photo { max-width: 520px; margin-inline: auto; width: 100%; }
+    .hero-photo .frame { aspect-ratio: 5 / 4; }
+    .bib { left: 12px; bottom: -26px; }
+  }
+
+  /* ---------- facts band ---------- */
+  .band { background: var(--navy); color: #fff; }
+  .band ul { list-style: none; margin-block: 0; padding: 1.6rem 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; }
+  .band li { display: flex; gap: .85rem; align-items: center; font-size: .95rem; color: var(--mist-2); }
+  .band li b { display: block; font: 800 1.35rem/1.05 var(--display); text-transform: uppercase; color: #fff; letter-spacing: .02em; }
+  .band svg { flex: none; width: 34px; height: 34px; color: var(--copper); }
+  @media (max-width: 900px) { .band ul { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 480px) { .band ul { grid-template-columns: 1fr; } }
+
+  section.block { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
+
+  /* ---------- offers ---------- */
+  .offers-head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+  .offers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .offer { background: #fff; border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--line); transition: transform .2s, box-shadow .2s; }
+  .offer:hover { transform: translateY(-4px); box-shadow: 0 26px 50px -30px rgba(20,37,58,.5); }
+  .offer .img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+  .offer .img img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+  .offer:hover .img img { transform: scale(1.04); }
+  .offer .num { position: absolute; left: 14px; top: 14px; background: var(--paper); color: var(--navy); font: 800 1.6rem/1 var(--display); padding: .45rem .6rem .35rem; border-radius: 4px; border-bottom: 4px solid var(--copper); }
+  .offer .tag { position: absolute; right: 14px; top: 14px; background: var(--navy); color: #fff; font: 600 .8rem var(--display); letter-spacing: .12em; text-transform: uppercase; padding: .38rem .6rem; border-radius: 4px; }
+  .offer .body { padding: 1.4rem 1.4rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
+  .offer h3 { font: 800 2rem/1 var(--display); text-transform: uppercase; color: var(--navy); margin: 0 0 .2rem; }
+  .offer .sub { font: italic 600 1.08rem/1.2 var(--display); color: var(--copper-ink); margin: 0 0 .8rem; }
+  .offer p.desc { margin: 0 0 1.1rem; color: var(--muted); font-size: .98rem; }
+  .facts { display: flex; flex-wrap: wrap; gap: .45rem; margin: auto 0 1.2rem; padding: 0; list-style: none; }
+  .facts li { font-size: .84rem; font-weight: 600; background: var(--mist-2); color: var(--navy); padding: .32rem .6rem; border-radius: 4px; }
+  .offer .foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px dashed var(--line); padding-top: 1.1rem; }
+  .price { font: 800 2rem/1 var(--display); color: var(--navy); }
+  .price small { font: 600 .9rem var(--display); color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .offer .btn { padding: .75rem 1rem; font-size: 1rem; }
+  .status { font-size: .86rem; color: var(--muted); margin: 0 0 1rem; display: flex; gap: .5rem; align-items: baseline; }
+  @media (max-width: 980px) { .offers { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .offers { grid-template-columns: 1fr; } }
+
+  /* ---------- about ---------- */
+  .about { background: var(--paper-2); position: relative; overflow: hidden; }
+  .about .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 6vw, 5rem); align-items: center; }
+  .about .photo { position: relative; }
+  .about .photo img { border-radius: var(--radius); aspect-ratio: 1; object-fit: cover; width: 100%; height: auto; }
+  .about .photo .lanes { inset: auto auto -8% -10%; }
+  .values { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 1.8rem 0; }
+  .values div { background: var(--paper); padding: 1rem 1.1rem; }
+  .values b { display: block; font: 800 1.5rem/1 var(--display); text-transform: uppercase; color: var(--navy); }
+  .values b span { color: var(--copper); margin-right: .35rem; }
+  .values small { color: var(--muted); font-size: .92rem; }
+  blockquote { margin: 0; padding-left: 1.2rem; border-left: 4px solid var(--copper); font-size: 1.15rem; font-style: italic; color: var(--ink); }
+  blockquote cite { display: block; font: 600 .95rem var(--display); letter-spacing: .1em; text-transform: uppercase; font-style: normal; color: var(--muted); margin-top: .6rem; }
+  .textlink { font: 600 1.1rem var(--display); text-transform: uppercase; letter-spacing: .08em; color: var(--navy); text-decoration: none; border-bottom: 3px solid var(--copper); padding-bottom: 2px; display: inline-block; margin-top: 1.8rem; }
+  @media (max-width: 900px) { .about .wrap { grid-template-columns: 1fr; } .about .photo { max-width: 460px; } }
+
+  /* ---------- steps ---------- */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; counter-reset: s; margin-top: 2.2rem; }
+  .step { position: relative; padding: 1.6rem 1.4rem 1.5rem; border-top: 4px solid var(--navy); background: #fff; border-radius: 0 0 var(--radius) var(--radius); }
+  .step::before { counter-increment: s; content: "0" counter(s); font: 800 3.6rem/1 var(--display); color: var(--mist); position: absolute; right: 1rem; top: .6rem; }
+  .step h3 { font: 800 1.6rem/1.05 var(--display); text-transform: uppercase; color: var(--navy); margin: 0 0 .5rem; max-width: 70%; }
+  .step p { margin: 0; color: var(--muted); font-size: .98rem; }
+  @media (max-width: 820px) { .steps { grid-template-columns: 1fr; } }
+
+  /* ---------- sport strip ---------- */
+  .sport { background: var(--navy); color: #fff; }
+  .sport .kicker { color: var(--mist); }
+  .sport h2 { color: #fff; }
+  .sport .lead { color: var(--mist-2); }
+  .strip { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 1rem; margin-top: 2.2rem; }
+  .strip figure { margin: 0; position: relative; border-radius: var(--radius); overflow: hidden; }
+  .strip img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 3 / 2; }
+  .strip figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2.5rem 1rem .8rem; font: 600 1rem var(--display); letter-spacing: .1em; text-transform: uppercase; background: linear-gradient(transparent, rgba(12,26,42,.85)); }
+  .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.6rem; padding: 0; list-style: none; }
+  .chips li { border: 1px solid color-mix(in srgb, var(--mist) 45%, transparent); color: var(--mist-2); padding: .35rem .7rem; border-radius: 4px; font-size: .88rem; }
+  @media (max-width: 820px) { .strip { grid-template-columns: 1fr 1fr; } .strip figure:first-child { grid-column: 1 / -1; } }
+
+  /* ---------- inquiry ---------- */
+  .inquiry .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+  .contact { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1.1rem; }
+  .contact li { display: flex; gap: .9rem; align-items: start; }
+  .contact .ic { width: 44px; height: 44px; border-radius: var(--radius); background: var(--navy); color: #fff; display: grid; place-items: center; flex: none; }
+  .contact .ic svg { width: 22px; height: 22px; }
+  .contact b { font: 800 1.2rem var(--display); text-transform: uppercase; color: var(--navy); display: block; letter-spacing: .02em; }
+  .contact span, .contact a { color: var(--muted); font-size: .97rem; }
+  form.card { background: #fff; border: 1px solid var(--line); border-top: 6px solid var(--copper); border-radius: var(--radius); padding: clamp(1.3rem, 3vw, 2.2rem); display: grid; gap: 1.1rem; }
+  fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 1rem; }
+  legend { font: 800 1.25rem var(--display); text-transform: uppercase; color: var(--navy); letter-spacing: .04em; margin-bottom: .6rem; display: flex; align-items: center; gap: .6rem; padding: 0; }
+  legend span { font: 800 .95rem var(--display); background: var(--navy); color: #fff; width: 26px; height: 26px; display: grid; place-items: center; border-radius: 4px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .grid3 { display: grid; grid-template-columns: 1.2fr 1fr .7fr; gap: 1rem; }
+  label.f { display: grid; gap: .35rem; font-size: .9rem; font-weight: 600; }
+  input, select, textarea { font: inherit; font-size: 1rem; color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: .75rem .85rem; width: 100%; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--copper); outline-offset: 1px; background: #fff; }
+  select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--navy) 50%), linear-gradient(135deg, var(--navy) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px; background-repeat: no-repeat; }
+  .times { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .times label { cursor: pointer; }
+  .times input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+  .times span { display: inline-block; padding: .5rem .8rem; border: 1px solid var(--line); border-radius: 4px; font-size: .9rem; font-weight: 600; background: var(--paper); }
+  .times input:checked + span { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .times input:focus-visible + span { outline: 2px solid var(--copper); }
+  .consent { display: flex; gap: .7rem; font-size: .88rem; color: var(--muted); align-items: start; }
+  .consent input { width: 18px; height: 18px; margin-top: .2rem; accent-color: var(--copper); flex: none; }
+  .hint { font-size: .85rem; color: var(--muted); margin: 0; }
+  .flash { animation: flash 1.2s ease; }
+  @keyframes flash { 0%, 40% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--copper) 45%, transparent); } 100% { box-shadow: none; } }
+  @media (max-width: 900px) { .inquiry .wrap { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  /* ---------- footer ---------- */
+  footer.site { background: #10233a; color: var(--mist-2); padding: 3.5rem 0 2rem; font-size: .95rem; }
+  footer.site .cols { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 2rem; }
+  footer.site img { height: 64px; width: auto; }
+  footer.site h4 { font: 800 1.1rem var(--display); text-transform: uppercase; letter-spacing: .1em; color: #fff; margin: 0 0 .8rem; }
+  footer.site ul { list-style: none; padding: 0; margin: 0; display: grid; gap: .4rem; }
+  footer.site a { text-decoration: none; }
+  footer.site a:hover { color: #fff; text-decoration: underline; }
+  .crosslink { margin-top: 2.5rem; padding: 1rem 1.2rem; border: 1px dashed color-mix(in srgb, var(--mist) 40%, transparent); border-radius: var(--radius); display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .crosslink a { color: #fff; font-weight: 600; }
+  .legal { margin-top: 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: .85rem; opacity: .8; }
+  @media (max-width: 760px) { footer.site .cols { grid-template-columns: 1fr; } }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.85"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-award" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="6"/><path d="M9 14.2 8 21l4-2 4 2-1-6.8"/></symbol>
+  <symbol id="i-whistle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9a5 5 0 1 0 9.6 2H21V7H9"/><path d="M9 7V4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-insta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor"/></symbol>
+</svg>
+
+<header class="site">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Alltag kann Sport – Startseite"><img src="../../../../public/uploads/training/logo/logo.png" alt="Karolin Riesing – Alltag kann Sport" width="332" height="200"></a>
+    <nav aria-label="Hauptmenü">
+      <a href="#angebote">Angebote</a>
+      <a href="#ueber-mich">Über mich</a>
+      <a href="#anfrage">Kontakt</a>
+      <a class="btn btn-primary" href="#anfrage">Anfragen</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="lanes mist" aria-hidden="true"></div>
+    <div class="wrap">
+      <div>
+        <p class="kicker">Hundetraining · Glashütte, Osterzgebirge</p>
+        <h1 class="display">Alltag<br>kann <em>Sport.</em></h1>
+        <p class="lead">Hundetraining für echte Alltagssituationen – mit sportlichen Übungen für Fokus und Bindung. In kleinen Gruppen oder im Einzeltraining: klar, fair und verständlich.</p>
+        <div class="actions">
+          <a class="btn btn-navy" href="#anfrage">Training anfragen <span class="arrow">→</span></a>
+          <a class="btn btn-outline" href="#angebote">Angebote ansehen</a>
+        </div>
+        <p class="note" data-neu="1"><i class="dot"></i><span><b>Training nur auf Anfrage.</b> Schreib mir, was du und dein Hund braucht – wir finden gemeinsam einen Termin.</span></p>
+      </div>
+      <div class="hero-photo">
+        <div class="lanes" aria-hidden="true"></div>
+        <div class="frame"><img src="../../../../public/uploads/training/start/spaziergang-feldweg.jpg" alt="Karolin geht mit Rottweiler und Dackel an lockerer Leine einen Feldweg entlang" width="1600" height="1065"></div>
+        <div class="bib">
+          <small>Einzeltraining</small>
+          <strong>ab 50 €</strong>
+          <div class="row"><span><b>45</b> Min.</span><span>vor Ort</span><span>auf Anfrage</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FACTS -->
+  <div class="band">
+    <ul class="wrap">
+      <li><svg><use href="#i-users"/></svg><span><b>Kleine Gruppen</b>bis zu 6 Hunde</span></li>
+      <li><svg><use href="#i-shield"/></svg><span><b>§ 11 TSchG</b>behördlich genehmigt</span></li>
+      <li><svg><use href="#i-award"/></svg><span><b>Trainer-C-Lizenz</b>gleichwertige Ausbildung</span></li>
+      <li><svg><use href="#i-whistle"/></svg><span><b>Seit 2019</b>Übungsleiterin im Verein</span></li>
+    </ul>
+  </div>
+
+  <!-- OFFERS -->
+  <section class="block" id="angebote">
+    <div class="wrap">
+      <div class="offers-head">
+        <div>
+          <p class="kicker">Meine Angebote</p>
+          <h2 class="display">Das passende Training<br>für euch zwei</h2>
+          <p class="lead">Entdecke das passende Training für dich und deinen Hund – von individueller Einzelbetreuung bis hin zu Gruppenkursen.</p>
+        </div>
+        <a class="textlink" href="#anfrage">Alle Angebote →</a>
+      </div>
+
+      <div class="offers">
+        <article class="offer">
+          <div class="img"><img src="../../../../public/uploads/training/angebote/einzeltraining-1.jpg" alt="Karolin sitzt mit ihrem Rottweiler auf der Wiese" loading="lazy"><span class="num">01</span><span class="tag">Auf Anfrage</span></div>
+          <div class="body">
+            <h3>Einzeltraining</h3>
+            <p class="sub">Für Alltag, Verhalten oder Sport</p>
+            <p class="desc">Einzeltermine biete ich aktuell nur nach persönlicher Absprache an. Schreib mir gern eine Nachricht — wir schauen gemeinsam, was du und dein Hund braucht, und finden einen passenden Termin.</p>
+            <ul class="facts"><li>45 Min.</li><li>Vor Ort</li><li>1 Mensch-Hund-Team</li></ul>
+            <div class="foot"><span class="price">50 € <small>/ Termin</small></span><a class="btn btn-primary" href="#anfrage" data-angebot="einzeltraining">Anfrage senden</a></div>
+          </div>
+        </article>
+
+        <article class="offer">
+          <div class="img"><img src="../../../../public/uploads/training/hundesport/fussarbeit-hundeplatz.jpg" alt="Karolin bei der Fußarbeit mit ihrem Rottweiler auf dem Hundeplatz" loading="lazy"><span class="num">02</span><span class="tag">Gruppenkurs</span></div>
+          <div class="body">
+            <h3>Basistraining</h3>
+            <p class="sub">„Hör auf damit, mach was mir gefällt“</p>
+            <p class="desc">Der Einstiegskurs für alle Hundehalter, die ihren Hund besser verstehen und im Alltag sicher führen möchten: Orientierung am Menschen, Sitz/Platz/Steh, Leinenführigkeit, Impulskontrolle und erste sportliche Übungen.</p>
+            <ul class="facts"><li>4 Termine à 45 Min.</li><li>bis zu 6 Hunde</li><li>Vor Ort</li></ul>
+            <p class="status"><i class="dot"></i>Nächster Kurs: Termine auf Anfrage</p>
+            <div class="foot"><span class="price">25 € <small>/ Termin</small></span><a class="btn btn-primary" href="#anfrage" data-angebot="basistraining">Anfrage senden</a></div>
+          </div>
+        </article>
+
+        <article class="offer">
+          <div class="img"><img src="../../../../public/uploads/training/angebote/welpenkurs-rottweilerwelpe.jpg" alt="Rottweilerwelpe mit pinkem Halsband schaut nach oben" loading="lazy"><span class="num">03</span><span class="tag">Gruppenkurs</span></div>
+          <div class="body">
+            <h3>Welpenkurs</h3>
+            <p class="sub">Ein guter Start fürs ganze Hundeleben</p>
+            <p class="desc">Der Welpenkurs vermittelt von Anfang an die Basis: eine echte Bindung zwischen dir und deinem Hund, die Souveränität im Alltag und das Selbstvertrauen, das junge Hunde brauchen, um die Welt kennenzulernen.</p>
+            <ul class="facts"><li>45 Min.</li><li>bis zu 6 Welpen</li><li>Vor Ort</li></ul>
+            <p class="status"><i class="dot"></i>Nächster Kurs: Termine auf Anfrage</p>
+            <div class="foot"><span class="price">25 € <small>/ Termin</small></span><a class="btn btn-primary" href="#anfrage" data-angebot="welpenkurs">Anfrage senden</a></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="block about" id="ueber-mich">
+    <div class="wrap">
+      <div class="photo">
+        <div class="lanes" aria-hidden="true"></div>
+        <img src="../../../../public/uploads/training/karolin/karolin-mit-dackel-und-rottweiler.jpg" alt="Karolin Riesing mit Dackel und Rottweiler" loading="lazy" width="1080" height="1080">
+      </div>
+      <div>
+        <p class="kicker">Deine Trainerin</p>
+        <h2 class="display">Karolin Riesing</h2>
+        <p class="lead">Aufgewachsen auf dem Bauernhof, viele Jahre im Pferdesport, seit 2018 aktiv im Hundesport und seit 2019 Übungsleiterin im Hundesportverein. Vertrauen, klare Kommunikation und eine faire Ausbildung sind die Grundlage meines Trainings.</p>
+        <div class="values">
+          <div><b><span>01</span>Vertrauen</b><small>Als Basis für alles</small></div>
+          <div><b><span>02</span>Klarheit</b><small>In der Kommunikation</small></div>
+          <div><b><span>03</span>Fairness</b><small>Im Umgang miteinander</small></div>
+          <div><b><span>04</span>Verständnis</b><small>Für jedes Team</small></div>
+        </div>
+        <blockquote>„Ich möchte Menschen dabei unterstützen, ihre Hunde besser zu verstehen und eine klare, faire und vertrauensvolle Beziehung aufzubauen – egal ob im Alltag oder im Sport.“<cite>— Karolin Riesing</cite></blockquote>
+        <a class="textlink" href="#ueber-mich">Mehr über mich →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="block" data-neu="1">
+    <div class="wrap">
+      <p class="kicker">So läuft’s ab</p>
+      <h2 class="display">Ohne Buchungsstress</h2>
+      <p class="lead">Ich arbeite nur auf Anfrage. So kann ich mir für jedes Team die Zeit nehmen, die es braucht.</p>
+      <div class="steps">
+        <div class="step"><h3>Anfrage senden</h3><p>Erzähl mir kurz von dir und deinem Hund und wann es dir am besten passt.</p></div>
+        <div class="step"><h3>Wir sprechen uns</h3><p>Ich melde mich bei dir, wir klären Ziele, Termin und Treffpunkt.</p></div>
+        <div class="step"><h3>Los geht’s</h3><p>Wir trainieren draußen in Glashütte – im echten Alltag, mit sportlichen Übungen.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPORT -->
+  <section class="block sport">
+    <div class="wrap">
+      <p class="kicker">Hundesport</p>
+      <h2 class="display">Sportliche Leidenschaft &amp; Leistung</h2>
+      <p class="lead">Prüfungen nach FCI-Ordnung von der Begleithundeprüfung bis zur höchsten Klasse im Gebrauchshundesport, dazu Fährtenarbeit. Diese Erfahrung fließt direkt in mein Training ein.</p>
+      <ul class="chips"><li>Begleithundeprüfung (BH)</li><li>IGP (höchste Klasse)</li><li>Fährtenarbeit</li><li>Unterordnung</li><li>Apportierarbeit</li></ul>
+      <div class="strip">
+        <figure><img src="../../../../public/uploads/training/hundesport/apportieren-wiese.jpg" alt="Rottweiler läuft über die Wiese zu den Apportierhölzern" loading="lazy"><figcaption>Apportierarbeit</figcaption></figure>
+        <figure><img src="../../../../public/uploads/training/hundesport/training-hundeplatz.jpg" alt="Karolin führt ihren Hund bei einer Prüfung auf dem Hundeplatz" loading="lazy"><figcaption>Unterordnung</figcaption></figure>
+        <figure><img src="../../../../public/uploads/training/hundesport/drei-rottweiler-platz.jpg" alt="Drei Rottweiler liegen im Platz neben Karolin" loading="lazy"><figcaption>Impulskontrolle</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- INQUIRY -->
+  <section class="block inquiry" id="anfrage">
+    <div class="wrap">
+      <div>
+        <p class="kicker">Anfrage</p>
+        <h2 class="display">Training anfragen</h2>
+        <p class="lead">Schreib mir gern eine Nachricht – wir schauen gemeinsam, was du und dein Hund braucht, und finden einen passenden Termin.</p>
+        <ul class="contact">
+          <li><span class="ic"><svg><use href="#i-pin"/></svg></span><span><b>Trainingsgelände Glashütte</b>Dorfstr. 2d, 01768 Glashütte<br>Im Herzen des Osterzgebirges · <a href="https://maps.google.com/?q=Dorfstr.+2d,+01768+Glash%C3%BCtte" rel="noopener">In Google Maps öffnen</a></span></li>
+          <li><span class="ic"><svg><use href="#i-mail"/></svg></span><span><b>E-Mail</b><a href="mailto:bruosdonnalina2018@gmail.com">bruosdonnalina2018@gmail.com</a></span></li>
+          <li><span class="ic"><svg><use href="#i-insta"/></svg></span><span><b>Instagram</b><a href="https://www.instagram.com/karoriesing_caninepure" rel="noopener">@karoriesing_caninepure</a></span></li>
+        </ul>
+      </div>
+
+      <form class="card" id="anfrageformular" novalidate>
+        <fieldset>
+          <legend><span>1</span>Welches Training?</legend>
+          <label class="f">Angebot *
+            <select name="angebot" id="angebot" required>
+              <option value="">Bitte wählen …</option>
+              <option value="einzeltraining">Einzeltraining</option>
+              <option value="basistraining">Basistraining</option>
+              <option value="welpenkurs">Welpenkurs</option>
+              <option value="beratung">Ich bin noch unsicher – bitte beraten</option>
+            </select>
+          </label>
+        </fieldset>
+        <fieldset>
+          <legend><span>2</span>Über dich</legend>
+          <div class="grid2">
+            <label class="f">Name *<input name="name" autocomplete="name" required></label>
+            <label class="f">E-Mail *<input type="email" name="email" autocomplete="email" required></label>
+          </div>
+          <label class="f">Telefon (optional, für Rückruf)<input type="tel" name="telefon" autocomplete="tel"></label>
+        </fieldset>
+        <fieldset>
+          <legend><span>3</span>Über deinen Hund</legend>
+          <div class="grid3">
+            <label class="f">Name<input name="hund_name"></label>
+            <label class="f">Rasse / Mix<input name="hund_rasse"></label>
+            <label class="f">Alter<input name="hund_alter" placeholder="z. B. 4 Monate"></label>
+          </div>
+          <label class="f">Was wünschst du dir vom Training? *<textarea name="nachricht" rows="4" required placeholder="z. B. Leinenführigkeit, Begegnungen mit anderen Hunden, Einstieg in den Hundesport …"></textarea></label>
+        </fieldset>
+        <fieldset>
+          <legend><span>4</span>Wann passt es dir?</legend>
+          <div class="times" role="group" aria-label="Wunschzeiten">
+            <label><input type="checkbox" name="zeiten" value="Wochentags vormittags"><span>Wochentags vormittags</span></label>
+            <label><input type="checkbox" name="zeiten" value="Wochentags nachmittags"><span>Wochentags nachmittags</span></label>
+            <label><input type="checkbox" name="zeiten" value="Wochentags abends"><span>Wochentags abends</span></label>
+            <label><input type="checkbox" name="zeiten" value="Wochenende"><span>Wochenende</span></label>
+          </div>
+          <label class="f">Sonstiges zu Zeiten (optional)<input name="zeiten_text" placeholder="z. B. ab Mitte Mai, nicht mittwochs"></label>
+        </fieldset>
+        <label class="consent"><input type="checkbox" name="datenschutz" required><span>Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verwendet werden. Mehr in der <a href="#">Datenschutzerklärung</a>. *</span></label>
+        <div><button class="btn btn-primary" type="submit">Anfrage senden <span class="arrow">→</span></button></div>
+        <p class="hint">Das ist noch keine verbindliche Buchung. Ich melde mich persönlich bei dir.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <img src="../../../../public/uploads/training/logo/logo-hell.png" alt="Karolin Riesing – Alltag kann Sport" width="332" height="200">
+        <p>Hundetraining für echte Alltagssituationen in Glashütte, Osterzgebirge (Sachsen).</p>
+      </div>
+      <div>
+        <h4>Seiten</h4>
+        <ul><li><a href="#angebote">Angebote</a></li><li><a href="#ueber-mich">Über mich</a></li><li><a href="#anfrage">Anfrage</a></li></ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <ul><li>Dorfstr. 2d, 01768 Glashütte</li><li><a href="mailto:bruosdonnalina2018@gmail.com">E-Mail schreiben</a></li><li><a href="https://www.instagram.com/karoriesing_caninepure" rel="noopener">Instagram</a></li></ul>
+      </div>
+    </div>
+    <div class="crosslink"><span>Rottweiler aus eigener Zucht – ADRK-Zwinger „vom Luchberg“</span><a href="https://www.vomluchberg.de" rel="noopener">vomluchberg.de →</a></div>
+    <div class="legal"><span>© 2026 Alltag kann Sport · Karolin Riesing</span><span><a href="#">Impressum</a> · <a href="#">Datenschutz</a></span></div>
+  </div>
+</footer>
+
+<script>
+  // Mockup of the per-offer preselect: the real site uses /anfrage?angebot=<slug>
+  // (and renders the detail page form with the offer preselected server-side).
+  const select = document.getElementById('angebot');
+  const preset = new URLSearchParams(location.search).get('angebot');
+  if (preset && [...select.options].some((o) => o.value === preset)) select.value = preset;
+  document.querySelectorAll('[data-angebot]').forEach((a) => a.addEventListener('click', () => {
+    select.value = a.dataset.angebot;
+    select.classList.remove('flash'); void select.offsetWidth; select.classList.add('flash');
+  }));
+  document.getElementById('anfrageformular').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Mockup: hier würde die Anfrage per Web3Forms (oder mailto:) verschickt.');
+  });
+</script>
+</body>
+</html>
