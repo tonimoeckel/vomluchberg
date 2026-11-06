@@ -1,0 +1,27 @@
+---
+// Skeleton footer of the training site (real design: slice 2).
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { CmsConfig } from '../lib/data';
+
+interface Props { config?: CmsConfig | null }
+const { config } = Astro.props;
+const w = config?.website;
+const k = config?.kontakt;
+const jahr = new Date().getFullYear();
+---
+<footer class="mt-16 bg-dark text-on-dark">
+	<div class="container-page grid gap-8 py-10 sm:grid-cols-2">
+		<div>
+			<p class="font-display text-lg font-bold" data-tina-field={w ? tinaField(w, 'name') : undefined}>{w?.name}</p>
+			{w?.untertitel && <p class="text-on-dark/75" data-tina-field={tinaField(w, 'untertitel')}>{w.untertitel}</p>}
+		</div>
+		{k && (
+			<address class="not-italic text-on-dark/85" data-tina-field={tinaField(config!, 'kontakt')}>
+				{[k.name, k.strasse, k.ort].filter(Boolean).map((zeile) => <span class="block">{zeile}</span>)}
+				{k.telefon && <a class="block hover:text-white" href={`tel:${k.telefon.replace(/[^+\d]/g, '')}`}>{k.telefon}</a>}
+				{k.email && <a class="block break-all hover:text-white" href={`mailto:${k.email}`}>{k.email}</a>}
+			</address>
+		)}
+	</div>
+	<p class="container-page border-t border-on-dark/15 py-4 text-sm text-on-dark/60">© {jahr} {w?.name}</p>
+</footer>

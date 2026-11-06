@@ -2,6 +2,6 @@
 declare module 'virtual:multisite' {
   /** SITE_ID of this build. */
   export const siteId: string;
-  /** SITE_NOINDEX: keep this deployment out of search engines (robots.txt + meta robots). */
+  /** Keep this deployment out of search engines (robots.txt + meta robots): SITE_NOINDEX or a preview branch. */
   export const noindex: boolean;
 }

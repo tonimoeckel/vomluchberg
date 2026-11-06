@@ -10,7 +10,7 @@ import { cpSync, createReadStream, existsSync, readdirSync, statSync } from 'nod
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { contentType, sitePublicPath } from './public-files';
-import { isNoindex } from './robots';
+import { noindexFromEnv } from './robots';
 import { isRouteFile, routePattern } from './routes';
 
 const filesBelow = (dir: string): string[] =>
@@ -55,11 +55,11 @@ export function multisite(siteId: string): AstroIntegration {
     hooks: {
       'astro:config:setup': ({ config, injectRoute, updateConfig, logger }) => {
         publicDir = fileURLToPath(new URL(`./src/sites/${siteId}/public/`, config.root));
-        const noindex = isNoindex(process.env.SITE_NOINDEX);
+        const { noindex, reason } = noindexFromEnv(process.env);
         const plugins = [virtualModule({ siteId, noindex })];
         if (existsSync(publicDir)) plugins.push(servePublicDir(publicDir));
         updateConfig({ vite: { plugins } });
-        if (noindex) logger.warn(`SITE_NOINDEX is set: "${siteId}" is built with robots noindex`);
+        if (noindex) logger.warn(`"${siteId}" is built with robots noindex (${reason})`);
 
         const pagesDir = fileURLToPath(new URL(`./src/sites/${siteId}/pages/`, config.root));
         if (!existsSync(pagesDir)) throw new Error(`Site "${siteId}" has no pages folder (${pagesDir})`);

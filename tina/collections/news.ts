@@ -1,15 +1,16 @@
 import type { Collection } from 'tinacms';
 import { newsUrl } from '../../src/lib/domain/news';
 import { slugify } from '../../src/lib/domain/slug';
+import { siteRouter } from '../sites/router';
 import { bildFeld } from './fields';
 
 export const NewsCollection: Collection = {
   name: 'news',
-  label: 'Aktuelles',
+  label: 'Rottweiler · Aktuelles',
   path: 'src/content/aktuelles',
   format: 'md',
   ui: {
-    router: ({ document }) => newsUrl(document._sys.filename),
+    router: siteRouter('luchberg', (document) => newsUrl(document._sys.filename)),
     filename: {
       slugify: (values: { titel?: string }) => slugify(values?.titel, 'neuer-beitrag'),
     },

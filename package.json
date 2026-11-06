@@ -7,8 +7,13 @@
   },
   "scripts": {
     "dev": "tinacms dev -c \"astro dev\"",
+    "dev:dackel": "SITE_ID=dackel npm run dev",
+    "dev:training": "SITE_ID=training npm run dev",
     "build": "tinacms build --content=local -c \"astro build\"",
     "build:local": "tinacms build --local --skip-cloud-checks -c \"astro build\"",
+    "build:local:dackel": "SITE_ID=dackel npm run build:local",
+    "build:local:training": "SITE_ID=training npm run build:local",
+    "build:local:all": "npm run build:local && npm run build:local:dackel && npm run build:local:training",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest run"

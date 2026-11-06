@@ -14,7 +14,7 @@ The dropped directions B–H (mockups and screenshots) stay on the branch `claud
 | --- | --- | --- |
 | K1 | Own site `SITE_ID=dackel`, working name **"Rauhaardackel vom Luchberg"**, small and focused: 5 content pages + 2 legal pages. | Karo: someone looking for a dachshund must find a dachshund site. Small = she can keep it current. |
 | K2 | **Reuse the pure domain modules** (`hund`, `wurf`, `datum`, `slug`, `seo`) by parameterising the few Rottweiler-specific parts (category list, SEO suffix, URL bases). No copies. | D6, one tested rule set. |
-| K3 | **Separate Tina collections per site** (`dackelHund`, `dackelWurf`, `dackelSeite`, `dackelConfig`), labels prefixed "Dackel · …". Their field sets are built from shared field factories. | D2. Separate collections keep paths, routers and Karo's mental model apart. |
+| K3 | **Separate Tina collections per site** (`dackelHund`, `dackelWurf`, `dackelPage`, `dackelConfig`), labels prefixed "Dackel · …". Their field sets are built from shared field factories. | D2. Separate collections keep paths, routers and Karo's mental model apart. |
 | K4 | **No news collection at launch.** "Aktuelles" on this site = litter status (`geplant` / `aktuell`) plus an optional one-line `hinweis` in the config ("Derzeit keine Welpen …"). | Karo has never posted dachshund news; an empty news page hurts more than it helps. Can be added later by reusing `news` with a site-scoped collection. |
 | K5 | **No club claims until Karo answers** (DTK/VDH vs. Liebhaberzucht). Copy uses only what she wrote: "Standard Rauhaardackel", "für Liebhaber und Familien", "Gesundheit und Wesen", "jagdliche Abstammungen". No "Papiere", "Zuchtstätte im DTK", "VDH-Welpen", "Zuchtwart", "Wurfabnahme" anywhere. Club fields exist in the model but stay empty/hidden. | Wrong claims about papers are a legal and trust risk (UWG). The old site headed the text "Rauhaardackel aus Hobbyzucht", which hints at Liebhaberzucht, but it must be confirmed. |
 | K6 | **Design direction A "Wiesenweg"** (editorial, paper + meadow green + rust, serif display). **Decided by Karo 2026-11-06.** It shares no tokens, fonts, radii or gradients with the Rottweiler site. No decorative animation and no animation toggle (only the small hover lift on cards). | D5, D11. Karo wants a completely different but plain look; animation "could annoy people". |
@@ -84,7 +84,7 @@ the other site's admin forms.
 | Collection | Path | Based on | Dachshund-specific |
 | --- | --- | --- | --- |
 | `dackelConfig` (global, "Dackel · Einstellungen") | `src/content/dackel/config/config.json` | `config` | No `farbschema` (one scheme, light+dark), no `workingDog`; `verband`/`verbandLink` kept but empty until K5 is answered; new `hinweis` (string, short status line) and `querverweis` (object: `text`, `link`, `bild`) for the Rottweiler hint. |
-| `dackelSeite` ("Dackel · Seiten") | `src/content/dackel/seiten/*.md` | `page` | Same block templates minus `news`, plus none new at launch (see below). |
+| `dackelPage` ("Dackel · Seiten") | `src/content/dackel/seiten/*.md` | `page` | Same block templates minus `news`, plus none new at launch (see below). |
 | `dackelHund` ("Dackel · Unsere Dackel") | `src/content/dackel/hunde/*.md` | `hund` | See fields below. |
 | `dackelWurf` ("Dackel · Würfe & Welpen") | `src/content/dackel/wuerfe/*.md` | `wurf` | Puppy `farbe`; parent links are free links (no working-dog.com label). |
 
@@ -267,9 +267,12 @@ luchberg build before/after for tasks 1–3).
    new tests for a dachshund config (categories, URL base `/unsere-dackel`, SEO suffix, `ohneGeschlecht`).
 2. **Parameterise `wurf` URL + `headMeta` fallback.** `wurf.ts` (`wurfUrlFuer`), `seo.ts`. Tests.
 3. **`domain/dackel.ts`** + `dackel.test.ts`: categories, colours, sizes, labels, `dackelSteckbrief`.
-4. **Tina collections.** `tina/collections/dackel/{config,seite,hund,wurf}.ts` built from shared field
+4. **Tina collections.** Slice 0 PR B already ships `dackelPage` + `dackelConfig` (skeleton, in
+   `tina/sites/dackel/{page,config}.ts`, factories in `tina/sites/collections.ts`, registered in
+   `tina/schema.ts` and in `collections` of `src/sites/dackel/site.ts`). Add `tina/sites/dackel/{hund,wurf}.ts`
+   and extend config/page, built from shared field
    factories (extract `hundBasisFelder`, `wurfBasisFelder` into `tina/collections/fields.ts` without
-   changing the Rottweiler forms). Register per slice 0's mechanism; regenerate and commit
+   changing the Rottweiler forms). Routers via `siteRouter('dackel', …)`; regenerate and commit
    `tina/tina-lock.json`. Verify in `npm run dev` that `/admin` shows "Dackel · …" collections and the
    Rottweiler forms are unchanged.
 5. **Content.** `src/content/dackel/**`: config, pages (`home`, `unsere-dackel`, `welpen`, `ueber-uns`,

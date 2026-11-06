@@ -1,0 +1,22 @@
+---
+// Skeleton header of the training site (real design: slice 2).
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { CmsConfig } from '../lib/data';
+
+interface Props { config?: CmsConfig | null }
+const { config } = Astro.props;
+const w = config?.website;
+const nav = (config?.nav ?? []).filter((n) => n !== null);
+---
+<header class="border-b border-border bg-bg">
+	<div class="container-page flex flex-wrap items-center justify-between gap-4 py-4">
+		<a href="/" class="font-display text-xl font-bold" data-tina-field={w ? tinaField(w, 'name') : undefined}>{w?.name}</a>
+		{nav.length > 0 && (
+			<nav aria-label="Hauptmenü" data-tina-field={config ? tinaField(config, 'nav') : undefined}>
+				<ul class="flex flex-wrap gap-x-6 gap-y-2">
+					{nav.map((n) => <li><a href={n.link} class="font-semibold hover:text-primary-ink" data-tina-field={tinaField(n)}>{n.titel}</a></li>)}
+				</ul>
+			</nav>
+		)}
+	</div>
+</header>

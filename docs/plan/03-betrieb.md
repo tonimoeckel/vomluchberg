@@ -81,8 +81,14 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 | Build command | `npm run build` | `npm run build` | `npm run build` |
 | Deploy command | `npx wrangler deploy` | `npx wrangler deploy` | `npx wrangler deploy` |
 | Preview build command | `npm run build:local` | `npm run build:local` | `npm run build:local` |
-| Preview command | `npx wrangler preview` | `npx wrangler preview` | `npx wrangler preview` (verify in CF-01 that `preview` follows `.wrangler/deploy/config.json` like `deploy`; otherwise pass `--config dist/server/wrangler.json`) |
+| Preview command | `npx wrangler preview` | `npx wrangler preview` | `npx wrangler preview` (verified in CF-01: `preview` follows `.wrangler/deploy/config.json` like `deploy`, no `--config` needed) |
 | Custom domain (later) | `www.vomluchberg.de` | `www.rauhaardackel-vom-luchberg.de` | `www.alltag-kann-sport.de` |
+
+CF-01 result (2026-11-06, Wrangler 4.140.0): with `DEPLOY_ADAPTER=cloudflare SITE_ID=<id> npm run build:local`
+the generated `dist/server/wrangler.json` names `vomluchberg` / `vomluchberg-dackel` / `vomluchberg-training`.
+`npx wrangler deploy --dry-run` and `npx wrangler preview` both log "Using redirected Wrangler configuration …
+dist/server/wrangler.json" (preview then stops at the missing API token, as expected locally), so the plain
+commands in the table work for all three workers.
 
 ### 3.2 Build variables (production)
 
@@ -135,7 +141,7 @@ Notes:
 
 | ID | Owner | Task | Done when |
 | --- | --- | --- | --- |
-| CF-01 | C | (slice 0 PR B) Add `src/sites/{dackel,training}/wrangler.jsonc` (names `vomluchberg-dackel` / `vomluchberg-training`), add `previews`/`preview_urls` to all three. The outdated 3 MiB comment in `astro.config.mjs` was fixed in the consolidation. | `DEPLOY_ADAPTER=cloudflare SITE_ID=<id> npm run build:local` + `npx wrangler deploy --dry-run` passes for all three and names the right worker. |
+| CF-01 | C | **Done** (slice 0 PR B, 2026-11-06). Add `src/sites/{dackel,training}/wrangler.jsonc` (names `vomluchberg-dackel` / `vomluchberg-training`), add `previews`/`preview_urls` to all three. The outdated 3 MiB comment in `astro.config.mjs` was fixed in the consolidation. | `DEPLOY_ADAPTER=cloudflare SITE_ID=<id> npm run build:local` + `npx wrangler deploy --dry-run` passes for all three and names the right worker. |
 | CF-02 | T | `vomluchberg` Worker: Settings → Builds → switch to **Worker Previews** (one-time, irreversible), set preview build command `npm run build:local`, preview vars (3.2), watch paths (3.3). | A push to a feature branch creates a Preview URL with `noindex`; a push to `docs/` only does not build. |
 | CF-03 | T | Create Worker `vomluchberg-dackel`: *Workers & Pages → Create → Import repository* `vomluchberg`, settings from 3.1/3.2/3.3, `SITE_NOINDEX=true`, `SITE_URL=<workers.dev URL>`. | Site reachable on `vomluchberg-dackel.<subdomain>.workers.dev`, page source contains `noindex`. |
 | CF-04 | T | Same for `vomluchberg-training`. | as above |
@@ -243,7 +249,7 @@ The training site has no overlap with the breeding sites. The Pfotentermin texts
 
 | ID | Owner | Task |
 | --- | --- | --- |
-| S-01 | C | Implement I-4/I-5 (if slice 0 doesn't) + tests: robots/noindex per env, sitemap filter. |
+| S-01 | C | I-4 is done in slice 0 PR B (`SITE_NOINDEX`, automatic noindex for branches ≠ `main`, tested). Open: I-5 extras (`Disallow: /admin/`, `/tina-island/` in robots.txt) + sitemap filter, with tests. |
 | S-02 | C | JSON-LD builder as a pure module in `src/lib/domain/seo.ts` (+ tests), wired in `BaseHead.astro`. |
 | S-03 | C | Footer cross-link component reading the registry + Tina text; teaser card for `/hunde/rauhaardackel`. |
 | S-04 | K (+C draft) | Shorten the luchberg dachshund profile at dachshund go-live (5.4). |

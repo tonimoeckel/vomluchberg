@@ -1,6 +1,6 @@
 # Slice 0 – Multi-site foundation
 
-Status: **plan, ready to implement** (2026-11-05). Spikes were run on a throwaway branch (not
+Status: **PR A and PR B implemented** (2026-11-06), step 12 (infrastructure) open. Planned 2026-11-05. Spikes were run on a throwaway branch (not
 committed); their results are in [Spike results](#spike-results). Slices 1 (`dackel`) and 2
 (`training`) build on the mechanism described here.
 
@@ -18,7 +18,46 @@ committed); their results are in [Spike results](#spike-results). Slices 1 (`dac
   commit: `src/styles/global.css` excludes `docs/`, `migration/` and the root `*.md` files via
   `@source not`. That removed only the unused `.table` and `.visible` rules (49 bytes per page);
   from now on docs edits don't touch the site's CSS.
-- PR B (steps 8–10) and step 12: open.
+- **PR B (steps 8–10) + CF-01: implemented** on `claude/impl-00-multisite-pr-b` (one commit per step,
+  plus CF-01 and the optional automatic noindex). Every commit was checked with `npm test`, `astro check`
+  (0/0/0), `build:local` for all three sites and the luchberg dist diff: `dist/client` identical for the
+  Node and the Cloudflare adapter (only the admin bundle changes: new labels). Results and deviations:
+  - **Admin bundle env (finding):** Tina's admin bundle replaces `process.env` with the `TINA_PUBLIC_*`
+    variables only, so a router reading `process.env.SITE_ID` (as sketched in 2.6) would always see
+    `luchberg`. `tina/config.ts` calls `exposeSiteId()`, which copies `SITE_ID` to
+    `TINA_PUBLIC_SITE_ID` while the CLI loads the config in Node; `adminSiteId()` reads that first.
+    Verified in the built admin (`TINA_PUBLIC_SITE_ID:"training"`) and in `npm run dev:dackel`: the
+    dackel home page opens with live preview and live edits, a Rottweiler page opens as a plain form.
+  - **Schema list** lives in `tina/schema.ts` (importable by tests without the Tina runtime);
+    `tina/config.ts` only registers it. Site definitions gained `adminLabel` ("Rottweiler", "Dackel",
+    "Training") and `collections` (the Tina collections a site owns) – this is the "which collection
+    belongs to which site" helper slice 1 asked for (01-dackel §3, item 6). `schema.test.ts` checks
+    ownership, names, paths, labels, one global config per site, SITE_ID independence and that routers
+    preview only in the owner's admin.
+  - **New collections:** `dackelPage`, `dackelConfig`, `trainingPage`, `trainingConfig`, built with the
+    factories in `tina/sites/collections.ts` (`seitenCollection`, `einstellungenCollection`,
+    `basisEinstellungen` = `website` + `kontakt` + `nav`). Starter blocks are `hero`, `text`, `cta`
+    (not `kontakt`: its component is Rottweiler-specific and slice 2 excludes it; the slices add their
+    own contact/inquiry blocks). Slice 1 uses the name `dackelPage` (not `dackelSeite`).
+  - **Skeleton code** per site: own block components (luchberg's are typed to `PageBlocks*` and carry
+    the Rottweiler look), header/footer islands on `<id>Config`, `<html data-site="<id>">`, neutral
+    placeholder tokens (zinc greys, system fonts, no gradients), placeholder favicons (grey tile with
+    "D" / "A"). Each site's worker only contains its own islands (`/tina-island/page` on dackel →
+    `Unknown island`).
+  - **No `.gitkeep`** in `public/uploads/<id>/`: it would be copied into every build, including
+    luchberg's. `public/uploads/training/` already has slice 2's images; `uploads/dackel/` appears with
+    slice 1's photos (Tina can also create the folder).
+  - **Content test** (`src/sites/content.test.ts`): a reference to a missing image fails for every
+    site (all 187 luchberg references resolve); images outside a new site's own folder only warn.
+  - **CF-01:** `previews: {}` + `preview_urls: true` in all three Wrangler files. `wrangler deploy
+    --dry-run` per site uses `dist/server/wrangler.json` with the right name (luchberg 4722 KiB / 998
+    KiB gzip, dackel and training skeletons 2683 KiB / 651 KiB gzip). `wrangler preview` (4.140.0) also
+    follows `.wrangler/deploy/config.json` (source: `useConfigRedirectIfAvailable: true`; run without a
+    token it logs "Using redirected Wrangler configuration … dist/server/wrangler.json" before failing on
+    auth), so no `--config` is needed.
+  - **Automatic noindex (R3 / slice 3 I-4):** builds with `WORKERS_CI_BRANCH` ≠ `main` are noindex;
+    `SITE_NOINDEX` (true/false) overrides. `noindexFromEnv()` in `src/multisite/robots.ts`, tested.
+- Step 12 (create the two workers, TinaCloud site URLs, rebuild check): open, see slice 3 CF-02…CF-07.
 
 ## TL;DR
 
@@ -240,7 +279,9 @@ prerequisite.
   ```ts
   /** Preview path of a document, only in the admin of the site that owns the collection. */
   export const siteRouter = (owner: SiteId, path: (doc) => string | undefined) =>
-    ({ document }) => (resolveSiteId(process.env.SITE_ID) === owner ? path(document) : undefined);
+    ({ document }) => (adminSiteId() === owner ? path(document) : undefined);
+  // adminSiteId() reads TINA_PUBLIC_SITE_ID (set from SITE_ID by tina/config.ts) – the admin bundle
+  // only sees TINA_PUBLIC_* variables (implementation finding, see Implementation status).
   ```
 
   Tina's admin turns the router result into `#/~/<path>` on its **own origin** (checked in
@@ -499,6 +540,22 @@ merged and deployed first; steps 8–10 as PR B (new sites appear, unpublished);
 - **T6 – Luchberg labels:** prefixing "Rottweiler · " changes what Karo sees in the sidebar from
   the first deploy of step 8. Announce it to her with the new sites, or hold step 8's label
   change back until the dachshund site goes live? *(Assumption: ship with PR B.)*
+
+- **T7 – Collection names (new):** slice 0 planned `dackelPage`, slice 1 wrote `dackelSeite`. PR B
+  uses `dackelPage` / `trainingPage` (mirrors luchberg's `page`; block typenames `DackelPageBlocks*`)
+  and slice 1's plan was updated. Renaming later is cheap only while there is no content. OK?
+  *(Assumption: yes.)*
+- **T8 – Skeleton collections visible early (new):** after PR B is deployed, Karo sees "Dackel · …"
+  and "Training · …" in `vomluchberg.de/admin` with placeholder content. Saving there only commits
+  to `src/content/<id>/` (the two workers don't exist yet). The schema can't hide them (it must be the
+  same for all sites). Tell Karo "please don't edit yet" when announcing the new labels, or hold PR B
+  until slice 1 is ready? *(Assumption: deploy now, tell Karo; the question in `fragen-an-karo.md` §4
+  was updated.)*
+- **T9 – `TINA_PUBLIC_SITE_ID` relies on Tina CLI internals (new):** it works because the CLI loads
+  `tina/config.ts` in Node before it builds the admin bundle with the `TINA_PUBLIC_*` env. If a Tina
+  update changes that order, the dackel/training admins would lose their own live preview (forms still
+  work). Belt and braces: also set `TINA_PUBLIC_SITE_ID=<id>` as a build variable on the two new
+  workers? *(Assumption: not needed; re-check live preview after Tina updates.)*
 
 ## Spike results
 

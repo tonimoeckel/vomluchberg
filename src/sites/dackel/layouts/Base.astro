@@ -1,0 +1,37 @@
+---
+import '../styles/global.css';
+import BaseHead from '../../../components/BaseHead.astro';
+import TinaIsland from '@tinacms/astro/TinaIsland.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getConfig } from '../lib/data';
+import { islands } from '../lib/islands';
+import { headMeta, type Seo } from '../../../lib/domain/seo';
+import { dackel } from '../site';
+
+type Props = Partial<Seo>;
+
+const config = (await getConfig()).data?.dackelConfig ?? null;
+const meta = headMeta(Astro.props, config?.website, dackel.name);
+// Keep in sync with --bg (light / dark) in ../styles/global.css.
+const themeColor = { light: '#ffffff', dark: '#18181b' };
+---
+
+<!doctype html>
+<html lang="de" data-site="dackel">
+	<head>
+		<BaseHead {...meta} themeColor={themeColor} />
+	</head>
+	<body class="min-h-dvh flex flex-col">
+		<a href="#inhalt" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 btn-primary">Zum Inhalt springen</a>
+		<TinaIsland name="global" wrapper={islands.global.wrapper}>
+			<Header config={config} />
+		</TinaIsland>
+		<div id="inhalt" class="flex-1">
+			<slot />
+		</div>
+		<TinaIsland name="global-footer" wrapper={islands['global-footer'].wrapper}>
+			<Footer config={config} />
+		</TinaIsland>
+	</body>
+</html>

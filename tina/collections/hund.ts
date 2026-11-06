@@ -1,15 +1,16 @@
 import type { Collection } from 'tinacms';
 import { geschlechter, hundKategorien, hundUrl } from '../../src/lib/domain/hund';
 import { slugify } from '../../src/lib/domain/slug';
+import { siteRouter } from '../sites/router';
 import { bildFeld, galerieFeld } from './fields';
 
 export const HundCollection: Collection = {
   name: 'hund',
-  label: 'Unsere Hunde',
+  label: 'Rottweiler · Unsere Hunde',
   path: 'src/content/hunde',
   format: 'md',
   ui: {
-    router: ({ document }) => hundUrl(document._sys.filename),
+    router: siteRouter('luchberg', (document) => hundUrl(document._sys.filename)),
     filename: {
       slugify: (values: { name?: string }) => slugify(values?.name, 'neuer-hund'),
     },

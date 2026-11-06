@@ -2,6 +2,14 @@
 
 Handoff from a Claude Cowork session to Claude Code. Read `CLAUDE.md` first for the project conventions.
 
+## Update 2026-11-06: three sites in one repo
+
+The repo now builds three sites (`SITE_ID` = `luchberg` | `dackel` | `training`), see `CLAUDE.md` → *Multi-site* and
+`docs/plan/`. Slice 0 is implemented (PR A: mechanism, PR B: Tina groundwork with "Rottweiler · …" labels, skeletons
+for the dachshund and training sites, Worker Previews). Next: slices 1 (dachshund) and 2 (training) on top of it,
+then slice 3 (workers `vomluchberg-dackel` / `vomluchberg-training`, domains). The sections below describe the state
+of September and are partly outdated.
+
 ## What's done
 
 - Project scaffolded from `tina-astro-starter` (Astro 6.4, TinaCMS 3.14, Tailwind 4.3), with blog/space theme/unused adapters removed.

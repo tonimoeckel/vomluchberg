@@ -1,0 +1,118 @@
+/* Stylesheet of the training site – skeleton with NEUTRAL PLACEHOLDER tokens.
+   The real design (fonts, colours, utilities) comes with slice 2 (docs/plan/02-training.md).
+
+   Token contract (docs/plan/00-multisite.md, 2.5): every site defines the same semantic variables
+   (--bg, --surface, --surface-2, --fg, --muted, --border, --primary, --primary-ink, --accent,
+   --accent-ink, --dark, --on-dark, --radius, --grad, --grad-soft) and maps them to the same Tailwind
+   names, so shared components (Galerie, Lightbox, Icon) look native on every site. */
+@import 'tailwindcss' source(none);
+@plugin '@tailwindcss/typography';
+
+/* Only this site and the shared components are scanned for class names – never other sites. */
+@source '..';
+@source '../../../components/BaseHead.astro';
+@source '../../../components/Galerie.astro';
+@source '../../../components/Lightbox.astro';
+@source '../../../components/ui';
+
+:root {
+	color-scheme: light dark;
+	--bg: #ffffff;
+	--surface: #f4f4f5;
+	--surface-2: #e4e4e7;
+	--fg: #18181b;
+	--muted: #52525b;
+	--border: #e4e4e7;
+	--primary: #3f3f46;
+	--primary-ink: #27272a;
+	--accent: #52525b;
+	--accent-ink: #3f3f46;
+	--grad: linear-gradient(120deg, #52525b 0%, #3f3f46 100%);
+	--grad-soft: linear-gradient(120deg, #f4f4f5 0%, #e4e4e7 100%);
+	--dark: #27272a;
+	--on-dark: #fafafa;
+	--radius: 0.75rem;
+}
+
+/* Keep --bg (light / dark) in sync with themeColor in ../layouts/Base.astro. */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: #18181b;
+		--surface: #27272a;
+		--surface-2: #3f3f46;
+		--fg: #fafafa;
+		--muted: #a1a1aa;
+		--border: #3f3f46;
+		--primary: #d4d4d8;
+		--primary-ink: #e4e4e7;
+		--accent: #a1a1aa;
+		--accent-ink: #d4d4d8;
+		--grad: linear-gradient(120deg, #a1a1aa 0%, #d4d4d8 100%);
+		--grad-soft: linear-gradient(120deg, #27272a 0%, #3f3f46 100%);
+		--dark: #09090b;
+		--on-dark: #fafafa;
+	}
+}
+
+@theme inline {
+	--font-sans: system-ui, sans-serif;
+	--font-display: system-ui, sans-serif;
+	--color-bg: var(--bg);
+	--color-surface: var(--surface);
+	--color-surface-2: var(--surface-2);
+	--color-fg: var(--fg);
+	--color-muted: var(--muted);
+	--color-border: var(--border);
+	--color-primary: var(--primary);
+	--color-primary-ink: var(--primary-ink);
+	--color-accent: var(--accent);
+	--color-accent-ink: var(--accent-ink);
+	--color-dark: var(--dark);
+	--color-on-dark: var(--on-dark);
+	--radius-card: var(--radius);
+}
+
+@layer base {
+	body {
+		@apply bg-bg text-fg font-sans antialiased;
+	}
+	h1, h2, h3, h4 {
+		@apply font-display text-balance;
+	}
+	:focus-visible {
+		outline: 3px solid var(--accent);
+		outline-offset: 3px;
+	}
+}
+
+@utility container-page {
+	@apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+}
+@utility btn-primary {
+	@apply inline-flex items-center justify-center gap-2 rounded-card bg-primary px-5 py-2.5 font-semibold text-bg transition hover:opacity-90;
+}
+@utility btn-secondary {
+	@apply inline-flex items-center justify-center gap-2 rounded-card border-2 border-fg px-5 py-2.5 font-semibold text-fg transition hover:bg-fg hover:text-bg;
+}
+
+/* Rich text: class="prose prose-lg prose-site". Unlayered, so it wins over the typography plugin. */
+.prose-site {
+	max-width: none;
+	--tw-prose-body: var(--fg);
+	--tw-prose-headings: var(--fg);
+	--tw-prose-links: var(--primary-ink);
+	--tw-prose-bold: var(--fg);
+	--tw-prose-bullets: var(--accent);
+	--tw-prose-quotes: var(--fg);
+	--tw-prose-quote-borders: var(--accent);
+	--tw-prose-counters: var(--muted);
+	--tw-prose-captions: var(--muted);
+	--tw-prose-hr: var(--border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after {
+		transition: none !important;
+		animation: none !important;
+	}
+}

@@ -1,24 +1,15 @@
 import type { Collection } from 'tinacms';
 import { farbschemaOptions } from '../../src/lib/farbschema';
+import { navFeld, websiteFeld } from './fields';
 
 export const ConfigCollection: Collection = {
   name: 'config',
-  label: 'Einstellungen',
+  label: 'Rottweiler · Einstellungen',
   path: 'src/content/config',
   format: 'json',
   ui: { global: true, allowedActions: { create: false, delete: false } },
   fields: [
-    {
-      type: 'object', name: 'website', label: 'Website',
-      fields: [
-        { type: 'string', name: 'name', label: 'Name der Website', required: true },
-        { type: 'string', name: 'untertitel', label: 'Untertitel (unter dem Namen)' },
-        { type: 'string', name: 'beschreibung', label: 'Standard-Beschreibung für Google', ui: { component: 'textarea' } },
-        { type: 'image', name: 'logo', label: 'Logo' },
-        { type: 'image', name: 'logoDunkel', label: 'Logo für die dunkle Ansicht', description: 'Helle Version des Logos. Wird gezeigt, wenn das Handy oder der Computer auf „Dunkel“ steht.' },
-        { type: 'image', name: 'teilenBild', label: 'Bild für geteilte Links (Facebook, WhatsApp)' },
-      ],
-    },
+    websiteFeld,
     {
       type: 'string', name: 'farbschema', label: 'Farbschema',
       options: farbschemaOptions,
@@ -44,13 +35,6 @@ export const ConfigCollection: Collection = {
         { type: 'string', name: 'verbandLink', label: 'Verband (Link)' },
       ],
     },
-    {
-      type: 'object', name: 'nav', label: 'Menü', list: true,
-      ui: { itemProps: (i: { titel?: string }) => ({ label: i?.titel || 'Link' }) },
-      fields: [
-        { type: 'string', name: 'titel', label: 'Beschriftung', required: true },
-        { type: 'string', name: 'link', label: 'Link', required: true },
-      ],
-    },
+    navFeld,
   ],
 };
