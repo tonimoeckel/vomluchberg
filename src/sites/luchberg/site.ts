@@ -4,6 +4,9 @@ import type { SiteDefinition } from '../types';
 export const luchberg = {
   id: 'luchberg',
   name: 'Rottweiler vom Luchberg',
+  adminLabel: 'Rottweiler',
+  // Legacy names without site prefix: renaming would change document ids and GraphQL types.
+  collections: ['page', 'hund', 'wurf', 'news', 'config'],
   // Old URLs of the previous website → new pages (for Google & old links)
   redirects: {
     '/home': '/',

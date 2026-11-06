@@ -1,13 +1,14 @@
 import type { Collection } from 'tinacms';
 import { allBlocks } from '../blocks';
+import { seitenPfad, siteRouter } from '../sites/router';
 
 export const PageCollection: Collection = {
   name: 'page',
-  label: 'Seiten',
+  label: 'Rottweiler · Seiten',
   path: 'src/content/seiten',
   format: 'md',
   ui: {
-    router: ({ document }) => (document._sys.filename === 'home' ? '/' : `/${document._sys.filename}`),
+    router: siteRouter('luchberg', seitenPfad),
   },
   fields: [
     { type: 'string', name: 'titel', label: 'Seitentitel (Browser-Tab & Google)', isTitle: true, required: true },

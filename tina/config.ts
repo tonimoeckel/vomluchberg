@@ -1,9 +1,9 @@
 import { defineConfig } from 'tinacms';
-import { ConfigCollection } from './collections/config';
-import { PageCollection } from './collections/page';
-import { HundCollection } from './collections/hund';
-import { WurfCollection } from './collections/wurf';
-import { NewsCollection } from './collections/news';
+import { collections } from './schema';
+import { exposeSiteId } from './sites/router';
+
+// Lets the admin bundle know which site it belongs to (preview routers, tina/sites/router.ts).
+exposeSiteId();
 
 // Hosting providers expose the current branch under different env names.
 const branch =
@@ -30,6 +30,6 @@ export default defineConfig({
     },
   },
   schema: {
-    collections: [PageCollection, HundCollection, WurfCollection, NewsCollection, ConfigCollection],
+    collections,
   },
 });
