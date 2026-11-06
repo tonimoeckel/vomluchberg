@@ -245,21 +245,26 @@ Implementation would be one `<Dackel>` Astro component (inline SVG) plus one sma
 
 ### G – "Leckerli-Suche" (game prototype on top of F, mockup built)
 
-Toni's idea: an optional mini game. Same page as F (Flitzer and meadow patrol removed, so only one
-dog roams). "Leckerli verteilen" (header and hero card) turns the cursor into a bone; a click/tap
-anywhere drops a treat (max. 3 at a time, 6 per day). The dachshund runs over, sniffs the last
-stretch (nose down, zigzag, "schnüff" puffs) and eats it ("Mampf!"). If a treat is far away he dives
-into the nearest fox burrow – or digs his own hole – and comes out of the burrow closest to the
-treat; sometimes first out of the wrong one ("Huch?"). Burrows are `[data-bau]` elements inside the
-sections, so their positions follow the real layout on every screen size. After 6 treats he is
-full, lies down and snores until the next day (count per day in `localStorage`, no cookies);
-"Spiel zurücksetzen" in the review bar restarts it.
+Toni's idea: an optional mini game. Same layout as F (Flitzer and meadow patrol removed, so only one
+dog roams), but with a calmer palette: petrol instead of tomato red, softer butter yellow.
+"Leckerli verteilen" (header and hero card) turns the cursor into a bone; a click/tap anywhere drops
+a treat (max. 3 at a time, 6 per day). The dachshund trots over – speed ramps up and down, legs move
+in diagonal pairs with a lifted swing, the leg rhythm follows the speed – sniffs the last stretch
+(nose down, zigzag, "schnüff" puffs) and eats it ("Mampf!"). If a treat is far away or on another
+level of the page, he digs a hole (earth flies backwards), dives in head first and pops out of a
+fresh hole next to the treat: nose first, a sniff, then a jump out and a shake. Sometimes he comes up
+at the wrong spot first ("Huch?"). The holes fade after a moment. After 6 treats he turns once, lies
+down with his chin on his paw and sleeps until the next day (count per day in `localStorage`, no
+cookies); "Spiel zurücksetzen" in the review bar restarts it.
+Second iteration (Toni's feedback): cuter dog (bigger head, big eyes, blush, beard), all parts
+rotate around fixed pivots in SVG units and same-colour shapes overlap, so no seams or gaps appear
+while animating; fox burrows removed in favour of digging.
 Accessibility: off until the button is pressed, links and buttons keep working in treat mode, Esc
 or "Fertig" ends it, game graphics `aria-hidden`, status line `aria-live`. With reduced motion or
-"Animationen pausieren" he doesn't run: he fades out and reappears at the treat.
-*Risk:* on long mobile pages he can run a long way between burrows, and the HUD covers part of the
-screen. Real site: one `<LeckerliSuche>` island (≈ 250 lines, no library), burrows as a tiny
-`<Fuchsbau />` component placed in the page layout; can be combined with A as an easter egg.
+"Animationen pausieren" he neither runs nor digs: he fades out and reappears at the treat.
+*Risk:* holes appear on top of content for a moment, and the HUD covers part of a phone screen.
+Real site: one `<LeckerliSuche>` island (≈ 300 lines, no library) plus the shared `<Dackel>` SVG
+component; can be combined with A as an easter egg.
 
 **Recommendation: A.** It is clearly different from the Rottweiler site in every dimension (serif vs.
 grotesk, green/rust vs. orange/pink, paper vs. white, arches vs. rounded cards, calm vs. neon), fits
