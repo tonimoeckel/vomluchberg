@@ -1,6 +1,6 @@
 ---
-import Detailseite from '../../layouts/Detailseite.astro';
-import { aktuelles } from '../../lib/detailseiten';
+import Detailseite from '../../../../layouts/Detailseite.astro';
+import { aktuelles } from '../../../../lib/detailseiten';
 
 export const getStaticPaths = aktuelles.paths;
 const beitrag = await aktuelles.load(String(Astro.params.slug));

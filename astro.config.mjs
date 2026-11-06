@@ -5,12 +5,21 @@ import icon from 'astro-icon';
 import tina from '@tinacms/astro/integration';
 import { tinaAdminDevRedirect } from '@tinacms/astro/vite';
 import tailwindcss from '@tailwindcss/vite';
+import { multisite } from './src/multisite/integration.ts';
+import { resolveSiteId, sites } from './src/sites/index.ts';
+
+// Which website this build produces (see docs/plan/00-multisite.md). Defaults to luchberg.
+const SITE_ID = resolveSiteId(process.env.SITE_ID);
+/** @type {import('./src/sites/index.ts').SiteDefinition} */
+const site = sites[SITE_ID];
 
 // Alle Inhaltsseiten werden statisch gebaut. Nur /tina-island (Live-Vorschau im
 // Tina-Editor) läuft on-demand. Auf Cloudflare Pages wird automatisch der
 // Cloudflare-Adapter genutzt, lokal der Node-Adapter.
 async function getAdapter() {
-	const cloudflare = async () => (await import('@astrojs/cloudflare')).default();
+	// Each site deploys to its own worker; its wrangler config sets the worker name (root wrangler.jsonc = luchberg).
+	const cloudflareOptions = site.wranglerConfig ? { configPath: site.wranglerConfig } : {};
+	const cloudflare = async () => (await import('@astrojs/cloudflare')).default(cloudflareOptions);
 	const node = async () => (await import('@astrojs/node')).default({ mode: 'standalone' });
 	if (process.env.DEPLOY_ADAPTER === 'cloudflare' || process.env.CF_PAGES || process.env.WORKERS_CI) return cloudflare();
 	return node();
@@ -28,9 +37,11 @@ function getSiteUrl() {
 // `@astrojs/markdown-remark` (Shiki) and the adapter's Prism loader. Their
 // ~240 languages, ~65 themes, the Oniguruma WASM and ~290 Prism components are
 // lazy `import()`s that are never called there (islands render Tina rich text,
-// not Markdown code blocks) but would still be uploaded, pushing the worker
-// towards the 3 MiB free-plan limit. All of them resolve to one empty module
-// in the `ssr` build only; prerendered pages and dev keep full highlighting.
+// not Markdown code blocks) but would still be uploaded with the worker.
+// (This was needed for the old 3 MiB gzip limit, which Cloudflare dropped on
+// 2026-09-04; only 64 MiB uncompressed counts now. A small worker still deploys
+// and starts faster.) All of them resolve to one empty module in the `ssr`
+// build only; prerendered pages and dev keep full highlighting.
 /** @returns {import('vite').Plugin} */
 function stubServerHighlighters() {
 	const STUB_ID = '\0luchberg:no-highlighter';
@@ -49,40 +60,14 @@ function stubServerHighlighters() {
 	};
 }
 
-// Alte URLs der bisherigen Website → neue Seiten (für Google & alte Links)
-const redirects = {
-	'/home': '/',
-	'/zuchtstaette': '/zucht',
-	'/about-me': '/zucht',
-	'/about-me/leistungen': '/zucht',
-	'/contacts': '/kontakt',
-	'/contacts/index.php': '/kontakt',
-	'/gallery': '/galerie',
-	'/links': '/',
-	'/page/2': '/aktuelles',
-	'/page/3': '/aktuelles',
-	'/welpen': '/wuerfe',
-	'/welpen/wurf': '/wuerfe/a-wurf',
-	'/welpen/b-w': '/wuerfe/b-wurf',
-	'/rottweilerhuendinnen': '/hunde',
-	'/rottweilerrueden': '/hunde',
-	'/weitere-rudelmitglieder': '/hunde',
-	'/weitere-rudelmitglieder/rauhaardackel': '/hunde/rauhaardackel',
-	'/rottweilerhuendinnen/baja-vom-luchberg': '/hunde/baja-vom-luchberg',
-	'/rottweilerhuendinnen/donna-von-der-staubzer-hoehe': '/hunde/donna-von-der-staubzer-hoehe',
-	'/rottweilerrueden/aaron-vom-luchberg': '/hunde/aaron-vom-luchberg',
-	'/rottweilerrueden/hunter-vom-auersberg': '/hunde/hunter-vom-auersberg',
-	'/harley-vom-auersberg': '/hunde/harley-vom-auersberg',
-	'/aktuelles/sitz-platzund-steh-aber-wie-geht-das': '/aktuelles/sitz-platz-und-steh-teil-2-platz',
-};
 
 // https://astro.build/config
 export default defineConfig({
 	site: getSiteUrl(),
 	output: 'static',
 	adapter: await getAdapter(),
-	redirects,
-	integrations: [sitemap(), icon(), tina()],
+	redirects: site.redirects,
+	integrations: [multisite(SITE_ID), sitemap(), icon(), tina()],
 	build: { inlineStylesheets: 'always' },
 	vite: {
 		plugins: [tailwindcss(), tinaAdminDevRedirect(), stubServerHighlighters()],

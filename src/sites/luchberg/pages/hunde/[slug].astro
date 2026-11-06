@@ -1,6 +1,6 @@
 ---
-import Detailseite from '../../layouts/Detailseite.astro';
-import { hunde } from '../../lib/detailseiten';
+import Detailseite from '../../../../layouts/Detailseite.astro';
+import { hunde } from '../../../../lib/detailseiten';
 
 export const getStaticPaths = hunde.paths;
 const hund = await hunde.load(String(Astro.params.slug));

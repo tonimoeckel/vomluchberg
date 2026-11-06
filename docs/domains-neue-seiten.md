@@ -46,7 +46,7 @@ Für jede der beiden Domains:
 
 ## 3. Toni: Website verbinden (erst wenn die Seite fertig ist)
 
-- [ ] *Workers & Pages* → Worker (`vomluchberg-dackel` bzw. `alltag-kann-sport`) → *Settings → Domains & Routes → Add Custom Domain* → `www.<domain>`.
+- [ ] *Workers & Pages* → Worker (`vomluchberg-dackel` bzw. `vomluchberg-training`) → *Settings → Domains & Routes → Add Custom Domain* → `www.<domain>`.
 - [ ] Für die Adresse ohne www: DNS-Eintrag `AAAA` für `@` → `100::`, **Proxy an** (orange Wolke). Dann *Rules → Redirect Rules* → Vorlage „Redirect from root to www“, Statuscode 301.
 - [ ] Im Worker unter *Settings → Build → Variables*: `SITE_URL=https://www.<domain>` setzen und `SITE_NOINDEX` löschen. Neu bauen lassen.
 - [ ] TinaCloud → Projekt → *Site URLs*: `https://www.<domain>` ergänzen.
