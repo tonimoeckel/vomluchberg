@@ -31,8 +31,8 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 
 | # | Decision | Why |
 | --- | --- | --- |
-| O1 | **Three Workers, one repo, root directory `/`**: `vomluchberg` (exists), `vomluchberg-dackel`, `alltag-kann-sport`. Same build command `npm run build`; the site is chosen by the build variable `SITE_ID`. | D1/D3. Same command keeps the dashboards boring; the only differences are env vars and watch paths. |
-| O2 | **One Wrangler file per site** (`wrangler.jsonc` for luchberg stays as is, plus `wrangler.dackel.jsonc`, `wrangler.training.jsonc`), deploy command `npx wrangler deploy --config <file>`. | The name override would work with one file, but explicit files make local `wrangler deploy` and `wrangler preview` safe (no accidental deploy of the dachshund build onto the Rottweiler Worker). |
+| O1 | **Three Workers, one repo, root directory `/`**: `vomluchberg` (exists), `vomluchberg-dackel`, `vomluchberg-training` (names settled in the consolidation, R1 in `README.md`). Same build command `npm run build`; the site is chosen by the build variable `SITE_ID`. | D1/D3. Same command keeps the dashboards boring; the only differences are env vars and watch paths. |
+| O2 | **One Wrangler file per site**, as built in slice 0: root `wrangler.jsonc` for luchberg, `src/sites/<id>/wrangler.jsonc` for the others, wired through the Cloudflare adapter's `configPath`. The build writes `dist/server/wrangler.json` with the right worker `name` and the redirect `.wrangler/deploy/config.json`, so the deploy command is plain `npx wrangler deploy` for all three (R2). | Explicit per-site files keep local `wrangler deploy` / `wrangler preview` safe (no accidental deploy of the dachshund build onto the Rottweiler Worker), and the site picks its own file, so nobody has to remember `--config`. |
 | O3 | **Build watch paths per Worker**, written as *exclude other sites' content*. Shared code (components, `src/lib`, `tina/`, `package*.json`, `astro.config.mjs`) rebuilds all three. | A Tina save for one site must only rebuild that site (≈1–2 min each; avoids three parallel builds on every save). |
 | O4 | **Preview builds on**, with preview build command `npm run build:local` and `noindex`. | Previews must not need the branch to be indexed in TinaCloud, and must never be indexed by Google. `/admin` on a preview is local-mode only, which is fine for reviewing layout. |
 | O5 | **Canonical host = `www.` for all three domains**, apex 301 → www (same as `vomluchberg.de` in `domain-umzug.md`). | One rule for Toni and Karo; consistent printed URLs ("www.…" also reads as a web address on flyers). |
@@ -56,7 +56,7 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 | I-4 | A switch `SITE_NOINDEX=true` (build var) and automatic noindex when `WORKERS_CI_BRANCH` is set and ≠ `main`: `<meta name="robots" content="noindex,nofollow">` on every page and `robots.txt` with `Disallow: /`. | New sites run on `*.workers.dev` before their domain exists; previews must never be indexed. |
 | I-5 | Per-site `robots.txt` endpoint (today there is none) with `Sitemap: ${SITE_URL}/sitemap-index.xml`, `Disallow: /admin/` and `/tina-island/`. `@astrojs/sitemap` filters out `/admin`, `/tina-island`, `/404`. | Per-domain sitemaps for Search Console. |
 | I-6 | Each build ships **only its own uploads** (`public/uploads/<own folders>`) plus shared files (favicons per site). Plus a test that fails when a site's content references `/uploads/…` outside its own folders. Optional: `npm run watch-paths` prints the include/exclude list per Worker from the registry. | Otherwise all three domains serve every image, and an image Karo uploads into the wrong folder silently goes missing. |
-| I-7 | Per-site Wrangler files (O2) with `"previews": {}` and `"preview_urls": true`; same `compatibility_date`/`nodejs_compat` as today. | Worker Previews (section 0). |
+| I-7 | Per-site Wrangler files (O2, `src/sites/<id>/wrangler.jsonc`) with `"previews": {}` and `"preview_urls": true`; same `compatibility_date`/`nodejs_compat` as today. | Worker Previews (section 0). |
 | I-8 | Redirects per site (the old-site `redirects` in `astro.config.mjs` stay luchberg-only). Training site gets a small redirect list for old Pfotentermin paths only if the training site re-uses them (it doesn't need to: Pfotentermin redirects are done on the Pfotentermin side, section 6). | Keep the 301s from the old Rottweiler site intact. |
 | I-9 | Decision on **where `/admin` lives** and how visual editing previews dachshund/training documents (one admin on `vomluchberg.de` with absolute preview URLs, or `/admin` built into every site). Whatever it is, slice 3 needs the list of origins to add to TinaCloud (task T-03). | TinaCloud only accepts logins/previews from configured site URLs. |
 
@@ -64,7 +64,7 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 
 - Final route list per site (for redirect mapping, sitemap check and the Pfotentermin path map in 6.3).
 - Which Tina "Einstellungen" field holds the cross-link text (O9) and the contact data used for JSON-LD.
-- Slice 2: URL of the offers page and the inquiry form anchor (`/kontakt` or `/#anfrage`) – target of the Pfotentermin booking-page redirects.
+- Slice 2: offers at `/angebote` + `/angebote/<slug>`, inquiry form at `/anfrage?angebot=<slug>`, about page `/ueber-mich` (settled, `02-training.md` §9).
 - Slice 1: what happens with `src/content/hunde/rauhaardackel.md` and `public/uploads/rudel/dackel/` (copy vs. move, see 4.4).
 
 ---
@@ -73,15 +73,15 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 
 ### 3.1 Worker matrix
 
-| | `vomluchberg` | `vomluchberg-dackel` | `alltag-kann-sport` |
+| | `vomluchberg` | `vomluchberg-dackel` | `vomluchberg-training` |
 | --- | --- | --- | --- |
 | Status | exists (Rottweiler) | new | new |
 | Git | `tonimoeckel/vomluchberg`, production branch `main` | same | same |
 | Root directory | `/` | `/` | `/` |
 | Build command | `npm run build` | `npm run build` | `npm run build` |
-| Deploy command | `npx wrangler deploy` | `npx wrangler deploy --config wrangler.dackel.jsonc` | `npx wrangler deploy --config wrangler.training.jsonc` |
+| Deploy command | `npx wrangler deploy` | `npx wrangler deploy` | `npx wrangler deploy` |
 | Preview build command | `npm run build:local` | `npm run build:local` | `npm run build:local` |
-| Preview command | `npx wrangler preview` | `npx wrangler preview --config wrangler.dackel.jsonc` | `npx wrangler preview --config wrangler.training.jsonc` |
+| Preview command | `npx wrangler preview` | `npx wrangler preview` | `npx wrangler preview` (verify in CF-01 that `preview` follows `.wrangler/deploy/config.json` like `deploy`; otherwise pass `--config dist/server/wrangler.json`) |
 | Custom domain (later) | `www.vomluchberg.de` | `www.rauhaardackel-vom-luchberg.de` | `www.alltag-kann-sport.de` |
 
 ### 3.2 Build variables (production)
@@ -89,7 +89,7 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 All values are **build** variables (Settings → Build → Variables and secrets). Nothing is needed at runtime
 as long as I-1 holds. Mark `TINA_TOKEN` and `PUBLIC_WEB3FORMS_KEY` as secret (masked in logs).
 
-| Variable | `vomluchberg` | `vomluchberg-dackel` | `alltag-kann-sport` |
+| Variable | `vomluchberg` | `vomluchberg-dackel` | `vomluchberg-training` |
 | --- | --- | --- | --- |
 | `SITE_ID` | `luchberg` | `dackel` | `training` |
 | `SITE_URL` | `https://www.vomluchberg.de` | before go-live: its `*.workers.dev` URL; after: `https://www.rauhaardackel-vom-luchberg.de` | before: `*.workers.dev`; after: `https://www.alltag-kann-sport.de` |
@@ -118,7 +118,7 @@ the hint text in the dashboard when entering them; adjust to `**` if the UI asks
 | --- | --- | --- |
 | `vomluchberg` | `*` | `src/content/dackel/*`, `src/content/training/*`, `public/uploads/dackel/*`, `public/uploads/training/*`, `docs/*`, `migration/*`, `*.md` in repo root |
 | `vomluchberg-dackel` | `*` | `src/content/seiten/*`, `src/content/hunde/*`, `src/content/wuerfe/*`, `src/content/aktuelles/*`, `src/content/config/*`, `src/content/training/*`, `public/uploads/galerie/*`, `public/uploads/header/*`, `public/uploads/hunde/*`, `public/uploads/news/*`, `public/uploads/rudel/*`, `public/uploads/seiten/*`, `public/uploads/wuerfe/*`, `public/uploads/training/*`, `docs/*`, `migration/*` |
-| `alltag-kann-sport` | `*` | same luchberg folders as above, plus `src/content/dackel/*`, `public/uploads/dackel/*`, `docs/*`, `migration/*` |
+| `vomluchberg-training` | `*` | same luchberg folders as above, plus `src/content/dackel/*`, `public/uploads/dackel/*`, `docs/*`, `migration/*` |
 
 Notes:
 
@@ -135,10 +135,10 @@ Notes:
 
 | ID | Owner | Task | Done when |
 | --- | --- | --- | --- |
-| CF-01 | C | (after slice 0) Add `wrangler.dackel.jsonc` and `wrangler.training.jsonc` (names `vomluchberg-dackel` / `alltag-kann-sport`), add `previews`/`preview_urls` to all three. Update the outdated 3 MiB comment in `astro.config.mjs`. | `npm run build:local` with each `SITE_ID`, `npx wrangler deploy --dry-run --config …` passes for all three. |
+| CF-01 | C | (slice 0 PR B) Add `src/sites/{dackel,training}/wrangler.jsonc` (names `vomluchberg-dackel` / `vomluchberg-training`), add `previews`/`preview_urls` to all three. The outdated 3 MiB comment in `astro.config.mjs` was fixed in the consolidation. | `DEPLOY_ADAPTER=cloudflare SITE_ID=<id> npm run build:local` + `npx wrangler deploy --dry-run` passes for all three and names the right worker. |
 | CF-02 | T | `vomluchberg` Worker: Settings → Builds → switch to **Worker Previews** (one-time, irreversible), set preview build command `npm run build:local`, preview vars (3.2), watch paths (3.3). | A push to a feature branch creates a Preview URL with `noindex`; a push to `docs/` only does not build. |
 | CF-03 | T | Create Worker `vomluchberg-dackel`: *Workers & Pages → Create → Import repository* `vomluchberg`, settings from 3.1/3.2/3.3, `SITE_NOINDEX=true`, `SITE_URL=<workers.dev URL>`. | Site reachable on `vomluchberg-dackel.<subdomain>.workers.dev`, page source contains `noindex`. |
-| CF-04 | T | Same for `alltag-kann-sport`. | as above |
+| CF-04 | T | Same for `vomluchberg-training`. | as above |
 | CF-05 | T | Create the three Web3Forms keys (with Karo's e-mails) and set them. Test each form once on production. | Karo confirms three test mails arrived. |
 | CF-06 | T | Workers & Pages → each Worker → Settings → Domains & Routes: after go-live (section 7), **disable the `workers.dev` route for production** (keep Preview URLs on). | `*.workers.dev` of the production Worker returns 404/disabled; previews still work. |
 | CF-07 | T+C | Smoke test after setup: save a dachshund text in Tina → only `vomluchberg-dackel` builds; save a Rottweiler text → only `vomluchberg` builds; change a shared component → all three build. | Build history shows exactly that. |
@@ -296,7 +296,11 @@ const karoHost = [{ type: 'host', value: 'karolin-riesing.pfotentermin.eu' }];
 { source: '/s/karolin-riesing/profile/:path*', has: karoHost, destination: `${PLATFORM}/profile/:path*`, permanent: true },
 { source: '/:p(login|auth|reset-password|update-password)/:rest*', has: karoHost, destination: `${PLATFORM}/:p/:rest*`, permanent: false },
 // …then the mapped storefront paths from 6.3, e.g.
+// one rule per service UUID first (6.3), e.g.
+{ source: '/:prefix(s/karolin-riesing)?/services/bff4106e-9676-4b1c-adfb-7c3c4aefbdd3', has: karoHost, destination: `${KARO}/angebote/einzeltraining`, permanent: true },
 { source: '/:prefix(s/karolin-riesing)?/services/:rest*', has: karoHost, destination: `${KARO}/angebote`, permanent: true },
+{ source: '/:prefix(s/karolin-riesing)?/:p(book|kontakt)/:rest*', has: karoHost, destination: `${KARO}/anfrage`, permanent: true },
+{ source: '/:prefix(s/karolin-riesing)?/ueber-uns', has: karoHost, destination: `${KARO}/ueber-mich`, permanent: true },
 { source: '/:path((?!_next|api).*)', has: karoHost, destination: `${KARO}/`, permanent: true },
 
 // 2) Platform hosts, path form
@@ -315,16 +319,18 @@ deploy (expect `301`, correct `location`, no chains, `/_next/*` and `/api/*` unt
 ### 6.3 Path mapping
 
 Tenant routes found in `app/s/[alias]/` (both URL forms, i.e. with and without the `/s/karolin-riesing`
-prefix on the subdomain). New targets marked *(slice 2)* depend on the final training routes.
+prefix on the subdomain). Targets follow the training routes fixed in `02-training.md` section 9 (R6).
 
 | Old (Pfotentermin) | New |
 | --- | --- |
 | `/` | `https://www.alltag-kann-sport.de/` |
-| `/services`, `/services/<id>` | offers page *(slice 2, e.g. `/angebote`)* |
-| `/events/<id>` | offers page *(slice 2)* |
-| `/book`, `/buchungen/<id>` (+ `@modal` book) | inquiry form *(slice 2, e.g. `/kontakt`)* |
-| `/ueber-uns` | about page *(slice 2, e.g. `/ueber-mich`)* |
-| `/bewertungen`, `/bewertung` | `/` (or a reviews section if slice 2 adds one) |
+| `/services` | `/angebote` |
+| `/services/bff4106e-…` / `670bef78-…` / `20d50494-…` | `/angebote/einzeltraining` / `/angebote/basistraining` / `/angebote/welpenkurs` (full UUIDs in `02-training.md` §9); unknown id → `/angebote` |
+| `/events/<id>` | `/angebote` |
+| `/book` (+ `@modal` book), `/kontakt` | `/anfrage`; `/book?service=<uuid>` → `/anfrage?angebot=<slug>` |
+| `/buchungen/<id>` | private customer page: untouched in mode `on`, platform `/profile` in mode `final` (as built in #188) |
+| `/ueber-uns` | `/ueber-mich` |
+| `/bewertungen`, `/bewertung` | `/` (no reviews section, T7 in `02-training.md`) |
 | `/profile/**` (customer accounts, dogs, health data, bookings) | **`https://booking.pfotentermin.eu/profile/**`** – customers keep access to their own data on the platform |
 | `/login`, `/auth/**`, `/reset-password`, `/update-password` | same path on `booking.pfotentermin.eu` (302) |
 | `/admin/**` | unchanged (`proxy.ts` already sends it to the platform) |
@@ -374,7 +380,7 @@ Use 301 for content URLs. Keep the redirects **at least 12 months**, ideally per
 | P-02 | T | Inventory (SQL counts) | numbers sent to Karo |
 | P-03 | T | Export script + secure hand-over | Karo confirms she can open it |
 | P-04 | K | Contact open cases | list ticked off |
-| P-08 | T/C | Pfotentermin PR: draft **tonimoeckel/pfotentermin#188** (`lib/config/tenant-redirects.js`, env flag `TENANT_REDIRECT_KAROLIN_RIESING` = `off`/`on`/`final`, sitemap + listing exclusion, 64 tests). Before merge/flag-on: confirm target paths with slice 2, check prod DB for `subdomainOverride`/`customDomain`. Set `websiteUrl` in the admin by hand. | merged with flag off |
+| P-08 | T/C | Pfotentermin PR: draft **tonimoeckel/pfotentermin#188** (`lib/config/tenant-redirects.js`, env flag `TENANT_REDIRECT_KAROLIN_RIESING` = `off`/`on`/`final`, sitemap + listing exclusion, 64 tests). Before merge/flag-on: update the path map to 6.3 (the draft still has `book` → `/kontakt` and all `services/*` → `/angebote`; needs `book`/`kontakt` → `/anfrage`, one rule per service UUID → `/angebote/<slug>`, and `?service=<uuid>` → `/anfrage?angebot=<slug>` via a `has: query` rule), check prod DB for `subdomainOverride`/`customDomain`. Set `websiteUrl` in the admin by hand. | merged with flag off |
 | P-05 | T | Freeze services/events | storefront shows no bookable offer (behind the redirect) |
 | P-06 | T | Final export + `isActive = false` | after the transition |
 | P-07 | T+K | Anonymise/delete | on Karo's go |

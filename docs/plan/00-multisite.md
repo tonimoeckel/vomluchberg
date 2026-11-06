@@ -37,7 +37,7 @@ committed); their results are in [Spike results](#spike-results). Slices 1 (`dac
   byte-identical. New sites use `src/content/<id>/` and `public/uploads/<id>/`.
 - **Three Workers** from the same repo, same build command, the site picked by the build
   variable `SITE_ID`. The worker name per site comes from `src/sites/<id>/wrangler.jsonc` via the
-  Cloudflare adapter's `configPath` (verified). Each worker is ~1 MiB gzip, well below 3 MiB.
+  Cloudflare adapter's `configPath` (verified). Each worker is ~1 MiB gzip (~4.7 MiB uncompressed). Cloudflare removed the compressed-size limit on 2026-09-04; only 64 MiB uncompressed counts now (see `03-betrieb.md` §0).
 
 ## 1. Decision and alternatives
 
@@ -50,7 +50,7 @@ committed); their results are in [Spike results](#spike-results). Slices 1 (`dac
 | Media root | ✅ one root `public/uploads`, per-site subfolders | ❌ one root vs. three `public/` dirs | ✅ |
 | Visual-editing islands `/tina-island/[name]` | ✅ one route per site, registry contains only that site's islands (verified) | ✅ per app | ✅ one registry for all |
 | Cloudflare Workers Builds (3 workers, 1 repo) | ✅ same root dir and build command, `SITE_ID` per worker, watch paths per worker | ⚠️ works with root dirs, but Wrangler's workspace support is "limited" per the Cloudflare docs | ✅ one worker – but no separate domains |
-| Worker size limit (3 MiB gzip) | ✅ ~995 KiB per site (measured) | ✅ | ⚠️ one worker carries all three sites' island code |
+| Worker size limit (was 3 MiB gzip, now 64 MiB uncompressed) | ✅ ~995 KiB per site (measured) | ✅ | ⚠️ one worker carries all three sites' island code |
 | Sitemap / robots / canonical per site | ✅ automatic: each build only contains its own pages, `site` = its `SITE_URL` | ✅ | ❌ one sitemap, one canonical host; the dachshund site is not "its own site" |
 | 301 `redirects` only on luchberg | ✅ redirects live in the site definition | ✅ | ⚠️ manual scoping |
 | Dev experience | ✅ `npm run dev` (luchberg) / `npm run dev:dackel` / `npm run dev:training` | ⚠️ three dev servers + Tina in one of them | ✅ one dev server |
@@ -73,7 +73,7 @@ the live site's routes are written. `injectRoute` keeps plain file-based routing
 | --- | --- | --- |
 | D1 | ✅ **confirmed** | `SITE_ID` env var, validated (unknown id → build error), default `luchberg`. |
 | D2 | ✅ **confirmed, with a caveat** | One TinaCloud project, one schema. Caveat: live preview of a site only works in **that site's** `/admin` (see 2.6). All collections are editable in every `/admin`. |
-| D3 | ✅ **confirmed** | Three workers, same repo/build command; per-site `wrangler.jsonc` via the adapter's `configPath`. Suggested names: `vomluchberg`, `vomluchberg-dackel`, `vomluchberg-training` (open question T1). |
+| D3 | ✅ **confirmed** | Three workers, same repo/build command; per-site `wrangler.jsonc` via the adapter's `configPath`. Settled names (R1): `vomluchberg`, `vomluchberg-dackel`, `vomluchberg-training` (open question T1). |
 | D4 | ✅ **confirmed, refined** | Luchberg content and uploads **stay where they are – permanently, unless a later need appears**. New sites: `src/content/<id>/**`, `public/uploads/<id>/**`. Uploads are **not** pruned per site (all images ship with every site; see 2.4). |
 
 ## 2. Target design
@@ -431,7 +431,7 @@ Steps marked 🔒 touch the Tina schema: run `npm run dev` once and commit `tina
    Expect: `npm run build:local:all` passes; dackel/training output contains only their pages,
    their sitemap and their favicons; `DEPLOY_ADAPTER=cloudflare SITE_ID=dackel npm run
    build:local` → `dist/server/wrangler.json` `name` is `vomluchberg-dackel`; `npx wrangler deploy
-   --dry-run` < 3 MiB gzip per site; `npm run dev:dackel` → `/admin` live-previews a dackel page
+   --dry-run` passes per site (size only checked against 64 MiB uncompressed); `npm run dev:dackel` → `/admin` live-previews a dackel page
    and shows Rottweiler pages as forms only.
    The content models (dogs, litters, offers…) and real design are slices 1 and 2.
 
@@ -486,7 +486,7 @@ merged and deployed first; steps 8–10 as PR B (new sites appear, unpublished);
 
 - **T1 – Worker names:** `vomluchberg-dackel` / `vomluchberg-training` (fits the Wrangler-env
   fallback, which requires the `vomluchberg-` prefix) or `alltag-kann-sport`? Names only show in
-  `*.workers.dev` URLs until the domains exist. *(Assumption: `vomluchberg-` prefix.)*
+  `*.workers.dev` URLs until the domains exist. **Settled (R1): `vomluchberg-` prefix.**
 - **T2 – Editing UX:** OK that live preview only works in each site's own `/admin`? Alternative
   would be a separate "editor" worker that serves all three sites under path prefixes purely for
   preview – more moving parts, not recommended now. *(Assumption: per-site `/admin`.)*
@@ -495,8 +495,7 @@ merged and deployed first; steps 8–10 as PR B (new sites appear, unpublished);
 - **T4 – TinaCloud plan:** three domains + `workers.dev` URLs in one project's site URLs – any
   plan limit? Please check in the dashboard during step 12.
 - **T5 – Preview builds:** Workers Builds can build non-`main` branches as previews. Do we want
-  that for the new sites (Tina branch detection works via `WORKERS_CI_BRANCH`)? *(Assumption: not
-  now.)*
+  that for the new sites (Tina branch detection works via `WORKERS_CI_BRANCH`)? **Settled (R3): yes**, as `03-betrieb.md` O4 plans: preview build command `npm run build:local`, `SITE_NOINDEX=true`.
 - **T6 – Luchberg labels:** prefixing "Rottweiler · " changes what Karo sees in the sidebar from
   the first deploy of step 8. Announce it to her with the new sites, or hold step 8's label
   change back until the dachshund site goes live? *(Assumption: ship with PR B.)*
@@ -516,7 +515,7 @@ Run on a throwaway branch in a scratch worktree (deleted, nothing committed).
 | On-demand island route via `injectRoute` (dev) | ✅ `POST /tina-island/dackelPage?slug=ueber-uns` renders; `/tina-island/page` → `Unknown island "page"` (registry is per site) |
 | Tina router pointing to another origin | ❌ not supported (admin builds `#/~/<path>` on its own origin – `tinacms/dist/index.js`) |
 | Cloudflare adapter `configPath` per site | ✅ `dist/server/wrangler.json` `name: vomluchberg-dackel`; `wrangler deploy` picks it up via `.wrangler/deploy/config.json` |
-| Worker size (`wrangler deploy --dry-run`) | luchberg 4720 KiB / **998 KiB gzip**, dackel skeleton 4698 KiB / **995 KiB gzip** (limit 3 MiB gzip) |
+| Worker size (`wrangler deploy --dry-run`) | luchberg 4720 KiB / **998 KiB gzip**, dackel skeleton 4698 KiB / **995 KiB gzip** (limit at the time 3 MiB gzip; removed 2026-09-04) |
 | Per-site `public/` copied into build root in `astro:build:done` | ✅ (dev serving still needs a middleware – step 3) |
 | Pruning other sites' `uploads/<id>` in `astro:build:done` | ✅ works, but **not adopted** (2.4) |
 | Two `build:local` in parallel | ❌ "Datalayer server is busy on port 9000" → builds run sequentially |

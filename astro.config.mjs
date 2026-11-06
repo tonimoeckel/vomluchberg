@@ -37,9 +37,11 @@ function getSiteUrl() {
 // `@astrojs/markdown-remark` (Shiki) and the adapter's Prism loader. Their
 // ~240 languages, ~65 themes, the Oniguruma WASM and ~290 Prism components are
 // lazy `import()`s that are never called there (islands render Tina rich text,
-// not Markdown code blocks) but would still be uploaded, pushing the worker
-// towards the 3 MiB free-plan limit. All of them resolve to one empty module
-// in the `ssr` build only; prerendered pages and dev keep full highlighting.
+// not Markdown code blocks) but would still be uploaded with the worker.
+// (This was needed for the old 3 MiB gzip limit, which Cloudflare dropped on
+// 2026-09-04; only 64 MiB uncompressed counts now. A small worker still deploys
+// and starts faster.) All of them resolve to one empty module in the `ssr`
+// build only; prerendered pages and dev keep full highlighting.
 /** @returns {import('vite').Plugin} */
 function stubServerHighlighters() {
 	const STUB_ID = '\0luchberg:no-highlighter';

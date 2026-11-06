@@ -290,7 +290,7 @@ New domain is TBD (`alltag-kann-sport.de`?); paths below are relative to it. Bot
 | `/bewertungen`, `/s/karolin-riesing/bewertungen` | `/` |
 | `/book…`, `/s/karolin-riesing/book…` | `/anfrage`; with `?service=<uuid>` → `/anfrage?angebot=<slug>` (uuid → slug as above) |
 | `/s/karolin-riesing/kontakt` | `/anfrage` |
-| any other path under the tenant (`/profile`, `/buchungen`, unknown) | `/` |
+| any other storefront path | `/` (customer-account paths like `/profile/**`, `/login`, `/auth/**` go to the Pfotentermin platform instead, and `/buchungen/<id>` stays a private customer page: `03-betrieb.md` §6.3 is authoritative) |
 
 Pfotentermin legal pages for the tenant are 404 today; nothing to map. Also: Pfotentermin's own
 `sitemap.xml` lists 4 tenant URLs – remove them when the tenant is deactivated (slice 3).
