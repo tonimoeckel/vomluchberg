@@ -1,0 +1,7 @@
+{
+	// Worker of the training site. Picked by astro.config.mjs (configPath) when SITE_ID=training;
+	// the build writes dist/server/wrangler.json with this name, so `npx wrangler deploy` needs no --config.
+	"name": "vomluchberg-training",
+	"compatibility_date": "2026-06-01",
+	"compatibility_flags": ["nodejs_compat"]
+}

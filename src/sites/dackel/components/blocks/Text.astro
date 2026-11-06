@@ -1,0 +1,26 @@
+---
+// Skeleton text block (real design: slice 1).
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { BlockOf } from '../../lib/data';
+interface Props { data: BlockOf<'Text'> }
+const { data } = Astro.props;
+---
+<section class:list={['py-12 sm:py-16', data.hervorheben && 'bg-surface']}>
+	<div class:list={['container-page grid items-start gap-10', data.bild && 'lg:grid-cols-2']}>
+		<div class:list={[data.bild && data.bildPosition === 'links' && 'lg:order-2']}>
+			{data.ueberschrift && <h2 class="mb-6 text-3xl font-bold" data-tina-field={tinaField(data, 'ueberschrift')}>{data.ueberschrift}</h2>}
+			{data.inhalt && (
+				<div class="prose prose-lg prose-site" data-tina-field={tinaField(data, 'inhalt')}>
+					<TinaMarkdown content={data.inhalt} />
+				</div>
+			)}
+		</div>
+		{data.bild && (
+			<figure data-tina-field={tinaField(data, 'bild')}>
+				<img src={data.bild} alt={data.bildunterschrift ?? ''} loading="lazy" class="w-full rounded-card object-cover" />
+				{data.bildunterschrift && <figcaption class="mt-3 text-center text-sm text-muted" data-tina-field={tinaField(data, 'bildunterschrift')}>{data.bildunterschrift}</figcaption>}
+			</figure>
+		)}
+	</div>
+</section>

@@ -1,0 +1,17 @@
+{
+  "website": {
+    "name": "Alltag kann Sport",
+    "untertitel": "Hundetraining Karolin Riesing",
+    "beschreibung": "Alltag kann Sport – Hundetraining Karolin Riesing in Glashütte (Osterzgebirge, Sachsen)."
+  },
+  "kontakt": {
+    "name": "Karolin Riesing",
+    "ort": "Glashütte"
+  },
+  "nav": [
+    {
+      "titel": "Start",
+      "link": "/"
+    }
+  ]
+}

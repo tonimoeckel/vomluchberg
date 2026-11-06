@@ -8,6 +8,13 @@
 @source not '../../docs';
 @source not '../../migration';
 @source not '../../*.md';
+/* The other sites have their own stylesheets (src/sites/<id>/styles); their markup and content
+   must not add classes to this one. */
+@source not '../sites/dackel';
+@source not '../sites/training';
+@source not '../content/dackel';
+@source not '../content/training';
+@source not '../../tina/sites';
 
 /* ------------------------------------------------------------------
    Farbschemata

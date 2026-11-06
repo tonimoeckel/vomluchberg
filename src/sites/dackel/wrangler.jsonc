@@ -1,0 +1,7 @@
+{
+	// Worker of the dackel site. Picked by astro.config.mjs (configPath) when SITE_ID=dackel;
+	// the build writes dist/server/wrangler.json with this name, so `npx wrangler deploy` needs no --config.
+	"name": "vomluchberg-dackel",
+	"compatibility_date": "2026-06-01",
+	"compatibility_flags": ["nodejs_compat"]
+}

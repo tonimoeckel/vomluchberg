@@ -22,10 +22,10 @@ describe('adminSiteId', () => {
   });
 
   it('reads SITE_ID in Node and TINA_PUBLIC_SITE_ID (the admin bundle) first', () => {
-    setEnv('luchberg');
-    expect(adminSiteId()).toBe('luchberg');
-    setEnv('pudel', 'luchberg');
-    expect(adminSiteId()).toBe('luchberg');
+    setEnv('dackel');
+    expect(adminSiteId()).toBe('dackel');
+    setEnv('dackel', 'training');
+    expect(adminSiteId()).toBe('training');
   });
 
   it('fails on unknown ids', () => {
@@ -36,22 +36,29 @@ describe('adminSiteId', () => {
 
 describe('exposeSiteId', () => {
   it('copies the resolved SITE_ID to TINA_PUBLIC_SITE_ID (the only variables the admin bundle sees)', () => {
-    setEnv(' luchberg ');
+    setEnv(' training ');
     exposeSiteId();
-    expect(process.env.TINA_PUBLIC_SITE_ID).toBe('luchberg');
-    setEnv('', 'pudel');
+    expect(process.env.TINA_PUBLIC_SITE_ID).toBe('training');
+    setEnv('', 'dackel');
     exposeSiteId();
     expect(process.env.TINA_PUBLIC_SITE_ID).toBe('luchberg');
   });
 });
 
 describe('siteRouter', () => {
-  const router = siteRouter('luchberg', (d) => `/x/${d._sys.filename}`);
-  const document = { _sys: { filename: 'baja' } };
+  const router = siteRouter('dackel', (d) => `/x/${d._sys.filename}`);
+  const document = { _sys: { filename: 'hanni' } };
 
   it('routes in the admin of the owning site', () => {
+    setEnv('dackel');
+    expect(router({ document })).toBe('/x/hanni');
+  });
+
+  it('returns no preview path in other sites’ admins', () => {
     setEnv('luchberg');
-    expect(router({ document })).toBe('/x/baja');
+    expect(router({ document })).toBeUndefined();
+    setEnv(undefined, 'training');
+    expect(router({ document })).toBeUndefined();
   });
 });
 
