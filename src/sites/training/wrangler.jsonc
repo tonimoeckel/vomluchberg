@@ -3,5 +3,8 @@
 	// the build writes dist/server/wrangler.json with this name, so `npx wrangler deploy` needs no --config.
 	"name": "vomluchberg-training",
 	"compatibility_date": "2026-06-01",
-	"compatibility_flags": ["nodejs_compat"]
+	"compatibility_flags": ["nodejs_compat"],
+	// Worker Previews for non-production branches (Workers Builds, docs/plan/03-betrieb.md §3).
+	"previews": {},
+	"preview_urls": true
 }
