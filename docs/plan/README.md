@@ -66,6 +66,7 @@ few places. These rulings win over the slice files, which were updated to match:
 | R4 | Worker size | The compressed 3 MiB limit is gone (since 2026-09-04, 64 MiB uncompressed). Size notes in slice 0 and the comment in `astro.config.mjs` are updated. The highlighter stub stays, because it keeps the worker small. |
 | R5 | Reviews | No reviews on the training site (slice 2 T7, there are 0). Slice 3's question about taking over Pfotentermin reviews is removed. |
 | R6 | Pfotentermin redirect targets | Slice 2 §9 sets the paths: `/angebote`, `/angebote/<slug>`, `/anfrage?angebot=<slug>`, `/ueber-mich`. Slice 3 §6.3 adds the private customer paths, which stay on the platform. Draft tonimoeckel/pfotentermin#188 still maps `book` → `/kontakt` and every `services/*` → `/angebote`. It must be updated (P-08) before the flag is switched on. |
+| R7 | Per-site stylesheet | `src/sites/<id>/styles/global.css`, as in slice 0 step 9 (slices 1 and 2 had their own paths). |
 
 Slice 0's open questions for Toni (T1–T6) are now working assumptions: per-site `/admin` with
 live preview only for its own site (T2), no Windows support (T3), check the TinaCloud site URLs in

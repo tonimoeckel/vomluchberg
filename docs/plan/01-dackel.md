@@ -277,7 +277,7 @@ luchberg build before/after for tasks 1–3).
    move) photos to `public/uploads/dackel/` with readable names (`dackel-duo-bank.jpg`,
    `vater-steht-im-garten.jpg`, `welpe-mit-spielzeug-1.jpg` …) and alt texts. Never run
    `migration/migrate.py`.
-6. **Design tokens + base layout.** `src/sites/dackel/styles.css` (tokens light/dark, `@theme`,
+6. **Design tokens + base layout.** `src/sites/dackel/styles/global.css` (slice 0 step 9, R7) (tokens light/dark, `@theme`,
    utilities `container-page`, `btn*`, `arch`, `eyebrow`, `squiggle`, `prose-dackel`), Fontsource
    deps `@fontsource-variable/fraunces`, `@fontsource-variable/source-sans-3`; `Header`, `Footer`
    (with cross-link card), `BaseHead` data (theme-color `#f6f1e7` / `#14170f`, favicon from the

@@ -224,9 +224,12 @@ site is warm, round and gradient-heavy, this one is condensed, angular and calm.
   gradients, no glow.
 - **Photos**: Karo's real photos only, `object-fit: cover`; hero uses the walk on the field path
   (Alltag), the sport strip uses Hundeplatz photos (Sport) – the name in pictures.
+- **Motion**: none beyond hover states and the short highlight on the inquiry form (respects
+  reduced motion). Karo asked for a plain dachshund site without animation (D11); the training site
+  follows the same rule unless she says otherwise.
 - **Logo**: the PNG is only 332×200; looks fine at 52 px header height, but ask Karo for the
   vector/original for crisp rendering and a proper favicon set (`favicon.png` 512 px exists).
-- Implementation: tokens in `src/styles/sites/training.css` mapped onto the **same semantic Tailwind
+- Implementation: tokens in `src/sites/training/styles/global.css` (slice 0 step 9, R7) mapped onto the **same semantic Tailwind
   names** (`bg`, `surface`, `fg`, `muted`, `primary`, `primary-ink`, `accent`, …) so shared
   components keep working; training-only utilities (`lanes`, `bib`, `display`) as `@utility`.
 
@@ -246,7 +249,7 @@ output diffed against `main` where routes/shared components change.
 | 6 | Share the form submit script | `src/scripts/formular.ts`, `Kontakt.astro` uses it | Rottweiler contact form unchanged: manual test with and without `PUBLIC_WEB3FORMS_KEY` (mailto) |
 | 7 | Add inquiry form | `src/components/training/AnfrageFormular.astro`, used by `AnfrageBlock` and `AngebotBody` | Playwright smoke (manual or script): `/anfrage?angebot=welpenkurs` preselects; detail page preselects without JS; mailto fallback body contains all fields |
 | 8 | Training settings, header, footer | `tina/collections/training-config.ts`, `src/content/training/config/config.json`, `src/components/training/{Header,Footer}.astro` (or slice 0's per-site slots) | header/footer render from config; cross-link hint present |
-| 9 | Training design tokens + fonts | `src/styles/sites/training.css`, `package.json` (`@fontsource/barlow-condensed`), font imports in the training layout | contrast check (copper-ink on paper ≥ 4.5:1, white on copper ≥ 3:1 for large button text – use 800 weight), light + dark, 390 px / 1366 px screenshots, no horizontal overflow |
+| 9 | Training design tokens + fonts | `src/sites/training/styles/global.css` (slice 0 step 9, R7), `package.json` (`@fontsource/barlow-condensed`), font imports in the training layout | contrast check (copper-ink on paper ≥ 4.5:1, white on copper ≥ 3:1 for large button text – use 800 weight), light + dark, 390 px / 1366 px screenshots, no horizontal overflow |
 | 10 | Training pages | `src/content/training/seiten/{home,angebote,ueber-mich,anfrage,impressum,datenschutz}.md` | every page from §3 builds; texts match inventory; new copy marked in the PR for Karo |
 | 11 | SEO for training | per-site `BaseHead` data (favicon from `logo/favicon.png`, `theme-color #193450`, OG image), JSON-LD (`LocalBusiness`, `Service`), sitemap + robots via slice 0 | unit tests for JSON-LD builders; validate JSON-LD output in build HTML; sitemap lists 9 URLs |
 | 12 | Old-path redirects on the new site | per-site `redirects`: `/services` → `/angebote`, `/ueber-uns` → `/ueber-mich`, `/book` → `/anfrage`, `/bewertungen` → `/` | build output contains redirect pages |
