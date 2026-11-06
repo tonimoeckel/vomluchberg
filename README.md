@@ -1,6 +1,8 @@
-# Rottweiler vom Luchberg – vomluchberg.de
+# Rottweiler vom Luchberg – vomluchberg.de (+ two more sites)
 
-Website for Karo's ADRK Rottweiler kennel "vom Luchberg" (Glashütte OT Luchau).
+Website for Karo's ADRK Rottweiler kennel "vom Luchberg" (Glashütte OT Luchau). The same repo also builds Karo's
+**Rauhaardackel** site and her dog training site **"Alltag kann Sport"** (both skeletons for now, see [Multi-site](#multi-site)
+and [`docs/plan/`](docs/plan/README.md)).
 
 **Stack:** Astro 6 · Tailwind CSS 4 · TinaCMS / TinaCloud (visual editing via `@tinacms/astro`, no React on the site) · Cloudflare Workers (static assets, free tier)
 
@@ -20,20 +22,26 @@ npm run dev                  # site: http://localhost:4321  ·  CMS: http://loca
 
 | Script | What it does |
 | --- | --- |
-| `npm run dev` | Tina (local) + Astro dev server |
+| `npm run dev` | Tina (local) + Astro dev server (Rottweiler site) |
+| `npm run dev:dackel` / `dev:training` | Same for the dachshund / training site |
 | `npm run build` | Production build against TinaCloud (needs `PUBLIC_TINA_CLIENT_ID` + `TINA_TOKEN`) |
 | `npm run build:local` | Offline build without TinaCloud (CI checks, previews) |
+| `npm run build:local:dackel` / `:training` / `:all` | Offline build of another site / of all three, one after another |
+| `npm test` | Unit tests (domain rules, site registry, Tina schema rules) |
 | `npx astro check` | Type check |
 
 ## Content model (what Karo can edit)
 
 | Tina collection | Files | Route | Notes |
 | --- | --- | --- | --- |
-| **Seiten** | `src/content/seiten/*.md` | `/`, `/zucht`, `/hunde`, … | Pages are built from blocks (see below) |
-| **Unsere Hunde** | `src/content/hunde/*.md` | `/hunde/[slug]` | Category: Unsere Rottweiler · Aufzucht · Weitere Rudelmitglieder · In Erinnerung |
-| **Würfe** | `src/content/wuerfe/*.md` | `/wuerfe/[slug]` | Status: geplant / aktuell / vergangen, puppies list, gallery |
-| **Aktuelles** | `src/content/aktuelles/*.md` | `/aktuelles/[slug]` | News / blog posts |
-| **Einstellungen** | `src/content/config/config.json` | global | Name, logo, **colour scheme**, contact data, social links, menu |
+| **Rottweiler · Seiten** | `src/content/seiten/*.md` | `/`, `/zucht`, `/hunde`, … | Pages are built from blocks (see below) |
+| **Rottweiler · Unsere Hunde** | `src/content/hunde/*.md` | `/hunde/[slug]` | Category: Unsere Rottweiler · Aufzucht · Weitere Rudelmitglieder · In Erinnerung |
+| **Rottweiler · Würfe** | `src/content/wuerfe/*.md` | `/wuerfe/[slug]` | Status: geplant / aktuell / vergangen, puppies list, gallery |
+| **Rottweiler · Aktuelles** | `src/content/aktuelles/*.md` | `/aktuelles/[slug]` | News / blog posts |
+| **Rottweiler · Einstellungen** | `src/content/config/config.json` | global | Name, logo, **colour scheme**, contact data, social links, menu |
+
+The other two sites have their own collections (`Dackel · …`, `Training · …`) under `src/content/dackel/` and
+`src/content/training/`. All collections share one Tina schema and one login.
 
 **Page blocks** (`tina/blocks/index.ts` ↔ `src/components/blocks/*`): Hero · Text (with image) · Highlights · Galerie · Hunde‑Übersicht (auto) · Würfe‑Übersicht (auto) · Aktuelles (auto) · CTA · Kontakt + Formular.
 
@@ -71,6 +79,34 @@ The site builds to static HTML; only `/tina-island` runs on demand. `astro.confi
 5. Custom domain: see [`docs/domain-umzug.md`](docs/domain-umzug.md).
 
 **Contact form:** create a free access key at [web3forms.com](https://web3forms.com) with Karo's e-mail address, then set `PUBLIC_WEB3FORMS_KEY`. Without a key, the form opens the visitor's mail app. Mention the form provider in the privacy policy.
+
+## Multi-site
+
+One Astro project, three websites. `SITE_ID` picks the site at build time; each site is its own Cloudflare Worker.
+
+| Site | `SITE_ID` | Worker | Wrangler file | Code / content / images |
+| --- | --- | --- | --- | --- |
+| Rottweiler (vomluchberg.de) | `luchberg` (default) | `vomluchberg` | `wrangler.jsonc` | `src/sites/luchberg/` + legacy `src/components`, `src/lib`, `src/content/{seiten,hunde,wuerfe,aktuelles,config}`, `public/uploads/*` |
+| Rauhaardackel | `dackel` | `vomluchberg-dackel` | `src/sites/dackel/wrangler.jsonc` | `src/sites/dackel/`, `src/content/dackel/`, `public/uploads/dackel/` |
+| Alltag kann Sport (training) | `training` | `vomluchberg-training` | `src/sites/training/wrangler.jsonc` | `src/sites/training/`, `src/content/training/`, `public/uploads/training/` |
+
+All three workers: root directory `/`, branch `main`, build command `npm run build`, deploy command
+`npx wrangler deploy` (the build points Wrangler at the right worker), preview build command `npm run build:local`.
+Build variables per worker: `SITE_ID`, `SITE_URL`, the same Tina credentials, its own `PUBLIC_WEB3FORMS_KEY`, and
+`SITE_NOINDEX=true` until the site has its domain. Preview builds of other branches are noindex automatically.
+
+**Build watch paths** (exclude list; everything else rebuilds all three, `tina/**` always does):
+
+| Worker | Exclude |
+| --- | --- |
+| `vomluchberg` | `src/content/dackel/*`, `src/content/training/*`, `public/uploads/dackel/*`, `public/uploads/training/*`, `src/sites/dackel/*`, `src/sites/training/*`, `docs/*`, `migration/*`, `*.md` |
+| `vomluchberg-dackel` | `src/content/{seiten,hunde,wuerfe,aktuelles,config,training}/*`, `public/uploads/training/*`, `src/sites/luchberg/*`, `src/sites/training/*`, `docs/*`, `migration/*`, `*.md` |
+| `vomluchberg-training` | `src/content/{seiten,hunde,wuerfe,aktuelles,config,dackel}/*`, `public/uploads/dackel/*`, `src/sites/luchberg/*`, `src/sites/dackel/*`, `docs/*`, `migration/*`, `*.md` |
+
+The Rottweiler upload folders are not excluded for the other workers, because every worker ships all of
+`public/uploads` (no per-site pruning). Write `{a,b}` as separate entries if the dashboard does not accept braces. Details and the setup steps:
+[`docs/plan/03-betrieb.md`](docs/plan/03-betrieb.md) §3. Each site's `/admin` shows a live preview only for that site;
+the other sites' documents can still be edited there as forms.
 
 ## Migration from the old site
 
