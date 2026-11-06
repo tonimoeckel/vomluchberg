@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rauhaardackel vom Luchberg – Entwurf H „Schabernack“</title>
+<meta name="description" content="Standard-Rauhaardackel aus Glashütte OT Luchau (Sachsen): mit Familienanschluss im Rudel aufgewachsen, mit Blick auf Gesundheit und Wesen. Anfragen nehmen wir gern entgegen.">
+<!--
+  Design mockup for slice 1 (docs/plan/01-dackel.md), H "Schabernack": humour without a game,
+  woven into the normal scroll path (same layout and calm palette as G).
+  1. Stretch gag: between "Was uns wichtig ist" and "Unsere Dackel" the page seems to stop (a sticky
+     stage, ~1.6 screen heights of scrolling). The front of the dachshund walks on with the scroll, the
+     rear is still busy at a tree (leg lifted), so the body gets longer and longer ("Länge: 3,1 Dackel").
+     At the end it snaps back ("Boing!") and he has a good stretch (play bow + yawn), then the page moves on.
+  2. Barking: peeking dogs say hello on the cards, the dog at the letterbox barks when the contact
+     section comes into view and points at the buttons on hover/focus. Click any small dog: "Wuff!".
+  3. Tug-of-war ("Zergeln"): in the puppy section you can grab the rope knot; the puppy pulls back,
+     shakes his head and growls. Button "Mitzerren" does the same for keyboard users.
+  4. Page end: a dog sleeps on a cushion and wakes up (stretch + "Schon unten?") when you arrive.
+  Accessibility: everything is decorative (aria-hidden) except the buttons; with prefers-reduced-motion
+  or "Animationen pausieren" the stage does not pin, the long dog is shown still. No sound.
+  Our own drawn dachshund (same SVG as F/G), no external requests.
+-->
+<!--
+  Design mockup for slice 1 (docs/plan/01-dackel.md), G "Leckerli-Suche": a small game prototype
+  built on top of F "Dackelparade" (same layout, calmer palette: petrol instead of tomato red).
+  Game: switch on "Leckerli verteilen", click/tap anywhere on the page to drop a treat (max. 3 at a
+  time, 6 per day). The dachshund trots over (speed ramps up and down, legs move in diagonal pairs),
+  sniffs the last stretch (nose down, zigzag) and eats it. If the treat is far away or on another
+  level of the page, he digs a hole, dives in head first and pops out of a fresh hole next to the
+  treat (nose first, then shakes off the earth); sometimes at the wrong spot first ("Huch?").
+  After 6 treats he turns once, lies down and sleeps; the count is stored per day in localStorage
+  (no cookies, no server).
+  Accessibility: the game is optional (off until the button is pressed), links/buttons keep working,
+  all game graphics are aria-hidden, the status line is aria-live. With prefers-reduced-motion or
+  "Animationen pausieren" the dog does not run or dig: he fades out and appears next to the treat.
+  Self-contained: no external requests. Real site: Astro component + one small script island.
+-->
+<style>
+:root {
+	--bg: #fff8e8;
+	--card: #ffffff;
+	--yellow: #f6d77a;
+	--mint: #bfe8c9;
+	--sky: #c9dcff;
+	--fg: #1e1b33;
+	--muted: #545069;
+	--muted-y: #4a4660;
+	--line: #1e1b33;
+	--primary: #23606b;     /* petrol */
+	--on-primary: #ffffff;
+	--blue: #1f4e8c;
+	--dark: #1e1b33;
+	--on-dark: #fff8e8;
+	--grass: #5aa84f;
+	--grass-2: #3f8f3a;
+	--shadow: 5px 5px 0 var(--line);
+	--fell: #7d5c3f; --fell-d: #4b3624; --bart: #b39876;
+	--font-display: 'Fredoka Variable', 'Fredoka', ui-rounded, 'SF Pro Rounded', 'Arial Rounded MT Bold', system-ui, sans-serif;
+	--font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme='light']) {
+		--bg: #15132a; --card: #232040; --yellow: #3d3212; --mint: #1d3b2a; --sky: #1f2c4d;
+		--fg: #f7f1e3; --muted: #bab4cf; --muted-y: #d9cfb0; --line: #0a0918; --primary: #8ccfd6; --on-primary: #15132a;
+		--blue: #8fb6ff; --dark: #0d0c1c; --on-dark: #f7f1e3; --grass: #2f6b33; --grass-2: #24552a;
+		--shadow: 5px 5px 0 #000;
+	}
+}
+:root[data-theme='dark'] {
+	--bg: #15132a; --card: #232040; --yellow: #3d3212; --mint: #1d3b2a; --sky: #1f2c4d;
+	--fg: #f7f1e3; --muted: #bab4cf; --muted-y: #d9cfb0; --line: #0a0918; --primary: #8ccfd6; --on-primary: #15132a;
+	--blue: #8fb6ff; --dark: #0d0c1c; --on-dark: #f7f1e3; --grass: #2f6b33; --grass-2: #24552a;
+	--shadow: 5px 5px 0 #000;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 1.0625rem/1.65 var(--font-body); overflow-x: hidden; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.08; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+ul { list-style: none; margin: 0; padding: 0; }
+.wrap { width: min(1180px, 100% - 2rem); margin-inline: auto; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; border-radius: 6px; }
+
+/* review bar */
+.entwurf { background: var(--dark); color: var(--on-dark); font-size: .85rem; padding: .45rem 1rem; display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; justify-content: center; text-align: center; }
+.entwurf button { font: inherit; background: transparent; color: inherit; border: 1px solid currentColor; border-radius: 999px; padding: .1rem .7rem; cursor: pointer; }
+.todo { background: #fde68a; color: #3b2f05; padding: 0 .3em; border-radius: 4px; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; gap: .5rem; font: 600 1.02rem/1 var(--font-display); text-decoration: none; padding: .85rem 1.3rem; border-radius: 14px; border: 2.5px solid var(--line); box-shadow: 4px 4px 0 var(--line); transition: transform .15s, box-shadow .15s; cursor: pointer; }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--line); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--line); }
+.btn-primary { background: var(--primary); color: var(--on-primary); }
+.btn-plain { background: var(--card); color: var(--fg); }
+.kicker { font: 600 .82rem/1.2 var(--font-body); text-transform: uppercase; letter-spacing: .12em; color: var(--primary); }
+.sticker { background: var(--card); border: 2.5px solid var(--line); border-radius: 22px; box-shadow: var(--shadow); }
+
+/* header */
+header.site { position: sticky; top: 0; z-index: 30; background: var(--bg); border-bottom: 2.5px solid var(--line); }
+header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .7rem 0; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
+.brand .dk { width: 64px; }
+.brand b { font: 700 1.2rem/1 var(--font-display); display: block; }
+.brand small { font-size: .78rem; color: var(--muted); }
+nav ul { display: flex; flex-wrap: wrap; gap: .35rem; }
+nav a { display: block; text-decoration: none; font: 600 .95rem/1 var(--font-display); padding: .55rem .85rem; border-radius: 999px; border: 2px solid transparent; }
+nav a:hover { border-color: var(--line); }
+nav a[aria-current='page'] { background: var(--yellow); border-color: var(--line); }
+.motion-btn { font: 600 .82rem/1 var(--font-body); background: var(--card); color: var(--fg); border: 2px solid var(--line); border-radius: 999px; padding: .5rem .8rem; cursor: pointer; display: inline-flex; gap: .4rem; align-items: center; }
+.motion-btn svg { width: 14px; height: 14px; }
+.track { position: relative; height: 34px; border-top: 2px dashed color-mix(in srgb, var(--line) 25%, transparent); }
+.track .dk { position: absolute; bottom: 2px; width: 58px; left: calc(var(--p, 0) * (100% - 58px)); transition: left .08s linear; }
+.track .bone { position: absolute; right: 8px; bottom: 6px; width: 26px; color: var(--muted); }
+@media (max-width: 760px) { header.site { position: static; } nav { order: 3; width: 100%; } nav ul { justify-content: center; } }
+
+/* ---------- dachshund (generated by JS into [data-dackel]) ----------
+   All pivots are given in SVG user units (transform-box: view-box), so parts rotate around the
+   hip / neck / tail root and never drift apart. Neighbouring shapes of one colour always overlap
+   (no touching edges = no anti-aliasing seams). */
+.dk { display: inline-block; line-height: 0; position: relative; }
+.dk svg { width: 100%; height: auto; overflow: visible; }
+.dk.flip svg { transform: scaleX(-1); }
+.dk .leg, .dk .tail, .dk .ear, .dk .head, .dk .all { transform-box: view-box; }
+.dk .all { transform-origin: 110px 88px; }
+.dk .tail { animation: wag .45s ease-in-out infinite alternate; }
+.dk .head { animation: tilt 7s ease-in-out infinite; }
+.dk .auge { transform-box: fill-box; transform-origin: 50% 50%; animation: blink 5s infinite; }
+.dk .zunge, .dk .lid { display: none; }
+/* trot: diagonal pairs (rear-far + front-near, rear-near + front-far), stance slow, swing fast + lifted */
+.dk.run { --T: .34s; } .dk.walk { --T: .62s; }
+.dk:is(.run, .walk) .leg, html.scrolling .dk.scrolly .leg { animation: schritt var(--T, .34s) infinite; }
+.dk:is(.run, .walk) :is(.l1, .l4), html.scrolling .dk.scrolly :is(.l1, .l4) { animation-delay: calc(var(--T, .34s) * -.5); }
+.dk:is(.run, .walk) .all, html.scrolling .dk.scrolly .all { animation: bob calc(var(--T, .34s) / 4) ease-in-out infinite alternate; }
+.dk.run .ear, html.scrolling .dk.scrolly .ear { animation: flap calc(var(--T, .34s) / 2) ease-in-out infinite alternate; }
+.dk.hop svg { animation: hop .5s cubic-bezier(.3,1.6,.6,1); }
+@keyframes schritt {
+	0% { transform: rotate(-22deg); animation-timing-function: linear; }
+	60% { transform: rotate(20deg); animation-timing-function: ease-out; }
+	80% { transform: translateY(-5px) rotate(-4deg); animation-timing-function: ease-in; }
+	100% { transform: rotate(-22deg); }
+}
+@keyframes bob { from { transform: translateY(0); } to { transform: translateY(-2.5px); } }
+@keyframes wag { from { transform: rotate(-10deg); } to { transform: rotate(14deg); } }
+@keyframes flap { from { transform: rotate(2deg); } to { transform: rotate(22deg); } }
+@keyframes tilt { 0%, 78%, 100% { transform: rotate(0); } 84%, 90% { transform: rotate(-7deg); } }
+@keyframes blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.12); } }
+@keyframes hop { 0% { translate: 0 0; } 40% { translate: 0 -30px; } 100% { translate: 0 0; } }
+.fell-grau { --fell: #8a827a; --fell-d: #5c554f; --bart: #c4bdb4; }
+.fell-rot { --fell: #a8653a; --fell-d: #74401f; --bart: #d2a27a; }
+.fell-dunkel { --fell: #5f4a3a; --fell-d: #3b2c21; --bart: #a8927a; }
+.bubble { position: absolute; bottom: 100%; left: 50%; translate: -50% -4px; background: var(--card); color: var(--fg); border: 2.5px solid var(--line); border-radius: 14px; padding: .25rem .6rem; font: 700 1rem/1.2 var(--font-display); white-space: nowrap; pointer-events: none; animation: pop 1.4s ease-out forwards; }
+@keyframes pop { 0% { opacity: 0; scale: .5; } 15% { opacity: 1; scale: 1.08; } 25% { scale: 1; } 80% { opacity: 1; } 100% { opacity: 0; translate: -50% -18px; } }
+
+/* hero bento */
+.hero { padding: clamp(1.5rem, 4vw, 3rem) 0 0; }
+.bento { display: grid; gap: 1.1rem; grid-template-columns: 1.45fr 1fr .85fr; grid-template-areas: "intro photo quote" "intro photo call"; }
+.b-intro { grid-area: intro; padding: clamp(1.4rem, 3.5vw, 2.6rem); background: var(--card); }
+.b-intro h1 { font-size: clamp(2.4rem, 5vw, 3.9rem); font-weight: 700; margin: .7rem 0 1rem; }
+.b-intro h1 .wiggle { display: inline-block; color: var(--primary); animation: wiggle 2.6s ease-in-out infinite; transform-origin: 50% 80%; }
+@keyframes wiggle { 0%, 70%, 100% { transform: rotate(0); } 75% { transform: rotate(-6deg); } 82% { transform: rotate(5deg); } 89% { transform: rotate(-3deg); } }
+.b-intro .lead { color: var(--muted); font-size: 1.12rem; max-width: 34rem; }
+.b-intro .ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
+.b-photo { grid-area: photo; overflow: hidden; position: relative; padding: 0; min-height: 360px; rotate: 1.2deg; }
+.b-photo img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+.b-photo .tag { position: absolute; left: 14px; bottom: 14px; background: var(--yellow); color: var(--fg); border: 2.5px solid var(--line); border-radius: 999px; padding: .25rem .8rem; font: 700 .95rem/1.3 var(--font-display); }
+.b-quote { grid-area: quote; background: var(--yellow); padding: 1.3rem 1.3rem 1.1rem; rotate: -1.6deg; display: flex; flex-direction: column; justify-content: space-between; gap: .8rem; }
+.b-quote p { font: 700 1.45rem/1.15 var(--font-display); }
+.b-quote small { color: var(--muted-y); font-size: .88rem; }
+.b-call { grid-area: call; background: var(--sky); padding: 1.2rem; display: flex; flex-direction: column; gap: .7rem; justify-content: space-between; }
+.b-call p { font: 600 1.05rem/1.3 var(--font-display); }
+.b-call .btn { justify-content: center; }
+@media (max-width: 980px) { .bento { grid-template-columns: 1fr 1fr; grid-template-areas: "intro intro" "photo quote" "photo call"; } }
+@media (max-width: 560px) { .bento { grid-template-columns: 1fr; grid-template-areas: "intro" "photo" "quote" "call"; } .b-photo { min-height: 340px; } }
+
+/* meadow strip: the game dog lives here */
+.wiese { position: relative; height: 130px; margin-top: 1.6rem; overflow: hidden; }
+.wiese .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 34px; background: var(--grass); border-top: 2.5px solid var(--line); }
+.wiese .ground::before { content: ''; position: absolute; left: 0; right: 0; top: -12px; height: 12px; background: radial-gradient(circle at 6px 12px, var(--grass) 6px, transparent 6.5px) 0 0 / 12px 12px repeat-x; }
+.wiese .blume { position: absolute; bottom: 30px; width: 22px; }
+/* sections */
+section { padding: clamp(3rem, 7vw, 5.5rem) 0; }
+.sec-head { max-width: 46rem; margin-bottom: 2.2rem; }
+.sec-head h2 { font-size: clamp(2rem, 4.6vw, 3.1rem); margin: .5rem 0 .8rem; }
+.sec-head p { color: var(--muted); font-size: 1.1rem; }
+
+.werte { display: grid; gap: 1.2rem; grid-template-columns: repeat(3, 1fr); }
+.wert { padding: 1.6rem; transition: rotate .25s, translate .25s; }
+.wert:nth-child(1) { background: var(--mint); rotate: -1deg; }
+.wert:nth-child(2) { background: var(--card); rotate: .8deg; }
+.wert:nth-child(3) { background: var(--sky); rotate: -.5deg; }
+.wert:hover { rotate: 0deg; translate: 0 -4px; }
+.wert .ico { width: 56px; height: 56px; display: grid; place-items: center; border-radius: 16px; background: var(--yellow); border: 2.5px solid var(--line); margin-bottom: 1rem; }
+.wert .ico svg { width: 28px; height: 28px; }
+.wert h3 { font-size: 1.4rem; margin-bottom: .5rem; }
+.wert p { color: var(--muted); }
+@media (max-width: 860px) { .werte { grid-template-columns: 1fr; } }
+
+
+/* dog cards */
+.hunde { display: grid; gap: 2.2rem 1.4rem; grid-template-columns: repeat(3, 1fr); padding-top: 2.6rem; }
+.hund { position: relative; isolation: isolate; text-decoration: none; display: block; }
+.hund .peek { position: absolute; z-index: 0; right: 22px; top: -62px; width: 130px; transform: translateY(46px); transition: transform .35s cubic-bezier(.3,1.5,.6,1); }
+.hund:nth-child(2) .peek { left: 22px; right: auto; }
+.hund:hover .peek, .hund:focus-visible .peek { transform: translateY(0); }
+.hund .inner { position: relative; z-index: 1; overflow: hidden; transition: translate .2s, box-shadow .2s; }
+.hund:hover .inner { translate: -2px -2px; box-shadow: 7px 7px 0 var(--line); }
+.hund img { aspect-ratio: 4/3; object-fit: cover; width: 100%; border-bottom: 2.5px solid var(--line); }
+.hund .info { padding: 1rem 1.2rem 1.2rem; }
+.hund .info b { font: 700 1.3rem/1.2 var(--font-display); display: block; }
+.hund .meta { color: var(--muted); font-size: .95rem; margin-top: .2rem; }
+@media (hover: none) { .hund .peek { transform: translateY(0); } }
+@media (max-width: 860px) { .hunde { grid-template-columns: 1fr; max-width: 520px; } }
+
+/* welpen */
+.welpen { background: var(--yellow); border-block: 2.5px solid var(--line); padding-top: 0; }
+.band { background: var(--dark); color: var(--on-dark); overflow: hidden; border-bottom: 2.5px solid var(--line); margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+.band .lauf { display: flex; width: max-content; animation: lauf 26s linear infinite; }
+.band span { font: 700 1.25rem/1 var(--font-display); padding: .9rem 1.2rem; white-space: nowrap; display: inline-flex; gap: .9rem; align-items: center; }
+.band span svg { width: 22px; height: 22px; color: var(--yellow); }
+@keyframes lauf { to { transform: translateX(-50%); } }
+.welpen .grid { display: grid; gap: 2.2rem; grid-template-columns: 1fr 1fr; align-items: center; }
+.welpen .sec-head p, .welpen .sec-head .kicker { color: var(--muted-y); }
+.welpen dl { margin: 0 0 1.6rem; display: grid; gap: .6rem; }
+.welpen dl div { display: flex; gap: 1rem; justify-content: space-between; padding: .7rem 1rem; background: var(--card); border: 2.5px solid var(--line); border-radius: 14px; }
+.welpen dt { font-weight: 700; }
+.wurfkiste { position: relative; height: 210px; background: var(--mint); overflow: hidden; }
+.wurfkiste .label { position: absolute; left: 14px; top: 12px; font: 700 .95rem/1 var(--font-display); color: var(--fg); background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: .35rem .7rem; }
+.wurfkiste .decke { position: absolute; left: 12%; right: 12%; bottom: 18px; height: 34px; border-radius: 50%; background: repeating-linear-gradient(90deg, #d9e7e3 0 14px, #fbf3e2 14px 28px); border: 2.5px solid var(--line); opacity: .9; }
+.welpe { position: absolute; bottom: 30px; width: 92px; }
+.welpe .dk { width: 92px; }
+.welpe.w1 { animation: kiste 9s linear infinite; }
+.welpe.w2 { animation: kiste 12s linear infinite -4s; bottom: 46px; z-index: -0; }
+.welpe.w3 { animation: kiste 7s linear infinite -2s; bottom: 22px; }
+@keyframes kiste {
+	0% { left: 4%; transform: scaleX(1); }
+	45% { left: calc(96% - 92px); transform: scaleX(1); }
+	50% { left: calc(96% - 92px); transform: scaleX(-1); }
+	95% { left: 4%; transform: scaleX(-1); }
+	100% { left: 4%; transform: scaleX(1); }
+}
+.welpen .fotos { display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem; margin-top: 1rem; }
+.welpen .fotos img { aspect-ratio: 1; object-fit: cover; border: 2.5px solid var(--line); border-radius: 16px; }
+.welpen .fotos img:nth-child(odd) { rotate: -2deg; } .welpen .fotos img:nth-child(even) { rotate: 2deg; }
+@media (max-width: 860px) { .welpen .grid { grid-template-columns: 1fr; } }
+
+/* about */
+.about { display: grid; gap: 2.4rem; grid-template-columns: .9fr 1.1fr; align-items: center; }
+.about figure { margin: 0; overflow: hidden; position: relative; rotate: -1.5deg; }
+.about figure img { aspect-ratio: 4/3; object-fit: cover; width: 100%; }
+.about figcaption { position: absolute; right: 12px; bottom: 12px; background: var(--card); border: 2.5px solid var(--line); border-radius: 999px; padding: .25rem .8rem; font: 700 .9rem/1.3 var(--font-display); }
+.about h2 { font-size: clamp(2rem, 4.4vw, 2.9rem); margin: .5rem 0 1rem; }
+.about p { color: var(--muted); font-size: 1.1rem; }
+.about .more { display: inline-block; margin-top: 1.2rem; font: 700 1.05rem/1.2 var(--font-display); color: var(--primary); }
+@media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+
+/* contact */
+.kontakt .box { background: var(--sky); padding: clamp(1.6rem, 4vw, 3rem); display: grid; gap: 1.5rem; grid-template-columns: 1fr auto; align-items: end; position: relative; }
+.kontakt h2 { font-size: clamp(2rem, 4.6vw, 3rem); margin: .5rem 0 .8rem; }
+.kontakt p { color: var(--muted); font-size: 1.1rem; max-width: 40rem; }
+.kontakt .ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+.kontakt .warten { width: 190px; text-align: center; }
+.kontakt .warten small { display: block; font: 600 .9rem/1.3 var(--font-display); color: var(--muted); margin-top: .3rem; }
+@media (max-width: 760px) { .kontakt .box { grid-template-columns: 1fr; } .kontakt .warten { justify-self: center; } }
+
+/* footer */
+footer { background: var(--dark); color: var(--on-dark); padding: 3rem 0 2rem; margin-top: clamp(3rem, 7vw, 5rem); }
+footer .cols { display: grid; gap: 2rem; grid-template-columns: 1.3fr 1fr 1.4fr; }
+footer h2 { font-size: 1.1rem; margin-bottom: .8rem; }
+footer p, footer li { font-size: .95rem; opacity: .9; }
+footer li + li { margin-top: .35rem; }
+footer a { text-decoration: none; } footer a:hover { text-decoration: underline; }
+footer .hinweis { display: flex; gap: .9rem; align-items: center; }
+footer .hinweis img { width: 72px; height: 72px; object-fit: cover; border-radius: 14px; border: 2px solid var(--on-dark); flex: none; }
+footer .legal { border-top: 1px solid rgb(255 248 232 / .18); margin-top: 2.4rem; padding-top: 1.2rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .75rem; font-size: .85rem; opacity: .8; }
+footer .legal ul { display: flex; gap: 1.2rem; }
+@media (max-width: 860px) { footer .cols { grid-template-columns: 1fr; } }
+
+
+/* ---------- H: humour along the scroll path ---------- */
+.dk-klick { cursor: pointer; }
+/* poses on a .dk (full dog) */
+.dk.schnueffelt .head { animation: sniff .22s ease-in-out infinite alternate; }
+@keyframes sniff { from { transform: rotate(14deg); } to { transform: rotate(20deg); } }
+.dk.freut .tail { animation-duration: .12s; }
+.dk.freut .zunge { display: inline; }
+.dk.schlaeft .lid { display: inline; }
+.dk.schlaeft .auge { display: none; }
+.dk.schlaeft .all { animation: atmen 3.4s ease-in-out infinite; }
+.dk.schlaeft .leg { animation: none; opacity: 0; }
+.dk.schlaeft .l4 { opacity: 1; transform: translate(10px, 9px) rotate(-90deg); }
+.dk.schlaeft .head { animation: none; transform: translateY(2px) rotate(13deg); }
+.dk.schlaeft .tail { animation: none; transform: rotate(-62deg); }
+@keyframes atmen { 0%, 100% { transform: translateY(14px) scaleY(1); } 50% { transform: translateY(14px) scaleY(1.035); } }
+/* the stretch (play bow): chest down, bottom up, front paws forward, a big yawn */
+.dk.streckt .all { animation: bow-all 2.4s ease-in-out both; transform-origin: 60px 88px; }
+.dk.streckt :is(.l3, .l4) { animation: bow-vorn 2.4s ease-in-out both; }
+.dk.streckt :is(.l1, .l2) { animation: bow-hinten 2.4s ease-in-out both; }
+.dk.streckt .head { animation: bow-kopf 2.4s ease-in-out both; }
+.dk.streckt .zunge { display: inline; animation: gaehnen 2.4s ease-in-out both; transform-box: fill-box; transform-origin: 50% 0; }
+.dk.streckt .tail { animation-duration: .2s; }
+@keyframes bow-all { 0%, 100% { transform: rotate(0); } 22%, 72% { transform: rotate(9deg); } }
+@keyframes bow-vorn { 0%, 100% { transform: rotate(0); } 22%, 72% { transform: rotate(-80deg); } }
+@keyframes bow-hinten { 0%, 100% { transform: rotate(0); } 22%, 72% { transform: rotate(-9deg); } }
+@keyframes bow-kopf { 0%, 18%, 100% { transform: rotate(0); } 32%, 60% { transform: rotate(-24deg); } 72% { transform: rotate(-6deg); } }
+@keyframes gaehnen { 0%, 26%, 66%, 100% { transform: scaleY(0); } 36%, 56% { transform: scaleY(1.5); } }
+/* bark: short hop + head up */
+.dk.bellt .head { animation: bellen .18s ease-out 2 alternate; }
+@keyframes bellen { from { transform: rotate(0); } to { transform: rotate(-12deg); } }
+
+/* 1) Stretch gag: the page "stops" (sticky stage) while the front walks on and the rear is still busy at the tree */
+.dehnung { --h: clamp(86px, 13vw, 150px); position: relative; height: 260vh; }
+.dehnung .buehne { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: grid; align-content: center; gap: 1.4rem; }
+.dehnung .kopfzeile { text-align: center; padding-inline: 1rem; min-height: 3.6em; display: grid; align-content: end; }
+.dehnung .kopfzeile p { font: 700 clamp(1.3rem, 3vw, 2rem)/1.2 var(--font-display); text-wrap: balance; }
+.dehnung .kopfzeile small { color: var(--muted); font-size: 1rem; display: block; margin-top: .3rem; }
+.dehnung .strecke { position: relative; height: calc(var(--h) * 1.25); }
+.dehnung .boden { position: absolute; left: 0; right: 0; top: calc(var(--h) * .86); height: 34px; background: var(--grass); border-top: 2.5px solid var(--line); }
+.dehnung .baum { position: absolute; width: calc(var(--h) * 1.05); bottom: calc(100% - var(--h) * .9); line-height: 0; }
+.dehnung .baum svg { width: 100%; height: auto; overflow: visible; }
+.dehnung :is(.hinten, .vorn, .ganz) { position: absolute; top: 0; width: var(--h); }
+.dehnung .ganz { width: calc(var(--h) * 2.2); visibility: hidden; }
+.dehnung .mitte { position: absolute; top: calc(var(--h) * .34); height: calc(var(--h) * .36); background: var(--fell); }
+.dehnung.gespannt .strecke { animation: zittern .09s linear infinite; }
+@keyframes zittern { 0%, 100% { translate: 0 0; } 50% { translate: 0 1px; } }
+/* leg lift at the tree (rear near leg), and a modest little stream */
+.dehnung .hinten.pinkelt .l2 { animation: none; transform: translate(-2px, 2px) rotate(96deg); }
+.dehnung .hinten.pinkelt .l2 > * { fill: var(--fell-d); }
+.dehnung .hinten.pinkelt .all { transform: rotate(-3deg); }
+.dehnung .tropfen { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.dehnung .tropfen i { position: absolute; width: 5px; height: 6px; border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: #e9cf55; offset-path: var(--bahn); animation: tropf .7s linear infinite; opacity: 0; }
+.dehnung .tropfen i:nth-child(2) { animation-delay: -.23s; } .dehnung .tropfen i:nth-child(3) { animation-delay: -.46s; }
+@keyframes tropf { 0% { offset-distance: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+.dehnung .pfuetze { position: absolute; height: 7px; border-radius: 50%; background: #e9cf55; opacity: .75; width: 0; transition: width .3s; }
+.dehnung .boing { position: absolute; font: 700 clamp(1.4rem, 3.5vw, 2.4rem)/1 var(--font-display); color: var(--primary); pointer-events: none; }
+.dehnung .meter { position: absolute; right: max(16px, env(safe-area-inset-right, 0px)); top: calc(var(--h) * 1.02); font: 600 .9rem/1 var(--font-body); color: var(--muted); background: var(--card); border: 2px solid var(--line); border-radius: 999px; padding: .3rem .7rem; }
+.dehnung .weiter { justify-self: center; font: 600 .95rem/1.2 var(--font-body); color: var(--muted); display: flex; gap: .5rem; align-items: center; }
+.dehnung .weiter svg { width: 18px; height: 18px; animation: runter 1.2s ease-in-out infinite; }
+@keyframes runter { 50% { translate: 0 5px; } }
+html.motion-off .dehnung { height: auto; }
+html.motion-off .dehnung .buehne { position: static; height: auto; padding-block: 3rem; }
+html.motion-off .dehnung .weiter { display: none; }
+
+/* 2) Barking: dogs that react to the reader */
+.post { position: relative; width: 230px; display: flex; align-items: flex-end; gap: .2rem; }
+.post > .dk { width: 160px; flex: none; }
+.post .kasten { width: 60px; flex: none; order: 2; }
+.post .kasten .klappe { transform-box: fill-box; transform-origin: 50% 0; transition: transform .25s; }
+.post.offen .kasten .klappe { transform: rotate(-35deg); }
+
+/* 3) Tug-of-war: grab the rope, the puppy pulls back */
+.zergeln { position: relative; height: 190px; margin-top: 1rem; background: var(--card); overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.zergeln .label { position: absolute; left: 14px; top: 12px; font: 700 .95rem/1 var(--font-display); background: var(--yellow); border: 2px solid var(--line); border-radius: 999px; padding: .35rem .7rem; z-index: 2; }
+.zergeln .boden { position: absolute; left: 0; right: 0; bottom: 0; height: 26px; background: var(--grass); border-top: 2.5px solid var(--line); }
+.zergeln .welpe { position: absolute; left: 0; top: 0; width: 120px; bottom: auto; }
+.zergeln .welpe > .dk { width: 100%; transform-origin: 30% 88%; }
+.zergeln svg.seil { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.zergeln .knoten { position: absolute; left: 0; top: 0; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; cursor: grab; display: grid; place-items: center; touch-action: none; background: none; border: 0; padding: 0; }
+.zergeln .knoten:active { cursor: grabbing; }
+.zergeln .knoten span { width: 26px; height: 26px; border-radius: 50%; background: #e7d3a8; border: 2.5px solid var(--line); box-shadow: inset -4px -3px 0 rgb(0 0 0 / .12); }
+.zergeln .tipp { position: absolute; right: 14px; top: 12px; font: 600 .88rem/1.2 var(--font-body); color: var(--muted); }
+.zergeln .grr { position: absolute; font: 700 1.05rem/1 var(--font-display); color: var(--fg); pointer-events: none; }
+.zergeln .welpe.zieht .head { animation: schuetteln .11s ease-in-out infinite alternate; }
+.zergeln .welpe.zieht .tail { animation-duration: .14s; }
+.zergeln .welpe.zieht :is(.l3, .l4) { transform: rotate(-24deg); }
+.zergeln .welpe.zieht :is(.l1, .l2) { transform: rotate(14deg); }
+.zergeln .welpe.spielt .head { animation: schuetteln .16s ease-in-out 6 alternate; }
+@keyframes schuetteln { from { transform: rotate(-5deg); } to { transform: rotate(4deg); } }
+.zergeln .mitzerren { position: absolute; right: 12px; bottom: 34px; padding: .45rem .8rem; font-size: .88rem; box-shadow: 3px 3px 0 var(--line); z-index: 2; }
+
+/* 4) The end of the page: he is asleep under the last section and wakes up when you get there */
+.ende { position: relative; display: flex; justify-content: center; align-items: flex-end; gap: 1rem; padding: 1rem 0 0; margin-bottom: -6px; }
+.ende .kissen { position: relative; width: min(300px, 70vw); }
+.ende .kissen::after { content: ''; position: absolute; left: 4%; right: 4%; bottom: -2px; height: 30px; border-radius: 50%; background: var(--mint); border: 2.5px solid var(--line); z-index: -1; }
+.ende .kissen .dk { width: 72%; margin-left: 14%; }
+.ende .zzz { position: absolute; right: 8%; top: 0; font: 700 1.2rem/1 var(--font-display); color: var(--muted); animation: zzz 2.6s ease-in-out infinite; }
+@keyframes zzz { from { opacity: 0; translate: 0 10px; } 40% { opacity: 1; } to { opacity: 0; translate: 14px -22px; } }
+.ende.wach .zzz { display: none; }
+
+/* motion off: everything stands still */
+html.motion-off *, html.motion-off *::before, html.motion-off *::after { animation-play-state: paused !important; }
+html.motion-off .welpe.w1 { animation: none; left: 8%; } html.motion-off .welpe.w2 { animation: none; left: 40%; } html.motion-off .welpe.w3 { animation: none; left: 66%; }
+</style>
+</head>
+<body>
+
+<div class="entwurf">Entwurf H „Schabernack“ – Humor ohne Spiel: einfach runterscrollen. Auf kleine Dackel klicken, am Seil ziehen.
+	<button type="button" id="theme">Hell / Dunkel</button></div>
+
+<header class="site">
+	<div class="wrap">
+		<a class="brand" href="#">
+			<span data-dackel="idle" aria-hidden="true"></span>
+			<span><b>Rauhaardackel vom Luchberg</b><small>Glashütte OT Luchau · Sachsen</small></span>
+		</a>
+		<nav aria-label="Hauptnavigation">
+			<ul>
+				<li><a href="#" aria-current="page">Start</a></li>
+				<li><a href="#dackel">Unsere Dackel</a></li>
+				<li><a href="#welpen">Welpen</a></li>
+				<li><a href="#ueber-uns">Über uns</a></li>
+				<li><a href="#kontakt">Kontakt</a></li>
+			</ul>
+		</nav>
+		<button type="button" class="motion-btn" id="motion" aria-pressed="false">
+			<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg>
+			<span>Animationen pausieren</span>
+		</button>
+	</div>
+	<div class="track wrap" aria-hidden="true">
+		<span data-dackel="idle" data-scrolly></span>
+		<svg class="bone" viewBox="0 0 32 14" fill="currentColor"><path d="M6 1a4 4 0 0 0-3 6.5A4 4 0 0 0 7 13c1.6 0 2.6-1 3-2h12c.4 1 1.4 2 3 2a4 4 0 0 0 4-5.5A4 4 0 0 0 26 1c-1.6 0-2.6 1-3 2H9C8.6 2 7.6 1 6 1z"/></svg>
+	</div>
+</header>
+
+<main>
+	<div class="hero">
+		<div class="wrap bento">
+			<div class="b-intro sticker">
+				<p class="kicker">Standard-Rauhaardackel aus Sachsen</p>
+				<h1>Kurze Beine, <span class="wiggle">großes Herz.</span></h1>
+				<p class="lead">Wir züchten unsere Rauhaardackel für Liebhaber und Familien und achten dabei auf Gesundheit und Wesen. Die Kleinen wachsen mit Familienanschluss bei uns auf und lernen alles Wichtige für ihren späteren Alltag kennen.</p>
+				<div class="ctas">
+					<a class="btn btn-primary" href="#welpen">Welpen anfragen</a>
+					<a class="btn btn-plain" href="#dackel">Unsere Dackel kennenlernen</a>
+				</div>
+			</div>
+			<figure class="b-photo sticker" style="margin:0">
+				<img src="../../../../public/uploads/rudel/dackel/dackel-duo-bank.jpg" alt="Zwei Rauhaardackel sitzen nebeneinander auf einer Holzbank" width="1280" height="1600">
+				<figcaption class="tag">Hanni &amp; Bonnie</figcaption>
+			</figure>
+			<div class="b-quote sticker">
+				<p>„Bei uns sind sie absolute Familienhunde.“</p>
+				<small>Karo über ihre Rauhaardackel</small>
+			</div>
+			<div class="b-call sticker">
+				<p>Unsere Dackel haben immer was zu sagen. Klickt mal drauf!</p>
+				<span data-dackel="idle" class="fell-dunkel dk-klick" aria-hidden="true" style="width:120px;align-self:center"></span>
+				<a class="btn btn-plain" href="#welpen">Zu den Welpen</a>
+			</div>
+		</div>
+		<div class="wiese" aria-hidden="true">
+			<svg class="blume" style="left:12%" viewBox="0 0 22 40"><path d="M11 40V16" stroke="#3f8f3a" stroke-width="2.5"/><circle cx="11" cy="11" r="8" fill="#f6d77a" stroke="#1e1b33" stroke-width="2"/><circle cx="11" cy="11" r="3" fill="#e8b94a"/></svg>
+			<svg class="blume" style="left:37%;width:18px" viewBox="0 0 22 40"><path d="M11 40V16" stroke="#3f8f3a" stroke-width="2.5"/><circle cx="11" cy="11" r="8" fill="#ffffff" stroke="#1e1b33" stroke-width="2"/><circle cx="11" cy="11" r="3" fill="#ffd23f"/></svg>
+			<svg class="blume" style="left:64%" viewBox="0 0 22 40"><path d="M11 40V16" stroke="#3f8f3a" stroke-width="2.5"/><circle cx="11" cy="11" r="8" fill="#f6d77a" stroke="#1e1b33" stroke-width="2"/><circle cx="11" cy="11" r="3" fill="#e8b94a"/></svg>
+			<svg class="blume" style="left:86%;width:18px" viewBox="0 0 22 40"><path d="M11 40V16" stroke="#3f8f3a" stroke-width="2.5"/><circle cx="11" cy="11" r="8" fill="#ffffff" stroke="#1e1b33" stroke-width="2"/><circle cx="11" cy="11" r="3" fill="#ffd23f"/></svg>
+			<div class="ground"></div>
+		</div>
+	</div>
+
+	<section>
+		<div class="wrap">
+			<div class="sec-head">
+				<p class="kicker">Was uns wichtig ist</p>
+				<h2>Familienhunde mit Dackelkopf</h2>
+			</div>
+			<div class="werte">
+				<div class="wert sticker">
+					<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></div>
+					<h3>Gesundheit &amp; Wesen</h3>
+					<p>Darauf achten wir bei unserer Zucht – die wir ausschließlich für Liebhaber und Familien betreiben.</p>
+				</div>
+				<div class="wert sticker">
+					<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-5h4v5"/></svg></div>
+					<h3>Aufgewachsen im Rudel</h3>
+					<p>Die Kleinen wachsen mit Familienanschluss bei uns auf, zusammen mit unseren anderen Hunden, und lernen alles Wichtige kennen.</p>
+				</div>
+				<div class="wert sticker">
+					<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21V11M12 11c-4 0-7-3-7-7 4 0 7 3 7 7zM12 11c4 0 7-3 7-7-4 0-7 3-7 7z"/></svg></div>
+					<h3>Jagdliche Wurzeln</h3>
+					<p>Wir bilden unsere Dackel nicht zur Jagd aus – die Elterntiere haben aber jagdliche Abstammungen. Bei uns sind sie absolute Familienhunde.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="dehnung fell-rot" aria-hidden="true">
+		<div class="buehne">
+			<div class="kopfzeile"><p id="dz-text">Kurze Gassi-Pause am Baum.</p><small id="dz-sub">Scrollt ruhig weiter – er kommt gleich nach.</small></div>
+			<div class="strecke">
+				<div class="boden"></div>
+				<span class="baum"><svg viewBox="0 0 100 130"><rect x="44" y="58" width="12" height="74" rx="4" fill="#7a5a3c"/><path d="M50 92 L36 74" stroke="#7a5a3c" stroke-width="6" stroke-linecap="round"/><circle cx="50" cy="40" r="32" fill="var(--grass)" stroke="var(--line)" stroke-width="2.5"/><circle cx="26" cy="58" r="17" fill="var(--grass)" stroke="var(--line)" stroke-width="2.5"/><circle cx="74" cy="56" r="19" fill="var(--grass)" stroke="var(--line)" stroke-width="2.5"/><path d="M14 52 C20 40 40 46 50 34 C62 46 80 40 88 52 L84 64 L16 64 Z" fill="var(--grass)"/><circle cx="38" cy="30" r="3" fill="#f6d77a"/><circle cx="64" cy="44" r="3" fill="#ffffff"/><circle cx="30" cy="56" r="2.6" fill="#ffffff"/></svg></span>
+				<span class="pfuetze"></span>
+				<div class="tropfen"><i></i><i></i><i></i></div>
+				<span class="hinten pinkelt" data-dackel="rear"></span>
+				<div class="mitte"></div>
+				<span class="vorn" data-dackel="front" data-scrolly></span>
+				<span class="ganz" data-dackel="idle"></span>
+				<span class="meter">Länge: 1,0 Dackel</span>
+			</div>
+			<p class="weiter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5 12l7 7 7-7"/></svg>Weiterscrollen</p>
+		</div>
+	</div>
+
+	<section id="dackel" style="padding-top:1rem">
+		<div class="wrap">
+			<div class="sec-head">
+				<p class="kicker">Unsere Dackel</p>
+				<h2>Hanni, Bonnie und der Vater unserer Dackel</h2>
+				<p>Gut sozialisiert und erzogen: Unsere Rauhaardackel helfen oft als „Lehrhund“ auf dem Hundeplatz mit – vor allem die Kinder haben daran große Freude.</p>
+			</div>
+			<div class="hunde">
+				<a class="hund" href="#">
+					<span class="peek" aria-hidden="true"><span data-dackel="idle" class="fell-grau"></span></span>
+					<div class="inner sticker">
+						<img loading="lazy" src="../../../../public/uploads/rudel/dackel/53add332-b7ff-2b5f-d118-81e15aafe02d.jpg" alt="Rauhaardackel-Hündin liegt in der Löwenzahnwiese" width="1600" height="1067">
+						<div class="info"><b>Hündin</b><p class="meta">Wurftag, Farbe &amp; Abstammung folgen</p></div>
+					</div>
+				</a>
+				<a class="hund" href="#">
+					<span class="peek" aria-hidden="true"><span data-dackel="idle" class="fell-dunkel flip"></span></span>
+					<div class="inner sticker">
+						<img loading="lazy" src="../../../../public/uploads/rudel/dackel/ed953edf-7ead-47d2-461e-1b57fad27b70.jpg" alt="Rauhaardackel-Hündin sitzt im Gras" width="1600" height="1067">
+						<div class="info"><b>Hündin</b><p class="meta">Wurftag, Farbe &amp; Abstammung folgen</p></div>
+					</div>
+				</a>
+				<a class="hund" href="#">
+					<span class="peek" aria-hidden="true"><span data-dackel="idle" class="fell-rot"></span></span>
+					<div class="inner sticker">
+						<img loading="lazy" src="../../../../public/uploads/rudel/dackel/c3b66134-8be9-44da-b2ec-5831581ad930.jpg" alt="Rotbrauner Rauhaardackel-Rüde steht im Garten" width="1600" height="1067">
+						<div class="info"><b>Rüde · Vater unserer Dackel</b><p class="meta">Der Vater unserer Dackel</p></div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<section id="welpen" class="welpen">
+		<div class="band" aria-hidden="true">
+			<div class="lauf">
+				<span>Welpen anfragen <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Kurze Beine <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Großes Herz <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Mit Familienanschluss im Rudel <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Welpen anfragen <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Kurze Beine <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Großes Herz <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+				<span>Mit Familienanschluss im Rudel <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="9" r="2.4"/><circle cx="10" cy="5" r="2.4"/><circle cx="14" cy="5" r="2.4"/><circle cx="18" cy="9" r="2.4"/><path d="M12 10c-3 0-6 4-6 7 0 2 2 3 3.5 2.5S11 18.5 12 18.5s1 .5 2.5 1S18 19 18 17c0-3-3-7-6-7z"/></svg></span>
+			</div>
+		</div>
+		<div class="wrap grid">
+			<div>
+				<div class="sec-head" style="margin-bottom:1.6rem">
+					<p class="kicker">Welpen</p>
+					<h2>Ihr sucht einen Rauhaardackel?</h2>
+					<p>Bei Interesse an einem Dackel nehmen wir gern eure Anfrage entgegen und stehen euch mit Rat und Tat zur Seite.</p>
+				</div>
+				<dl>
+					<div><dt>Nächster Wurf</dt><dd style="margin:0"><span class="todo">Termin offen</span></dd></div>
+					<div><dt>Eltern</dt><dd style="margin:0"><span class="todo">folgt</span></dd></div>
+					<div><dt>Aufzucht</dt><dd style="margin:0">Mit Familienanschluss im Rudel</dd></div>
+				</dl>
+				<a class="btn btn-primary" href="#kontakt">Jetzt unverbindlich anfragen</a>
+			</div>
+			<div>
+				<div class="wurfkiste sticker" aria-hidden="true">
+					<span class="label">Die Wurfkiste</span>
+					<div class="decke"></div>
+					<div class="welpe w2"><span data-dackel="walk" class="fell-dunkel"></span></div>
+					<div class="welpe w1"><span data-dackel="walk"></span></div>
+					<div class="welpe w3"><span data-dackel="walk" class="fell-grau"></span></div>
+				</div>
+				<div class="zergeln sticker">
+					<span class="label">Zergeln</span>
+					<span class="tipp" aria-hidden="true">Knoten packen und ziehen</span>
+					<div class="boden" aria-hidden="true"></div>
+					<svg class="seil" aria-hidden="true"><path d="" fill="none" stroke="#c9a96e" stroke-width="6" stroke-linecap="round"/></svg>
+					<div class="welpe" aria-hidden="true"><span data-dackel="idle" class="fell-dunkel"></span></div>
+					<span class="knoten" aria-hidden="true"><span></span></span>
+					<button type="button" class="btn btn-plain mitzerren">Mitzerren</button>
+				</div>
+				<div class="fotos">
+					<img loading="lazy" src="../../../../public/uploads/rudel/dackel/c3dfdb93-b889-2476-cad5-f1f983e4a5fa.jpg" alt="Dackelwelpe pirscht durchs Gras" width="1600" height="1067">
+					<img loading="lazy" src="../../../../public/uploads/rudel/dackel/fd61d309-3527-cf91-0a33-c7926781635e.jpg" alt="Dackelwelpe mit gelbem Spielzeug" width="1600" height="1067">
+					<img loading="lazy" src="../../../../public/uploads/rudel/dackel/2b8a30f9-cd18-0503-f5f2-47ee1990488a.jpg" alt="Dackelwelpe schaut in die Kamera" width="1600" height="1067">
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="ueber-uns">
+		<div class="wrap about">
+			<figure class="sticker">
+				<img loading="lazy" src="../../../../public/uploads/rudel/dackel/karo-mit-dackel-und-junghund.jpg" alt="Karo hockt auf einem Weg, neben ihr Dackel Bonnie und Rottweiler-Junghündin Baja" width="1600" height="1065">
+				<figcaption>Karo mit Bonnie und Baja</figcaption>
+			</figure>
+			<div>
+				<p class="kicker">Über uns</p>
+				<h2>Ein Rudel, eine Familie</h2>
+				<p>Ich bin Karo und lebe mit meiner Familie und unserem Rudel in Luchau, einem Ortsteil von Glashütte. Zu unserem Rudel gehören auch unsere beiden Rauhaardackel-Damen Hanni und Bonnie.</p>
+				<a class="more" href="#">Mehr über uns und die Aufzucht →</a>
+			</div>
+		</div>
+	</section>
+
+	<section id="kontakt" class="kontakt" style="padding-top:0">
+		<div class="wrap">
+			<div class="box sticker">
+				<div>
+					<p class="kicker">Kontakt</p>
+					<h2>Schreibt uns – wir freuen uns auf euch.</h2>
+					<p>Erzählt uns ein bisschen von euch und euren Vorstellungen. Wir melden uns gern und beantworten alle Fragen rund um den Rauhaardackel.</p>
+					<div class="ctas">
+						<a class="btn btn-primary" href="#" data-wuff="Wuff! Da drücken!">Anfrage senden</a>
+						<a class="btn btn-plain" href="tel:01733665494" data-wuff="Wuff! Ruft an!">0173 3665494</a>
+					</div>
+				</div>
+				<div class="post" aria-hidden="true">
+					<svg class="kasten" viewBox="0 0 64 70"><rect x="29" y="40" width="6" height="30" fill="#7a5a3c"/><rect x="6" y="8" width="52" height="36" rx="8" fill="#f6d77a" stroke="var(--line)" stroke-width="2.5"/><rect class="klappe" x="14" y="16" width="36" height="7" rx="3" fill="var(--card)" stroke="var(--line)" stroke-width="2"/><path d="M22 34 h20" stroke="var(--line)" stroke-width="2" stroke-linecap="round"/></svg>
+					<span data-dackel="idle" class="fell-grau dk-klick"></span>
+				</div>
+			</div>
+		</div>
+	</section>
+	<div class="ende wrap" aria-hidden="true">
+		<div class="kissen"><span class="zzz">z z z</span><span data-dackel="idle" class="schlaeft dk-klick"></span></div>
+	</div>
+</main>
+
+<footer>
+	<div class="wrap">
+		<div class="cols">
+			<div>
+				<h2>Rauhaardackel vom Luchberg</h2>
+				<address style="font-style:normal">Karolin Riesing<br>Dorfstr. 2d<br>01768 Glashütte OT Luchau</address>
+			</div>
+			<div>
+				<h2>Seiten</h2>
+				<ul>
+					<li><a href="#dackel">Unsere Dackel</a></li>
+					<li><a href="#welpen">Welpen</a></li>
+					<li><a href="#ueber-uns">Über uns</a></li>
+					<li><a href="#kontakt">Kontakt</a></li>
+				</ul>
+			</div>
+			<div>
+				<h2>Auch bei uns</h2>
+				<div class="hinweis">
+					<img src="../../../../public/uploads/rudel/dackel/karo-mit-dackel-und-junghund.jpg" alt="" width="1600" height="1065" style="object-position:62% 50%">
+					<p>Wir züchten auch Rottweiler im ADRK:<br><a href="https://vomluchberg.de">Rottweiler vom Luchberg →</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="legal">
+			<p>© 2026 Rauhaardackel vom Luchberg</p>
+			<ul><li><a href="#">Impressum</a></li><li><a href="#">Datenschutz</a></li></ul>
+		</div>
+	</div>
+</footer>
+
+
+<script>
+(() => {
+	// Mockup only: light/dark toggle for the review.
+	document.getElementById('theme').addEventListener('click', () => {
+		const r = document.documentElement;
+		const dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+		r.dataset.theme = dark ? 'light' : 'dark';
+	});
+
+	// ---- Dachshund SVG (side view, facing right, wire-haired: beard + brows) ----
+	// viewBox 0 0 220 100, paws stand on y = 88. Body band y 34..70 so the long dachshund can be
+	// stitched together. Pivots in user units: legs at the hip (y 60), head at the neck, tail at its root.
+	const O = (x, y) => `style="transform-origin:${x}px ${y}px"`;
+	const leg = (cls, x, far) => {
+		const c = far ? 'var(--fell-d)' : 'var(--fell)';
+		return `<g class="leg ${cls}" ${O(x, 60)}><rect x="${x - 7}" y="50" width="14" height="34" rx="7" fill="${c}"/><ellipse cx="${x + 3}" cy="83.8" rx="9.5" ry="4.2" fill="${c}"/></g>`;
+	};
+	const tail = `<g class="tail" ${O(44, 46)}><path d="M48 46 C36 42 27 32 23 17" fill="none" stroke="var(--fell-d)" stroke-width="9" stroke-linecap="round"/><path d="M24.5 19 L18 9 L24 12 L25 4 L28.5 12 L32 7 L29.5 18 Z" fill="var(--fell-d)"/></g>`;
+	const head = `
+		<g class="head" ${O(156, 50)}>
+			<path d="M136 58 C140 42 151 29 166 21 L186 36 C173 44 165 53 158 64 Z" fill="var(--fell)"/>
+			<circle cx="174" cy="29" r="18.5" fill="var(--fell)"/>
+			<rect x="177" y="21.5" width="35" height="21" rx="10.5" fill="var(--fell)"/>
+			<ellipse class="zunge" cx="199" cy="50" rx="3.6" ry="5" fill="#e3938c"/>
+			<path d="M181 36 C181 46 187 51 193 51 C196 54.5 201 54.5 203.5 51 C208 51.5 213 47 212.5 37 Z" fill="var(--bart)"/>
+			<ellipse cx="185" cy="33" rx="4.2" ry="2.6" fill="#e3938c" opacity=".35"/>
+			<ellipse cx="209.5" cy="27.5" rx="5.6" ry="4.8" fill="#1b1410"/><ellipse cx="208" cy="25.8" rx="1.6" ry="1.1" fill="#fff" opacity=".55"/>
+			<g class="auge"><circle cx="188" cy="24" r="5" fill="#1b1410"/><circle cx="189.8" cy="22.2" r="1.8" fill="#fff"/><circle cx="186.4" cy="26" r=".85" fill="#fff"/></g>
+			<path class="lid" d="M183.5 25 q4.5 3.6 9 0" fill="none" stroke="#1b1410" stroke-width="2.2" stroke-linecap="round"/>
+			<path d="M182 16.5 q6.5 -4.5 13 -.5" fill="none" stroke="var(--bart)" stroke-width="4.2" stroke-linecap="round"/>
+			<g class="ear" ${O(167, 15)}><path d="M168 12 C155 15 150 30 155 43 C159 50 168 49 170.5 41 C174 30 175 19 168 12 Z" fill="var(--fell-d)"/></g>
+		</g>`;
+	const torso = `<rect x="34" y="34" width="130" height="36" rx="18" fill="var(--fell)"/><ellipse cx="55" cy="55" rx="21" ry="16" fill="var(--fell)"/><ellipse cx="150" cy="56" rx="20" ry="16" fill="var(--fell)"/>`;
+	const svg = (part) => {
+		if (part === 'rear') return `<svg viewBox="0 0 100 100"><g class="all">${tail}${leg('l1', 55, true)}<rect x="34" y="34" width="80" height="36" rx="18" fill="var(--fell)"/><rect x="60" y="34" width="41.5" height="36" fill="var(--fell)"/><ellipse cx="55" cy="55" rx="21" ry="16" fill="var(--fell)"/>${leg('l2', 63, false)}</g></svg>`;
+		if (part === 'front') return `<svg viewBox="120 0 100 100"><g class="all">${leg('l3', 145, true)}<rect x="118.5" y="34" width="46" height="36" fill="var(--fell)"/><ellipse cx="150" cy="56" rx="20" ry="16" fill="var(--fell)"/>${head}${leg('l4', 155, false)}</g></svg>`;
+		return `<svg viewBox="0 0 220 100"><g class="all">${tail}${leg('l1', 55, true)}${leg('l3', 145, true)}${torso}${head}${leg('l2', 63, false)}${leg('l4', 155, false)}</g></svg>`;
+	};
+	const make = (el) => {
+		const mode = el.dataset.dackel;
+		el.classList.add('dk');
+		if (mode === 'run' || mode === 'walk') el.classList.add(mode);
+		if ('scrolly' in el.dataset) el.classList.add('scrolly');
+		el.innerHTML = svg(mode === 'rear' || mode === 'front' ? mode : 'full');
+	};
+	document.querySelectorAll('[data-dackel]').forEach(make);
+
+	const root = document.documentElement;
+	const bark = (dk) => {
+		dk.classList.remove('hop'); void dk.offsetWidth; dk.classList.add('hop');
+		const b = document.createElement('span');
+		b.className = 'bubble';
+		b.textContent = ['Wuff!', 'Wau!', 'Wuff wuff!', 'Hallo!'][Math.floor(Math.random() * 4)];
+		dk.appendChild(b);
+		setTimeout(() => b.remove(), 1400);
+	};
+	document.querySelector('.brand .dk').addEventListener('mouseenter', (e) => bark(e.currentTarget));
+
+	// ---- motion toggle (off by default with prefers-reduced-motion) ----
+	const btn = document.getElementById('motion');
+	let stored = null; try { stored = localStorage.getItem('dackel-motion'); } catch (e) {}
+	const setMotion = (on, save) => {
+		root.classList.toggle('motion-off', !on);
+		btn.setAttribute('aria-pressed', String(!on));
+		btn.querySelector('span').textContent = on ? 'Animationen pausieren' : 'Animationen abspielen';
+		if (save) try { localStorage.setItem('dackel-motion', on ? 'on' : 'off'); } catch (e) {}
+	};
+	setMotion(stored ? stored === 'on' : !matchMedia('(prefers-reduced-motion: reduce)').matches, false);
+	btn.addEventListener('click', () => setMotion(root.classList.contains('motion-off'), true));
+
+	// ---- scroll: progress dachshund + "legs move while scrolling" ----
+	const track = document.querySelector('.track .dk');
+	let lastY = scrollY, stop;
+	const onScroll = () => {
+		const max = document.documentElement.scrollHeight - innerHeight;
+		track.style.setProperty('--p', max > 0 ? Math.min(1, scrollY / max) : 0);
+		if (scrollY !== lastY) track.classList.toggle('flip', scrollY < lastY);
+		lastY = scrollY;
+		root.classList.add('scrolling');
+		clearTimeout(stop); stop = setTimeout(() => root.classList.remove('scrolling'), 160);
+	};
+	addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+
+	// ---- shared helpers ----
+	const motionOff = () => root.classList.contains('motion-off');
+	const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+	const pick = (a) => a[Math.floor(Math.random() * a.length)];
+	const say = (dk, text, ms = 1400) => {
+		dk.querySelectorAll('.bubble').forEach((b) => b.remove());
+		const b = document.createElement('span');
+		b.className = 'bubble'; b.textContent = text; b.style.animationDuration = ms + 'ms';
+		dk.appendChild(b); setTimeout(() => b.remove(), ms);
+	};
+	const woof = (dk, text) => {
+		say(dk, text || pick(['Wuff!', 'Wau!', 'Wuff wuff!']));
+		if (motionOff()) return;
+		dk.classList.remove('bellt', 'hop'); void dk.offsetWidth; dk.classList.add('bellt', 'hop');
+		setTimeout(() => dk.classList.remove('bellt', 'hop'), 520);
+	};
+	// any dog marked .dk-klick barks when clicked
+	document.addEventListener('click', (e) => { const d = e.target.closest('.dk-klick'); if (d) woof(d); });
+	// the dogs peeking over the cards say hello once
+	document.querySelectorAll('.hund').forEach((card) => {
+		const d = card.querySelector('.peek .dk');
+		const hi = () => { if (!card.dataset.gebellt) { card.dataset.gebellt = '1'; woof(d, pick(['Hallo!', 'Wuff!', 'Ich bin’s!'])); } };
+		card.addEventListener('mouseenter', hi); card.addEventListener('focus', hi);
+	});
+
+	// ---- 1) Stretch gag: sticky stage, front walks with the scroll, rear is still busy at the tree ----
+	const dz = document.querySelector('.dehnung');
+	const strecke = dz.querySelector('.strecke');
+	const [hinten, vorn, ganz] = ['.hinten', '.vorn', '.ganz'].map((s) => dz.querySelector(s));
+	const mitte = dz.querySelector('.mitte'), baum = dz.querySelector('.baum'), pfuetze = dz.querySelector('.pfuetze');
+	const tropfen = dz.querySelector('.tropfen'), meter = dz.querySelector('.meter');
+	const tx = dz.querySelector('#dz-text'), sub = dz.querySelector('#dz-sub');
+	const TEXTE = [
+		[0, 'Kurze Gassi-Pause am Baum.', 'Scrollt ruhig weiter – er kommt gleich nach.'],
+		[.14, 'Vorne ist er schon weiter …', '… hinten ist er noch beschäftigt.'],
+		[.4, 'Dackel sind lang. Aber so lang?', 'Einfach weiterscrollen.'],
+		[.6, 'Gleich … gleich …', 'Noch ein kleines Stück.'],
+	];
+	const ease = (t) => t < .5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2;
+	let G = null, state = 'zug', snapAnim = null;
+	const geo = () => {
+		const h = hinten.offsetWidth, W = strecke.clientWidth;
+		const T = Math.max(8, W * .03), bw = baum.offsetWidth;
+		const R0 = T + bw * .56 - h * .02;
+		const F0 = R0 + 1.2 * h;
+		const Fmax = Math.max(F0, W - h - Math.max(16, W * .03));
+		G = { h, W, T, bw, R0, F0, Fmax };
+		baum.style.left = T + 'px';
+		const sx = R0 + .5 * h, sy = .64 * h, ex = T + bw * .56, ey = .86 * h;
+		tropfen.style.setProperty('--bahn', `path('M ${sx} ${sy} Q ${sx - .25 * h} ${sy - .12 * h} ${ex} ${ey}')`);
+		pfuetze.style.left = (ex - .14 * h) + 'px'; pfuetze.style.top = (ey - 3) + 'px';
+	};
+	const setz = (R, F) => {
+		const h = G.h;
+		// F = left edge of the front part; its viewBox starts at x 120, so a normal dog has F = R + 1.2h
+		hinten.style.left = R + 'px'; vorn.style.left = F + 'px';
+		mitte.style.left = (R + h - 2) + 'px'; mitte.style.width = Math.max(0, F - R - h + 4) + 'px';
+		const L = (F + h - R) / (2.2 * h);
+		meter.textContent = `Länge: ${L.toFixed(1).replace('.', ',')} Dackel`;
+	};
+	const zeige = (teile) => {
+		for (const el of [hinten, vorn, mitte, tropfen]) el.style.visibility = teile ? 'visible' : 'hidden';
+		ganz.style.visibility = teile ? 'hidden' : 'visible';
+	};
+	const text = (a, b) => { if (tx.textContent !== a) tx.textContent = a; if (sub.textContent !== b) sub.textContent = b; };
+	const fortschritt = () => {
+		const r = dz.getBoundingClientRect();
+		const span = dz.offsetHeight - innerHeight;
+		return span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : .6;
+	};
+	const snap = async () => {
+		state = 'boing';
+		const { h } = G, F = parseFloat(vorn.style.left), R1 = parseFloat(hinten.style.left), R2 = F - 1.2 * h;
+		hinten.classList.remove('pinkelt'); dz.classList.remove('gespannt');
+		tropfen.style.visibility = 'hidden';
+		text('Boing!', 'Fertig – und hinterher.');
+		const t0 = performance.now(), dur = motionOff() ? 0 : 520;
+		await new Promise((done) => {
+			const step = (now) => {
+				if (state !== 'boing') return done();
+				const t = dur ? Math.min(1, (now - t0) / dur) : 1;
+				const k = 1 + 2.2 * (t - 1) ** 3 + 1.2 * (t - 1) ** 2; // ease-out-back
+				setz(R1 + (R2 - R1) * k, F);
+				if (t < 1) snapAnim = requestAnimationFrame(step); else done();
+			};
+			snapAnim = requestAnimationFrame(step);
+		});
+		if (state !== 'boing') return;
+		ganz.style.left = R2 + 'px'; zeige(false); state = 'fertig';
+		pfuetze.style.width = (.28 * G.h) + 'px';
+		await wait(250);
+		if (state !== 'fertig') return;
+		text('Und jetzt erstmal ausgiebig strecken.', 'Weiter geht’s – zu unseren Dackeln.');
+		if (!motionOff()) { ganz.classList.remove('streckt'); void ganz.offsetWidth; ganz.classList.add('streckt'); }
+	};
+	const reset = () => {
+		cancelAnimationFrame(snapAnim); state = 'zug';
+		ganz.classList.remove('streckt'); hinten.classList.add('pinkelt'); zeige(true);
+	};
+	const dehnen = () => {
+		if (!G) geo();
+		const p = motionOff() ? .55 : fortschritt();
+		if (state !== 'zug') { if (p < .62) reset(); else return; }
+		const t = ease(Math.min(1, Math.max(0, (p - .06) / .66)));
+		setz(G.R0, G.F0 + (G.Fmax - G.F0) * t);
+		pfuetze.style.width = (Math.min(1, p / .5) * .28 * G.h) + 'px';
+		dz.classList.toggle('gespannt', p > .6 && !motionOff());
+		const zeile = TEXTE.filter((z) => p >= z[0]).pop();
+		text(zeile[1], zeile[2]);
+		if (p >= .76 && !motionOff()) snap();
+	};
+	addEventListener('scroll', dehnen, { passive: true });
+	addEventListener('resize', () => { G = null; if (state === 'zug') dehnen(); else { geo(); reset(); dehnen(); } });
+	btn.addEventListener('click', () => { reset(); dehnen(); });
+	dehnen();
+
+	// ---- 2) Barking at the contact box: he guards the letterbox and points at the buttons ----
+	const post = document.querySelector('.post'), postDk = post.querySelector('.dk');
+	document.querySelectorAll('.kontakt .ctas a').forEach((a) => {
+		const t = a.dataset.wuff;
+		a.addEventListener('mouseenter', () => woof(postDk, t)); a.addEventListener('focus', () => woof(postDk, t));
+	});
+	new IntersectionObserver((es, io) => {
+		if (!es[0].isIntersecting) return;
+		io.disconnect();
+		post.classList.add('offen');
+		setTimeout(() => woof(postDk, 'Wuff! Post?'), 300);
+		setTimeout(() => post.classList.remove('offen'), 1600);
+	}, { threshold: .9 }).observe(post);
+
+	// ---- 3) Tug-of-war: drag the knot, the puppy pulls back (decorative; button for keyboard users) ----
+	const zg = document.querySelector('.zergeln');
+	const welpe = zg.querySelector('.welpe'), wdk = welpe.querySelector('.dk');
+	const knoten = zg.querySelector('.knoten'), seil = zg.querySelector('.seil path');
+	const LEN = 150;
+	const Z = { px: 0, rest: 0, kx: 0, ky: 0, drag: false, lastGrr: 0 };
+	const zMass = () => {
+		const w = welpe.offsetWidth, hh = w * 100 / 220, ground = zg.clientHeight - 26;
+		return { w, hh, top: ground - hh * .88, ground };
+	};
+	const mund = () => {
+		// mouth point, rotated with the lean (pivot at 30% / 88% of the dog box)
+		const m = zMass(), a = (parseFloat(wdk.style.rotate) || 0) * Math.PI / 180;
+		const ox = Z.px + m.w * .3, oy = m.top + m.hh * .88, dx = m.w * 200 / 220 - m.w * .3, dy = m.w * 47 / 220 - m.hh * .88;
+		return { x: ox + dx * Math.cos(a) - dy * Math.sin(a), y: oy + dx * Math.sin(a) + dy * Math.cos(a) };
+	};
+	const zMalen = () => {
+		const m = zMass();
+		welpe.style.transform = `translate(${Z.px}px, ${m.top}px)`;
+		knoten.style.left = Z.kx + 'px'; knoten.style.top = Z.ky + 'px';
+		const a = mund(), d = Math.hypot(Z.kx - a.x, Z.ky - a.y);
+		const sag = d < LEN ? Math.sqrt(LEN * LEN - d * d) * .5 : 0;
+		const mx = (a.x + Z.kx) / 2, my = Math.min(m.ground - 2, (a.y + Z.ky) / 2 + sag);
+		seil.setAttribute('d', `M ${a.x} ${a.y} Q ${mx} ${my} ${Z.kx} ${Z.ky}`);
+		return d;
+	};
+	const zRuhe = () => { const m = zMass(); Z.rest = Math.max(14, zg.clientWidth * .08); Z.px = Z.rest; const a = mund(); Z.kx = Math.min(zg.clientWidth - 30, a.x + 110); Z.ky = m.ground - 13; zMalen(); };
+	const grr = () => {
+		const now = performance.now(); if (now - Z.lastGrr < 900) return; Z.lastGrr = now;
+		say(wdk, pick(['Grrr!', 'Grrrr!', 'Meins!']), 900);
+	};
+	const ziehen = (x, y) => {
+		const m = zMass();
+		Z.kx = Math.min(zg.clientWidth - 20, Math.max(20, x)); Z.ky = Math.min(m.ground - 10, Math.max(30, y));
+		Z.px = Z.rest; let d = zMalen();
+		const over = Math.max(0, d - LEN);
+		// he gets dragged a little (with resistance), leans back and shakes his head
+		Z.px = Z.rest + Math.min(46, over * .35 * Math.sign(Z.kx - mund().x || 1));
+		const pull = Math.min(1, over / 60);
+		wdk.style.rotate = (-9 * pull) + 'deg';
+		zMalen();
+		welpe.classList.toggle('zieht', pull > .05);
+		if (pull > .3) grr();
+	};
+	const loslassen = async () => {
+		Z.drag = false; welpe.classList.remove('zieht');
+		const from = { kx: Z.kx, ky: Z.ky, px: Z.px }; zRuhe(); const to = { kx: Z.kx, ky: Z.ky, px: Z.px };
+		const t0 = performance.now(), dur = motionOff() ? 0 : 420;
+		await new Promise((done) => {
+			const step = (now) => {
+				const t = dur ? Math.min(1, (now - t0) / dur) : 1, k = 1 - (1 - t) ** 3;
+				Z.kx = from.kx + (to.kx - from.kx) * k; Z.ky = from.ky + (to.ky - from.ky) * k; Z.px = from.px + (to.px - from.px) * k;
+				wdk.style.rotate = (-9 * (1 - k) * (Z.px !== to.px ? 1 : 0)) + 'deg';
+				zMalen();
+				if (t < 1 && !Z.drag) requestAnimationFrame(step); else done();
+			};
+			requestAnimationFrame(step);
+		});
+		if (Z.drag) return;
+		wdk.style.rotate = '0deg';
+		welpe.classList.remove('spielt'); void welpe.offsetWidth; welpe.classList.add('spielt');
+		wdk.classList.add('freut'); say(wdk, pick(['Nochmal!', 'Gewonnen!']), 1200);
+		setTimeout(() => wdk.classList.remove('freut'), 1500);
+	};
+	const lokal = (e) => { const r = zg.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
+	knoten.addEventListener('pointerdown', (e) => { e.preventDefault(); Z.drag = true; knoten.setPointerCapture(e.pointerId); welpe.classList.remove('spielt'); });
+	knoten.addEventListener('pointermove', (e) => { if (Z.drag) ziehen(...lokal(e)); });
+	knoten.addEventListener('pointerup', loslassen); knoten.addEventListener('pointercancel', loslassen);
+	zg.querySelector('.mitzerren').addEventListener('click', async () => {
+		if (Z.drag) return;
+		Z.drag = true;
+		const a = { x: Z.kx, y: Z.ky };
+		for (let i = 0; i <= 24 && Z.drag; i++) { ziehen(a.x + i * 4.2, a.y - Math.sin(i / 3) * 10); await wait(motionOff() ? 0 : 40); }
+		await wait(motionOff() ? 0 : 500);
+		loslassen();
+	});
+	addEventListener('resize', zRuhe); zRuhe();
+
+	// ---- 4) End of the page: he sleeps on his cushion and wakes up when you arrive ----
+	const ende = document.querySelector('.ende'), schlaefer = ende.querySelector('.dk');
+	let weckTimer;
+	new IntersectionObserver((es) => {
+		if (!es[0].isIntersecting || ende.classList.contains('wach')) return;
+		clearTimeout(weckTimer);
+		weckTimer = setTimeout(async () => {
+			ende.classList.add('wach'); schlaefer.classList.remove('schlaeft');
+			if (!motionOff()) { schlaefer.classList.add('streckt'); }
+			say(schlaefer, 'Schon unten? Dann schreibt uns!', 2600);
+			await wait(2600);
+			schlaefer.classList.remove('streckt');
+			setTimeout(() => { ende.classList.remove('wach'); schlaefer.classList.add('schlaeft'); }, 12000);
+		}, 500);
+	}, { threshold: 1 }).observe(ende);
+
+})();
+</script>
+
+</body>
+</html>

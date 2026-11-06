@@ -9,7 +9,8 @@ Design mockups (open locally in a browser, they load the real photos from `publi
 [`mockups/dackel/bilderbuch.html`](mockups/dackel/bilderbuch.html) – D "Bilderbuch",
 [`mockups/dackel/lichtung.html`](mockups/dackel/lichtung.html) – E "Lichtung",
 [`mockups/dackel/dackelparade.html`](mockups/dackel/dackelparade.html) – F "Dackelparade" (animated),
-[`mockups/dackel/leckerli-suche.html`](mockups/dackel/leckerli-suche.html) – G "Leckerli-Suche" (small game on top of F).
+[`mockups/dackel/leckerli-suche.html`](mockups/dackel/leckerli-suche.html) – G "Leckerli-Suche" (small game on top of F),
+[`mockups/dackel/schabernack.html`](mockups/dackel/schabernack.html) – H "Schabernack" (humour along the scroll path, no game).
 Side-by-side overview of the heroes A–E: [`mockups/dackel/uebersicht.png`](mockups/dackel/uebersicht.png).
 
 ## 1. Decisions
@@ -265,6 +266,35 @@ or "Fertig" ends it, game graphics `aria-hidden`, status line `aria-live`. With 
 *Risk:* holes appear on top of content for a moment, and the HUD covers part of a phone screen.
 Real site: one `<LeckerliSuche>` island (≈ 300 lines, no library) plus the shared `<Dackel>` SVG
 component; can be combined with A as an easter egg.
+
+### H – "Schabernack" (humour without a game, mockup built)
+
+Toni's idea after a reference cartoon clip: humour woven into the normal scroll path instead of a
+game. Only the gag ideas are taken (a dachshund that gets longer and longer, peeing, barking, tug of
+war, a stretch); the character is our own dachshund SVG from F/G, nothing of the clip's figure or
+look is copied. Same layout and calm palette as G (`schabernack.html`):
+1. **Stretch gag ("Länge: 3,4 Dackel")**: between "Was uns wichtig ist" and "Unsere Dackel" the
+   page seems to stop – a sticky stage (section 260vh, so about 1.6 screens of scrolling). The rear
+   of the dog stands at a tree with a leg lifted (a few small drops, a puddle), the front walks on
+   with the scroll, the body stretches to the right edge and starts to tremble. At the end it snaps
+   back ("Boing!") with an overshoot, then he has a good stretch (play bow + yawn) and the page
+   moves on. Scrolling back up resets the gag. Text lines change with progress.
+2. **Barking**: peeking dogs on the cards say hello once; the dog at the letterbox in the contact
+   box barks when the section comes into view ("Wuff! Post?") and points at "Anfrage senden" /
+   the phone number on hover or focus; clicking any small dog makes it bark (bubble, no sound).
+3. **Zergeln**: a card under the whelping box; grab the rope knot and pull, the puppy leans back,
+   shakes his head and growls ("Grrr!", "Meins!"), gets dragged a little; on release the rope
+   springs back ("Gewonnen!"). "Mitzerren" button does the same for keyboard users.
+4. **Page end**: a dog sleeps on a cushion above the footer and wakes up with a stretch when you
+   arrive ("Schon unten? Dann schreibt uns!").
+Accessibility: all of it is decorative (`aria-hidden`) except the buttons; with reduced motion or
+"Animationen pausieren" the stage does not pin and the long dog is shown still. No sound (browsers
+only allow it after interaction, and it would annoy).
+*Risks:* the pinned stage is a mild form of scroll-jacking – keep it to one per page, short, and
+never on the puppy/contact path; the pee gag needs Karo's OK (it is the male, kept small).
+Real site: one `<Dehnung>` component (sticky CSS + ≈ 120 lines of script), small islands for
+tug-of-war and barking, all sharing the `<Dackel>` SVG component. Can be combined with A (only the
+stretch gag) or with G.
 
 **Recommendation: A.** It is clearly different from the Rottweiler site in every dimension (serif vs.
 grotesk, green/rust vs. orange/pink, paper vs. white, arches vs. rounded cards, calm vs. neon), fits
