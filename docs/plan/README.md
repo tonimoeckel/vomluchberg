@@ -31,6 +31,7 @@ Karo wants two more websites next to `vomluchberg.de` (Rottweiler):
 | D8 | **Training site works "auf Anfrage"**: offers/courses are listed (description, duration, price if Karo wants it shown), every CTA leads to an inquiry form (Web3Forms, `mailto:` fallback like the Rottweiler contact form). No booking, no AGB unless Karo needs them. | Matches how she works today. |
 | D9 | **Pfotentermin tenant stays live until the new training site is live**, then the tenant URL redirects (301) to the new domain and the tenant is deactivated. | No gap for her customers or Google. |
 | D10 | GDPR rules from `CLAUDE.md` apply to all sites: self-hosted fonts, no tracking, no cookies, images served from the repo (no hotlinking to Supabase). | Same legal baseline. |
+| D11 | **Dachshund design = direction A "Wiesenweg"** (slice 1 mockup `mockups/dackel/index.html`), calm and plain. **No decorative animation** and no animation toggle: only the small hover lift on cards, nothing on scroll. Directions B–H are dropped. | Karo's feedback 2026-11-06: she and two friends liked the first, plain proposal best; the animated variants are fun but could annoy visitors, and she would not switch them on. |
 
 Working names until Karo decides: **"Rauhaardackel vom Luchberg"** and **"Alltag kann Sport – Hundetraining Karolin Riesing"**.
 

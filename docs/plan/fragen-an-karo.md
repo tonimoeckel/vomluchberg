@@ -17,7 +17,8 @@ Jede Planungs-Session ergänzt nur **ihren eigenen Abschnitt**.
 - [ ] **Name der Seite:** Wie soll sie heißen? Gibt es für die Dackel einen eigenen Zwingernamen? *(Annahme: „Rauhaardackel vom Luchberg“.)*
 - [ ] **Verein:** Züchtest du die Dackel in einem Verein (z. B. Deutscher Teckelklub / VDH) mit Papieren, oder als Liebhaberzucht? Das ändert, wie wir die Zucht auf der Seite beschreiben dürfen. *(Annahme: offen, wir formulieren vorsichtig.)*
 - [ ] **Domain:** Wunschadresse? *(Annahme: wird noch gesucht, bis dahin läuft die Seite unter einer Cloudflare-Testadresse.)*
-- [ ] **Design:** Was soll die Seite ausstrahlen, wie soll sie sich vom Rottweiler-Design unterscheiden? Gibt es Farben oder Seiten, die dir gefallen? Brauchst du ein eigenes Logo? *(Annahme: wir machen einen Vorschlag zum Anschauen.)*
+- [x] **Design:** Was soll die Seite ausstrahlen, wie soll sie sich vom Rottweiler-Design unterscheiden? Gibt es Farben oder Seiten, die dir gefallen? Brauchst du ein eigenes Logo? *(Annahme: wir machen einen Vorschlag zum Anschauen.)*
+  **Antwort (06.11.):** Der erste, schlichte Entwurf „Wiesenweg“ gefällt dir (und zwei Freundinnen) am besten. Die animierten Varianten sind witzig, könnten aber nerven, darum lassen wir Animationen weg, auch als Schalter. Die Frage nach dem Logo ist noch offen.
 
 ## Hundetraining-Seite
 
