@@ -79,7 +79,7 @@ The old site was a Plesk *Web Presence Builder* site (`old_archive/vomluchberg_a
 - `migration/old-site-content.json`: all texts extracted from the old pages
 - `migration/image-map.json`: old image path → new `/uploads/…` path
 - `migration/migrate.py`: generated the initial `src/content/**` (one-off; don't re-run after Karo starts editing, because it overwrites content)
-- Old URLs are 301-redirected to the new pages (`redirects` in `astro.config.mjs`)
+- Old URLs are 301-redirected to the new pages (`redirects` in `src/sites/luchberg/site.ts`)
 
 ## Before going live (open items)
 

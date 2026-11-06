@@ -3,6 +3,12 @@
 @import '@fontsource-variable/bricolage-grotesque';
 @plugin '@tailwindcss/typography';
 
+/* Tailwind scans the whole repo for class names. Docs and migration data are not part of the
+   site, but class-like words in them would end up in the CSS inlined into every page. */
+@source not '../../docs';
+@source not '../../migration';
+@source not '../../*.md';
+
 /* ------------------------------------------------------------------
    Farbschemata
    Das aktive Schema steht als data-farbe auf <html>

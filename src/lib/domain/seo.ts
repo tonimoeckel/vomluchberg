@@ -3,9 +3,12 @@ export interface Seo { title: string; description: string | null; image: string 
 
 type Website = { name?: string | null; beschreibung?: string | null; teilenBild?: string | null } | null | undefined;
 
-/** Head meta of a page: the title gets the site name appended, missing description and image come from the site. */
-export function headMeta(seo: Partial<Seo>, website: Website): Seo & { description: string } {
-  const name = website?.name ?? 'Rottweiler vom Luchberg';
+/**
+ * Head meta of a page: the title gets the site name appended, missing description and image come from the site.
+ * `defaultName` is the site's name when its CMS config has none (from src/sites/<id>/site.ts).
+ */
+export function headMeta(seo: Partial<Seo>, website: Website, defaultName: string): Seo & { description: string } {
+  const name = website?.name ?? defaultName;
   return {
     title: seo.title && !seo.title.includes(name) ? `${seo.title} | ${name}` : seo.title || name,
     description: seo.description || website?.beschreibung || '',

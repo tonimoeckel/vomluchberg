@@ -1,51 +1,56 @@
 import { describe, expect, it } from 'vitest';
 import { headMeta, seiteSeo } from './seo';
 
+const NAME = 'Rottweiler vom Luchberg';
 const website = { name: 'Rottweiler vom Luchberg', beschreibung: 'ADRK-Zucht in Sachsen.', teilenBild: '/uploads/teilen.jpg' };
 
 describe('headMeta title', () => {
   it('appends the site name', () => {
-    expect(headMeta({ title: 'Aaron' }, website).title).toBe('Aaron | Rottweiler vom Luchberg');
+    expect(headMeta({ title: 'Aaron' }, website, NAME).title).toBe('Aaron | Rottweiler vom Luchberg');
   });
 
   it('is the site name alone without a title', () => {
-    expect(headMeta({}, website).title).toBe('Rottweiler vom Luchberg');
-    expect(headMeta({ title: '' }, website).title).toBe('Rottweiler vom Luchberg');
+    expect(headMeta({}, website, NAME).title).toBe('Rottweiler vom Luchberg');
+    expect(headMeta({ title: '' }, website, NAME).title).toBe('Rottweiler vom Luchberg');
   });
 
   it('keeps a title that already contains the site name', () => {
-    expect(headMeta({ title: 'Rottweiler vom Luchberg' }, website).title).toBe('Rottweiler vom Luchberg');
-    expect(headMeta({ title: 'Willkommen bei den Rottweiler vom Luchberg' }, website).title).toBe(
+    expect(headMeta({ title: 'Rottweiler vom Luchberg' }, website, NAME).title).toBe('Rottweiler vom Luchberg');
+    expect(headMeta({ title: 'Willkommen bei den Rottweiler vom Luchberg' }, website, NAME).title).toBe(
       'Willkommen bei den Rottweiler vom Luchberg',
     );
   });
 
   it('uses the default site name when the config has none', () => {
-    expect(headMeta({ title: 'Aaron' }, null).title).toBe('Aaron | Rottweiler vom Luchberg');
-    expect(headMeta({ title: 'Aaron' }, { name: null }).title).toBe('Aaron | Rottweiler vom Luchberg');
-    expect(headMeta({}, undefined).title).toBe('Rottweiler vom Luchberg');
+    expect(headMeta({ title: 'Aaron' }, null, NAME).title).toBe('Aaron | Rottweiler vom Luchberg');
+    expect(headMeta({ title: 'Aaron' }, { name: null }, NAME).title).toBe('Aaron | Rottweiler vom Luchberg');
+    expect(headMeta({}, undefined, NAME).title).toBe('Rottweiler vom Luchberg');
+  });
+
+  it('takes the default name from the site, not from luchberg', () => {
+    expect(headMeta({ title: 'Bonnie' }, null, 'Rauhaardackel vom Luchberg').title).toBe('Bonnie | Rauhaardackel vom Luchberg');
   });
 });
 
 describe('headMeta description', () => {
   it('prefers the page description', () => {
-    expect(headMeta({ description: 'Unser Rüde.' }, website).description).toBe('Unser Rüde.');
+    expect(headMeta({ description: 'Unser Rüde.' }, website, NAME).description).toBe('Unser Rüde.');
   });
 
   it('falls back to the site description, then to empty', () => {
-    expect(headMeta({ description: null }, website).description).toBe('ADRK-Zucht in Sachsen.');
-    expect(headMeta({ description: '' }, website).description).toBe('ADRK-Zucht in Sachsen.');
-    expect(headMeta({}, { beschreibung: null }).description).toBe('');
-    expect(headMeta({}, null).description).toBe('');
+    expect(headMeta({ description: null }, website, NAME).description).toBe('ADRK-Zucht in Sachsen.');
+    expect(headMeta({ description: '' }, website, NAME).description).toBe('ADRK-Zucht in Sachsen.');
+    expect(headMeta({}, { beschreibung: null }, NAME).description).toBe('');
+    expect(headMeta({}, null, NAME).description).toBe('');
   });
 });
 
 describe('headMeta image', () => {
   it('prefers the page image, then the site share image, else none', () => {
-    expect(headMeta({ image: '/uploads/aaron.jpg' }, website).image).toBe('/uploads/aaron.jpg');
-    expect(headMeta({ image: null }, website).image).toBe('/uploads/teilen.jpg');
-    expect(headMeta({}, { teilenBild: null }).image).toBe(null);
-    expect(headMeta({}, null).image).toBe(null);
+    expect(headMeta({ image: '/uploads/aaron.jpg' }, website, NAME).image).toBe('/uploads/aaron.jpg');
+    expect(headMeta({ image: null }, website, NAME).image).toBe('/uploads/teilen.jpg');
+    expect(headMeta({}, { teilenBild: null }, NAME).image).toBe(null);
+    expect(headMeta({}, null, NAME).image).toBe(null);
   });
 });
 
