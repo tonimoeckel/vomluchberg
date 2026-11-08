@@ -51,6 +51,13 @@ export const FARBSCHEMATA: readonly Farbschema[] = [
     themeColor: { light: '#f3ede3', dark: '#1a1410' },
   },
   {
+    id: 'pink',
+    label: 'Pink',
+    tinaLabel: 'Pink (Navy mit pinken Highlights)',
+    swatch: punkt('#fbf6f5', '#193450', '#c2185b'),
+    themeColor: { light: '#fbf6f5', dark: '#0f1f33' },
+  },
+  {
     id: 'kreide',
     label: 'Kreide',
     tinaLabel: 'Kreide (Weiß & Grafit, Kupfer-Akzente)',
