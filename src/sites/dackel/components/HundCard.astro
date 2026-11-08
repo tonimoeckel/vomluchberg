@@ -1,0 +1,21 @@
+---
+import type { HundListItem } from '../lib/data';
+import { lebensdatenKarte, istErinnerung } from '../../../lib/domain/hund';
+import { dackelHunde, dackelKurzinfo } from '../../../lib/domain/dackel';
+interface Props { hund: HundListItem; ueberschrift?: 'h2' | 'h3' }
+const { hund, ueberschrift: Tag = 'h3' } = Astro.props;
+const badge = dackelHunde.geschlechtBadge(hund);
+const tag = [badge?.label, hund.kategorie === 'deckrude' ? dackelHunde.kategorieLabel(hund.kategorie) : null].filter(Boolean).join(' · ');
+const meta = [dackelKurzinfo(hund), lebensdatenKarte(hund).wurftag].filter(Boolean).join(' · ');
+---
+<a href={dackelHunde.hundUrl(hund._sys.filename)} class="group block no-underline">
+	<div class="card-lift">
+		{hund.bild
+			? <img src={hund.bild} alt={hund.rufname || hund.name} width="1600" height="1060" loading="lazy" decoding="async"
+				class:list={['arch aspect-[3/4] w-full object-cover', istErinnerung(hund) && 'grayscale-[35%]']} />
+			: <div class="arch aspect-[3/4] w-full bg-surface-2"></div>}
+	</div>
+	{tag && <p class="mt-4 text-[0.78rem] font-bold uppercase tracking-[0.06em] text-accent-ink">{tag}</p>}
+	<Tag class="mt-1 text-[1.7rem] group-hover:underline group-hover:decoration-sun group-hover:decoration-2 group-hover:underline-offset-4">{hund.rufname || hund.name}</Tag>
+	{meta && <p class="text-[0.95rem] text-muted">{meta}</p>}
+</a>

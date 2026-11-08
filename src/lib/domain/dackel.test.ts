@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   dackelFarben, dackelGroessen, dackelHunde, dackelKategorien, dackelKurzinfo, dackelSteckbrief, dackelWuerfe,
-  farbeLabel, groesseLabel, welpenStatus,
+  anfrageBetreff, betonteTeile, farbeLabel, groesseLabel, welpenStatus,
 } from './dackel';
 
 describe('dackelKategorien', () => {
@@ -100,5 +100,27 @@ describe('welpenStatus', () => {
     expect(welpenStatus([{ titel: 'A-Wurf', status: 'vergangen' }], ' Derzeit keine Welpen ')).toBe('Derzeit keine Welpen');
     expect(welpenStatus([], '')).toBeNull();
     expect(welpenStatus([])).toBeNull();
+  });
+});
+
+describe('betonteTeile', () => {
+  it('marks the starred parts', () => {
+    expect(betonteTeile('Rauhaardackel, *groß geworden* mitten im Rudel.')).toEqual([
+      { text: 'Rauhaardackel, ', betont: false },
+      { text: 'groß geworden', betont: true },
+      { text: ' mitten im Rudel.', betont: false },
+    ]);
+  });
+
+  it('keeps text without or with an unmatched asterisk as it is', () => {
+    expect(betonteTeile('Welpen')).toEqual([{ text: 'Welpen', betont: false }]);
+    expect(betonteTeile('5* Hotel')).toEqual([{ text: '5* Hotel', betont: false }]);
+  });
+});
+
+describe('anfrageBetreff', () => {
+  it('names the breed and the topic', () => {
+    expect(anfrageBetreff('Anfrage zu einem Welpen')).toBe('Anfrage Rauhaardackel: Anfrage zu einem Welpen');
+    expect(anfrageBetreff(' ')).toBe('Anfrage Rauhaardackel');
   });
 });

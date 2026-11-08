@@ -1,0 +1,30 @@
+---
+// Dog list (automatic): grouped by category with titles, or plain cards ("karten", start page).
+import { tinaField } from '@tinacms/astro/tina-field';
+import HundCard from '../HundCard.astro';
+import SectionHead from '../ui/SectionHead.astro';
+import { listHunde, type BlockOf } from '../../lib/data';
+import { dackelHunde } from '../../../../lib/domain/dackel';
+interface Props { data: BlockOf<'Hunde'> }
+const { data } = Astro.props;
+const { gruppen, zeigeAlleLink } = dackelHunde.hundeUebersicht(await listHunde(), data.kategorie);
+const karten = data.variante === 'karten';
+const anzeige = karten ? [{ kategorie: 'alle', titel: null, hunde: gruppen.flatMap((g) => g.hunde) }] : gruppen;
+---
+<section class="py-14 sm:py-18">
+	<div class="container-page">
+		<SectionHead kicker={data.kicker} titel={data.ueberschrift} text={data.text}
+			fields={{ kicker: tinaField(data, 'kicker'), titel: tinaField(data, 'ueberschrift'), text: tinaField(data, 'text') }} />
+		<div class="space-y-16">
+			{anzeige.map((g) => (
+				<div>
+					{g.titel && <h2 class="mb-8 text-[clamp(1.6rem,3vw,2.1rem)]">{g.titel}</h2>}
+					<ul class="grid gap-10 sm:grid-cols-2 md:grid-cols-3 md:gap-8">
+						{g.hunde.map((h) => <li><HundCard hund={h} ueberschrift={g.titel ? 'h3' : data.ueberschrift ? 'h3' : 'h2'} /></li>)}
+					</ul>
+				</div>
+			))}
+		</div>
+		{zeigeAlleLink && !karten && <p class="mt-10"><a href={dackelHunde.hundeListeUrl} class="btn-secondary">Alle unsere Dackel</a></p>}
+	</div>
+</section>

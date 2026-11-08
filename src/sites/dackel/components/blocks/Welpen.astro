@@ -1,0 +1,43 @@
+---
+// Dark-green puppy panel with a status pill (current/planned litter or the settings' "Hinweis").
+import { tinaField } from '@tinacms/astro/tina-field';
+import { getConfig, listWuerfe, type BlockOf } from '../../lib/data';
+import { welpenStatus } from '../../../../lib/domain/dackel';
+interface Props { data: BlockOf<'Welpen'> }
+const { data } = Astro.props;
+const config = (await getConfig()).data?.dackelConfig;
+const status = welpenStatus(await listWuerfe(), config?.hinweis);
+const bilder = (data.bilder ?? []).filter((b) => !!b?.bild).map((b) => b!).slice(0, 3);
+const buttons = (data.buttons ?? []).filter((b) => b !== null);
+---
+<section class="py-10 sm:py-14">
+	<div class="container-page">
+		<div class:list={['grid items-center gap-8 rounded-[2rem] bg-dark px-6 py-10 text-on-dark sm:px-10 lg:p-14', bilder.length && 'lg:grid-cols-2 lg:gap-12']}>
+			<div>
+				{data.kicker && <p class="eyebrow !text-sun" data-tina-field={tinaField(data, 'kicker')}>{data.kicker}</p>}
+				{data.titel && <h2 class="mt-2 text-[clamp(1.9rem,4vw,2.6rem)]" data-tina-field={tinaField(data, 'titel')}>{data.titel}</h2>}
+				{data.text && <p class="mt-4 text-on-dark/90" data-tina-field={tinaField(data, 'text')}>{data.text}</p>}
+				{status && (
+					<p class="mt-6 inline-flex items-center gap-2 rounded-full border border-on-dark/30 px-3.5 py-1.5 text-[0.95rem]" data-tina-field={config ? tinaField(config, 'hinweis') : undefined}>
+						<span class="size-2.5 flex-none rounded-full bg-sun" aria-hidden="true"></span>{status}
+					</p>
+				)}
+				{buttons.length > 0 && (
+					<div class="mt-7 flex flex-wrap gap-3">
+						{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class="btn-sun">{b.label}</a>)}
+					</div>
+				)}
+			</div>
+			{bilder.length > 0 && (
+				<ul class="grid grid-cols-2 gap-3" data-tina-field={tinaField(data, 'bilder')}>
+					{bilder.map((b, i) => (
+						<li class:list={[i === 0 && 'col-span-2']} data-tina-field={tinaField(b)}>
+							<img src={b.bild!} alt={b.beschreibung ?? ''} width="1600" height="1060" loading="lazy" decoding="async"
+								class:list={['w-full rounded-2xl object-cover', i === 0 ? 'aspect-video' : 'aspect-square']} />
+						</li>
+					))}
+				</ul>
+			)}
+		</div>
+	</div>
+</section>

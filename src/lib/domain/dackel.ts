@@ -97,3 +97,18 @@ export function welpenStatus(wuerfe: readonly WurfInfo[], hinweis?: string | nul
   if (geplant) return `In Planung: ${geplant.titel}`;
   return hinweis?.trim() || null;
 }
+
+export interface TextTeil { text: string; betont: boolean }
+
+/**
+ * Splits a heading at single asterisks: "Rauhaardackel, *groß geworden* mitten im Rudel." → the
+ * starred part is shown in italics. An unmatched asterisk is kept as text.
+ */
+export function betonteTeile(text: string): TextTeil[] {
+  const teile = text.split('*');
+  if (teile.length % 2 === 0) return [{ text, betont: false }];
+  return teile.map((t, i) => ({ text: t, betont: i % 2 === 1 })).filter((t) => t.text !== '');
+}
+
+/** Mail subject of an inquiry: "Anfrage Rauhaardackel" plus the chosen topic. */
+export const anfrageBetreff = (thema: string) => `Anfrage Rauhaardackel${thema.trim() ? `: ${thema.trim()}` : ''}`;
