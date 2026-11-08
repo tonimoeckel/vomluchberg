@@ -35,9 +35,7 @@ kommen in den passenden Abschnitt.
 - [ ] **Würfe:** Gab es schon Dackelwürfe (Buchstabe, Datum, Eltern), und ist ein nächster Wurf geplant? Zu welchem Wurf gehören die Welpenfotos? *(Annahme: noch keine Wurfseiten. Die Welpenfotos zeigen wir als Galerie, bei „Welpen“ steht „Gerade sind keine Welpen da, meldet euch gern“.)*
 - [ ] **Dackeltext auf der Rottweiler-Seite:** Darf dein Dackeltext auf die neue Dackel-Seite umziehen? Auf vomluchberg.de bleiben dann bei „Unsere Rauhaardackel“ nur der Satz über Hanni und Bonnie, zwei Fotos und ein Link zur Dackel-Seite. *(Annahme: ja, sobald die Dackel-Seite online ist. Doppelte Texte auf zwei Seiten mag Google nicht.)*
 - [ ] **Mehr Text (freiwillig):** Magst du noch etwas zur Aufzucht schreiben, z. B. seit wann du Dackel hast, was die Welpen beim Auszug mitbekommen und wie du die neuen Familien aussuchst? *(Annahme: wir starten mit deinem bisherigen Text.)*
-- [ ] **Welpenfotos:** Auf der Welpen-Seite zeigen wir die Welpenfotos unter „Aus der Kinderstube – so wachsen unsere Kleinen auf“. Sind das alles Welpen aus deiner Zucht, die bei dir aufgewachsen sind? *(Annahme: ja. Sonst nehmen wir die anderen Fotos dort heraus.)*
 - [ ] **Steckbrief der Dackel:** Auf den Seiten von Hanni, Bonnie und dem Vater gibt es einen kleinen Steckbrief (Größe, Farbe, Wurftag, Eltern, Abstammung, Brustumfang, Gesundheit). Was davon magst du angeben? Leere Felder werden einfach nicht angezeigt. *(Annahme: vorerst nur „Standard-Rauhaardackel“.)*
-- [ ] **Hinweis auf die Rottweiler:** Im Fuß der Dackel-Seite steht „Wir züchten auch Rottweiler im ADRK: Rottweiler vom Luchberg →“ mit dem Foto von dir, Bonnie und Baja. Passt das so? *(Annahme: ja. Text und Foto kannst du unter „Dackel · Einstellungen“ selbst ändern.)*
 
 ## 3. Inhalte der Trainingsseite
 
@@ -77,3 +75,7 @@ kommen in den passenden Abschnitt.
 
 - [x] **Design der Dackel-Seite:** Was soll die Seite ausstrahlen, wie soll sie sich vom Rottweiler-Design unterscheiden?
   **Antwort (06.11.):** Der erste, schlichte Entwurf „Wiesenweg“ gefällt dir (und zwei Freundinnen) am besten. Die animierten Varianten sind witzig, könnten aber nerven, darum lassen wir Animationen weg, auch als Schalter.
+- [x] **Welpenfotos:** Sind die Welpenfotos auf der Welpen-Seite alle aus deiner Zucht?
+  **Antwort (08.11., über Toni):** Ja, die Welpenfotos sind von dir.
+- [x] **Hinweis auf die Rottweiler:** Passt im Fuß der Dackel-Seite „Wir züchten auch Rottweiler im ADRK: Rottweiler vom Luchberg →“ mit dem Foto von dir, Bonnie und Baja?
+  **Antwort (08.11., über Toni):** Ja.
