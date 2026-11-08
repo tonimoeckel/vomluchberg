@@ -31,7 +31,9 @@ const eltern = data ? [
 						{eltern.map((e) => (
 							<div class="grid gap-1 border-b border-border py-3 sm:grid-cols-[9rem_1fr] sm:gap-4" data-tina-field={tinaField(data, e.feld as never)}>
 								<dt class="font-display italic text-accent-ink">{e.label}</dt>
-								<dd>{e.link ? <a href={e.link} target="_blank" rel="noopener" class="link-sun">{e.name} ↗</a> : e.name}</dd>
+								<dd>{!e.link ? e.name : e.link.startsWith('/')
+									? <a href={e.link} class="link-sun">{e.name} →</a>
+									: <a href={e.link} target="_blank" rel="noopener" class="link-sun">{e.name} ↗</a>}</dd>
 							</div>
 						))}
 						{data.wurfdatum && (

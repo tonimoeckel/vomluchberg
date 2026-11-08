@@ -9,7 +9,7 @@ import { wurfUrlFuer } from './wurf';
 export const dackelHunde = hundRegeln({
   kategorien: [
     { value: 'zucht', label: 'Unsere Hündinnen' },
-    { value: 'deckrude', label: 'Der Vater unserer Dackel' },
+    { value: 'deckrude', label: 'Die Väter unserer Würfe' },
     { value: 'erinnerung', label: 'In Erinnerung' },
   ],
   standardKategorie: 'zucht',
@@ -24,36 +24,47 @@ export const dackelKategorien = dackelHunde.kategorien;
 /** Litters ("Würfe") are listed on /welpen – the word families search for. */
 export const dackelWuerfe = wurfUrlFuer('/welpen');
 
-/** Coat colours (dogs and puppies). A fixed list keeps the cards consistent. */
+/** Coat colours (dogs and puppies), in Karo's words. A fixed list keeps the cards consistent. */
 export const dackelFarben = [
-  { value: 'wildschweinfarben', label: 'wildschweinfarben' },
-  { value: 'duerrlaubfarben', label: 'dürrlaubfarben' },
+  { value: 'saufarben', label: 'saufarben' },
+  { value: 'dunkelsaufarben', label: 'dunkelsaufarben' },
+  { value: 'schoko-braun', label: 'schoko-braun' },
+  { value: 'black-tan', label: 'black-tan' },
   { value: 'rot', label: 'rot' },
-  { value: 'schwarz-rot', label: 'schwarz-rot' },
+  { value: 'duerrlaubfarben', label: 'dürrlaubfarben' },
   { value: 'sonstige', label: 'sonstige' },
 ] as const;
 
-/**
- * Size classes (by chest girth). Only shown once Karo has measured a dog: without a value the site
- * names no class (Karo, 08.11.: they fit the standard; Zwerg or Kaninchen depends on the girth).
- */
+/** Size classes (by chest girth). Without a value the site names no class. */
 export const dackelGroessen = [
-  { value: 'standard', label: 'Standard-Rauhaardackel' },
-  { value: 'zwerg', label: 'Zwerg-Rauhaardackel' },
-  { value: 'kaninchen', label: 'Kaninchen-Rauhaardackel' },
+  { value: 'standard', label: 'Standard' },
+  { value: 'zwerg', label: 'Zwerg' },
+  { value: 'kaninchen', label: 'Kaninchen' },
+] as const;
+
+/** Coat types; a missing one counts as wire-haired (the site's breed). Fathers may differ (Pietri). */
+export const dackelHaar = [
+  { value: 'rauhaar', label: 'Rauhaar' },
+  { value: 'kurzhaar', label: 'Kurzhaar' },
+  { value: 'langhaar', label: 'Langhaar' },
 ] as const;
 
 const label = (options: readonly { value: string; label: string }[], value?: string | null) =>
   options.find((o) => o.value === value)?.label ?? '';
 
-/** "wildschweinfarben"; empty for unknown values and for "sonstige" (says nothing on a card). */
+/** "saufarben"; empty for unknown values and for "sonstige" (says nothing on a card). */
 export const farbeLabel = (farbe?: string | null) => (farbe === 'sonstige' ? '' : label(dackelFarben, farbe));
 
-/** "Zwerg-Rauhaardackel"; empty when no size class is set. */
-export const groesseLabel = (groesse?: string | null) => label(dackelGroessen, groesse);
+/** "Standard-Rauhaardackel", "Zwerg-Kurzhaardackel"; just "Rauhaardackel" without a size class. */
+export function dackelBezeichnung(hund: { groesse?: string | null; haar?: string | null }): string {
+  const haar = label(dackelHaar, hund.haar) || 'Rauhaar';
+  const groesse = label(dackelGroessen, hund.groesse);
+  return `${groesse ? `${groesse}-` : ''}${haar}dackel`;
+}
 
 export interface DackelInfo {
   groesse?: string | null;
+  haar?: string | null;
   farbe?: string | null;
   geboren?: string | null;
   verstorben?: string | null;
@@ -71,7 +82,7 @@ export interface SteckbriefZeile { feld: keyof DackelInfo; label: string; wert: 
 /** Profile rows of a dog's detail page, in display order; empty values are skipped. */
 export function dackelSteckbrief(hund: DackelInfo): SteckbriefZeile[] {
   const zeilen: (SteckbriefZeile | null)[] = [
-    { feld: 'groesse', label: 'Größe', wert: groesseLabel(hund.groesse) },
+    { feld: 'groesse', label: 'Rasse', wert: dackelBezeichnung(hund) },
     { feld: 'farbe', label: 'Farbe', wert: farbeLabel(hund.farbe) },
     { feld: 'geboren', label: 'Wurftag', wert: lebensspanne(hund) ?? '' },
     { feld: 'eltern', label: 'Eltern', wert: hund.eltern ?? '' },
@@ -83,9 +94,9 @@ export function dackelSteckbrief(hund: DackelInfo): SteckbriefZeile[] {
   return zeilen.filter((z): z is SteckbriefZeile => !!z && z.wert.trim() !== '');
 }
 
-/** Short line under a dog's name on cards: "Rauhaardackel · wildschweinfarben" (size class when set). */
-export const dackelKurzinfo = (hund: Pick<DackelInfo, 'groesse' | 'farbe'>) =>
-  [groesseLabel(hund.groesse) || 'Rauhaardackel', farbeLabel(hund.farbe)].filter(Boolean).join(' · ');
+/** Short line under a dog's name on cards: "Standard-Rauhaardackel · saufarben". */
+export const dackelKurzinfo = (hund: Pick<DackelInfo, 'groesse' | 'haar' | 'farbe'>) =>
+  [dackelBezeichnung(hund), farbeLabel(hund.farbe)].filter(Boolean).join(' · ');
 
 type WurfInfo = { titel: string; status?: string | null };
 

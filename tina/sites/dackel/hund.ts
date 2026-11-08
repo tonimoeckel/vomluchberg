@@ -1,5 +1,5 @@
 import type { Collection } from 'tinacms';
-import { dackelFarben, dackelGroessen, dackelHunde, dackelKategorien } from '../../../src/lib/domain/dackel';
+import { dackelFarben, dackelGroessen, dackelHaar, dackelHunde, dackelKategorien } from '../../../src/lib/domain/dackel';
 import { slugify } from '../../../src/lib/domain/slug';
 import { galerieFeld, hundFelder } from '../../collections/fields';
 import { siteRouter } from '../router';
@@ -23,7 +23,8 @@ export const DackelHundCollection: Collection = {
     hundFelder.geschlecht,
     hundFelder.kategorie(dackelKategorien),
     hundFelder.reihenfolge,
-    { type: 'string', name: 'groesse', label: 'Größe', description: 'Erst auswählen, wenn der Brustumfang gemessen ist – leer = keine Angabe', options: [...dackelGroessen] },
+    { type: 'string', name: 'groesse', label: 'Größe', description: 'Standard, Zwerg oder Kaninchen – leer = keine Angabe', options: [...dackelGroessen] },
+    { type: 'string', name: 'haar', label: 'Haarart', description: 'Leer = Rauhaar', options: [...dackelHaar] },
     { type: 'string', name: 'farbe', label: 'Farbe', options: [...dackelFarben] },
     hundFelder.geboren,
     hundFelder.verstorben,

@@ -24,14 +24,16 @@ blocks:
     bildPosition: links
     hervorheben: true
     inhalt: |
-      Unsere Rauhaardackel züchten wir ausschließlich für Liebhaber und Familien, wir achten dabei auf Gesundheit und Wesen.
+      Die Dackelzucht ist eine reine Hobbyzucht, die mit viel Liebe, Herz und Verstand geführt wird. Im Vordergrund stehen das Wesen und die Gesundheit unserer Hunde.
+
+      Unsere Rauhaardackel züchten wir ausschließlich für Liebhaber und Familien.
 
       Auch die Kleinen wachsen mit Familienanschluss und im Rudel auf. Sie lernen alles Wichtige für ihren neuen Lebensweg kennen.
   - _template: text
     kicker: Jagdliche Wurzeln
     ueberschrift: Familienhund mit jagdlicher Abstammung
-    bild: /uploads/dackel/junghund-auf-der-wiese.jpg
-    bildunterschrift: Junger Rauhaardackel auf der Löwenzahnwiese
+    bild: /uploads/dackel/hanni-auf-der-wiese.jpg
+    bildunterschrift: Hanni auf der Löwenzahnwiese
     bildPosition: rechts
     inhalt: |
       Wir bilden unsere Dackelchen nicht zur Jagd aus. Das heißt allerdings nicht, dass sie das nicht dennoch können – die Elterntiere haben jagdliche Abstammungen.

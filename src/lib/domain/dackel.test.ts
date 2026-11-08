@@ -1,14 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import {
-  dackelFarben, dackelGroessen, dackelHunde, dackelKategorien, dackelKurzinfo, dackelSteckbrief, dackelWuerfe,
-  anfrageBetreff, betonteTeile, farbeLabel, groesseLabel, welpenStatus,
+  dackelFarben, dackelGroessen, dackelHaar, dackelHunde, dackelKategorien, dackelKurzinfo, dackelSteckbrief, dackelWuerfe,
+  anfrageBetreff, betonteTeile, dackelBezeichnung, farbeLabel, welpenStatus,
 } from './dackel';
 
 describe('dackelKategorien', () => {
   it('lists the categories of the dachshund site in display order', () => {
     expect(dackelKategorien).toEqual([
       { value: 'zucht', label: 'Unsere Hündinnen' },
-      { value: 'deckrude', label: 'Der Vater unserer Dackel' },
+      { value: 'deckrude', label: 'Die Väter unserer Würfe' },
       { value: 'erinnerung', label: 'In Erinnerung' },
     ]);
   });
@@ -37,16 +37,16 @@ describe('dackelWuerfe', () => {
 
 describe('options', () => {
   it('has unique values', () => {
-    for (const list of [dackelFarben, dackelGroessen]) {
+    for (const list of [dackelFarben, dackelGroessen, dackelHaar]) {
       expect(new Set(list.map((o) => o.value)).size).toBe(list.length);
     }
   });
 });
 
-describe('farbeLabel / groesseLabel', () => {
-  it('returns the labels', () => {
+describe('farbeLabel', () => {
+  it('returns the label', () => {
     expect(farbeLabel('duerrlaubfarben')).toBe('dürrlaubfarben');
-    expect(groesseLabel('zwerg')).toBe('Zwerg-Rauhaardackel');
+    expect(farbeLabel('saufarben')).toBe('saufarben');
   });
 
   it('says nothing for unknown colours and "sonstige"', () => {
@@ -54,25 +54,32 @@ describe('farbeLabel / groesseLabel', () => {
     expect(farbeLabel('lila')).toBe('');
     expect(farbeLabel('sonstige')).toBe('');
   });
+});
 
-  it('names no size class when none is set', () => {
-    expect(groesseLabel(undefined)).toBe('');
-    expect(groesseLabel('')).toBe('');
+describe('dackelBezeichnung', () => {
+  it('combines size class and coat', () => {
+    expect(dackelBezeichnung({ groesse: 'standard' })).toBe('Standard-Rauhaardackel');
+    expect(dackelBezeichnung({ groesse: 'zwerg', haar: 'kurzhaar' })).toBe('Zwerg-Kurzhaardackel');
+  });
+
+  it('names no size class when none is set and defaults to wire-haired', () => {
+    expect(dackelBezeichnung({})).toBe('Rauhaardackel');
+    expect(dackelBezeichnung({ groesse: '', haar: 'langhaar' })).toBe('Langhaardackel');
   });
 });
 
 describe('dackelSteckbrief', () => {
   it('lists only filled rows, in display order', () => {
-    expect(dackelSteckbrief({ farbe: 'wildschweinfarben', geboren: '2020-04-03T00:00:00.000Z', brustumfang: '34 cm' })).toEqual([
-      { feld: 'farbe', label: 'Farbe', wert: 'wildschweinfarben' },
-      { feld: 'geboren', label: 'Wurftag', wert: '03.04.2020' },
+    expect(dackelSteckbrief({ groesse: 'standard', farbe: 'saufarben', geboren: '2020-09-30T00:00:00.000Z', brustumfang: '34 cm' })).toEqual([
+      { feld: 'groesse', label: 'Rasse', wert: 'Standard-Rauhaardackel' },
+      { feld: 'farbe', label: 'Farbe', wert: 'saufarben' },
+      { feld: 'geboren', label: 'Wurftag', wert: '30.09.2020' },
       { feld: 'brustumfang', label: 'Brustumfang', wert: '34 cm' },
     ]);
   });
 
-  it('skips blank strings', () => {
-    expect(dackelSteckbrief({ eltern: '  ', abstammung: '' })).toEqual([]);
-    expect(dackelSteckbrief({ groesse: 'standard' }).map((z) => z.wert)).toEqual(['Standard-Rauhaardackel']);
+  it('skips blank strings but always names the breed', () => {
+    expect(dackelSteckbrief({ eltern: '  ', abstammung: '' })).toEqual([{ feld: 'groesse', label: 'Rasse', wert: 'Rauhaardackel' }]);
   });
 
   it('shows the owner only for dogs that are not ours', () => {
@@ -84,9 +91,9 @@ describe('dackelSteckbrief', () => {
 });
 
 describe('dackelKurzinfo', () => {
-  it('joins size and colour', () => {
+  it('joins breed and colour', () => {
     expect(dackelKurzinfo({ farbe: 'rot' })).toBe('Rauhaardackel · rot');
-    expect(dackelKurzinfo({ groesse: 'zwerg' })).toBe('Zwerg-Rauhaardackel');
+    expect(dackelKurzinfo({ groesse: 'zwerg', haar: 'kurzhaar', farbe: 'black-tan' })).toBe('Zwerg-Kurzhaardackel · black-tan');
     expect(dackelKurzinfo({})).toBe('Rauhaardackel');
   });
 });

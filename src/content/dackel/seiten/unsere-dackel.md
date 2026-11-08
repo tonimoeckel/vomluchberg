@@ -1,11 +1,11 @@
 ---
 titel: Unsere Dackel
-beschreibung: Lernt Hanni, Bonnie und Monty, den Vater unserer Dackel, kennen – unsere Rauhaardackel sind absolute Familienhunde, gut sozialisiert und erzogen.
+beschreibung: Lernt Hanni, Bonnie und die Väter unserer Würfe kennen – unsere Rauhaardackel sind absolute Familienhunde, gut sozialisiert und erzogen.
 blocks:
   - _template: hero
     variante: schmal
     kicker: Unsere Dackel
-    titel: Hanni, Bonnie und der Vater unserer Dackel
+    titel: Hanni, Bonnie und die Väter unserer Würfe
     untertitel: Zu unserem Rudel gehören unsere beiden Rauhaardackel-Damen Hanni und Bonnie. Unsere Rauhaardackel sind absolute Familienhunde, gut sozialisiert und erzogen. Sie dürfen oftmals als „Lehrhund“ auf dem Hundeplatz mithelfen – das bereitet allen, vor allem den Kindern, große Freude.
   - _template: hunde
     kategorie: alle

@@ -24,24 +24,28 @@ blocks:
     variante: band
     ueberschrift: Fotos unserer Dackel
     bilder:
-      - bild: /uploads/dackel/welpe-mit-spielzeug-1.jpg
-        beschreibung: Dackelwelpe mit gelbem Spielzeug im Gras
-      - bild: /uploads/dackel/junghund-auf-der-wiese.jpg
-        beschreibung: Junger Rauhaardackel auf der Löwenzahnwiese
+      - bild: /uploads/dackel/a-wurf-alfons.jpg
+        beschreibung: Alfons aus dem A-Wurf mit gelbem Spielzeug
+      - bild: /uploads/dackel/hanni-auf-der-wiese.jpg
+        beschreibung: Hanni auf der Löwenzahnwiese
       - bild: /uploads/dackel/zwei-junghunde-auf-dem-hof.jpg
         beschreibung: Zwei junge Rauhaardackel sitzen auf dem Hof
       - bild: /uploads/dackel/junghund-am-weidenkorb.jpg
         beschreibung: Junger Rauhaardackel schnuppert an einem Weidenkorb
       - bild: /uploads/dackel/welpe-auf-dem-teppich.jpg
         beschreibung: Dackelwelpe liegt auf dem Teppich
-      - bild: /uploads/dackel/welpe-auf-der-matte.jpg
-        beschreibung: Dackelwelpe klettert über eine Matte
+      - bild: /uploads/dackel/a-wurf-arthur.jpg
+        beschreibung: Arthur aus dem A-Wurf klettert über eine Matte
       - bild: /uploads/dackel/welpe-liegt-im-gras.jpg
         beschreibung: Dackelwelpe liegt in der Sonne im Gras
-      - bild: /uploads/dackel/dackel-in-der-loewenzahnwiese.jpg
-        beschreibung: Rauhaardackel liegt in der Löwenzahnwiese
+      - bild: /uploads/dackel/gustav-in-der-loewenzahnwiese.jpg
+        beschreibung: Gustav liegt in der Löwenzahnwiese
       - bild: /uploads/dackel/dackel-sitzt-im-garten.jpg
         beschreibung: Rauhaardackel sitzt im Garten
+  - _template: text
+    kicker: Hobbyzucht
+    inhalt: |
+      > Die Dackelzucht ist eine reine Hobbyzucht, die mit viel Liebe, Herz und Verstand geführt wird. Im Vordergrund stehen das Wesen und die Gesundheit unserer Hunde.
   - _template: highlights
     kicker: Was uns wichtig ist
     ueberschrift: Familienhunde mit Dackelkopf
@@ -54,9 +58,9 @@ blocks:
         text: Wir bilden unsere Dackel nicht zur Jagd aus – die Elterntiere haben aber jagdliche Abstammungen. Bei uns sind sie absolute Familienhunde.
   - _template: hunde
     kicker: Unsere Dackel
-    ueberschrift: Hanni, Bonnie und der Vater unserer Dackel
+    ueberschrift: Hanni und Bonnie
     text: 'Gut sozialisiert und erzogen: Unsere Rauhaardackel helfen oft als „Lehrhund“ auf dem Hundeplatz mit – vor allem die Kinder haben daran große Freude.'
-    kategorie: alle
+    kategorie: zucht
     variante: karten
   - _template: welpen
     kicker: Welpen
@@ -65,10 +69,10 @@ blocks:
     bilder:
       - bild: /uploads/dackel/welpe-pirscht-durchs-gras.jpg
         beschreibung: Dackelwelpe pirscht durchs Gras
-      - bild: /uploads/dackel/welpe-mit-spielzeug-2.jpg
-        beschreibung: Dackelwelpe mit gelbem Spielzeug
-      - bild: /uploads/dackel/welpe-mit-spielzeug-1.jpg
-        beschreibung: Dackelwelpe schaut in die Kamera
+      - bild: /uploads/dackel/a-wurf-alma.jpg
+        beschreibung: Alma aus dem A-Wurf mit gelbem Spielzeug
+      - bild: /uploads/dackel/a-wurf-alfons.jpg
+        beschreibung: Alfons aus dem A-Wurf mit gelbem Spielzeug
     buttons:
       - label: Jetzt unverbindlich anfragen
         link: /kontakt

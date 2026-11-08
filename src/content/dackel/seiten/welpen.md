@@ -1,12 +1,12 @@
 ---
 titel: Welpen
-beschreibung: Ihr sucht einen Rauhaardackel-Welpen in Sachsen? Hier findet ihr unsere geplanten und aktuellen Würfe – Anfragen nehmen wir gern entgegen.
+beschreibung: Ihr sucht einen Rauhaardackel-Welpen in Sachsen? Hier findet ihr unsere Würfe – Anfragen nehmen wir gern entgegen.
 blocks:
   - _template: hero
     variante: schmal
     kicker: Welpen & Würfe
     titel: Rauhaardackel-Welpen vom Luchberg
-    untertitel: Unsere Rauhaardackel züchten wir ausschließlich für Liebhaber und Familien. Auch die Kleinen wachsen mit Familienanschluss und im Rudel auf und lernen alles Wichtige für ihren neuen Lebensweg kennen.
+    untertitel: Die Dackelzucht ist eine reine Hobbyzucht, die mit viel Liebe, Herz und Verstand geführt wird. Im Vordergrund stehen das Wesen und die Gesundheit unserer Hunde. Auch die Kleinen wachsen mit Familienanschluss und im Rudel auf und lernen alles Wichtige für ihren neuen Lebensweg kennen.
   - _template: wuerfe
     kicker: Würfe
     ueberschrift: Unsere Würfe
@@ -18,22 +18,20 @@ blocks:
     bilder:
       - bild: /uploads/dackel/welpe-pirscht-durchs-gras.jpg
         beschreibung: Dackelwelpe pirscht durchs Gras
-      - bild: /uploads/dackel/welpe-mit-spielzeug-1.jpg
-        beschreibung: Dackelwelpe mit gelbem Spielzeug im Gras
-      - bild: /uploads/dackel/welpe-mit-spielzeug-2.jpg
-        beschreibung: Dackelwelpe kaut auf einem gelben Spielzeug
+      - bild: /uploads/dackel/a-wurf-alfons.jpg
+        beschreibung: Alfons aus dem A-Wurf mit gelbem Spielzeug
+      - bild: /uploads/dackel/a-wurf-alma.jpg
+        beschreibung: Alma aus dem A-Wurf mit gelbem Spielzeug
       - bild: /uploads/dackel/welpe-liegt-im-gras.jpg
         beschreibung: Dackelwelpe liegt in der Sonne im Gras
       - bild: /uploads/dackel/welpe-auf-dem-teppich.jpg
         beschreibung: Dackelwelpe liegt auf dem Teppich
-      - bild: /uploads/dackel/welpe-auf-der-matte.jpg
-        beschreibung: Dackelwelpe klettert über eine Matte
+      - bild: /uploads/dackel/a-wurf-arthur.jpg
+        beschreibung: Arthur aus dem A-Wurf klettert über eine Matte
       - bild: /uploads/dackel/zwei-junghunde-auf-dem-hof.jpg
         beschreibung: Zwei junge Rauhaardackel sitzen auf dem Hof
       - bild: /uploads/dackel/junghund-am-weidenkorb.jpg
         beschreibung: Junger Rauhaardackel schnuppert an einem Weidenkorb
-      - bild: /uploads/dackel/junghund-auf-der-wiese.jpg
-        beschreibung: Junger Rauhaardackel auf der Löwenzahnwiese
   - _template: cta
     kicker: Anfrage
     titel: Ihr sucht einen Rauhaardackel?

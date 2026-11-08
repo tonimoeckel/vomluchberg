@@ -53,7 +53,7 @@ and the new files under `uploads/dackel/` (every worker ships all uploads, see `
 
 - **Photo identity (08.11.):** Karo: Bonnie wears the purple collar. On `dackel-duo-bank.jpg` Bonnie
   sits left, Hanni right; the profile photos `bonnie-auf-der-bank.jpg` / `hanni-auf-der-bank.jpg` are
-  crops of it. No collar visible on `dackel-in-der-loewenzahnwiese.jpg` and `dackel-sitzt-im-garten.jpg`:
+  crops of it. No collar visible on `gustav-in-der-loewenzahnwiese.jpg` and `dackel-sitzt-im-garten.jpg`:
   shown without names in the home photo band until Karo says who it is (fragen-an-karo §2).
 
 - **Karo's answers (08.11.), see fragen-an-karo §2:** Hobbyzucht without a kennel name, so the copy
@@ -62,6 +62,14 @@ and the new files under `uploads/dackel/` (every worker ships all uploads, see `
   Monty (`hunde/monty.md`, no text about him). A-Wurf prepared as `wuerfe/a-wurf.md` (status
   `vergangen`, father Monty, nothing else) until the data from Karo's Word file arrives; past
   litters show no inquiry button.
+
+- **Karo's Word file (08.11., `docs/karo/2026-11-08-dackelhomepage/` on its own branch/PR):** profiles
+  of Hanni, Bonnie and the fathers Monty, Gustav, Pietri (dates, colours, size, Karo's texts verbatim),
+  A/B/C-Wurf with puppies and photos, the Hobbyzucht notice on home, Welpen and Über uns. Six photos
+  of the file were already in `uploads/dackel/` in a larger size and were renamed (Monty, Hanni,
+  Gustav, Arthur, Alma, Alfons); the other 18 were imported with `scripts/import-images.mjs`. New
+  field `haar` (Pietri is a Zwerg-Kurzhaardackel; empty = Rauhaar), size options are now the class
+  only (`dackelBezeichnung`), colours use Karo's words. Open points are in fragen-an-karo §2.
 
 **At go-live** (slice 3): set `url` + `live: true` in `src/sites/dackel/site.ts`, add
 `querverweisFeld` to `tina/collections/config.ts` and pass its text to `<Querverweis>`, shorten
@@ -337,7 +345,7 @@ luchberg build before/after for tasks 1–3).
 5. **Content.** `src/content/dackel/**`: config, pages (`home`, `unsere-dackel`, `welpen`, `ueber-uns`,
    `kontakt`, `impressum`, `datenschutz`), dogs (`hanni`, `bonnie`, `vater`), no litters yet. Copy (not
    move) photos to `public/uploads/dackel/` with readable names (`dackel-duo-bank.jpg`,
-   `vater-steht-im-garten.jpg`, `welpe-mit-spielzeug-1.jpg` …) and alt texts. Never run
+   `monty-im-garten.jpg`, `a-wurf-alfons.jpg` …) and alt texts. Never run
    `migration/migrate.py`.
 6. **Design tokens + base layout.** `src/sites/dackel/styles/global.css` (slice 0 step 9, R7) (tokens light/dark, `@theme`,
    utilities `container-page`, `btn*`, `arch`, `eyebrow`, `squiggle`, `prose-dackel`), Fontsource
