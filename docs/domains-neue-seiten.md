@@ -152,8 +152,8 @@ Für alle vier Domains:
 
 - [x] Cloudflare → *Add a site* → Domain eingeben → Free-Plan (08.11.2026, alle vier Zonen angelegt).
 - [x] Nameserver bei INWX auf Cloudflare (bei der Bestellung eingetragen).
-- [ ] Warten, bis Cloudflare die Domains als *Active* zeigt (meist unter einer Stunde).
-- [ ] Ohne eigene E-Mail: Schutz gegen gefälschte Absender eintragen
+- [ ] Warten, bis Cloudflare die Domains als *Active* zeigt (meist unter einer Stunde). Stand 08.11.2026: drei aktiv, `dackelvomluchberg.de` noch *pending*.
+- [x] Ohne eigene E-Mail: Schutz gegen gefälschte Absender eintragen (08.11.2026, alle vier Domains)
   - `MX` für `@` mit Priorität 0 und Ziel `.` (bedeutet: keine E-Mail)
   - `TXT` für `@`: `v=spf1 -all`
   - `TXT` für `_dmarc`: `v=DMARC1; p=reject;`
@@ -167,13 +167,13 @@ Für alle vier Domains:
 - [ ] Im Worker unter *Settings → Build → Variables*: `SITE_URL=https://www.<domain>` setzen und `SITE_NOINDEX` löschen. Neu bauen lassen.
 - [ ] TinaCloud → Projekt → *Site URLs*: `https://www.<domain>` ergänzen.
 - [ ] Die `workers.dev`-Adresse des Workers für die Produktion abschalten (*Domains & Routes*).
-- [ ] Weiterleitungs-Domains `alltagkannsport.de` und `hundetraining-osterzgebirge.de`: in deren Zone `AAAA` für `@` und `www` → `100::`, Proxy an, dann eine Redirect Rule: alle Anfragen 301 auf `https://www.alltag-kann-sport.de` + Pfad, Query behalten. Kein Worker, keine eigene Seite.
+- [x] Weiterleitungs-Domains `alltagkannsport.de` und `hundetraining-osterzgebirge.de` (eingerichtet und getestet am 08.11.2026): in deren Zone `AAAA` für `@` und `www` → `100::`, Proxy an, dazu eine Page Rule `*<domain>/*` → *Forwarding URL* 301 auf `https://www.alltag-kann-sport.de/$2` (Pfad und Query bleiben erhalten). Page Rule statt Redirect Rule, weil das API-Token keine Rulesets-Rechte hat; beim Umstellen auf eine Redirect Rule die Page Rule löschen. Kein Worker, keine eigene Seite.
 
 ## 4. Testen
 
 - [ ] Startseite, zwei Unterseiten, eine Seite, die es nicht gibt (soll die 404-Seite zeigen).
 - [ ] Adresse ohne www eingeben → landet auf www.
-- [ ] Nur Training: `alltagkannsport.de/angebote` (und ggf. `karolin-riesing.de`) → landet auf `https://www.alltag-kann-sport.de/angebote`.
+- [x] Nur Training: `alltagkannsport.de/angebote` und `hundetraining-osterzgebirge.de/…` → landen auf `https://www.alltag-kann-sport.de/…` (getestet am 08.11.2026; die Zielseite selbst gibt es erst nach dem Start).
 - [ ] Kontakt- bzw. Anfrageformular abschicken → Karo bekommt die E-Mail.
 - [ ] Impressum und Datenschutz sind erreichbar und vollständig.
 - [ ] Hinweis im Footer der anderen Seiten zeigt auf die neue Adresse.

@@ -408,7 +408,7 @@ Each step lists its rollback. "Live check" = home, two subpages, 404, form, `rob
 | A2 | T | CF-02 (previews + watch paths on `vomluchberg`). | Watch paths: clear the fields. Previews switch can't be undone, but it only affects non-`main` branches. |
 | A3 | T | CF-03/CF-04: new Workers on `workers.dev`, `noindex`. T-03 for the workers.dev origins. | Delete the Worker (nothing public depends on it). |
 | A4 | K | Domains ordered at INWX (checklist [`domains-neue-seiten.md`](../domains-neue-seiten.md), part 1). Can happen any time; the domains can sit unused. | Not needed (a registered unused domain costs a few euros/year). |
-| A5 | T | Zones added to Cloudflare, nameservers switched at INWX, anti-spoofing mail records (O7). | Switch nameservers back to INWX defaults. |
+| A5 | T | Zones added to Cloudflare, nameservers switched at INWX, anti-spoofing mail records (O7). **Done 2026-11-08** for all four domains; the two training redirect domains already 301 to `https://www.alltag-kann-sport.de` + path (proxied `AAAA 100::` + Page Rule, because the API token has no Rulesets permission). | Switch nameservers back to INWX defaults. |
 
 ### Phase B – Dachshund site go-live
 
