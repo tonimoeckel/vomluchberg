@@ -1,22 +1,43 @@
 ---
-// Skeleton header of the training site (real design: slice 2).
+// Header of the training site: logo, menu and the inquiry button. Below md the menu folds into a
+// <details> (no JS, no animation).
 import { tinaField } from '@tinacms/astro/tina-field';
+import Icon from '../../../components/ui/Icon.astro';
+import Logo from './Logo.astro';
 import type { CmsConfig } from '../lib/data';
 
 interface Props { config?: CmsConfig | null }
 const { config } = Astro.props;
-const w = config?.website;
 const nav = (config?.nav ?? []).filter((n) => n !== null);
+const button = config?.menueButton;
+const pfad = Astro.url.pathname.replace(/\/$/, '') || '/';
+const aktiv = (link: string) => link !== '/' && (pfad === link || pfad.startsWith(`${link}/`));
 ---
-<header class="border-b border-border bg-bg">
-	<div class="container-page flex flex-wrap items-center justify-between gap-4 py-4">
-		<a href="/" class="font-display text-xl font-bold" data-tina-field={w ? tinaField(w, 'name') : undefined}>{w?.name}</a>
-		{nav.length > 0 && (
-			<nav aria-label="Hauptmenü" data-tina-field={config ? tinaField(config, 'nav') : undefined}>
-				<ul class="flex flex-wrap gap-x-6 gap-y-2">
-					{nav.map((n) => <li><a href={n.link} class="font-semibold hover:text-primary-ink" data-tina-field={tinaField(n)}>{n.titel}</a></li>)}
+<header class="relative z-30 border-b border-border bg-bg">
+	<div class="container-page flex h-[74px] items-center justify-between gap-4">
+		<a href="/" aria-label="Alltag kann Sport – Startseite" class="shrink-0">
+			<Logo website={config?.website} class="h-11 w-auto sm:h-[52px]" />
+		</a>
+		<nav aria-label="Hauptmenü" class="hidden items-center gap-7 md:flex">
+			<ul class="flex items-center gap-7 font-display text-lg font-semibold uppercase tracking-[0.08em]" data-tina-field={config ? tinaField(config, 'nav') : undefined}>
+				{nav.map((n) => (
+					<li><a href={n.link} aria-current={aktiv(n.link) ? 'page' : undefined}
+						class:list={['no-underline hover:text-primary-ink', aktiv(n.link) ? 'text-primary-ink' : 'text-heading']}
+						data-tina-field={tinaField(n)}>{n.titel}</a></li>
+				))}
+			</ul>
+			{button?.label && button.link && <a href={button.link} class="btn-primary px-4 py-3 text-base" data-tina-field={tinaField(button)}>{button.label}</a>}
+		</nav>
+		<details class="group relative md:hidden">
+			<summary class="flex cursor-pointer list-none items-center gap-2 rounded-card border-2 border-heading px-3 py-2 font-display font-semibold uppercase tracking-[0.08em] text-heading [&::-webkit-details-marker]:hidden">
+				<Icon name="menu-2" class="size-5 group-open:hidden" /><Icon name="x" class="hidden size-5 group-open:block" />Menü
+			</summary>
+			<nav aria-label="Hauptmenü (mobil)" class="absolute right-0 top-full mt-3 w-64 rounded-card border border-border bg-card p-3 shadow-[var(--shadow)]">
+				<ul class="grid font-display text-xl font-semibold uppercase tracking-[0.06em]">
+					{nav.map((n) => <li><a href={n.link} class="block rounded px-3 py-2.5 text-heading no-underline hover:bg-surface hover:text-primary-ink">{n.titel}</a></li>)}
 				</ul>
+				{button?.label && button.link && <a href={button.link} class="btn-primary mt-2 w-full">{button.label}</a>}
 			</nav>
-		)}
+		</details>
 	</div>
 </header>

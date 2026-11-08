@@ -1,10 +1,16 @@
 ---
 // Block dispatcher of the training site: dispatches on the template name (blockName), not the
-// collection-prefixed __typename, so shared block templates can be reused as they are.
+// collection-prefixed __typename (TrainingPageBlocksHero …).
 import { tinaField } from '@tinacms/astro/tina-field';
 import Hero from './blocks/Hero.astro';
 import Text from './blocks/Text.astro';
+import Highlights from './blocks/Highlights.astro';
+import AngeboteBlock from './blocks/AngeboteBlock.astro';
+import Zeitstrahl from './blocks/Zeitstrahl.astro';
+import Zitat from './blocks/Zitat.astro';
+import GalerieBlock from './blocks/GalerieBlock.astro';
 import Cta from './blocks/Cta.astro';
+import AnfrageBlock from './blocks/AnfrageBlock.astro';
 import { blockName } from '../../../lib/tina-typename';
 import type { BlockOf, CmsPage } from '../lib/data';
 
@@ -18,7 +24,13 @@ const blocks = (data?.blocks ?? []).filter((b) => b !== null);
 			switch (blockName(block.__typename)) {
 				case 'Hero': return <Hero data={block as BlockOf<'Hero'>} />;
 				case 'Text': return <Text data={block as BlockOf<'Text'>} />;
+				case 'Highlights': return <Highlights data={block as BlockOf<'Highlights'>} />;
+				case 'Angebote': return <AngeboteBlock data={block as BlockOf<'Angebote'>} />;
+				case 'Zeitstrahl': return <Zeitstrahl data={block as BlockOf<'Zeitstrahl'>} />;
+				case 'Zitat': return <Zitat data={block as BlockOf<'Zitat'>} />;
+				case 'Galerie': return <GalerieBlock data={block as BlockOf<'Galerie'>} />;
 				case 'Cta': return <Cta data={block as BlockOf<'Cta'>} />;
+				case 'Anfrage': return <AnfrageBlock data={block as BlockOf<'Anfrage'>} />;
 			}
 		})()}
 	</div>

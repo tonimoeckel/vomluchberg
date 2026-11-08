@@ -1,0 +1,21 @@
+---
+// A quote of Karo's, with an optional photo.
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { BlockOf } from '../../lib/data';
+
+interface Props { data: BlockOf<'Zitat'> }
+const { data } = Astro.props;
+---
+<section class="py-12 sm:py-16">
+	<figure class:list={['container-page grid items-center gap-8', data.bild && 'md:grid-cols-[220px_1fr] md:gap-12']}>
+		{data.bild && <img src={data.bild} alt="" loading="lazy" class="aspect-square w-40 rounded-card object-cover md:w-full" data-tina-field={tinaField(data, 'bild')} />}
+		<div class="max-w-3xl">
+			{data.zitat && (
+				<blockquote class="border-l-4 border-copper pl-5 text-xl italic leading-relaxed text-fg sm:text-2xl" data-tina-field={tinaField(data, 'zitat')}>
+					<p>„{data.zitat.replace(/^[„"“]|[“"”]$/g, '')}“</p>
+				</blockquote>
+			)}
+			{data.autor && <figcaption class="mt-4 pl-6 font-display text-[0.95rem] font-semibold uppercase tracking-[0.1em] text-muted" data-tina-field={tinaField(data, 'autor')}>— {data.autor}</figcaption>}
+		</div>
+	</figure>
+</section>

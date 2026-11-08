@@ -1,7 +1,7 @@
 # Rottweiler vom Luchberg – vomluchberg.de (+ two more sites)
 
 Website for Karo's ADRK Rottweiler kennel "vom Luchberg" (Glashütte OT Luchau). The same repo also builds Karo's
-**Rauhaardackel** site and her dog training site **"Alltag kann Sport"** (both skeletons for now, see [Multi-site](#multi-site)
+**Rauhaardackel** site and her dog training site **"Alltag kann Sport"** (the dachshund site is a skeleton for now, see [Multi-site](#multi-site)
 and [`docs/plan/`](docs/plan/README.md)).
 
 **Stack:** Astro 6 · Tailwind CSS 4 · TinaCMS / TinaCloud (visual editing via `@tinacms/astro`, no React on the site) · Cloudflare Workers (static assets, free tier)
@@ -94,6 +94,9 @@ All three workers: root directory `/`, branch `main`, build command `npm run bui
 `npx wrangler deploy` (the build points Wrangler at the right worker), preview build command `npm run build:local`.
 Build variables per worker: `SITE_ID`, `SITE_URL`, the same Tina credentials, its own `PUBLIC_WEB3FORMS_KEY`, and
 `SITE_NOINDEX=true` until the site has its domain. Preview builds of other branches are noindex automatically.
+Training worker: `SITE_ID=training`, `SITE_URL=https://training.vomluchberg.de` (later its own domain), `SITE_NOINDEX=true`,
+and a Web3Forms key registered for the training e-mail address (`PUBLIC_WEB3FORMS_KEY`; without it the inquiry form opens
+the visitor's mail app).
 
 **Build watch paths** (exclude list; everything else rebuilds all three, `tina/**` always does):
 

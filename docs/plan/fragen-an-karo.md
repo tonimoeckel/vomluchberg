@@ -54,6 +54,10 @@ kommen in den passenden Abschnitt.
 - [ ] **„Seminar“:** Im Text „Ob Einzeltraining, Gruppenkurs oder Seminar“ kommt ein Seminar vor, das es nicht gibt. Streichen? *(Annahme: ja, streichen.)*
 - [ ] **Fotos:** Müssen wir bei den Fotos einen Fotografen nennen? Und ist auf dem Foto „Karolin und Donna“ wirklich Donna? *(Annahme: kein Fotografen-Hinweis nötig.)*
 - [ ] **Instagram:** Soll auf der Trainingsseite `@karoriesing_caninepure` verlinkt werden? *(Annahme: ja.)*
+- [ ] **Anrede:** Auf Pfotentermin sprichst du deine Kunden mit „du“ an. Auf deinen Websites schreiben wir einheitlich „ihr/euch“ (Mensch und Hund als Team), z. B. „Schreibt mir gern eine Nachricht“. Passt das? *(Annahme: ja, „ihr/euch“. Dein „ich“ bleibt.)*
+- [ ] **Neue Texte auf der Trainingsseite:** Ein paar kurze Texte haben wir neu geschrieben, weil es sie bei Pfotentermin nicht gab: „So läuft’s ab – Ohne Buchungsstress“ (drei Schritte), der Hinweis „Training nur auf Anfrage“ oben auf der Startseite, „Noch unsicher, was passt?“ auf der Angebotsseite, der zweite Absatz beim Einzeltraining und „Meine Hunde stellen sich auf der Website meiner Rottweiler-Zucht vor“. Bitte einmal lesen und ändern, was nicht nach dir klingt. *(Annahme: passt so.)*
+- [ ] **Satz zur Zucht:** Auf der Über-mich-Seite steht „im Allgemeiner Deutscher Rottweiler-Klub (ADRK) unter dem Dach des Verband für das Deutsche Hundewesen“. Dürfen wir das zu „im Allgemeinen Deutschen Rottweiler-Klub (ADRK) unter dem Dach des Verbands für das Deutsche Hundewesen“ korrigieren? *(Annahme: ja, bis dahin steht dein Original da.)*
+- [ ] **Datenschutz/Impressum Training:** Im Impressum fehlen noch das Veterinäramt, das deine Erlaubnis nach § 11 erteilt hat, und die Angabe zur Umsatzsteuer. Beides ist auf der Seite deutlich als „[PLATZHALTER …]“ markiert. Schick uns bitte die Angaben. *(Annahme: siehe oben, Kleinunternehmerin.)*
 
 ## 4. Editor und Ablauf
 

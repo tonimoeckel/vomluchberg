@@ -1,6 +1,11 @@
 # Slice 2 – Training site "Alltag kann Sport"
 
-Status: **planned** (2026-11-05). Builds on the guiding decisions D1–D10 in [`README.md`](README.md).
+Status: **implemented** (2026-11-08, branch `claude/impl-02-training`, tasks 3–13). Deviations: task 6
+(shared form script) is deferred, because moving the Rottweiler contact form's inline script into a bundled module would
+change the luchberg build (it must stay byte-identical); the training form has its own script on top of the shared domain
+module `anfrage.ts`. The training site has its own `hero`/`text`/`highlights`/`galerie` templates (extra fields such as
+`akzent`, `stichworte`, `hintergrund`, `darstellung`) instead of reusing the luchberg ones; `cta` is shared. Offers have no
+`ort` field (the training ground comes from the settings). Original plan date: 2026-11-05. Builds on the guiding decisions D1–D10 in [`README.md`](README.md).
 Content inventory: [`02-training-inhalte.md`](02-training-inhalte.md). Start-page mockup:
 [`mockups/training/index.html`](mockups/training/index.html) (open it from the repo, it uses the images in
 `public/uploads/training/`). Open questions: section "Hundetraining-Seite" in

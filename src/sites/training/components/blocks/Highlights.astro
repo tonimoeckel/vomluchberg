@@ -1,0 +1,69 @@
+---
+// Tiles in four looks: "kacheln" (cards with icon), "band" (navy facts band), "schritte"
+// (numbered steps 01, 02, …) and "werte" (compact numbered grid).
+import { tinaField } from '@tinacms/astro/tina-field';
+import Icon from '../../../../components/ui/Icon.astro';
+import SectionHead from '../SectionHead.astro';
+import type { BlockOf } from '../../lib/data';
+
+interface Props { data: BlockOf<'Highlights'> }
+const { data } = Astro.props;
+const items = (data.items ?? []).filter((i) => i !== null);
+const darstellung = data.darstellung ?? 'kacheln';
+const nr = (i: number) => String(i + 1).padStart(2, '0');
+---
+{darstellung === 'band' ? (
+	<section class="bg-dark text-on-dark">
+		<div class="container-page py-7">
+			<SectionHead data={data} dunkel class="mb-6" />
+			<ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+				{items.map((it) => (
+					<li class="flex items-center gap-3.5 text-[0.95rem] text-on-dark-muted" data-tina-field={tinaField(it)}>
+						{it.icon && <Icon name={it.icon} class="size-9 shrink-0 text-copper" />}
+						<span><b class="block font-display text-[1.35rem] font-extrabold uppercase leading-tight tracking-[0.02em] text-on-dark">{it.titel}</b>{it.text}</span>
+					</li>
+				))}
+			</ul>
+		</div>
+	</section>
+) : (
+	<section class="py-14 sm:py-20">
+		<div class="container-page">
+			<SectionHead data={data} />
+			{darstellung === 'schritte' && (
+				<ol class="mt-9 grid gap-6 md:grid-cols-3">
+					{items.map((it, i) => (
+						<li class="relative rounded-b-card border-t-4 border-heading bg-card px-6 pt-6 pb-6" data-tina-field={tinaField(it)}>
+							<span class="absolute right-4 top-2.5 font-display text-6xl font-extrabold leading-none text-lane" aria-hidden="true">{nr(i)}</span>
+							<h3 class="display relative max-w-[75%] text-[1.6rem] leading-[1.05]">{it.titel}</h3>
+							{it.text && <p class="relative mt-2 text-[0.98rem] text-muted">{it.text}</p>}
+						</li>
+					))}
+				</ol>
+			)}
+			{darstellung === 'werte' && (
+				<ul class="mt-8 grid gap-px overflow-hidden rounded-card border border-border bg-border sm:grid-cols-2">
+					{items.map((it, i) => (
+						<li class="bg-bg px-5 py-4" data-tina-field={tinaField(it)}>
+							<b class="block font-display text-2xl font-extrabold uppercase leading-none text-heading"><span class="mr-1.5 text-copper">{nr(i)}</span>{it.titel}</b>
+							{it.text && <span class="text-[0.92rem] text-muted">{it.text}</span>}
+						</li>
+					))}
+				</ul>
+			)}
+			{darstellung === 'kacheln' && (
+				<ul class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+					{items.map((it) => (
+						<li class="card flex gap-4 p-5" data-tina-field={tinaField(it)}>
+							{it.icon && <span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name={it.icon} class="size-6" /></span>}
+							<span>
+								<h3 class="font-display text-xl font-extrabold uppercase leading-tight tracking-[0.02em] text-heading">{it.titel}</h3>
+								{it.text && <p class="mt-1 text-[0.95rem] text-muted">{it.text}</p>}
+							</span>
+						</li>
+					))}
+				</ul>
+			)}
+		</div>
+	</section>
+)}

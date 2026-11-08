@@ -1,0 +1,24 @@
+---
+// Kicker, display headline and lead of a section. Pass the block object to make the fields editable.
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface Props {
+	data: Record<string, unknown> & { kicker?: string | null; ueberschrift?: string | null; text?: string | null };
+	/** Headline level (h1 on pages without a hero). */
+	as?: 'h1' | 'h2';
+	dunkel?: boolean;
+	class?: string;
+}
+const { data, as: Tag = 'h2', dunkel = false, class: className } = Astro.props;
+// tinaField() is typed per document; the heading fields are shared by several block types.
+const feld = (name: 'kicker' | 'ueberschrift' | 'text') => tinaField(data as never, name as never);
+---
+{(data.kicker || data.ueberschrift || data.text) && (
+	<div class={className}>
+		{data.kicker && <p class:list={['kicker', dunkel && 'text-lane']} data-tina-field={feld('kicker')}>{data.kicker}</p>}
+		{data.ueberschrift && (
+			<Tag class:list={['display mt-2 text-[2.6rem] sm:text-6xl', dunkel && 'text-on-dark']} data-tina-field={feld('ueberschrift')}>{data.ueberschrift}</Tag>
+		)}
+		{data.text && <p class:list={['mt-4 max-w-[60ch] text-lg', dunkel ? 'text-on-dark-muted' : 'text-muted']} data-tina-field={feld('text')}>{data.text}</p>}
+	</div>
+)}

@@ -66,6 +66,17 @@ The new sites have their own tokens, fonts and utilities in `src/sites/<id>/styl
 - Fonts are self-hosted via Fontsource (Bricolage Grotesque for display, Inter for body). **No Google Fonts, no tracking, no cookies** (GDPR).
 - Images are served as plain `<img>` from `public/uploads/**` (imports were pre-resized to ≤1600 px). Galleries use `Galerie.astro`. The lightbox opens any `<a data-lightbox="group">`.
 
+## Training site (`training`)
+
+"Alltag kann Sport – Hundetraining Karolin Riesing" (plan: `docs/plan/02-training.md`, content inventory `02-training-inhalte.md`). Works **on request only**: no booking, every call to action leads to `/anfrage?angebot=<slug>`.
+
+- **Fixed paths** (targets of the Pfotentermin 301s, R6): `/angebote`, `/angebote/<slug>` (`einzeltraining`, `basistraining`, `welpenkurs`), `/anfrage`, `/ueber-mich`. Don't rename them or the offer files. Old Pfotentermin paths have 301s in `src/sites/training/site.ts`.
+- **Collections:** `trainingPage` (blocks from `tina/sites/training/blocks.ts`: own `hero`, `text`, `highlights`, `galerie` with training-only fields, shared `cta`, plus `angebote`, `zeitstrahl`, `zitat`, `anfrage`), `trainingAngebot` (offers, detail page `AngebotBody.astro`; `sichtbar: false` hides an offer from the site and the form), `trainingConfig` (website, kontakt, social, anfrage texts, nav, menu button, cross-link to vomluchberg.de).
+- **Inquiry form:** `src/sites/training/components/AnfrageFormular.astro`, rules in `src/lib/domain/anfrage.ts` (field names, options, subject, mail text). Web3Forms with `PUBLIC_WEB3FORMS_KEY` (subject set by JS, plain POST without JS), otherwise `mailto:` (JS builds subject + body, without JS `enctype="text/plain"`). Offer preselected server-side on detail pages, from `?angebot=` (validated) on other pages. The Rottweiler `Kontakt.astro` keeps its own inline script (shared script deferred: it would change the luchberg build).
+- **Design** (`src/sites/training/styles/global.css`): navy/copper from the logo, paper backgrounds, Barlow Condensed (`@fontsource/barlow-condensed`, latin 600/800/800 italic) + Inter. Extra tokens `card`, `heading`, `copper`, `lane`, `dark-2`, `on-dark-muted`; utilities `display`, `kicker`, `btn-primary`/`btn-navy`/`btn-secondary`/`btn-hell`, `textlink`, `card`, `chip`, `lanes`, `lanes-copper`, `bib`, `feld`. Section backgrounds via the block option `hintergrund` (hell, sand, dunkel). Karo wants it plain: **no decorative animation**, only colour/border/shadow hover states, no transforms.
+- **SEO:** `LocalBusiness` JSON-LD on `/` (`src/lib/domain/localBusiness.ts`), `Service` per offer (`angebotJsonLd`). Legal pages contain marked `[PLATZHALTER …]` for the § 11 TSchG authority, VAT and the Web3Forms provider.
+- Copy is "ihr/euch" (Karo's Pfotentermin texts used "du"); Karo's first-person "ich" stays.
+
 ## Multi-site
 
 Plan and reasoning: `docs/plan/00-multisite.md` (rulings R1–R7 in `docs/plan/README.md` win over the slice files).
