@@ -1,27 +1,55 @@
 ---
-// Skeleton footer of the training site (real design: slice 2).
+// Footer of the training site: claim, pages, contact, the hint to the Rottweiler kennel (D7), legal links.
 import { tinaField } from '@tinacms/astro/tina-field';
+import Logo from './Logo.astro';
 import type { CmsConfig } from '../lib/data';
 
 interface Props { config?: CmsConfig | null }
 const { config } = Astro.props;
 const w = config?.website;
 const k = config?.kontakt;
+const s = config?.social;
+const q = config?.querverweis;
+const nav = (config?.nav ?? []).filter((n) => n !== null);
 const jahr = new Date().getFullYear();
 ---
-<footer class="mt-16 bg-dark text-on-dark">
-	<div class="container-page grid gap-8 py-10 sm:grid-cols-2">
-		<div>
-			<p class="font-display text-lg font-bold" data-tina-field={w ? tinaField(w, 'name') : undefined}>{w?.name}</p>
-			{w?.untertitel && <p class="text-on-dark/75" data-tina-field={tinaField(w, 'untertitel')}>{w.untertitel}</p>}
+<footer class="bg-dark-2 pt-14 pb-8 text-[0.95rem] text-on-dark-muted">
+	<div class="container-page">
+		<div class="grid gap-10 md:grid-cols-[1.3fr_1fr_1fr]">
+			<div>
+				<a href="/" aria-label="Alltag kann Sport – Startseite" class="inline-block"><Logo website={w} hell class="h-16 w-auto" /></a>
+				{w?.fusszeile && <p class="mt-4 max-w-sm" data-tina-field={tinaField(w, 'fusszeile')}>{w.fusszeile}</p>}
+			</div>
+			{nav.length > 0 && (
+				<div>
+					<h2 class="mb-3 font-display text-lg font-extrabold uppercase tracking-[0.1em] text-on-dark">Seiten</h2>
+					<ul class="grid gap-1.5" data-tina-field={config ? tinaField(config, 'nav') : undefined}>
+						{nav.map((n) => <li><a href={n.link} class="no-underline hover:text-on-dark hover:underline">{n.titel}</a></li>)}
+					</ul>
+				</div>
+			)}
+			{k && (
+				<div>
+					<h2 class="mb-3 font-display text-lg font-extrabold uppercase tracking-[0.1em] text-on-dark">Kontakt</h2>
+					<ul class="grid gap-1.5" data-tina-field={tinaField(config!, 'kontakt')}>
+						{k.name && <li>{k.name}</li>}
+						{(k.strasse || k.ort) && <li>{[k.strasse, k.ort].filter(Boolean).join(', ')}</li>}
+						{k.telefon && <li><a class="no-underline hover:text-on-dark hover:underline" href={`tel:${k.telefon.replace(/[^+\d]/g, '')}`}>{k.telefon}</a></li>}
+						{k.email && <li><a class="no-underline hover:text-on-dark hover:underline" href={`mailto:${k.email}`}>E-Mail schreiben</a></li>}
+						{s?.instagram && <li data-tina-field={tinaField(s, 'instagram')}><a class="no-underline hover:text-on-dark hover:underline" href={s.instagram} rel="noopener">Instagram</a></li>}
+					</ul>
+				</div>
+			)}
 		</div>
-		{k && (
-			<address class="not-italic text-on-dark/85" data-tina-field={tinaField(config!, 'kontakt')}>
-				{[k.name, k.strasse, k.ort].filter(Boolean).map((zeile) => <span class="block">{zeile}</span>)}
-				{k.telefon && <a class="block hover:text-white" href={`tel:${k.telefon.replace(/[^+\d]/g, '')}`}>{k.telefon}</a>}
-				{k.email && <a class="block break-all hover:text-white" href={`mailto:${k.email}`}>{k.email}</a>}
-			</address>
+		{q?.link && (
+			<p class="mt-10 flex flex-wrap justify-between gap-x-4 gap-y-1 rounded-card border border-dashed border-on-dark-muted/40 px-5 py-4" data-tina-field={tinaField(q)}>
+				<span>{q.text}</span>
+				<a href={q.link} rel="noopener" class="font-semibold text-on-dark hover:underline">{q.linkText || q.link} →</a>
+			</p>
 		)}
+		<div class="mt-8 flex flex-wrap justify-between gap-4 text-sm opacity-80">
+			<span>© {jahr} {w?.name}{k?.name && ` · ${k.name}`}</span>
+			<span><a href="/impressum" class="hover:text-on-dark hover:underline">Impressum</a> · <a href="/datenschutz" class="hover:text-on-dark hover:underline">Datenschutz</a></span>
+		</div>
 	</div>
-	<p class="container-page border-t border-on-dark/15 py-4 text-sm text-on-dark/60">© {jahr} {w?.name}</p>
 </footer>

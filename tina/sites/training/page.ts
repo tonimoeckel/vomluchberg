@@ -1,5 +1,25 @@
-import { ctaBlock, heroBlock, textBlock } from '../../blocks';
+import { ctaBlock } from '../../blocks';
 import { seitenCollection } from '../collections';
+import {
+  anfrageBlock,
+  angeboteBlock,
+  trainingGalerieBlock,
+  trainingHeroBlock,
+  trainingHighlightsBlock,
+  trainingTextBlock,
+  zeitstrahlBlock,
+  zitatBlock,
+} from './blocks';
 
-/** Starter block set of the training site (skeleton, slice 2 adds its own blocks). */
-export const TrainingPageCollection = seitenCollection('training', [heroBlock, textBlock, ctaBlock]);
+/** Pages of the training site with its own block set (docs/plan/02-training.md §4.2). */
+export const TrainingPageCollection = seitenCollection('training', [
+  trainingHeroBlock,
+  trainingTextBlock,
+  trainingHighlightsBlock,
+  angeboteBlock,
+  zeitstrahlBlock,
+  zitatBlock,
+  trainingGalerieBlock,
+  ctaBlock,
+  anfrageBlock,
+]);

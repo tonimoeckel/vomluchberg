@@ -1,0 +1,9 @@
+---
+import Detailseite from '../../layouts/Detailseite.astro';
+import { angebote } from '../../lib/detailseiten';
+
+export const getStaticPaths = angebote.paths;
+const angebot = await angebote.load(String(Astro.params.slug));
+if (!angebot) return new Response('Not Found', { status: 404 });
+---
+<Detailseite {...angebot} />

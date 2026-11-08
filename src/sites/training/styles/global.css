@@ -1,86 +1,118 @@
-/* Stylesheet of the training site – skeleton with NEUTRAL PLACEHOLDER tokens.
-   The real design (fonts, colours, utilities) comes with slice 2 (docs/plan/02-training.md).
+/* Stylesheet of the training site "Alltag kann Sport" – direction "Trainingsplatz"
+   (docs/plan/02-training.md §6, mockup docs/plan/mockups/training/index.html).
+   Navy and copper from Karo's logo, paper backgrounds, Barlow Condensed (display) + Inter (body),
+   small radius, lane lines and numbered "start bibs" as motifs. No gradients, no glow and
+   no decorative animation: only hover states (colour, border, shadow).
 
    Token contract (docs/plan/00-multisite.md, 2.5): every site defines the same semantic variables
    (--bg, --surface, --surface-2, --fg, --muted, --border, --primary, --primary-ink, --accent,
    --accent-ink, --dark, --on-dark, --radius, --grad, --grad-soft) and maps them to the same Tailwind
-   names, so shared components (Galerie, Lightbox, Icon) look native on every site. */
+   names, so shared components (Lightbox, Icon) look native on every site. Training-only tokens:
+   --card, --heading, --copper (decorative lines), --lane, --dark-2. */
 @import 'tailwindcss' source(none);
+@import '@fontsource-variable/inter';
+@import '@fontsource/barlow-condensed/latin-600.css';
+@import '@fontsource/barlow-condensed/latin-800.css';
+@import '@fontsource/barlow-condensed/latin-800-italic.css';
 @plugin '@tailwindcss/typography';
 
 /* Only this site and the shared components are scanned for class names – never other sites. */
 @source '..';
 @source '../../../components/BaseHead.astro';
-@source '../../../components/Galerie.astro';
 @source '../../../components/Lightbox.astro';
 @source '../../../components/ui';
 
+/* Contrast (WCAG AA, checked 2026-11-08): white on --primary 5.0:1, --primary-ink on --bg 5.3:1 and
+   on --surface 4.9:1, --muted on --bg 6.0:1; dark: --primary-ink on --bg 7.1:1, --muted 11.5:1. */
 :root {
-	color-scheme: light dark;
-	--bg: #ffffff;
-	--surface: #f4f4f5;
-	--surface-2: #e4e4e7;
-	--fg: #18181b;
-	--muted: #52525b;
-	--border: #e4e4e7;
-	--primary: #3f3f46;
-	--primary-ink: #27272a;
-	--accent: #52525b;
-	--accent-ink: #3f3f46;
-	--grad: linear-gradient(120deg, #52525b 0%, #3f3f46 100%);
-	--grad-soft: linear-gradient(120deg, #f4f4f5 0%, #e4e4e7 100%);
-	--dark: #27272a;
-	--on-dark: #fafafa;
-	--radius: 0.75rem;
+	color-scheme: light;
+	--bg: #f6f2ea; /* paper */
+	--surface: #efe8db; /* paper-2: alternating sections */
+	--surface-2: #e4edf5; /* mist-2: chips */
+	--card: #ffffff;
+	--fg: #14253a; /* ink */
+	--heading: #193450; /* navy (logo) */
+	--muted: #4d5d70;
+	--border: #d9d0c0;
+	--primary: #a85a2f; /* copper, darkened for white button text */
+	--primary-hover: #9a4f25;
+	--primary-ink: #9a4f25; /* copper for text on light backgrounds */
+	--copper: #b96637; /* logo copper: lines, numbers */
+	--accent: #193450; /* navy */
+	--accent-ink: #193450;
+	--lane: #c8d9e8; /* mist (logo background) */
+	--grad: linear-gradient(120deg, #193450 0%, #193450 100%);
+	--grad-soft: linear-gradient(120deg, #efe8db 0%, #efe8db 100%);
+	--dark: #193450;
+	--dark-2: #10233a;
+	--on-dark: #ffffff;
+	--on-dark-muted: #e4edf5;
+	--radius: 6px;
+	--shadow: 0 26px 50px -30px rgb(20 37 58 / 0.5);
 }
 
 /* Keep --bg (light / dark) in sync with themeColor in ../layouts/Base.astro. */
 @media (prefers-color-scheme: dark) {
 	:root {
-		--bg: #18181b;
-		--surface: #27272a;
-		--surface-2: #3f3f46;
-		--fg: #fafafa;
-		--muted: #a1a1aa;
-		--border: #3f3f46;
-		--primary: #d4d4d8;
-		--primary-ink: #e4e4e7;
-		--accent: #a1a1aa;
-		--accent-ink: #d4d4d8;
-		--grad: linear-gradient(120deg, #a1a1aa 0%, #d4d4d8 100%);
-		--grad-soft: linear-gradient(120deg, #27272a 0%, #3f3f46 100%);
-		--dark: #09090b;
-		--on-dark: #fafafa;
+		color-scheme: dark;
+		--bg: #0f1f33;
+		--surface: #132840;
+		--surface-2: #22446a;
+		--card: #1a314d;
+		--fg: #f6f2ea;
+		--heading: #f6f2ea;
+		--muted: #c8d9e8;
+		--border: #2b4664;
+		--primary: #a85a2f;
+		--primary-hover: #b96637;
+		--primary-ink: #e09a6c;
+		--copper: #c8743f;
+		--accent: #c8d9e8;
+		--accent-ink: #e4edf5;
+		--lane: #22446a;
+		--grad: linear-gradient(120deg, #0a1626 0%, #0a1626 100%);
+		--grad-soft: linear-gradient(120deg, #132840 0%, #132840 100%);
+		--dark: #0a1626;
+		--dark-2: #08111e;
+		--on-dark: #f6f2ea;
+		--on-dark-muted: #c8d9e8;
+		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
 	}
 }
 
 @theme inline {
-	--font-sans: system-ui, sans-serif;
-	--font-display: system-ui, sans-serif;
+	--font-sans: 'Inter Variable', system-ui, sans-serif;
+	--font-display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
 	--color-bg: var(--bg);
 	--color-surface: var(--surface);
 	--color-surface-2: var(--surface-2);
+	--color-card: var(--card);
 	--color-fg: var(--fg);
+	--color-heading: var(--heading);
 	--color-muted: var(--muted);
 	--color-border: var(--border);
 	--color-primary: var(--primary);
 	--color-primary-ink: var(--primary-ink);
+	--color-copper: var(--copper);
 	--color-accent: var(--accent);
 	--color-accent-ink: var(--accent-ink);
+	--color-lane: var(--lane);
 	--color-dark: var(--dark);
+	--color-dark-2: var(--dark-2);
 	--color-on-dark: var(--on-dark);
+	--color-on-dark-muted: var(--on-dark-muted);
 	--radius-card: var(--radius);
 }
 
 @layer base {
 	body {
-		@apply bg-bg text-fg font-sans antialiased;
+		@apply bg-bg text-fg font-sans text-[1.0625rem] leading-relaxed antialiased;
 	}
 	h1, h2, h3, h4 {
 		@apply font-display text-balance;
 	}
 	:focus-visible {
-		outline: 3px solid var(--accent);
+		outline: 3px solid var(--copper);
 		outline-offset: 3px;
 	}
 }
@@ -88,31 +120,114 @@
 @utility container-page {
 	@apply mx-auto w-full max-w-6xl px-4 sm:px-6;
 }
+
+/* Big uppercase display type (headlines, numbers, prices). */
+@utility display {
+	@apply font-display font-extrabold uppercase leading-[0.95] tracking-[0.005em] text-heading;
+}
+
+/* Section kicker with a short copper line in front. */
+@utility kicker {
+	@apply flex items-center gap-2.5 font-display text-[0.95rem] font-semibold uppercase tracking-[0.14em] text-primary-ink;
+	&::before {
+		content: '';
+		width: 28px;
+		height: 3px;
+		flex: none;
+		background: var(--copper);
+	}
+}
+
+@utility btn {
+	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 border-transparent px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors;
+}
 @utility btn-primary {
-	@apply inline-flex items-center justify-center gap-2 rounded-card bg-primary px-5 py-2.5 font-semibold text-bg transition hover:opacity-90;
+	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 border-transparent px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors bg-primary text-white hover:bg-[var(--primary-hover)];
+}
+/* Navy button: on light backgrounds navy, in dark mode a paper button. */
+@utility btn-navy {
+	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 border-transparent px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors bg-heading text-bg hover:bg-primary hover:text-white;
 }
 @utility btn-secondary {
-	@apply inline-flex items-center justify-center gap-2 rounded-card border-2 border-fg px-5 py-2.5 font-semibold text-fg transition hover:bg-fg hover:text-bg;
+	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors border-heading text-heading hover:bg-heading hover:text-bg;
+}
+/* Outline button on navy bands. */
+@utility btn-hell {
+	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors border-on-dark text-on-dark hover:bg-on-dark hover:text-dark;
+}
+
+/* Text link with a copper underline bar. */
+@utility textlink {
+	@apply inline-block border-b-[3px] border-copper pb-0.5 font-display text-lg font-semibold uppercase tracking-[0.08em] text-heading no-underline hover:text-primary-ink;
+}
+
+@utility card {
+	@apply rounded-card border border-border bg-card;
+}
+
+/* Fact chip ("45 Min.", "bis zu 6 Hunde"). */
+@utility chip {
+	@apply rounded bg-surface-2 px-2.5 py-1 text-[0.84rem] font-semibold text-heading;
+}
+
+/* Diagonal lane lines, the "Hundeplatz" motif. Purely decorative (aria-hidden, behind content). */
+@utility lanes {
+	background: repeating-linear-gradient(-58deg, transparent 0 22px, var(--lane) 22px 26px);
+}
+@utility lanes-copper {
+	background: repeating-linear-gradient(-58deg, transparent 0 22px, color-mix(in srgb, var(--copper) 55%, transparent) 22px 25px);
+	opacity: 0.55;
+}
+
+/* Numbered "start bib" (01, 02, …) on offer cards. */
+@utility bib {
+	@apply rounded bg-bg px-2.5 pt-2 pb-1.5 font-display text-2xl leading-none font-extrabold text-heading;
+	border-bottom: 4px solid var(--copper);
+}
+
+/* Form controls of the inquiry form. */
+@utility feld {
+	@apply w-full rounded-card border border-border bg-bg px-3.5 py-3 text-base text-fg;
+	&:focus {
+		outline: 2px solid var(--copper);
+		outline-offset: 1px;
+		background: var(--card);
+	}
 }
 
 /* Rich text: class="prose prose-lg prose-site". Unlayered, so it wins over the typography plugin. */
 .prose-site {
 	max-width: none;
 	--tw-prose-body: var(--fg);
-	--tw-prose-headings: var(--fg);
+	--tw-prose-headings: var(--heading);
 	--tw-prose-links: var(--primary-ink);
-	--tw-prose-bold: var(--fg);
-	--tw-prose-bullets: var(--accent);
+	--tw-prose-bold: var(--heading);
+	--tw-prose-bullets: var(--copper);
 	--tw-prose-quotes: var(--fg);
-	--tw-prose-quote-borders: var(--accent);
+	--tw-prose-quote-borders: var(--copper);
 	--tw-prose-counters: var(--muted);
 	--tw-prose-captions: var(--muted);
 	--tw-prose-hr: var(--border);
+}
+.prose-site :where(h2, h3) {
+	font-family: var(--font-display);
+	text-transform: uppercase;
+	font-weight: 800;
+	letter-spacing: 0.01em;
+}
+/* Rich text on navy bands. */
+.prose-hell {
+	--tw-prose-body: var(--on-dark-muted);
+	--tw-prose-headings: var(--on-dark);
+	--tw-prose-links: var(--on-dark);
+	--tw-prose-bold: var(--on-dark);
+	--tw-prose-bullets: var(--copper);
 }
 
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after {
 		transition: none !important;
 		animation: none !important;
+		scroll-behavior: auto !important;
 	}
 }

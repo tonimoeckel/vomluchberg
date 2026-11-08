@@ -1,25 +1,44 @@
 ---
-// Skeleton text block (real design: slice 2).
+// Text with optional image, tags and buttons; background light, sand or navy.
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
+import SectionHead from '../SectionHead.astro';
+import { hintergrundKlasse } from './hintergrund';
 import type { BlockOf } from '../../lib/data';
+
 interface Props { data: BlockOf<'Text'> }
 const { data } = Astro.props;
+const dunkel = data.hintergrund === 'dunkel';
+const stichworte = (data.stichworte ?? []).filter(Boolean);
+const buttons = (data.buttons ?? []).filter((b) => b !== null);
 ---
-<section class:list={['py-12 sm:py-16', data.hervorheben && 'bg-surface']}>
-	<div class:list={['container-page grid items-start gap-10', data.bild && 'lg:grid-cols-2']}>
+<section class:list={['py-14 sm:py-20', hintergrundKlasse(data.hintergrund)]}>
+	<div class:list={['container-page grid items-center gap-10 lg:gap-16', data.bild && 'lg:grid-cols-2']}>
 		<div class:list={[data.bild && data.bildPosition === 'links' && 'lg:order-2']}>
-			{data.ueberschrift && <h2 class="mb-6 text-3xl font-bold" data-tina-field={tinaField(data, 'ueberschrift')}>{data.ueberschrift}</h2>}
+			<SectionHead data={data} dunkel={dunkel} class="mb-6" />
 			{data.inhalt && (
-				<div class="prose prose-lg prose-site" data-tina-field={tinaField(data, 'inhalt')}>
+				<div class:list={['prose prose-lg prose-site', dunkel && 'prose-hell']} data-tina-field={tinaField(data, 'inhalt')}>
 					<TinaMarkdown content={data.inhalt} />
+				</div>
+			)}
+			{stichworte.length > 0 && (
+				<ul class="mt-6 flex flex-wrap gap-2" data-tina-field={tinaField(data, 'stichworte')}>
+					{stichworte.map((s) => <li class:list={[dunkel ? 'rounded border border-lane/60 px-2.5 py-1 text-sm text-on-dark-muted' : 'chip']}>{s}</li>)}
+				</ul>
+			)}
+			{buttons.length > 0 && (
+				<div class="mt-8 flex flex-wrap gap-3">
+					{buttons.map((b) => (
+						<a data-tina-field={tinaField(b)} href={b.link} rel={b.link?.startsWith('http') ? 'noopener' : undefined}
+							class={b.stil === 'sekundaer' ? (dunkel ? 'btn-hell' : 'btn-secondary') : 'btn-primary'}>{b.label}</a>
+					))}
 				</div>
 			)}
 		</div>
 		{data.bild && (
-			<figure data-tina-field={tinaField(data, 'bild')}>
-				<img src={data.bild} alt={data.bildunterschrift ?? ''} loading="lazy" class="w-full rounded-card object-cover" />
-				{data.bildunterschrift && <figcaption class="mt-3 text-center text-sm text-muted" data-tina-field={tinaField(data, 'bildunterschrift')}>{data.bildunterschrift}</figcaption>}
+			<figure class="relative" data-tina-field={tinaField(data, 'bild')}>
+				<div class="lanes absolute -bottom-[8%] -left-[8%] -z-0 h-1/2 w-2/3" aria-hidden="true"></div>
+				<img src={data.bild} alt={data.bildunterschrift ?? ''} loading="lazy" decoding="async" class="relative aspect-[4/3] w-full rounded-card object-cover" />
 			</figure>
 		)}
 	</div>
