@@ -10,7 +10,12 @@ kommen in den passenden Abschnitt.
 
 ## 1. Wichtig vor dem Start (Recht und Adressen)
 
-- [ ] **Domains:** Passen `rauhaardackel-vom-luchberg.de` und `alltag-kann-sport.de`? Beide waren am 05.11.2026 noch frei. *(Annahme: ja, genutzt wird jeweils die Adresse mit www. Bis dahin laufen die Seiten unter einer Testadresse.)*
+- [ ] **Domains:** Passt `rauhaardackel-vom-luchberg.de` für die Dackel? *(Annahme: ja, am 05.11.2026 frei.)* Für das Training haben wir Vorschläge mit Vor- und Nachteilen zusammengestellt ([`domains-neue-seiten.md`](../domains-neue-seiten.md), „Domain für die Trainingsseite – Vorschläge“). Bitte eine auswählen:
+  - **`alltag-kann-sport.de`** (Empfehlung, euer Markenname), dazu `alltagkannsport.de` als Weiterleitung, damit es auch ohne Bindestriche klappt
+  - `karolin-riesing.de`, falls du den Namen „Alltag kann Sport“ nicht behalten möchtest
+  - `hundetraining-riesing.de`, falls Name und Leistung in der Adresse stehen sollen
+
+  Möchtest du zusätzlich `karolin-riesing.de` als Weiterleitung auf die Trainingsseite (sichert deinen Namen, kostet ein paar Euro im Jahr)? Alle waren am 08.11.2026 frei. *(Annahme: `alltag-kann-sport.de` + `alltagkannsport.de`, ohne `karolin-riesing.de`. Genutzt wird jeweils die Adresse mit www. Bis dahin laufen die Seiten unter einer Testadresse.)*
 - [ ] **Domains bestellen:** Bestellst und bezahlst du beide Domains selbst, im selben Account wie `vomluchberg.de`? *(Annahme: ja, bei INWX, Toni bekommt Zugang.)*
 - [ ] **Verein (Dackel):** Züchtest du die Dackel in einem Verein (z. B. Deutscher Teckelklub / VDH) mit Papieren, oder als Liebhaberzucht? Das ändert, wie wir die Zucht auf der Seite beschreiben dürfen. *(Annahme: offen. Bis zur Antwort schreiben wir nichts über Verein oder Papiere.)*
 - [ ] **Erlaubnis nach § 11 Tierschutzgesetz:** Hast du sie für das Hundetraining (und ggf. die Zucht)? Welches Veterinäramt hat sie erteilt? Das gehört ins Impressum. Und dürfen diese Angaben öffentlich stehen: „Ausbildung gleichwertig zur Trainer-C-Lizenz“ und „Genehmigung nach § 11 TSchG“? *(Annahme: ja, für das Training. Die Behörde reichst du nach.)*
