@@ -75,7 +75,8 @@ step 12 (T4), and "Rottweiler · " labels shipped with PR B (T6).
 ### Implementation order
 
 1. **Slice 0 PR B** (steps 8–10: Tina groundwork, dachshund/training skeletons, docs) plus CF-01
-   (per-site Wrangler files with previews).
+   (per-site Wrangler files with previews). **Implemented 2026-11-06** on `claude/impl-00-multisite-pr-b`
+   (status and new questions T7–T9 in `00-multisite.md`).
 2. **Slice 1 tasks 1–11** and **slice 2 tasks** in parallel, on top of PR B. Slice 1 tasks 1–3
    (pure domain modules) can start right away.
 3. **Slice 3**: Cloudflare setup (CF-02…CF-07, Toni), domains once Karo confirms, then the

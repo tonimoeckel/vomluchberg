@@ -1,0 +1,15 @@
+{
+	// Worker of the dackel site. Picked by astro.config.mjs (configPath) when SITE_ID=dackel;
+	// the build writes dist/server/wrangler.json with this name, so `npx wrangler deploy` needs no --config.
+	"name": "vomluchberg-dackel",
+	"compatibility_date": "2026-06-01",
+	"compatibility_flags": ["nodejs_compat"],
+	// Worker Previews for non-production branches (Workers Builds, docs/plan/03-betrieb.md §3).
+	"previews": {},
+	"preview_urls": true,
+	// Interim preview address on Karo's existing zone until the site's own domain exists
+	// (docs/plan/03-betrieb.md §3.1). Cloudflare creates the DNS record and certificate on deploy;
+	// the Workers Builds token has "Workers Routes: Edit" for the zone. Keep SITE_NOINDEX=true while
+	// the site lives here, so this host never gets indexed.
+	"routes": [{ "pattern": "dackel.vomluchberg.de", "custom_domain": true }]
+}

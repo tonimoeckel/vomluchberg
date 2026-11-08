@@ -1,15 +1,16 @@
 import type { Collection } from 'tinacms';
 import { geschlechter } from '../../src/lib/domain/hund';
 import { wurfSlug, wurfStatus, wurfUrl } from '../../src/lib/domain/wurf';
+import { siteRouter } from '../sites/router';
 import { bildFeld, galerieFeld } from './fields';
 
 export const WurfCollection: Collection = {
   name: 'wurf',
-  label: 'Würfe',
+  label: 'Rottweiler · Würfe',
   path: 'src/content/wuerfe',
   format: 'md',
   ui: {
-    router: ({ document }) => wurfUrl(document._sys.filename),
+    router: siteRouter('luchberg', (document) => wurfUrl(document._sys.filename)),
     filename: {
       slugify: (values: { buchstabe?: string }) => wurfSlug(values?.buchstabe),
     },

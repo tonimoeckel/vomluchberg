@@ -23,7 +23,7 @@ eintippt, landet automatisch auch dort.
 
 - [ ] Karo: Welche zwei Namen sollen es werden? (Fragen in [`plan/fragen-an-karo.md`](plan/fragen-an-karo.md), Abschnitt „Betrieb & Domains“)
 - [ ] Karo: Braucht ihr E-Mail-Adressen mit der neuen Domain (z. B. `hallo@alltag-kann-sport.de`)? *Annahme: nein, die Gmail-Adressen bleiben. Eine Weiterleitung an Gmail ist später jederzeit kostenlos möglich.*
-- [ ] Toni: Prüfen, dass beide Seiten unter ihrer Cloudflare-Testadresse (`….workers.dev`) fertig und abgestimmt sind. Die Domain kann aber auch schon vorher bestellt werden.
+- [ ] Toni: Prüfen, dass beide Seiten unter ihrer Testadresse (`dackel.vomluchberg.de` bzw. `training.vomluchberg.de`) fertig und abgestimmt sind. Die Domain kann aber auch schon vorher bestellt werden.
 
 ## 1. Karo: Domains bestellen
 
@@ -46,7 +46,8 @@ Für jede der beiden Domains:
 
 ## 3. Toni: Website verbinden (erst wenn die Seite fertig ist)
 
-- [ ] *Workers & Pages* → Worker (`vomluchberg-dackel` bzw. `vomluchberg-training`) → *Settings → Domains & Routes → Add Custom Domain* → `www.<domain>`.
+- [ ] Im Repo in `src/sites/<id>/wrangler.jsonc` die Adresse unter `routes` von `dackel.vomluchberg.de` bzw. `training.vomluchberg.de` auf `www.<domain>` ändern und deployen. Cloudflare legt den DNS-Eintrag und das Zertifikat dabei selbst an. (Alternativ im Dashboard: *Workers & Pages* → Worker → *Settings → Domains & Routes → Add Custom Domain*.)
+- [ ] Die alte Testadresse (`dackel.vomluchberg.de` bzw. `training.vomluchberg.de`) per *Rules → Redirect Rules* in der Zone `vomluchberg.de` mit 301 auf `https://www.<domain>` weiterleiten, falls Karo den Link schon verschickt hat.
 - [ ] Für die Adresse ohne www: DNS-Eintrag `AAAA` für `@` → `100::`, **Proxy an** (orange Wolke). Dann *Rules → Redirect Rules* → Vorlage „Redirect from root to www“, Statuscode 301.
 - [ ] Im Worker unter *Settings → Build → Variables*: `SITE_URL=https://www.<domain>` setzen und `SITE_NOINDEX` löschen. Neu bauen lassen.
 - [ ] TinaCloud → Projekt → *Site URLs*: `https://www.<domain>` ergänzen.

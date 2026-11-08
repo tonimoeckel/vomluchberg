@@ -1,0 +1,17 @@
+{
+  "website": {
+    "name": "Rauhaardackel vom Luchberg",
+    "untertitel": "Glashütte OT Luchau",
+    "beschreibung": "Rauhaardackel vom Luchberg in Glashütte OT Luchau (Sachsen)."
+  },
+  "kontakt": {
+    "name": "Karolin Riesing",
+    "ort": "01768 Glashütte OT Luchau"
+  },
+  "nav": [
+    {
+      "titel": "Start",
+      "link": "/"
+    }
+  ]
+}

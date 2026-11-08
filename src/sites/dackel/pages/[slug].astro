@@ -1,0 +1,9 @@
+---
+import Detailseite from '../layouts/Detailseite.astro';
+import { seiten } from '../lib/detailseiten';
+
+export const getStaticPaths = seiten.paths;
+const seite = await seiten.load(String(Astro.params.slug));
+if (!seite) return new Response('Not Found', { status: 404 });
+---
+<Detailseite {...seite} />

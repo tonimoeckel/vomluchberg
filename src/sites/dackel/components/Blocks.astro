@@ -1,0 +1,25 @@
+---
+// Block dispatcher of the dackel site: dispatches on the template name (blockName), not the
+// collection-prefixed __typename, so shared block templates can be reused as they are.
+import { tinaField } from '@tinacms/astro/tina-field';
+import Hero from './blocks/Hero.astro';
+import Text from './blocks/Text.astro';
+import Cta from './blocks/Cta.astro';
+import { blockName } from '../../../lib/tina-typename';
+import type { BlockOf, CmsPage } from '../lib/data';
+
+interface Props { data?: CmsPage | null }
+const { data } = Astro.props;
+const blocks = (data?.blocks ?? []).filter((b) => b !== null);
+---
+{blocks.map((block) => (
+	<div data-tina-field={tinaField(block)}>
+		{(() => {
+			switch (blockName(block.__typename)) {
+				case 'Hero': return <Hero data={block as BlockOf<'Hero'>} />;
+				case 'Text': return <Text data={block as BlockOf<'Text'>} />;
+				case 'Cta': return <Cta data={block as BlockOf<'Cta'>} />;
+			}
+		})()}
+	</div>
+))}
