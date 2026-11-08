@@ -9,7 +9,7 @@ Cloudflare (kostenlos), die Websites laufen über Cloudflare Workers, genau wie 
 
 | Seite | Domain | Stand |
 | --- | --- | --- |
-| Hundetraining | **`alltag-kann-sport.de`**, dazu `alltagkannsport.de` und `hundetraining-osterzgebirge.de` als Weiterleitung | **bestellt am 08.11.2026** bei INWX, Nameserver Cloudflare (`sean`/`sloan.ns.cloudflare.com`), Zonen angelegt |
+| Hundetraining | **`alltag-kann-sport.de`**, dazu `alltagkannsport.de` und `hundetraining-osterzgebirge.de` als Weiterleitung | **bestellt am 08.11.2026** bei INWX, Nameserver Cloudflare (`sean`/`sloan.ns.cloudflare.com`), Zonen angelegt. `www.alltag-kann-sport.de` und `alltag-kann-sport.de` sind mit der Website verbunden (noch für Google gesperrt). Die beiden Zusatzdomains leiten noch nicht weiter (Weiterleitungsregel fehlt). |
 | Rauhaardackel | **`dackelvomluchberg.de`** | **bestellt am 08.11.2026** bei INWX, Nameserver Cloudflare (`sean`/`sloan.ns.cloudflare.com`), Zone angelegt |
 
 Bis zum Start laufen die Seiten unter `dackel.vomluchberg.de` und `training.vomluchberg.de`. Danach leiten diese
