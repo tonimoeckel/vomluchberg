@@ -1,0 +1,19 @@
+---
+/**
+ * Secret colour preview for choosing a scheme with Karo (src/sites/training/lib/farbschema.ts).
+ * `kopf`: inline script for <head> that applies the previewed scheme before first paint.
+ * Without `kopf`: loader at the end of <body>; the switcher itself (lib/themeUmschalter.ts) is a
+ * separate chunk that is only fetched while ?themes=active is on, so the normal page carries no
+ * switcher markup or texts.
+ */
+import { vorschauConfig, vorschauStarten } from '../lib/farbschema';
+
+interface Props { kopf?: boolean }
+const { kopf = false } = Astro.props;
+const start = `(${vorschauStarten.toString()})(${JSON.stringify(vorschauConfig)},location.search,(()=>{try{return sessionStorage}catch(e){return null}})(),document.documentElement);`;
+---
+{kopf ? <script is:inline set:html={start} /> : (
+	<script>
+		if ('themes' in document.documentElement.dataset) import('../lib/themeUmschalter').then((m) => m.starten());
+	</script>
+)}

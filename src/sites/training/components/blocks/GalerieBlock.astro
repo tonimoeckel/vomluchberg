@@ -27,7 +27,7 @@ const gruppe = `galerie-${(data.ueberschrift ?? 'bilder').toLowerCase().replace(
 						<a href={b!.bild!} data-lightbox={gruppe} data-caption={b!.beschreibung ?? ''} class="group block">
 							<img src={b!.bild!} alt={b!.beschreibung ?? ''} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover group-hover:opacity-90" />
 							{b!.titel && (
-								<span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgb(12_26_42/0.85)] to-transparent px-4 pt-10 pb-3 font-display font-semibold uppercase tracking-[0.1em] text-white">{b!.titel}</span>
+								<span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[color-mix(in_srgb,var(--dark-2)_85%,transparent)] to-transparent px-4 pt-10 pb-3 font-display font-semibold uppercase tracking-[0.1em] text-white">{b!.titel}</span>
 							)}
 						</a>
 					</li>
