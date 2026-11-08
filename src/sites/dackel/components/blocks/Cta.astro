@@ -1,18 +1,19 @@
 ---
-// Skeleton call to action (real design: slice 1).
+// Centred call to action with buttons.
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { BlockOf } from '../../lib/data';
 interface Props { data: BlockOf<'Cta'> }
 const { data } = Astro.props;
 const buttons = (data.buttons ?? []).filter((b) => b !== null);
 ---
-<section class="py-12 sm:py-16">
-	<div class="container-page rounded-card bg-dark px-6 py-12 text-center text-on-dark">
-		{data.titel && <h2 class="text-3xl font-bold" data-tina-field={tinaField(data, 'titel')}>{data.titel}</h2>}
-		{data.text && <p class="mx-auto mt-4 max-w-2xl text-on-dark/80" data-tina-field={tinaField(data, 'text')}>{data.text}</p>}
+<section class="py-14 text-center sm:py-18">
+	<div class="container-page">
+		{data.kicker && <p class="eyebrow" data-tina-field={tinaField(data, 'kicker')}>{data.kicker}</p>}
+		{data.titel && <h2 class="mx-auto mt-2 max-w-3xl text-[clamp(2rem,4.5vw,3rem)]" data-tina-field={tinaField(data, 'titel')}>{data.titel}</h2>}
+		{data.text && <p class="mx-auto mt-4 max-w-xl text-muted" data-tina-field={tinaField(data, 'text')}>{data.text}</p>}
 		{buttons.length > 0 && (
 			<div class="mt-8 flex flex-wrap justify-center gap-3">
-				{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class="btn-primary">{b.label}</a>)}
+				{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class={b.stil === 'sekundaer' ? 'btn-secondary' : 'btn-primary'}>{b.label}</a>)}
 			</div>
 		)}
 	</div>

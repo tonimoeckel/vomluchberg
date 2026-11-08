@@ -1,12 +1,79 @@
 # Slice 1 – Dachshund site ("Rauhaardackel vom Luchberg")
 
-Status: **plan**, 2026-11-05. Depends on slice 0 (`00-multisite.md`) for the multi-site mechanism.
+Status: **implemented** (tasks 1–11, 2026-11-08, branch `claude/impl-01-dackel`; see *Implementation status* below). Planned 2026-11-05. Depends on slice 0 (`00-multisite.md`) for the multi-site mechanism.
 Open questions for Karo are in [`fragen-an-karo.md`](fragen-an-karo.md) → "Rauhaardackel-Seite".
 Design (decided 2026-11-06, see D11 in `README.md`): direction **A "Wiesenweg"**, plain, no decorative animation.
 Mockup (open locally in a browser, it loads the real photos from `public/uploads/rudel/dackel/`):
 [`mockups/dackel/index.html`](mockups/dackel/index.html), full-page screenshot
 [`mockups/dackel/wiesenweg-desktop.jpg`](mockups/dackel/wiesenweg-desktop.jpg).
 The dropped directions B–H (mockups and screenshots) stay on the branch `claude/plan-01-dackel` for reference.
+
+## Implementation status
+
+Implemented 2026-11-08 on `claude/impl-01-dackel`, one commit per task (5–9 partly combined). Every
+commit was checked with `npm test`, `astro check` (0/0/0), `build:local` for all three sites and a diff
+of the luchberg `dist/client` against the build before task 1: **identical**, except the admin bundle
+and the new files under `uploads/dackel/` (every worker ships all uploads, see `00-multisite.md`).
+
+- **Domain (tasks 1–3):** `hundRegeln(config)` in `domain/hund.ts` (the Rottweiler exports are
+  `rottweilerHunde`), `wurfUrlFuer(listeUrl)` in `domain/wurf.ts`, `headMeta` already took the site name.
+  `domain/dackel.ts`: categories, colours (`duerrlaubfarben` as value, label with umlaut), sizes,
+  `dackelSteckbrief`, `dackelKurzinfo`, `welpenStatus` (puppy panel: current litter → planned
+  litter → settings `hinweis`), `betonteTeile` (`*…*` in a hero title is set in italics),
+  `anfrageBetreff`.
+- **Tina (task 4):** `dackelHund`, `dackelWurf`; field factories `hundFelder` / `wurfFelder` in
+  `tina/collections/fields.ts`, also used by the Rottweiler `hund` / `wurf` collections (schema
+  unchanged, checked against the lock). Dackel blocks in `tina/sites/dackel/blocks.ts`: the shared
+  templates plus `kicker` (eyebrow), hero `stichpunkte` + `bildnotiz`, galerie `variante`
+  (`raster` / `band`), hunde `variante` (`gruppiert` / `karten`), wuerfe `leer` (empty state) and
+  a new `welpen` block (dark panel). `dackelConfig` adds `hinweis`, `querverweis` (text + picture)
+  and `verband` (empty, K5).
+- **Design (tasks 6–7):** tokens and utilities in `src/sites/dackel/styles/global.css` as in §4,
+  Fraunces (`soft` axis files) and Source Sans 3 from Fontsource, placeholder mark and favicons
+  from the line-drawn dachshund. Only motion: the dog/litter card lift (`card-lift`), off with
+  reduced motion. Buttons change colour only. Own photo grid (`ui/Fotoraster.astro`), no zoom.
+- **Detail pages (task 8):** `/unsere-dackel/[slug]`, `/welpen/[slug]`; live editing checked in
+  `npm run dev:dackel` (edit of a dog's Rufname updates the preview).
+- **Contact (task 9):** own form in the dackel `Kontakt` block (the Rottweiler one is not a shared
+  component and changing it would touch the live site). Web3Forms with `PUBLIC_WEB3FORMS_KEY`,
+  otherwise `mailto:` with subject „Anfrage Rauhaardackel: <Thema>“ (checked in a browser).
+- **Cross-link (task 10), deviations:** the target URL comes from the site registry
+  (`url`, `live`, `querverweise` in `src/sites/<id>/site.ts`, helper `src/multisite/querverweis.ts`),
+  as 03-betrieb O9 decided; `querverweis.link` from §3 is not a field. The dackel footer links to
+  vomluchberg.de (live). The Rottweiler footer has `src/components/Querverweis.astro`, which renders
+  nothing until `dackel` gets `live: true` and its `url`. **The `querverweis` field is not yet in the
+  Rottweiler settings:** any new field in the `config` query changes the `data-tina-field` ids on
+  every Rottweiler page, so it is added at go-live together with shortening
+  `src/content/hunde/rauhaardackel.md` (§6). The old-site redirect
+  `/weitere-rudelmitglieder/rauhaardackel` still answers 308 → `/hunde/rauhaardackel`.
+- **Review (task 11):** Lighthouse (local static build) on `/`, a dog page, `/welpen`, `/kontakt`:
+  accessibility 100, SEO 100, best practices 100. The sitemap lists only dackel URLs. No
+  „Papiere“/DTK/VDH/Zuchtwart/Wurfabnahme anywhere (K5); „ADRK“ appears only in the Rottweiler hint.
+  Screenshots at 390 / 1366 px, light and dark, were shown to Toni.
+
+- **Photo identity (08.11.):** Karo: Bonnie wears the purple collar. On `dackel-duo-bank.jpg` Bonnie
+  sits left, Hanni right; the profile photos `bonnie-auf-der-bank.jpg` / `hanni-auf-der-bank.jpg` are
+  crops of it. No collar visible on `gustav-in-der-loewenzahnwiese.jpg` and `dackel-sitzt-im-garten.jpg`:
+  shown without names in the home photo band until Karo says who it is (fragen-an-karo §2).
+
+- **Karo's answers (08.11.), see fragen-an-karo §2:** Hobbyzucht without a kennel name, so the copy
+  may say „Hobbyzucht“ (her word); K5 still holds for papers and clubs. No size class is named until
+  she has measured the dogs (`groesse` has no default, cards say „Rauhaardackel“). The father is
+  Monty (`hunde/monty.md`, no text about him). A-Wurf prepared as `wuerfe/a-wurf.md` (status
+  `vergangen`, father Monty, nothing else) until the data from Karo's Word file arrives; past
+  litters show no inquiry button.
+
+- **Karo's Word file (08.11., `docs/karo/2026-11-08-dackelhomepage/` on its own branch/PR):** profiles
+  of Hanni, Bonnie and the fathers Monty, Gustav, Pietri (dates, colours, size, Karo's texts verbatim),
+  A/B/C-Wurf with puppies and photos, the Hobbyzucht notice on home, Welpen and Über uns. Six photos
+  of the file were already in `uploads/dackel/` in a larger size and were renamed (Monty, Hanni,
+  Gustav, Arthur, Alma, Alfons); the other 18 were imported with `scripts/import-images.mjs`. New
+  field `haar` (Pietri is a Zwerg-Kurzhaardackel; empty = Rauhaar), size options are now the class
+  only (`dackelBezeichnung`), colours use Karo's words. Open points are in fragen-an-karo §2.
+
+**At go-live** (slice 3): set `url` + `live: true` in `src/sites/dackel/site.ts`, add
+`querverweisFeld` to `tina/collections/config.ts` and pass its text to `<Querverweis>`, shorten
+`hunde/rauhaardackel.md` (§6), point the old redirect straight to the new domain.
 
 ## 1. Decisions
 
@@ -278,7 +345,7 @@ luchberg build before/after for tasks 1–3).
 5. **Content.** `src/content/dackel/**`: config, pages (`home`, `unsere-dackel`, `welpen`, `ueber-uns`,
    `kontakt`, `impressum`, `datenschutz`), dogs (`hanni`, `bonnie`, `vater`), no litters yet. Copy (not
    move) photos to `public/uploads/dackel/` with readable names (`dackel-duo-bank.jpg`,
-   `vater-steht-im-garten.jpg`, `welpe-mit-spielzeug-1.jpg` …) and alt texts. Never run
+   `monty-im-garten.jpg`, `a-wurf-alfons.jpg` …) and alt texts. Never run
    `migration/migrate.py`.
 6. **Design tokens + base layout.** `src/sites/dackel/styles/global.css` (slice 0 step 9, R7) (tokens light/dark, `@theme`,
    utilities `container-page`, `btn*`, `arch`, `eyebrow`, `squiggle`, `prose-dackel`), Fontsource

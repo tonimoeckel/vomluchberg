@@ -1,0 +1,9 @@
+---
+import Detailseite from '../../layouts/Detailseite.astro';
+import { wuerfe } from '../../lib/detailseiten';
+
+export const getStaticPaths = wuerfe.paths;
+const wurf = await wuerfe.load(String(Astro.params.slug));
+if (!wurf) return new Response('Not Found', { status: 404 });
+---
+<Detailseite {...wurf} />

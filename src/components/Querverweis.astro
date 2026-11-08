@@ -1,0 +1,19 @@
+---
+// Footer hint of the Rottweiler site to Karo's other sites (docs/plan/03-betrieb.md O9, 01-dackel §6).
+// Rendered only for targets flagged `live` in src/sites/<id>/site.ts – until the dachshund site has
+// its own domain this renders nothing. Uses only classes the footer already has, so the luchberg CSS
+// stays the same. At go-live: add `querverweisFeld` (tina/collections/fields.ts) to the Rottweiler
+// settings and pass its text here (adding it earlier changes every page's click-to-edit ids).
+import { querverweisZiele } from '../multisite/querverweis';
+
+interface Props { text?: string | null }
+const { text } = Astro.props;
+const ziele = querverweisZiele('luchberg');
+const standardText: Record<string, string> = { dackel: 'Wir züchten auch Rauhaardackel:' };
+---
+{ziele.map((ziel) => (
+	<p class="mt-4 text-sm text-on-dark/75">
+		{text || standardText[ziel.id] || 'Auch bei uns:'}{' '}
+		<a href={ziel.url} class="underline decoration-accent underline-offset-4 hover:text-white">{ziel.name} →</a>
+	</p>
+))}

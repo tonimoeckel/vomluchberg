@@ -15,7 +15,6 @@ kommen in den passenden Abschnitt.
   - [ ] Noch offen: Welche Schreibweise steht auf Flyern und Visitenkarten, mit oder ohne Bindestriche? Funktionieren tun beide. *(Annahme: mit Bindestrichen, `www.alltag-kann-sport.de`, weil sie besser lesbar ist.)*
   - [ ] Möchtest du zusätzlich `karolin-riesing.de` als Weiterleitung (sichert deinen Namen)? *(Annahme: nein.)*
 - [x] **Domains bestellen:** Bei INWX bestellt am 08.11.2026, Inhaberin Karo.
-- [ ] **Verein (Dackel):** Züchtest du die Dackel in einem Verein (z. B. Deutscher Teckelklub / VDH) mit Papieren, oder als Liebhaberzucht? Das ändert, wie wir die Zucht auf der Seite beschreiben dürfen. *(Annahme: offen. Bis zur Antwort schreiben wir nichts über Verein oder Papiere.)*
 - [ ] **Erlaubnis nach § 11 Tierschutzgesetz:** Hast du sie für das Hundetraining (und ggf. die Zucht)? Welches Veterinäramt hat sie erteilt? Das gehört ins Impressum. Und dürfen diese Angaben öffentlich stehen: „Ausbildung gleichwertig zur Trainer-C-Lizenz“ und „Genehmigung nach § 11 TSchG“? *(Annahme: ja, für das Training. Die Behörde reichst du nach.)*
 - [ ] **Umsatzsteuer:** Bist du Kleinunternehmerin, oder hast du eine USt-IdNr.? *(Annahme: Kleinunternehmerin, keine USt-IdNr. im Impressum.)*
 - [ ] **Verträge fürs Training:** Wie kommt eine Buchung zustande, per Telefon, E-Mail oder erst vor Ort? Bei Verträgen per E-Mail oder Telefon kann ein Widerrufsrecht gelten, das lassen wir prüfen. *(Annahme: Absprache per Telefon/E-Mail, Bezahlung vor Ort.)*
@@ -32,12 +31,36 @@ kommen in den passenden Abschnitt.
 ## 2. Inhalte der Dackel-Seite
 
 - [ ] **Name der Seite:** Wie soll sie heißen? Gibt es für die Dackel einen eigenen Zwingernamen? *(Annahme: „Rauhaardackel vom Luchberg“.)*
+  **Antwort (08.11., über Toni):** „Da die Hunde aus Hobbyzucht stammen, gibt es keinen Zwingernamen.“
+  **Noch offen:** Darf die Seite trotzdem „Rauhaardackel vom Luchberg“ heißen? „vom Luchberg“ steht hier für den Ort (und deine Rottweiler-Seite), nicht für einen Zwinger. *(Annahme: ja.)*
 - [ ] **Logo:** Soll es ein eigenes Dackel-Logo geben (z. B. eine Silhouette wie beim Rottweiler-Logo)? *(Annahme: vorerst eine einfache Dackel-Strichzeichnung als Platzhalter.)*
-- [ ] **Hanni und Bonnie:** Auf welchen Fotos ist Hanni, auf welchen Bonnie? Sind die beiden auf dem Bank-Foto Hanni und Bonnie? Wie heißen sie mit vollem Namen, wann ist ihr Wurftag, welche Farbe haben sie (z. B. wildschweinfarben) und magst du zu jeder ein paar Sätze schreiben? *(Annahme: Bank-Foto = Hanni und Bonnie, die übrigen Angaben bleiben leer, bis du sie schickst.)*
+- [ ] **Hanni und Bonnie:** Auf welchen Fotos ist Hanni, auf welchen Bonnie? Sind die beiden auf dem Bank-Foto Hanni und Bonnie? Wie heißen sie mit vollem Namen, wann ist ihr Wurftag, welche Farbe haben sie (z. B. wildschweinfarben) und magst du zu jeder ein paar Sätze schreiben? *(Annahme: Bonnie ist die Hündin mit dem lila Halsband, Hanni die andere. Auf dem Bank-Foto auf der Website sitzt Bonnie links, Hanni rechts. Die übrigen Angaben bleiben leer, bis du sie schickst.)*
+  **Antwort (08.11., über Toni):** „Bonnie ist die mit Lila Halsband ... ich weiß gerade nicht welches Bankfoto es ist ... auf dem einen sitzt sie links auf dem anderen rechts.“
+  ~~Noch offen~~ (Löwenzahnwiese geklärt, siehe unten): Auf zwei Fotos ist kein Halsband zu sehen: der Dackel, der in der Löwenzahnwiese liegt, und der Dackel, der im Garten sitzt (Seitenansicht). Wer ist das jeweils? Und ist auf dem Foto „Karo mit Bonnie und Baja“ wirklich Bonnie? Bis dahin stehen diese Fotos ohne Namen auf der Seite.
+  **Antwort (08.11., über Toni):** Größe: Hanni und Bonny „passen in jedem Fall in den Standard“. Ob Zwerg- oder Kaninchenteckel, hängt von Größe und Brustumfang ab, du könntest sie noch vermessen. *(Bis dahin nennt die Seite keine Größenklasse, nur „Rauhaardackel“.)*
+  ~~Schreibt man „Bonnie“ oder „Bonny“?~~ Geklärt: In der Word-Datei steht „Bonnie“.
+  **Antwort (08.11., Word-Datei „Dackelhomepage“):** Hanni: Standard Rauhaardackel, WT 30.09.2020, saufarben, „Eine liebenswerte, fröhliche Hündin, die genauso liebenswert wie eigensinnig ist.“ Bonnie (so geschrieben): Tochter von Gustav und Hanni (B-Wurf), Standard Rauhaardackel, WT 01.09.2023, saufarben, mit Beschreibung. *(Alles auf der Seite eingetragen; Größe „Standard“ damit geklärt, Schreibweise „Bonnie“.)* Das Foto in der Löwenzahnwiese (liegend) ist **Gustav**, nicht Hanni oder Bonnie.
+  **Noch offen:** Wer sitzt auf dem Garten-Foto (Dackel von der Seite, auf der Website ohne Namen)?
 - [ ] **Der Vater unserer Dackel:** Wie heißt er, wem gehört er, und dürfen wir den Namen und den Zwinger nennen? *(Annahme: nur Foto und „Der Vater unserer Dackel“, ohne Namen.)*
+  **Antwort (08.11., über Toni):** Der Vater ist **Monty**. Eine Beschreibung von ihm hast du nicht mehr. *(Auf der Seite steht jetzt „Monty – Der Vater unserer Dackel“, mit Foto, ohne Text über ihn.)*
+  **Noch offen:** Wem gehört Monty (Besitzer oder Zwinger), und dürfen wir das nennen? *(Annahme: wir nennen es nicht.)*
+  **Antwort (08.11., Word-Datei „Dackelhomepage“):** Monty: Standard Rauhaardackel, WT 17.04.2015, schoko-braun, keine Beschreibung. Dazu zwei weitere Väter: **Gustav** (Standard Rauhaardackel, WT 01.01.2020, dunkelsaufarben, mit Beschreibung) und **Pietri** (Zwerg Kurzhaar Dackel, WT 19.06.2020, blacktan, mit Beschreibung). *(Alle drei stehen unter „Die Väter unserer Würfe“.)*
+  **Noch offen:** Wem gehören Monty, Gustav und Pietri (Besitzer oder Zwinger), und dürfen wir das nennen? *(Annahme: wir nennen es nicht.)*
 - [ ] **Würfe:** Gab es schon Dackelwürfe (Buchstabe, Datum, Eltern), und ist ein nächster Wurf geplant? Zu welchem Wurf gehören die Welpenfotos? *(Annahme: noch keine Wurfseiten. Die Welpenfotos zeigen wir als Galerie, bei „Welpen“ steht „Gerade sind keine Welpen da, meldet euch gern“.)*
+  **Antwort (08.11., über Toni):** Es gab einen **A-Wurf**, Vater ist Monty. Daten, Maße und Beschreibungen der einzelnen Welpen stehen in deiner Word-Datei, die Toni noch weitergibt. *(Auf der Seite gibt es die Wurfseite „A-Wurf“ schon, mit Vater Monty, sonst noch leer. Ein neuer Wurf ist nicht eingetragen.)*
+  **Noch offen:** Wer ist die Mutter des A-Wurfs, und gehören die Welpenfotos zum A-Wurf?
+  **Antwort (08.11., Word-Datei „Dackelhomepage“):** A-Wurf (WT 04.09.2022, Monty x Hanni): Arthur, Alma, Alfons. B-Wurf (WT 01.09.2023, Gustav x Hanni): Bax, Bruno, Brösel (Erwin), Bitzi (Willy), Betty, Barney, Bonnie, Biff, Heimdall. C-Wurf (Pietri x Bonnie): Cody, Cara, Capper (Waldemar), Crazy, Cosmo, Carsten-Walter, Cera (Rosi), Calle (Winnie). *(Alle drei Würfe stehen als „Abgeschlossen“ mit Welpenfotos auf der Seite.)*
+  **Noch offen:**
+  - Wann war der C-Wurf (Wurftag)?
+  - Pietri ist ein Zwerg-Kurzhaardackel. Wie soll der C-Wurf heißen bzw. beschrieben werden (die Welpen sind ja keine reinen Rauhaardackel)? *(Bis dahin steht beim C-Wurf keine Rassebezeichnung.)*
+  - Für Cera (Rosi) und Calle (Winnie) gibt es nur ein Foto. Wer ist darauf? *(Bis dahin zeigen wir es ohne Namen.)*
+  - Was bedeuten die Namen in Klammern, z. B. „Brösel (Erwin)“: der neue Name bei der Familie? *(Bis dahin steht es so wie in deiner Datei.)*
+  - Wir haben die Namen den Fotos in der Reihenfolge der Datei zugeordnet (links nach rechts). Stimmt das? Sind die Geschlechter der Welpen wichtig (dann bitte angeben)?
+  - Vor der Zeile „Bonnie, Biff, Heimdall“ stand „C-Wurf“. Wir gehen davon aus, dass die drei zum B-Wurf gehören (Bonnie ist am 01.09.2023 geboren). Richtig?
 - [ ] **Dackeltext auf der Rottweiler-Seite:** Darf dein Dackeltext auf die neue Dackel-Seite umziehen? Auf vomluchberg.de bleiben dann bei „Unsere Rauhaardackel“ nur der Satz über Hanni und Bonnie, zwei Fotos und ein Link zur Dackel-Seite. *(Annahme: ja, sobald die Dackel-Seite online ist. Doppelte Texte auf zwei Seiten mag Google nicht.)*
 - [ ] **Mehr Text (freiwillig):** Magst du noch etwas zur Aufzucht schreiben, z. B. seit wann du Dackel hast, was die Welpen beim Auszug mitbekommen und wie du die neuen Familien aussuchst? *(Annahme: wir starten mit deinem bisherigen Text.)*
+- [ ] **Steckbrief der Dackel:** Auf den Seiten von Hanni, Bonnie und den Vätern gibt es einen kleinen Steckbrief (Größe, Farbe, Wurftag, Eltern, Abstammung, Brustumfang, Gesundheit). Was davon magst du angeben? Leere Felder werden einfach nicht angezeigt. *(Annahme: vorerst nur „Rauhaardackel“, ohne Größenklasse, siehe oben.)*
+  **Antwort (08.11., Word-Datei „Dackelhomepage“):** Wurftage, Farben, Größe und Beschreibungen sind eingetragen. Offen sind nur noch freiwillige Angaben (Abstammung, Brustumfang, Gesundheit).
 
 ## 3. Inhalte der Trainingsseite
 
@@ -81,3 +104,13 @@ kommen in den passenden Abschnitt.
 
 - [x] **Design der Dackel-Seite:** Was soll die Seite ausstrahlen, wie soll sie sich vom Rottweiler-Design unterscheiden?
   **Antwort (06.11.):** Der erste, schlichte Entwurf „Wiesenweg“ gefällt dir (und zwei Freundinnen) am besten. Die animierten Varianten sind witzig, könnten aber nerven, darum lassen wir Animationen weg, auch als Schalter.
+- [x] **Welpenfotos:** Sind die Welpenfotos auf der Welpen-Seite alle aus deiner Zucht?
+  **Antwort (08.11., über Toni):** Ja, die Welpenfotos sind von dir.
+- [x] **Hinweis auf die Rottweiler:** Passt im Fuß der Dackel-Seite „Wir züchten auch Rottweiler im ADRK: Rottweiler vom Luchberg →“ mit dem Foto von dir, Bonnie und Baja?
+  **Antwort (08.11., über Toni):** Ja.
+- [x] **Verein (Dackel):** Züchtest du die Dackel in einem Verein (z. B. Deutscher Teckelklub / VDH) mit Papieren, oder als Liebhaberzucht? Das ändert, wie wir die Zucht auf der Seite beschreiben dürfen. *(Annahme: offen. Bis zur Antwort schreiben wir nichts über Verein oder Papiere.)*
+  **Antwort (08.11., über Toni):** „Da die Hunde aus Hobbyzucht stammen, gibt es keinen Zwingernamen.“ Auf der Seite steht jetzt „Hobbyzucht“ (dein Wort), weiterhin nichts zu Papieren oder Vereinen.
+- [x] **Weitere Fotos:** Wie kommen neue Dackelfotos auf die Seite?
+  **Antwort (08.11., über Toni):** Du pflegst einen Bilder-Link (Cloud-Ordner) mit weiteren Dackelfotos, die Bilder kommen über Toni.
+- [x] **Hinweis Hobbyzucht:** (Wunsch aus deiner Word-Datei)
+  **Antwort (08.11., Word-Datei):** „Die Dackelzucht ist eine reine Hobbyzucht, die mit viel Liebe, Herz und Verstand geführt wird. Im Vordergrund stehen das Wesen und die Gesundheit unserer Hunde.“ *(Steht auf der Startseite, der Welpen-Seite und bei „Über uns“.)*

@@ -1,0 +1,9 @@
+---
+import Detailseite from '../../layouts/Detailseite.astro';
+import { hunde } from '../../lib/detailseiten';
+
+export const getStaticPaths = hunde.paths;
+const hund = await hunde.load(String(Astro.params.slug));
+if (!hund) return new Response('Not Found', { status: 404 });
+---
+<Detailseite {...hund} />

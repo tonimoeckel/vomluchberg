@@ -11,4 +11,10 @@ export interface SiteDefinition {
   wranglerConfig?: string;
   /** Names of the Tina collections this site owns (all sites share one schema, see tina/schema.ts). */
   collections: readonly string[];
+  /** Public address of the site once it is live, e.g. "https://vomluchberg.de" (cross-links, 03-betrieb O9). */
+  url?: string;
+  /** True once the site runs on its own domain with `url`. Other sites only link to live sites. */
+  live?: boolean;
+  /** Ids of the sites this one points to with a small footer hint (shown only for live targets). */
+  querverweise?: readonly string[];
 }

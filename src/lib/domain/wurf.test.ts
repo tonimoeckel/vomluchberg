@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { sortiereWuerfe, statusLabel, wuerfeListeUrl, wurfSeo, wurfSlug, wurfStatus, wurfUrl } from './wurf';
+import { sortiereWuerfe, statusLabel, wuerfeListeUrl, wurfSeo, wurfSlug, wurfStatus, wurfUrl, wurfUrlFuer } from './wurf';
 
 describe('wurfStatus', () => {
   it('lists the status options in CMS order with their labels', () => {
@@ -90,5 +90,13 @@ describe('wurfSeo', () => {
 
   it('keeps missing text and image empty', () => {
     expect(wurfSeo({ titel: 'A-Wurf' })).toEqual({ title: 'A-Wurf vom Luchberg', description: null, image: null });
+  });
+});
+
+describe('wurfUrlFuer', () => {
+  it('builds list and detail URLs for another site', () => {
+    const { wuerfeListeUrl: liste, wurfUrl: url } = wurfUrlFuer('/welpen');
+    expect(liste).toBe('/welpen');
+    expect(url('a-wurf')).toBe('/welpen/a-wurf');
   });
 });

@@ -1,20 +1,35 @@
 ---
-// Skeleton header of the dackel site (real design: slice 1).
 import { tinaField } from '@tinacms/astro/tina-field';
+import Logo from './ui/Logo.astro';
 import type { CmsConfig } from '../lib/data';
 
 interface Props { config?: CmsConfig | null }
 const { config } = Astro.props;
 const w = config?.website;
 const nav = (config?.nav ?? []).filter((n) => n !== null);
+// "Rauhaardackel vom Luchberg" → first word in italics, as in the mockup.
+const [erstes, ...rest] = (w?.name ?? '').split(' ');
+const pfad = Astro.url.pathname.replace(/\/$/, '') || '/';
+const aktiv = (link: string) => link === pfad || (link !== '/' && pfad.startsWith(`${link}/`));
 ---
-<header class="border-b border-border bg-bg">
-	<div class="container-page flex flex-wrap items-center justify-between gap-4 py-4">
-		<a href="/" class="font-display text-xl font-bold" data-tina-field={w ? tinaField(w, 'name') : undefined}>{w?.name}</a>
+<header class="py-5">
+	<div class="container-page flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+		<a href="/" class="flex items-center gap-3 no-underline" data-tina-field={w ? tinaField(w, 'name') : undefined}>
+			<Logo class="w-13 flex-none text-accent" />
+			<span>
+				<span class="block font-display text-xl font-semibold leading-tight sm:text-[1.3rem]"><i class="font-normal">{erstes}</i> {rest.join(' ')}</span>
+				{w?.untertitel && <span class="block text-sm text-muted" data-tina-field={tinaField(w, 'untertitel')}>{w.untertitel}</span>}
+			</span>
+		</a>
 		{nav.length > 0 && (
 			<nav aria-label="Hauptmenü" data-tina-field={config ? tinaField(config, 'nav') : undefined}>
-				<ul class="flex flex-wrap gap-x-6 gap-y-2">
-					{nav.map((n) => <li><a href={n.link} class="font-semibold hover:text-primary-ink" data-tina-field={tinaField(n)}>{n.titel}</a></li>)}
+				<ul class="flex flex-wrap gap-x-5 gap-y-1 font-semibold">
+					{nav.map((n) => (
+						<li data-tina-field={tinaField(n)}>
+							<a href={n.link} aria-current={aktiv(n.link) ? 'page' : undefined}
+								class="block border-b-2 border-transparent py-1 no-underline hover:border-sun aria-[current=page]:border-sun">{n.titel}</a>
+						</li>
+					))}
 				</ul>
 			</nav>
 		)}

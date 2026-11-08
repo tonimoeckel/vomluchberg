@@ -1,17 +1,42 @@
 {
   "website": {
     "name": "Rauhaardackel vom Luchberg",
-    "untertitel": "Glashütte OT Luchau",
-    "beschreibung": "Rauhaardackel vom Luchberg in Glashütte OT Luchau (Sachsen)."
+    "untertitel": "Glashütte OT Luchau · Sachsen",
+    "beschreibung": "Rauhaardackel aus Hobbyzucht in Glashütte OT Luchau (Sachsen): mit Familienanschluss im Rudel aufgewachsen, mit Blick auf Gesundheit und Wesen. Anfragen nehmen wir gern entgegen.",
+    "teilenBild": "/uploads/dackel/dackel-duo-bank.jpg"
   },
   "kontakt": {
     "name": "Karolin Riesing",
-    "ort": "01768 Glashütte OT Luchau"
+    "strasse": "Dorfstr. 2d",
+    "ort": "01768 Glashütte OT Luchau",
+    "telefon": "0173 3665494",
+    "email": "luchberg.rottweiler@gmail.com"
   },
   "nav": [
     {
       "titel": "Start",
       "link": "/"
+    },
+    {
+      "titel": "Unsere Dackel",
+      "link": "/unsere-dackel"
+    },
+    {
+      "titel": "Welpen",
+      "link": "/welpen"
+    },
+    {
+      "titel": "Über uns",
+      "link": "/ueber-uns"
+    },
+    {
+      "titel": "Kontakt",
+      "link": "/kontakt"
     }
-  ]
+  ],
+  "hinweis": "Gerade sind keine Welpen da – meldet euch gern",
+  "querverweis": {
+    "text": "Wir züchten auch Rottweiler im ADRK:",
+    "bild": "/uploads/dackel/karo-mit-dackel-und-junghund.jpg"
+  }
 }

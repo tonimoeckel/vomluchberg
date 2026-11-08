@@ -1,23 +1,48 @@
 ---
-// Skeleton hero (real design: slice 1).
+// Page head. "gross": two columns with the arch-framed photo (start page); "schmal": heading only.
 import { tinaField } from '@tinacms/astro/tina-field';
+import Squiggle from '../ui/Squiggle.astro';
+import { betonteTeile } from '../../../../lib/domain/dackel';
 import type { BlockOf } from '../../lib/data';
 interface Props { data: BlockOf<'Hero'> }
 const { data } = Astro.props;
+const gross = data.variante === 'gross';
 const buttons = (data.buttons ?? []).filter((b) => b !== null);
+const stichpunkte = (data.stichpunkte ?? []).filter((s): s is string => !!s);
 ---
-<section class:list={['bg-surface', data.variante === 'gross' ? 'py-16 sm:py-24' : 'py-10 sm:py-14']}>
-	<div class:list={['container-page grid items-center gap-10', data.bild && 'lg:grid-cols-2']}>
+<section class:list={[gross ? 'pb-16 pt-6 sm:pb-20' : 'pb-10 pt-8 sm:pb-12']}>
+	<div class:list={['container-page grid items-center gap-12', data.bild && (gross ? 'lg:grid-cols-[1.1fr_0.9fr] lg:gap-16' : 'md:grid-cols-[1.4fr_0.6fr]')]}>
 		<div>
-			{data.kicker && <p class="text-sm font-semibold uppercase tracking-wide text-accent-ink" data-tina-field={tinaField(data, 'kicker')}>{data.kicker}</p>}
-			{data.titel && <h1 class="mt-3 text-4xl font-bold sm:text-5xl" data-tina-field={tinaField(data, 'titel')}>{data.titel}</h1>}
-			{data.untertitel && <p class="mt-5 max-w-2xl text-lg text-muted" data-tina-field={tinaField(data, 'untertitel')}>{data.untertitel}</p>}
+			{data.kicker && <p class="eyebrow" data-tina-field={tinaField(data, 'kicker')}>{data.kicker}</p>}
+			{data.titel && (
+				<h1 data-tina-field={tinaField(data, 'titel')}
+					class:list={['mt-3', gross ? 'text-[clamp(2.4rem,6vw,4.4rem)]' : 'text-[clamp(2.2rem,5vw,3.4rem)]']}>
+					{betonteTeile(data.titel).map((t) => (t.betont ? <em class="font-normal text-primary-ink">{t.text}</em> : t.text))}
+				</h1>
+			)}
+			<Squiggle class="mt-3" />
+			{data.untertitel && <p class="mt-6 max-w-[38rem] text-lg text-muted sm:text-xl" data-tina-field={tinaField(data, 'untertitel')}>{data.untertitel}</p>}
 			{buttons.length > 0 && (
 				<div class="mt-8 flex flex-wrap gap-3">
 					{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class={b.stil === 'sekundaer' ? 'btn-secondary' : 'btn-primary'}>{b.label}</a>)}
 				</div>
 			)}
+			{stichpunkte.length > 0 && (
+				<ul class="mt-9 flex flex-wrap gap-x-6 gap-y-2 text-[0.95rem] text-muted" data-tina-field={tinaField(data, 'stichpunkte')}>
+					{stichpunkte.map((s) => <li><span class="text-sun" aria-hidden="true">✿ </span>{s}</li>)}
+				</ul>
+			)}
 		</div>
-		{data.bild && <img src={data.bild} alt="" class="w-full rounded-card object-cover" data-tina-field={tinaField(data, 'bild')} />}
+		{data.bild && (
+			<figure class:list={['arch-frame m-0 justify-self-center', gross ? 'w-[min(100%,26rem)] max-lg:mt-4 max-lg:ml-4' : 'hidden w-full max-w-60 md:block']} data-tina-field={tinaField(data, 'bild')}>
+				<img src={data.bild} alt={data.bildnotiz ? `Unsere Rauhaardackel ${data.bildnotiz}` : ''} width="1280" height="1600"
+					fetchpriority={gross ? 'high' : undefined}
+					class="arch aspect-[4/5] w-full object-cover shadow-[var(--shadow-photo)]" />
+				{data.bildnotiz && (
+					<figcaption data-tina-field={tinaField(data, 'bildnotiz')}
+						class="absolute bottom-8 -left-4 -rotate-6 rounded-full border-2 border-fg bg-bg px-4 py-2 font-display italic">{data.bildnotiz}</figcaption>
+				)}
+			</figure>
+		)}
 	</div>
 </section>

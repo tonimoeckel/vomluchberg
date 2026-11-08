@@ -1,0 +1,20 @@
+---
+// Photo grid of the dackel site; each photo opens in the shared lightbox (group `gruppe`).
+import { tinaField } from '@tinacms/astro/tina-field';
+interface Bild { bild?: string | null; beschreibung?: string | null }
+interface Props { bilder: (Bild | null)[]; gruppe: string; alt?: string; field?: string }
+const { bilder, gruppe, alt = '', field } = Astro.props;
+const liste = bilder.filter((b): b is Bild => !!b?.bild);
+---
+{liste.length > 0 && (
+	<ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4" data-tina-field={field}>
+		{liste.map((b) => (
+			<li data-tina-field={tinaField(b as never)}>
+				<a href={b.bild} data-lightbox={gruppe} data-caption={b.beschreibung ?? ''} class="block">
+					<img src={b.bild!} alt={b.beschreibung || alt} width="1600" height="1060" loading="lazy" decoding="async"
+						class="aspect-[3/2] w-full rounded-xl object-cover" />
+				</a>
+			</li>
+		))}
+	</ul>
+)}

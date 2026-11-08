@@ -5,6 +5,10 @@ export const luchberg = {
   id: 'luchberg',
   name: 'Rottweiler vom Luchberg',
   adminLabel: 'Rottweiler',
+  url: 'https://vomluchberg.de',
+  live: true,
+  // Footer hint "Wir züchten auch Rauhaardackel", shown once the dackel site is live.
+  querverweise: ['dackel'],
   // Legacy names without site prefix: renaming would change document ids and GraphQL types.
   collections: ['page', 'hund', 'wurf', 'news', 'config'],
   // Old URLs of the previous website → new pages (for Google & old links)

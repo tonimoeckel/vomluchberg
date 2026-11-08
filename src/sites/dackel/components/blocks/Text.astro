@@ -1,25 +1,28 @@
 ---
-// Skeleton text block (real design: slice 1).
+// Rich text with an optional photo beside it; "hervorheben" puts it on an oat band.
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { BlockOf } from '../../lib/data';
 interface Props { data: BlockOf<'Text'> }
 const { data } = Astro.props;
+const links = data.bildPosition === 'links';
 ---
-<section class:list={['py-12 sm:py-16', data.hervorheben && 'bg-surface']}>
-	<div class:list={['container-page grid items-start gap-10', data.bild && 'lg:grid-cols-2']}>
-		<div class:list={[data.bild && data.bildPosition === 'links' && 'lg:order-2']}>
-			{data.ueberschrift && <h2 class="mb-6 text-3xl font-bold" data-tina-field={tinaField(data, 'ueberschrift')}>{data.ueberschrift}</h2>}
+<section class:list={['py-14 sm:py-18', data.hervorheben && 'border-y border-border bg-surface']}>
+	<div class:list={['container-page grid items-center gap-10', data.bild && (links ? 'lg:grid-cols-[0.9fr_1.1fr] lg:gap-16' : 'lg:grid-cols-[1.1fr_0.9fr] lg:gap-16')]}>
+		<div class:list={[data.bild && links && 'lg:order-2']}>
+			{data.kicker && <p class="eyebrow" data-tina-field={tinaField(data, 'kicker')}>{data.kicker}</p>}
+			{data.ueberschrift && <h2 class="mb-6 mt-2 text-[clamp(1.9rem,4vw,2.6rem)]" data-tina-field={tinaField(data, 'ueberschrift')}>{data.ueberschrift}</h2>}
 			{data.inhalt && (
-				<div class="prose prose-lg prose-site" data-tina-field={tinaField(data, 'inhalt')}>
+				<div class="prose prose-lg prose-dackel" data-tina-field={tinaField(data, 'inhalt')}>
 					<TinaMarkdown content={data.inhalt} />
 				</div>
 			)}
 		</div>
 		{data.bild && (
-			<figure data-tina-field={tinaField(data, 'bild')}>
-				<img src={data.bild} alt={data.bildunterschrift ?? ''} loading="lazy" class="w-full rounded-card object-cover" />
-				{data.bildunterschrift && <figcaption class="mt-3 text-center text-sm text-muted" data-tina-field={tinaField(data, 'bildunterschrift')}>{data.bildunterschrift}</figcaption>}
+			<figure class:list={['m-0', links ? 'lg:order-1' : '']} data-tina-field={tinaField(data, 'bild')}>
+				<img src={data.bild} alt={data.bildunterschrift ?? ''} loading="lazy" decoding="async"
+					class:list={['w-full rounded-[1.25rem] object-cover shadow-[var(--shadow-photo)]', links ? '-rotate-[1.5deg]' : 'rotate-[1.5deg]']} />
+				{data.bildunterschrift && <figcaption class="mt-4 text-center text-sm text-muted" data-tina-field={tinaField(data, 'bildunterschrift')}>{data.bildunterschrift}</figcaption>}
 			</figure>
 		)}
 	</div>

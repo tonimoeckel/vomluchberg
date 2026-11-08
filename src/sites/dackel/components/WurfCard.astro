@@ -1,0 +1,23 @@
+---
+import type { WurfListItem } from '../lib/data';
+import { formatDatum } from '../../../lib/domain/datum';
+import { dackelWuerfe } from '../../../lib/domain/dackel';
+import { statusLabel } from '../../../lib/domain/wurf';
+interface Props { wurf: WurfListItem }
+const { wurf } = Astro.props;
+const offen = wurf.status === 'aktuell' || wurf.status === 'geplant';
+---
+<a href={dackelWuerfe.wurfUrl(wurf._sys.filename)} class="group flex h-full flex-col no-underline">
+	<div class="card-lift">
+		{wurf.bild
+			? <img src={wurf.bild} alt={wurf.titel} loading="lazy" decoding="async" class="aspect-[3/2] w-full rounded-[1.25rem] object-cover" />
+			: <div class="flex aspect-[3/2] w-full items-center justify-center rounded-[1.25rem] bg-surface-2 font-display text-6xl italic text-accent-ink">{wurf.buchstabe}</div>}
+	</div>
+	<span class:list={['mt-4 inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1 text-sm', offen ? 'border-primary text-primary-ink' : 'border-border text-muted']}>
+		<span class:list={['size-2 rounded-full', offen ? 'bg-sun' : 'bg-border']} aria-hidden="true"></span>{statusLabel(wurf.status)}
+	</span>
+	<h3 class="mt-2 text-[1.7rem] group-hover:underline group-hover:decoration-sun group-hover:decoration-2 group-hover:underline-offset-4">{wurf.titel}</h3>
+	{wurf.mutter && wurf.vater && <p class="font-semibold">{wurf.mutter} × {wurf.vater}</p>}
+	{wurf.wurfdatum && <p class="text-[0.95rem] text-muted">Wurftag {formatDatum(wurf.wurfdatum)}</p>}
+	{wurf.kurztext && <p class="mt-1 text-muted">{wurf.kurztext}</p>}
+</a>

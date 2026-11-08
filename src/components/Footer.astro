@@ -1,6 +1,7 @@
 ---
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from './ui/Icon.astro';
+import Querverweis from './Querverweis.astro';
 import type { CmsConfig } from '../lib/data';
 
 interface Props { config?: CmsConfig | null }
@@ -19,7 +20,7 @@ const jahr = new Date().getFullYear();
 				<p class="text-sm text-on-dark/75" data-tina-field={tinaField(s, 'verband')}>
 					{s.verbandLink ? <a href={s.verbandLink} class="underline decoration-accent underline-offset-4 hover:text-white" target="_blank" rel="noopener">{s.verband}</a> : s.verband}
 				</p>
-			)}
+			)}<Querverweis />
 		</div>
 		{k && (
 			<address class="not-italic" data-tina-field={tinaField(config!, 'kontakt')}>
