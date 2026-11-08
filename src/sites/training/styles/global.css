@@ -137,6 +137,33 @@
 	--shadow: 0 26px 50px -30px rgb(42 30 21 / 0.45);
 }
 
+/* Pink: navy from the logo for headings and bands, pink for the highlights (buttons, lines,
+   accent words) instead of copper. */
+[data-farbe='pink'] {
+	--bg: #fbf6f5;
+	--surface: #f7ebef;
+	--surface-2: #e4edf5;
+	--card: #ffffff;
+	--fg: #14253a;
+	--heading: #193450;
+	--muted: #4d5d70;
+	--border: #ead7de;
+	--primary: #c2185b;
+	--primary-hover: #a3134c;
+	--primary-ink: #ad1457;
+	--copper: #d6336c;
+	--accent: #193450;
+	--accent-ink: #193450;
+	--lane: #f4d3df;
+	--grad: linear-gradient(120deg, #193450 0%, #193450 100%);
+	--grad-soft: linear-gradient(120deg, #f7ebef 0%, #f7ebef 100%);
+	--dark: #193450;
+	--dark-2: #10233a;
+	--on-dark: #ffffff;
+	--on-dark-muted: #e4edf5;
+	--shadow: 0 26px 50px -30px rgb(20 37 58 / 0.5);
+}
+
 /* Kreide: white and graphite, copper accents – the most neutral variant. */
 [data-farbe='kreide'] {
 	--bg: #ffffff;
@@ -267,6 +294,31 @@
 		--dark-2: #0b0806;
 		--on-dark: #f3ede3;
 		--on-dark-muted: #d6c7b3;
+		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
+	}
+
+	[data-farbe='pink'] {
+		--bg: #0f1f33;
+		--surface: #132840;
+		--surface-2: #22446a;
+		--card: #1a314d;
+		--fg: #f6f2ea;
+		--heading: #f6f2ea;
+		--muted: #c8d9e8;
+		--border: #2b4664;
+		--primary: #d81b60;
+		--primary-hover: #c2185b;
+		--primary-ink: #f48fb1;
+		--copper: #ec5f92;
+		--accent: #c8d9e8;
+		--accent-ink: #e4edf5;
+		--lane: #22446a;
+		--grad: linear-gradient(120deg, #0a1626 0%, #0a1626 100%);
+		--grad-soft: linear-gradient(120deg, #132840 0%, #132840 100%);
+		--dark: #0a1626;
+		--dark-2: #08111e;
+		--on-dark: #f6f2ea;
+		--on-dark-muted: #c8d9e8;
 		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
 	}
 
