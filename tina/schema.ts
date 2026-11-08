@@ -12,6 +12,8 @@ import { WurfCollection } from './collections/wurf';
 import { NewsCollection } from './collections/news';
 import { DackelConfigCollection } from './sites/dackel/config';
 import { DackelPageCollection } from './sites/dackel/page';
+import { DackelHundCollection } from './sites/dackel/hund';
+import { DackelWurfCollection } from './sites/dackel/wurf';
 import { TrainingConfigCollection } from './sites/training/config';
 import { TrainingPageCollection } from './sites/training/page';
 
@@ -22,8 +24,10 @@ export const collections: Collection[] = [
   WurfCollection,
   NewsCollection,
   ConfigCollection,
-  // dackel (Rauhaardackel) – skeleton, slice 1 adds dogs and litters
+  // dackel (Rauhaardackel)
   DackelPageCollection,
+  DackelHundCollection,
+  DackelWurfCollection,
   DackelConfigCollection,
   // training (Alltag kann Sport) – skeleton, slice 2 adds offers
   TrainingPageCollection,

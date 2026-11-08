@@ -1,5 +1,5 @@
-import { ctaBlock, heroBlock, textBlock } from '../../blocks';
 import { seitenCollection } from '../collections';
+import { dackelBlocks } from './blocks';
 
-/** Starter block set of the dackel site (skeleton, slice 1 adds its own blocks). */
-export const DackelPageCollection = seitenCollection('dackel', [heroBlock, textBlock, ctaBlock]);
+/** Pages of the dackel site ("Dackel · Seiten"), blocks in tina/sites/dackel/blocks.ts. */
+export const DackelPageCollection = seitenCollection('dackel', dackelBlocks);
