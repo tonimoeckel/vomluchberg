@@ -1,62 +1,75 @@
-/* Stylesheet of the dackel site – skeleton with NEUTRAL PLACEHOLDER tokens.
-   The real design (fonts, colours, utilities) comes with slice 1 (docs/plan/01-dackel.md).
+/* Stylesheet of the dackel site – design direction A "Wiesenweg" (docs/plan/01-dackel.md §4, D11):
+   paper, meadow green and rust, Fraunces (display) + Source Sans 3 (body), arch-framed photos.
+   Plain on purpose: no decorative animation, only the small lift of dog cards on hover.
 
    Token contract (docs/plan/00-multisite.md, 2.5): every site defines the same semantic variables
    (--bg, --surface, --surface-2, --fg, --muted, --border, --primary, --primary-ink, --accent,
    --accent-ink, --dark, --on-dark, --radius, --grad, --grad-soft) and maps them to the same Tailwind
-   names, so shared components (Galerie, Lightbox, Icon) look native on every site. */
+   names, so shared components (Lightbox, Icon) look native on every site. */
 @import 'tailwindcss' source(none);
+@import '@fontsource-variable/fraunces/soft.css';
+@import '@fontsource-variable/fraunces/soft-italic.css';
+@import '@fontsource-variable/source-sans-3';
 @plugin '@tailwindcss/typography';
 
 /* Only this site and the shared components are scanned for class names – never other sites. */
 @source '..';
 @source '../../../components/BaseHead.astro';
-@source '../../../components/Galerie.astro';
 @source '../../../components/Lightbox.astro';
 @source '../../../components/ui';
 
+/* Contrast (WCAG) of every text pair is ≥ 4.5, see 01-dackel §4. --sun is decoration (and the button
+   on dark panels) only, never text on a light background. */
 :root {
 	color-scheme: light dark;
-	--bg: #ffffff;
-	--surface: #f4f4f5;
-	--surface-2: #e4e4e7;
-	--fg: #18181b;
-	--muted: #52525b;
-	--border: #e4e4e7;
-	--primary: #3f3f46;
-	--primary-ink: #27272a;
-	--accent: #52525b;
-	--accent-ink: #3f3f46;
-	--grad: linear-gradient(120deg, #52525b 0%, #3f3f46 100%);
-	--grad-soft: linear-gradient(120deg, #f4f4f5 0%, #e4e4e7 100%);
-	--dark: #27272a;
-	--on-dark: #fafafa;
-	--radius: 0.75rem;
+	--bg: #f6f1e7; /* paper */
+	--surface: #ede5d4; /* oat */
+	--surface-2: #e2d7bf;
+	--fg: #23261c; /* moss black */
+	--muted: #5e5a4b;
+	--border: #d8ccb3;
+	--primary: #3d5a2a; /* meadow green */
+	--primary-ink: #3d5a2a;
+	--on-primary: #f6f1e7;
+	--accent: #a5481a; /* rust, the wild-boar coat */
+	--accent-ink: #a5481a;
+	--sun: #e8b923; /* dandelion */
+	--on-sun: #23261c;
+	--dark: #24301d;
+	--on-dark: #f6f1e7;
+	--grain: rgb(120 100 60 / 0.06);
+	--shadow-photo: 0 30px 60px -30px rgb(35 38 28 / 0.55);
+	/* No gradients on this site; the variables exist for the token contract. */
+	--grad: var(--primary);
+	--grad-soft: var(--surface);
+	--radius: 1.25rem;
+	--radius-arch: 999px 999px 1.25rem 1.25rem;
 }
 
 /* Keep --bg (light / dark) in sync with themeColor in ../layouts/Base.astro. */
 @media (prefers-color-scheme: dark) {
 	:root {
-		--bg: #18181b;
-		--surface: #27272a;
-		--surface-2: #3f3f46;
-		--fg: #fafafa;
-		--muted: #a1a1aa;
-		--border: #3f3f46;
-		--primary: #d4d4d8;
-		--primary-ink: #e4e4e7;
-		--accent: #a1a1aa;
-		--accent-ink: #d4d4d8;
-		--grad: linear-gradient(120deg, #a1a1aa 0%, #d4d4d8 100%);
-		--grad-soft: linear-gradient(120deg, #27272a 0%, #3f3f46 100%);
-		--dark: #09090b;
-		--on-dark: #fafafa;
+		--bg: #14170f;
+		--surface: #1d2117;
+		--surface-2: #262b1e;
+		--fg: #eee8d9;
+		--muted: #b0aa95;
+		--border: #343a2a;
+		--primary: #a8c98a;
+		--primary-ink: #a8c98a;
+		--on-primary: #14170f;
+		--accent: #e8935a;
+		--accent-ink: #e8935a;
+		--dark: #0c0e08;
+		--on-dark: #eee8d9;
+		--grain: rgb(238 232 217 / 0.035);
+		--shadow-photo: 0 30px 60px -30px rgb(0 0 0 / 0.8);
 	}
 }
 
 @theme inline {
-	--font-sans: system-ui, sans-serif;
-	--font-display: system-ui, sans-serif;
+	--font-sans: 'Source Sans 3 Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--font-display: 'Fraunces Variable', 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
 	--color-bg: var(--bg);
 	--color-surface: var(--surface);
 	--color-surface-2: var(--surface-2);
@@ -65,19 +78,35 @@
 	--color-border: var(--border);
 	--color-primary: var(--primary);
 	--color-primary-ink: var(--primary-ink);
+	--color-on-primary: var(--on-primary);
 	--color-accent: var(--accent);
 	--color-accent-ink: var(--accent-ink);
+	--color-sun: var(--sun);
+	--color-on-sun: var(--on-sun);
 	--color-dark: var(--dark);
 	--color-on-dark: var(--on-dark);
 	--radius-card: var(--radius);
+	--radius-arch: var(--radius-arch);
 }
 
 @layer base {
+	html {
+		-webkit-text-size-adjust: 100%;
+	}
 	body {
 		@apply bg-bg text-fg font-sans antialiased;
+		font-size: 1.0625rem;
+		line-height: 1.65;
+		/* faint paper grain, CSS only */
+		background-image: radial-gradient(var(--grain) 1px, transparent 1px);
+		background-size: 4px 4px;
 	}
 	h1, h2, h3, h4 {
 		@apply font-display text-balance;
+		font-weight: 600;
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+		font-variation-settings: 'SOFT' 50;
 	}
 	:focus-visible {
 		outline: 3px solid var(--accent);
@@ -88,31 +117,97 @@
 @utility container-page {
 	@apply mx-auto w-full max-w-6xl px-4 sm:px-6;
 }
-@utility btn-primary {
-	@apply inline-flex items-center justify-center gap-2 rounded-card bg-primary px-5 py-2.5 font-semibold text-bg transition hover:opacity-90;
-}
-@utility btn-secondary {
-	@apply inline-flex items-center justify-center gap-2 rounded-card border-2 border-fg px-5 py-2.5 font-semibold text-fg transition hover:bg-fg hover:text-bg;
+
+/* Small uppercase rust line above headings. */
+@utility eyebrow {
+	@apply text-[0.8rem] font-bold uppercase tracking-[0.16em] text-accent-ink;
 }
 
-/* Rich text: class="prose prose-lg prose-site". Unlayered, so it wins over the typography plugin. */
-.prose-site {
-	max-width: none;
+@utility btn {
+	@apply inline-flex items-center justify-center gap-2 rounded-full border-2 px-5.5 py-3 font-bold leading-tight no-underline transition-colors;
+}
+@utility btn-primary {
+	@apply btn border-primary bg-primary text-on-primary hover:border-fg hover:bg-fg hover:text-bg;
+}
+@utility btn-secondary {
+	@apply btn border-primary text-primary-ink hover:bg-surface;
+}
+/* Dandelion button on the dark panels. */
+@utility btn-sun {
+	@apply btn border-sun bg-sun text-on-sun hover:border-on-dark hover:bg-on-dark;
+}
+
+/* The recurring motif: photos with a rounded top. */
+@utility arch {
+	border-radius: var(--radius-arch);
+}
+
+/* Arch photo with the offset rust outline behind it. */
+@utility arch-frame {
+	position: relative;
+	isolation: isolate;
+	&::before {
+		content: '';
+		position: absolute;
+		inset: -0.9rem 0.9rem 0.9rem -0.9rem;
+		border: 2px solid var(--accent);
+		border-radius: var(--radius-arch);
+		z-index: -1;
+	}
+}
+
+/* Underline in dandelion yellow for links in running text. */
+@utility link-sun {
+	@apply font-bold text-primary-ink underline decoration-sun decoration-2 underline-offset-[0.3em] hover:decoration-primary-ink;
+}
+
+/* The only motion on the site: dog cards lift a little (not with reduced motion, see below). */
+@utility card-lift {
+	@apply transition-transform duration-300;
+	.group:hover & {
+		transform: translateY(-4px) rotate(-0.6deg);
+	}
+}
+
+/* Rich text: class="prose prose-lg prose-dackel". Unlayered, so it wins over the typography plugin. */
+.prose-dackel {
+	max-width: 42rem;
 	--tw-prose-body: var(--fg);
 	--tw-prose-headings: var(--fg);
 	--tw-prose-links: var(--primary-ink);
 	--tw-prose-bold: var(--fg);
 	--tw-prose-bullets: var(--accent);
 	--tw-prose-quotes: var(--fg);
-	--tw-prose-quote-borders: var(--accent);
+	--tw-prose-quote-borders: var(--sun);
 	--tw-prose-counters: var(--muted);
 	--tw-prose-captions: var(--muted);
 	--tw-prose-hr: var(--border);
+}
+.prose-dackel :where(a) {
+	text-decoration-color: var(--sun);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 0.3em;
+}
+.prose-dackel :where(blockquote) {
+	font-family: var(--font-display);
+	font-size: 1.35em;
+	font-weight: 400;
+	line-height: 1.35;
+	border-left-width: 3px;
+	quotes: none;
+}
+.prose-dackel :where(blockquote p)::before,
+.prose-dackel :where(blockquote p)::after {
+	content: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after {
 		transition: none !important;
 		animation: none !important;
+		scroll-behavior: auto !important;
+	}
+	.group:hover .card-lift {
+		transform: none;
 	}
 }

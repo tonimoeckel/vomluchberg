@@ -1,0 +1,20 @@
+---
+// Eyebrow + heading + intro of a section; every part is optional and click-to-edit.
+interface Props {
+	kicker?: string | null;
+	titel?: string | null;
+	text?: string | null;
+	fields: { kicker?: string; titel?: string; text?: string };
+	/** Heading level: h1 on the first block of a page, otherwise h2. */
+	as?: 'h1' | 'h2';
+	class?: string;
+}
+const { kicker, titel, text, fields, as: Tag = 'h2', class: className } = Astro.props;
+---
+{(kicker || titel || text) && (
+	<div class:list={['mb-10 max-w-2xl', className]}>
+		{kicker && <p class="eyebrow" data-tina-field={fields.kicker}>{kicker}</p>}
+		{titel && <Tag class="mt-2 text-[clamp(1.9rem,4vw,2.8rem)]" data-tina-field={fields.titel}>{titel}</Tag>}
+		{text && <p class="mt-4 text-muted" data-tina-field={fields.text}>{text}</p>}
+	</div>
+)}

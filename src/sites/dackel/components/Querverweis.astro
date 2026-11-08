@@ -1,0 +1,26 @@
+---
+// Footer card "Auch bei uns" pointing to Karo's other live sites (docs/plan/03-betrieb.md O9).
+// Target URL from the site registry; text and picture from the settings ("querverweis").
+import { tinaField } from '@tinacms/astro/tina-field';
+import { querverweisZiele } from '../../../multisite/querverweis';
+import type { CmsConfig } from '../lib/data';
+
+interface Props { config?: CmsConfig | null }
+const { config } = Astro.props;
+const q = config?.querverweis;
+const ziele = querverweisZiele('dackel');
+---
+{ziele.length > 0 && (
+	<div data-tina-field={q ? tinaField(q) : undefined}>
+		<h2 class="mb-3 text-lg">Auch bei uns</h2>
+		{ziele.map((ziel) => (
+			<div class="flex items-center gap-3.5 rounded-2xl border border-dashed border-on-dark/35 px-4 py-3.5">
+				{q?.bild && <img src={q.bild} alt="" width="52" height="52" loading="lazy" class="size-13 flex-none rounded-full object-cover object-[62%_50%]" />}
+				<p>
+					<span data-tina-field={q ? tinaField(q, 'text') : undefined}>{q?.text || 'Schaut auch hier vorbei:'}</span>{' '}
+					<a href={ziel.url} class="font-bold underline decoration-sun decoration-2 underline-offset-4">{ziel.name} →</a>
+				</p>
+			</div>
+		))}
+	</div>
+)}
