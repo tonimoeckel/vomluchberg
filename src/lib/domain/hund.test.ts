@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   geschlechtBadge, geschlechter, geschlechtLabel, hundeListeUrl, hundKategorien, hundUrl, istErinnerung, kategorieLabel,
-  hundeBlockAuswahl, hundeUebersicht, hundSeo, lebensdatenKarte, lebensspanne, sortiereHunde,
+  hundeBlockAuswahl, hundeUebersicht, hundRegeln, hundSeo, lebensdatenKarte, lebensspanne, sortiereHunde,
 } from './hund';
 
 describe('hundKategorien', () => {
@@ -187,5 +187,60 @@ describe('hundSeo', () => {
       description: 'Unsere Rauhaardackel. Rottweiler vom Luchberg.',
       image: null,
     });
+  });
+});
+
+describe('hundRegeln (another site)', () => {
+  const regeln = hundRegeln({
+    kategorien: [
+      { value: 'zucht', label: 'Unsere Hündinnen' },
+      { value: 'deckrude', label: 'Der Vater unserer Dackel' },
+      { value: 'erinnerung', label: 'In Erinnerung' },
+    ],
+    standardKategorie: 'zucht',
+    blockKategorien: ['zucht', 'deckrude'],
+    ohneGeschlecht: [],
+    listeUrl: '/unsere-dackel',
+    seoSuffix: 'Rauhaardackel vom Luchberg.',
+  });
+
+  it('uses its own categories and labels', () => {
+    expect(regeln.kategorien.map((k) => k.value)).toEqual(['zucht', 'deckrude', 'erinnerung']);
+    expect(regeln.kategorieLabel('deckrude')).toBe('Der Vater unserer Dackel');
+    expect(regeln.kategorieLabel(null)).toBe('Unsere Hündinnen');
+    expect(regeln.kategorieLabel('rudel')).toBe('');
+  });
+
+  it('builds URLs below its own list page', () => {
+    expect(regeln.hundeListeUrl).toBe('/unsere-dackel');
+    expect(regeln.hundUrl('hanni')).toBe('/unsere-dackel/hanni');
+  });
+
+  it('offers "alle" plus its block categories', () => {
+    expect(regeln.hundeBlockAuswahl.map((k) => k.value)).toEqual(['alle', 'zucht', 'deckrude']);
+  });
+
+  it('shows the sex badge for every category when ohneGeschlecht is empty', () => {
+    expect(regeln.geschlechtBadge({ geschlecht: 'huendin', kategorie: 'rudel' })).toEqual({ value: 'huendin', label: 'Hündin' });
+    expect(regeln.geschlechtBadge({ geschlecht: 'ruede', kategorie: 'deckrude' })?.label).toBe('Rüde');
+  });
+
+  it('groups by its own categories', () => {
+    const hunde = [{ n: 'vater', kategorie: 'deckrude' }, { n: 'hanni', kategorie: 'zucht' }];
+    const { gruppen } = regeln.hundeUebersicht(hunde);
+    expect(gruppen.map((g) => [g.titel, g.hunde.map((h) => h.n)])).toEqual([
+      ['Unsere Hündinnen', ['hanni']],
+      ['Der Vater unserer Dackel', ['vater']],
+    ]);
+  });
+
+  it('ends the SEO description with its own suffix', () => {
+    expect(regeln.hundSeo({ name: 'Hanni', eltern: 'A x B' }).description).toBe('Hanni – A x B. Rauhaardackel vom Luchberg.');
+    expect(regeln.hundSeo({ name: 'Hanni' }).description).toBe('Hanni. Rauhaardackel vom Luchberg.');
+  });
+
+  it('leaves the Rottweiler rules untouched', () => {
+    expect(hundUrl('baja')).toBe('/hunde/baja');
+    expect(hundSeo({ name: 'Baja' }).description).toBe('Baja. Rottweiler vom Luchberg.');
   });
 });

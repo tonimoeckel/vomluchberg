@@ -2,17 +2,24 @@
 import { formatDatum } from './datum';
 import type { Seo } from './seo';
 
-/** Categories in display order – single source for the CMS options, labels and grouping. */
-export const hundKategorien = [
-  { value: 'zucht', label: 'Unsere Rottweiler' },
-  { value: 'aufzucht', label: 'Zur Aufzucht bei uns' },
-  { value: 'rudel', label: 'Weitere Rudelmitglieder' },
-  { value: 'erinnerung', label: 'In Erinnerung' },
-] as const;
+/** A category option: value stored in the CMS, label shown as group title and in the form. */
+export interface Kategorie { value: string; label: string }
 
-/** Label of a category; a missing category counts as "zucht". */
-export const kategorieLabel = (kategorie?: string | null) =>
-  hundKategorien.find((k) => k.value === (kategorie ?? 'zucht'))?.label ?? '';
+/** Site-specific part of the dog rules (categories, URLs, SEO). Everything else is shared. */
+export interface HundRegelConfig<K extends readonly Kategorie[] = readonly Kategorie[]> {
+  /** Categories in display order – single source for the CMS options, labels and grouping. */
+  kategorien: K;
+  /** Category a dog without one counts as (label fallback). */
+  standardKategorie: K[number]['value'];
+  /** Categories offered by the "Hunde" block besides "alle". */
+  blockKategorien: readonly K[number]['value'][];
+  /** Categories whose dogs show no sex badge. */
+  ohneGeschlecht: readonly K[number]['value'][];
+  /** List page of all dogs; detail pages live below it. */
+  listeUrl: string;
+  /** Last sentence of a dog's meta description, e.g. "Rottweiler vom Luchberg." */
+  seoSuffix: string;
+}
 
 /** Sex options (dogs and puppies). */
 export const geschlechter = [
@@ -28,15 +35,8 @@ export const geschlechtLabel = (geschlecht?: string | null) =>
 
 type HundInfo = { kategorie?: string | null; geschlecht?: string | null };
 
-/** Sex shown on card and detail page; none for the other pack members ("rudel"). */
-export const geschlechtBadge = (hund: HundInfo): Geschlecht | null =>
-  hund.kategorie === 'rudel' ? null : (geschlechter.find((g) => g.value === hund.geschlecht) ?? null);
-
 /** Dogs in memoriam are shown slightly desaturated. */
 export const istErinnerung = (hund: HundInfo) => hund.kategorie === 'erinnerung';
-
-export const hundeListeUrl = '/hunde';
-export const hundUrl = (slug: string) => `${hundeListeUrl}/${slug}`;
 
 /** Ascending by "reihenfolge"; dogs without one go to position 99. */
 export const sortiereHunde = <T extends { reihenfolge?: number | null }>(hunde: readonly T[]) =>
@@ -44,29 +44,76 @@ export const sortiereHunde = <T extends { reihenfolge?: number | null }>(hunde: 
 
 const alle = 'alle';
 
-/** Choices of the "Hunde" block: all dogs grouped by category, or a single category. */
-export const hundeBlockAuswahl = [
-  { value: alle, label: 'Alle (gruppiert)' },
-  ...hundKategorien.filter((k) => k.value === 'zucht' || k.value === 'rudel'),
-];
-
 export interface HundeGruppe<T> { kategorie: string; titel: string | null; hunde: T[] }
 
-/**
- * Dogs for the "Hunde" block. "alle" (default): one titled group per category in display order,
- * empty ones dropped. A single category: one untitled group plus a link to all dogs.
- */
-export function hundeUebersicht<T extends { kategorie?: string | null }>(hunde: readonly T[], auswahl?: string | null) {
-  const inKategorie = (k: string) => hunde.filter((h) => h.kategorie === k);
-  if (auswahl && auswahl !== alle) {
-    const gruppen: HundeGruppe<T>[] = [{ kategorie: auswahl, titel: null, hunde: inKategorie(auswahl) }];
-    return { gruppen, zeigeAlleLink: true };
-  }
-  const gruppen: HundeGruppe<T>[] = hundKategorien
-    .map((k) => ({ kategorie: k.value, titel: k.label, hunde: inKategorie(k.value) }))
-    .filter((g) => g.hunde.length);
-  return { gruppen, zeigeAlleLink: false };
+/** The dog rules of one site (categories, URLs, block choices, SEO) built from its config. */
+export function hundRegeln<const K extends readonly Kategorie[]>(config: HundRegelConfig<K>) {
+  const { kategorien, standardKategorie, blockKategorien, ohneGeschlecht, listeUrl, seoSuffix } = config;
+  const ohne = ohneGeschlecht as readonly string[];
+  const imBlock = blockKategorien as readonly string[];
+  return {
+    kategorien,
+    /** Label of a category; a missing category counts as the standard category. */
+    kategorieLabel: (kategorie?: string | null) =>
+      kategorien.find((k) => k.value === (kategorie ?? standardKategorie))?.label ?? '',
+    /** Sex shown on card and detail page; none for the categories in `ohneGeschlecht`. */
+    geschlechtBadge: (hund: HundInfo): Geschlecht | null =>
+      hund.kategorie && ohne.includes(hund.kategorie) ? null : (geschlechter.find((g) => g.value === hund.geschlecht) ?? null),
+    hundeListeUrl: listeUrl,
+    hundUrl: (slug: string) => `${listeUrl}/${slug}`,
+    /** Choices of the "Hunde" block: all dogs grouped by category, or a single category. */
+    hundeBlockAuswahl: [
+      { value: alle, label: 'Alle (gruppiert)' },
+      ...kategorien.filter((k) => imBlock.includes(k.value)),
+    ],
+    /**
+     * Dogs for the "Hunde" block. "alle" (default): one titled group per category in display order,
+     * empty ones dropped. A single category: one untitled group plus a link to all dogs.
+     */
+    hundeUebersicht<T extends { kategorie?: string | null }>(hunde: readonly T[], auswahl?: string | null) {
+      const inKategorie = (k: string) => hunde.filter((h) => h.kategorie === k);
+      if (auswahl && auswahl !== alle) {
+        const gruppen: HundeGruppe<T>[] = [{ kategorie: auswahl, titel: null, hunde: inKategorie(auswahl) }];
+        return { gruppen, zeigeAlleLink: true };
+      }
+      const gruppen: HundeGruppe<T>[] = kategorien
+        .map((k) => ({ kategorie: k.value, titel: k.label, hunde: inKategorie(k.value) }))
+        .filter((g) => g.hunde.length);
+      return { gruppen, zeigeAlleLink: false };
+    },
+    hundSeo: (hund: { name: string; eltern?: string | null; bild?: string | null }): Seo => ({
+      title: hund.name,
+      description: `${hund.name}${hund.eltern ? ' – ' + hund.eltern : ''}. ${seoSuffix}`,
+      image: hund.bild ?? null,
+    }),
+  };
 }
+
+/** Rules of the Rottweiler site (luchberg). */
+export const rottweilerHunde = hundRegeln({
+  kategorien: [
+    { value: 'zucht', label: 'Unsere Rottweiler' },
+    { value: 'aufzucht', label: 'Zur Aufzucht bei uns' },
+    { value: 'rudel', label: 'Weitere Rudelmitglieder' },
+    { value: 'erinnerung', label: 'In Erinnerung' },
+  ],
+  standardKategorie: 'zucht',
+  blockKategorien: ['zucht', 'rudel'],
+  ohneGeschlecht: ['rudel'],
+  listeUrl: '/hunde',
+  seoSuffix: 'Rottweiler vom Luchberg.',
+});
+
+export const {
+  kategorien: hundKategorien,
+  kategorieLabel,
+  geschlechtBadge,
+  hundeListeUrl,
+  hundUrl,
+  hundeBlockAuswahl,
+  hundeUebersicht,
+  hundSeo,
+} = rottweilerHunde;
 
 type Lebensdaten = { geboren?: string | null; verstorben?: string | null };
 
@@ -78,10 +125,4 @@ export const lebensspanne = (hund: Lebensdaten) =>
 export const lebensdatenKarte = (hund: Lebensdaten) => ({
   wurftag: hund.geboren ? `WT ${formatDatum(hund.geboren)}` : null,
   verstorben: hund.verstorben ? `– ${hund.verstorben}` : null,
-});
-
-export const hundSeo = (hund: { name: string; eltern?: string | null; bild?: string | null }): Seo => ({
-  title: hund.name,
-  description: `${hund.name}${hund.eltern ? ' – ' + hund.eltern : ''}. Rottweiler vom Luchberg.`,
-  image: hund.bild ?? null,
 });
