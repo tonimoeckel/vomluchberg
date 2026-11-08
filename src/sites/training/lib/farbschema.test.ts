@@ -56,9 +56,9 @@ const PAARE: [string, string, number][] = [
 ];
 
 describe('training colour schemes', () => {
-  it('has 3–4 unique schemes with the standard first', () => {
+  it('has 3–5 unique schemes with the standard first', () => {
     expect(FARBSCHEMATA.length).toBeGreaterThanOrEqual(3);
-    expect(FARBSCHEMATA.length).toBeLessThanOrEqual(4);
+    expect(FARBSCHEMATA.length).toBeLessThanOrEqual(5);
     expect(new Set(FARBSCHEMATA.map((s) => s.id)).size).toBe(FARBSCHEMATA.length);
     expect(FARBSCHEMATA[0].id).toBe(STANDARD_FARBSCHEMA);
   });

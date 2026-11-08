@@ -44,6 +44,13 @@ export const FARBSCHEMATA: readonly Farbschema[] = [
     themeColor: { light: '#f4f3ec', dark: '#0f1a15' },
   },
   {
+    id: 'erde',
+    label: 'Erde',
+    tinaLabel: 'Erde (Sand & Erdbraun, Logo-Blau und Logo-Kupfer)',
+    swatch: punkt('#f3ede3', '#3b2a1e', '#193450'),
+    themeColor: { light: '#f3ede3', dark: '#1a1410' },
+  },
+  {
     id: 'kreide',
     label: 'Kreide',
     tinaLabel: 'Kreide (Weiß & Grafit, Kupfer-Akzente)',

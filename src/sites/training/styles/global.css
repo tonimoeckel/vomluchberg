@@ -110,6 +110,33 @@
 	--shadow: 0 26px 50px -30px rgb(20 40 30 / 0.45);
 }
 
+/* Erde: sand and clay with earth-brown bands; logo navy for headings and buttons, logo copper
+   for lines – the logo's original colours on earth tones. */
+[data-farbe='erde'] {
+	--bg: #f3ede3;
+	--surface: #e9dfcf;
+	--surface-2: #e2d6c3;
+	--card: #fffdf9;
+	--fg: #2a2018;
+	--heading: #193450;
+	--muted: #5a4e43;
+	--border: #d8cab5;
+	--primary: #193450;
+	--primary-hover: #10233a;
+	--primary-ink: #8c4a22;
+	--copper: #b96637;
+	--accent: #193450;
+	--accent-ink: #193450;
+	--lane: #e0cfb5;
+	--grad: linear-gradient(120deg, #3b2a1e 0%, #3b2a1e 100%);
+	--grad-soft: linear-gradient(120deg, #e9dfcf 0%, #e9dfcf 100%);
+	--dark: #3b2a1e;
+	--dark-2: #2a1e15;
+	--on-dark: #fff8ef;
+	--on-dark-muted: #ead9c4;
+	--shadow: 0 26px 50px -30px rgb(42 30 21 / 0.45);
+}
+
 /* Kreide: white and graphite, copper accents – the most neutral variant. */
 [data-farbe='kreide'] {
 	--bg: #ffffff;
@@ -215,6 +242,31 @@
 		--dark-2: #070e0b;
 		--on-dark: #f1f0e8;
 		--on-dark-muted: #c9d6c8;
+		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
+	}
+
+	[data-farbe='erde'] {
+		--bg: #1a1410;
+		--surface: #221a14;
+		--surface-2: #3a2e24;
+		--card: #2a2119;
+		--fg: #f3ede3;
+		--heading: #f3ede3;
+		--muted: #d6c7b3;
+		--border: #3d3026;
+		--primary: #3b6fa3;
+		--primary-hover: #2f5d8a;
+		--primary-ink: #e09a6c;
+		--copper: #c8743f;
+		--accent: #c8d9e8;
+		--accent-ink: #e4edf5;
+		--lane: #33281f;
+		--grad: linear-gradient(120deg, #110d0a 0%, #110d0a 100%);
+		--grad-soft: linear-gradient(120deg, #221a14 0%, #221a14 100%);
+		--dark: #110d0a;
+		--dark-2: #0b0806;
+		--on-dark: #f3ede3;
+		--on-dark-muted: #d6c7b3;
 		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
 	}
 
