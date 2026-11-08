@@ -1,0 +1,78 @@
+---
+// Detail page of a litter: status, parents, text, puppies and gallery.
+import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
+import { tinaField } from '@tinacms/astro/tina-field';
+import Fotoraster from '../ui/Fotoraster.astro';
+import Squiggle from '../ui/Squiggle.astro';
+import Zurueck from '../ui/Zurueck.astro';
+import type { CmsWurf } from '../../lib/data';
+import { formatDatum } from '../../../../lib/domain/datum';
+import { dackelWuerfe, farbeLabel } from '../../../../lib/domain/dackel';
+import { geschlechtLabel } from '../../../../lib/domain/hund';
+import { statusLabel } from '../../../../lib/domain/wurf';
+interface Props { data?: CmsWurf | null }
+const { data } = Astro.props;
+const welpen = (data?.welpen ?? []).filter((w) => w !== null);
+const eltern = data ? [
+	{ feld: 'mutter', label: 'Mutter', name: data.mutter, link: data.mutterLink },
+	{ feld: 'vater', label: 'Vater', name: data.vater, link: data.vaterLink },
+].filter((e) => e.name) : [];
+---
+{data && (
+	<>
+		<Zurueck href={dackelWuerfe.wuerfeListeUrl} label="Alle Würfe & Welpen" />
+		<section class="container-page grid items-start gap-12 pb-10 pt-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+			<div>
+				<p class="eyebrow">{statusLabel(data.status)}</p>
+				<h1 data-tina-field={tinaField(data, 'titel')} class="mt-3 text-[clamp(2.4rem,6vw,4rem)]">{data.titel} <em class="font-normal text-primary-ink">vom Luchberg</em></h1>
+				<Squiggle class="mt-3" />
+				{(eltern.length > 0 || data.wurfdatum) && (
+					<dl class="mt-8 border-t-[3px] border-primary">
+						{eltern.map((e) => (
+							<div class="grid gap-1 border-b border-border py-3 sm:grid-cols-[9rem_1fr] sm:gap-4" data-tina-field={tinaField(data, e.feld as never)}>
+								<dt class="font-display italic text-accent-ink">{e.label}</dt>
+								<dd>{e.link ? <a href={e.link} target="_blank" rel="noopener" class="link-sun">{e.name} ↗</a> : e.name}</dd>
+							</div>
+						))}
+						{data.wurfdatum && (
+							<div class="grid gap-1 border-b border-border py-3 sm:grid-cols-[9rem_1fr] sm:gap-4" data-tina-field={tinaField(data, 'wurfdatum')}>
+								<dt class="font-display italic text-accent-ink">Wurftag</dt>
+								<dd>{formatDatum(data.wurfdatum)}</dd>
+							</div>
+						)}
+					</dl>
+				)}
+				{data.body && <div data-tina-field={tinaField(data, 'body')} class="prose prose-lg prose-dackel mt-8"><TinaMarkdown content={data.body} /></div>}
+				<p class="mt-8"><a href="/kontakt" class="btn-primary">Anfrage zu diesem Wurf</a></p>
+			</div>
+			{data.bild && (
+				<figure class="arch-frame m-0 ml-4 w-[min(100%-1rem,26rem)] justify-self-center lg:ml-0" data-tina-field={tinaField(data, 'bild')}>
+					<img src={data.bild} alt={data.titel} fetchpriority="high" class="arch aspect-[4/5] w-full object-cover shadow-[var(--shadow-photo)]" />
+				</figure>
+			)}
+		</section>
+		{welpen.length > 0 && (
+			<section class="container-page py-10" data-tina-field={tinaField(data, 'welpen')}>
+				<h2 class="mb-8 text-[clamp(1.6rem,3vw,2.1rem)]">Die Welpen</h2>
+				<ul class="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] gap-6">
+					{welpen.map((w) => (
+						<li data-tina-field={tinaField(w)}>
+							{w.bild
+								? <a href={w.bild} data-lightbox="welpen" data-caption={w.name ?? ''} class="block"><img src={w.bild} alt={w.name ?? ''} loading="lazy" class="arch aspect-[3/4] w-full object-cover" /></a>
+								: <div class="arch aspect-[3/4] w-full bg-surface-2"></div>}
+							<p class="mt-3 font-display text-xl font-semibold">{w.name}</p>
+							<p class="text-sm text-muted">{[geschlechtLabel(w.geschlecht), farbeLabel(w.farbe), w.notiz].filter(Boolean).join(' · ')}</p>
+							{w.link && <a href={w.link} target="_blank" rel="noopener" class="link-sun text-sm">Mehr ↗</a>}
+						</li>
+					))}
+				</ul>
+			</section>
+		)}
+		{(data.galerie ?? []).some((b) => b?.bild) && (
+			<section class="container-page py-10" data-tina-field={tinaField(data, 'galerie')}>
+				<h2 class="mb-8 text-[clamp(1.6rem,3vw,2.1rem)]">{data.titel} – Fotos</h2>
+				<Fotoraster bilder={data.galerie ?? []} gruppe="wurf-galerie" alt={data.titel} />
+			</section>
+		)}
+	</>
+)}
