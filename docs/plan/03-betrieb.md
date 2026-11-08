@@ -35,12 +35,12 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 | O2 | **One Wrangler file per site**, as built in slice 0: root `wrangler.jsonc` for luchberg, `src/sites/<id>/wrangler.jsonc` for the others, wired through the Cloudflare adapter's `configPath`. The build writes `dist/server/wrangler.json` with the right worker `name` and the redirect `.wrangler/deploy/config.json`, so the deploy command is plain `npx wrangler deploy` for all three (R2). | Explicit per-site files keep local `wrangler deploy` / `wrangler preview` safe (no accidental deploy of the dachshund build onto the Rottweiler Worker), and the site picks its own file, so nobody has to remember `--config`. |
 | O3 | **Build watch paths per Worker**, written as *exclude other sites' content*. Shared code (components, `src/lib`, `tina/`, `package*.json`, `astro.config.mjs`) rebuilds all three. | A Tina save for one site must only rebuild that site (≈1–2 min each; avoids three parallel builds on every save). |
 | O4 | **Preview builds on**, with preview build command `npm run build:local` and `noindex`. Since 2026-11-08 `npm run build` itself builds locally when `WORKERS_CI_BRANCH` ≠ `main` (`scripts/build.mjs`), so previews work even with the default preview build command. The other cause of the red branch builds was the Cloudflare adapter's automatic `SESSION` KV binding without an id, which Worker Previews reject; `astro.config.mjs` now uses an in-memory session driver, so no worker has a KV binding. | Previews must not need the branch to be indexed in TinaCloud, and must never be indexed by Google. `/admin` on a preview is local-mode only, which is fine for reviewing layout. |
-| O5 | **Canonical host = `www.` for the own domains** (`vomluchberg.de`, `alltag-kann-sport.de`), apex 301 → www (same as `vomluchberg.de` in `domain-umzug.md`). The dachshund site stays on the subdomain `dackel.vomluchberg.de` (O6), which is its canonical host, without `www`. | One rule for Toni and Karo; consistent printed URLs ("www.…" also reads as a web address on flyers). |
-| O6 | **Domains (decided 2026-11-08):** Training: **`alltag-kann-sport.de`** (canonical `www.`), plus `alltagkannsport.de` and `hundetraining-osterzgebirge.de` as 301-only redirect domains. Ordered by Toni at INWX on 2026-11-08, registrant Karo, nameservers `sean`/`sloan.ns.cloudflare.com`; the three Cloudflare zones (free plan, same account as the Workers) were created the same day. Dachshunds: **no own domain**, the site stays on `dackel.vomluchberg.de` for good (Toni/Karo, 2026-11-08). | Training: Karo's choice from the proposals in `domains-neue-seiten.md`; both spellings so typing with or without hyphens works. Dachshunds: a subdomain ranks as well as an own domain, shows that the dachshunds belong to "vom Luchberg", costs nothing and never needs a move. A landing page on `vomluchberg.de` with `rottweiler.`/`dackel.` subdomains was rejected: it would move the live Rottweiler site and cost its rankings. |
+| O5 | **Canonical host = `www.` for all three domains** (`vomluchberg.de`, `dackelvomluchberg.de`, `alltag-kann-sport.de`), apex 301 → www (same as `vomluchberg.de` in `domain-umzug.md`). | One rule for Toni and Karo; consistent printed URLs ("www.…" also reads as a web address on flyers). |
+| O6 | **Domains (decided 2026-11-08):** Training: **`alltag-kann-sport.de`** (canonical `www.`), plus `alltagkannsport.de` and `hundetraining-osterzgebirge.de` as 301-only redirect domains. Ordered by Toni at INWX on 2026-11-08, registrant Karo, nameservers `sean`/`sloan.ns.cloudflare.com`; the three Cloudflare zones (free plan, same account as the Workers) were created the same day. Dachshunds: **`dackelvomluchberg.de`** (canonical `www.`), ordered 2026-11-08 at INWX with the same nameservers, Cloudflare zone created the same day. `dackel.vomluchberg.de` gets a 301 to it at go-live. (Earlier the same day the subdomain was meant to stay for good; Karo then chose an own domain.) | Training: Karo's choice from the proposals in `domains-neue-seiten.md`; both spellings so typing with or without hyphens works. Dachshunds: Karo wants a short own address for ads and flyers; switching before go-live is free because the site is still `noindex`. A landing page on `vomluchberg.de` with `rottweiler.`/`dackel.` subdomains was rejected: it would move the live Rottweiler site and cost its rankings. |
 | O7 | **No new mailboxes.** Contact stays on the Gmail addresses. Optional: Cloudflare Email Routing for a nice receive-only address (e.g. `hallo@alltag-kann-sport.de` → Gmail). Domains without mail get anti-spoofing records (null MX, `v=spf1 -all`, DMARC `p=reject`). | Karo already uses Gmail; nothing to migrate. |
 | O8 | **One TinaCloud project**, all saves commit to `main`. No Tina editorial workflow. | D2. Rebuild routing is done by the watch paths (O3), not by Tina. |
 | O9 | **Cross-link URLs come from a site registry in code**, only rendered for sites flagged `live`. The hint text is editable in each site's Tina "Einstellungen". | A link must never point to a `*.workers.dev` URL; switching a domain is one code change, not three content edits. |
-| O11 | **Interim hosts on the existing zone** (Toni, 2026-11-08): until the own domains exist, the new Workers serve `dackel.vomluchberg.de` and `training.vomluchberg.de`. Declared as Custom Domains in `src/sites/<id>/wrangler.jsonc` (`routes` with `custom_domain: true`), so every deploy creates or keeps the DNS record and certificate; the Workers Builds token has *Workers Routes: Edit* on all zones. `SITE_NOINDEX=true` stays on while a site lives there. At go-live the training site switches to `www.alltag-kann-sport.de` and `training.vomluchberg.de` gets a 301 to it (Redirect Rule in the `vomluchberg.de` zone). The dachshund site keeps `dackel.vomluchberg.de` (O6); at go-live only `SITE_NOINDEX` is removed. | `vomluchberg.de` is already a Cloudflare zone, so the preview has a readable address for Karo now, without waiting for the domain order. |
+| O11 | **Interim hosts on the existing zone** (Toni, 2026-11-08): until the own domains exist, the new Workers serve `dackel.vomluchberg.de` and `training.vomluchberg.de`. Declared as Custom Domains in `src/sites/<id>/wrangler.jsonc` (`routes` with `custom_domain: true`), so every deploy creates or keeps the DNS record and certificate; the Workers Builds token has *Workers Routes: Edit* on all zones. `SITE_NOINDEX=true` stays on while a site lives there. At go-live each site switches to its `www.` domain (`www.dackelvomluchberg.de`, `www.alltag-kann-sport.de`) and the subdomain gets a 301 to it (Redirect Rule in the `vomluchberg.de` zone). | `vomluchberg.de` is already a Cloudflare zone, so the preview has a readable address for Karo now, without waiting for the domain order. |
 | O10 | **Pfotentermin: redirect first, deactivate later, delete never (without export).** Host/path 301s in Pfotentermin's `next.config.js` (not DB-dependent) to `www.alltag-kann-sport.de` the day the training site is live; customer `/profile` URLs go to the platform instead. Tenant stays active during a ~3-month transition (deactivation also locks Karo's admin), data exported to Karo first. Redirect stays ≥ 12 months. | D9. No gap for customers or Google; customers keep their dog data; reversible via env flag. |
 
 ---
@@ -83,7 +83,7 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 | Deploy command | `npx wrangler deploy` | `npx wrangler deploy` | `npx wrangler deploy` |
 | Preview build command | `npm run build:local` | `npm run build:local` | `npm run build:local` |
 | Preview command | `npx wrangler preview` | `npx wrangler preview` | `npx wrangler preview` (verified in CF-01: `preview` follows `.wrangler/deploy/config.json` like `deploy`, no `--config` needed) |
-| Custom domain | `www.vomluchberg.de` | `dackel.vomluchberg.de` (final, O6) | `training.vomluchberg.de`, later `www.alltag-kann-sport.de` |
+| Custom domain | `www.vomluchberg.de` | `dackel.vomluchberg.de`, later `www.dackelvomluchberg.de` | `training.vomluchberg.de`, later `www.alltag-kann-sport.de` |
 
 CF-01 result (2026-11-06, Wrangler 4.140.0): with `DEPLOY_ADAPTER=cloudflare SITE_ID=<id> npm run build:local`
 the generated `dist/server/wrangler.json` names `vomluchberg` / `vomluchberg-dackel` / `vomluchberg-training`.
@@ -99,7 +99,7 @@ as long as I-1 holds. Mark `TINA_TOKEN` and `PUBLIC_WEB3FORMS_KEY` as secret (ma
 | Variable | `vomluchberg` | `vomluchberg-dackel` | `vomluchberg-training` |
 | --- | --- | --- | --- |
 | `SITE_ID` | `luchberg` | `dackel` | `training` |
-| `SITE_URL` | `https://www.vomluchberg.de` | `https://dackel.vomluchberg.de` (before and after go-live, O6) | before: `https://training.vomluchberg.de` (O11); after: `https://www.alltag-kann-sport.de` |
+| `SITE_URL` | `https://www.vomluchberg.de` | before go-live: `https://dackel.vomluchberg.de` (O11); after: `https://www.dackelvomluchberg.de` | before: `https://training.vomluchberg.de` (O11); after: `https://www.alltag-kann-sport.de` |
 | `SITE_NOINDEX` | – | `true` until go-live, then delete | `true` until go-live, then delete |
 | `PUBLIC_TINA_CLIENT_ID` | project client ID | **same** | **same** |
 | `TINA_TOKEN` | read-only token | **same** | **same** |
@@ -221,7 +221,7 @@ same owner, relevant to visitors). Text editable in each site's Tina "Einstellun
 
 | On site | Where | Default text | Target |
 | --- | --- | --- | --- |
-| Rottweiler | Footer, left column under the ADRK line (small, `text-sm`) | "Wir züchten auch Rauhaardackel → dackel.vomluchberg.de" | dachshund home |
+| Rottweiler | Footer, left column under the ADRK line (small, `text-sm`) | "Wir züchten auch Rauhaardackel → dackelvomluchberg.de" | dachshund home |
 | Rottweiler | Footer, same block (if Karo agrees, question "Querverweise" in "Allgemein") | "Hundetraining bei Karo: Alltag kann Sport →" | training home |
 | Rottweiler | `/hunde/rauhaardackel` | short teaser card (see 5.4) | dachshund home |
 | Dachshund | Footer, one line | "Unsere Rottweiler findet ihr auf vomluchberg.de →" (+ training line) | Rottweiler home |
@@ -237,7 +237,7 @@ Today the Rottweiler site has a full dachshund profile (`src/content/hunde/rauha
 1. **At go-live (default):** shorten the luchberg profile to a teaser: 2–3 own sentences ("Zu unserem
    Rudel gehören auch Hanni und Bonnie …"), max. 2 photos, the cross-link card. The long breeding text
    moves (rewritten by slice 1) to the dachshund site only. Karo's edit, Toni/Claude prepare a draft.
-2. **Later (optional):** if Karo prefers, 301 `/hunde/rauhaardackel` → `https://dackel.vomluchberg.de/`
+2. **Later (optional):** if Karo prefers, 301 `/hunde/rauhaardackel` → `https://www.dackelvomluchberg.de/`
    (and update the old-site redirect `/weitere-rudelmitglieder/rauhaardackel` to point there directly, to
    avoid a chain), and remove the entry from the Rottweiler dog list.
 3. Photos: copy (not move) the ones the dachshund site uses into `public/uploads/dackel/`. Shared images on
@@ -415,8 +415,8 @@ Each step lists its rollback. "Live check" = home, two subpages, 404, form, `rob
 | # | Owner | Step | Rollback |
 | --- | --- | --- | --- |
 | B1 | K+T | Content and design approved on the workers.dev URL. | – |
-| B2 | T | Nothing to do: the Custom Domain `dackel.vomluchberg.de` already exists (O11) and stays (O6). | – |
-| B3 | T | Build vars: `SITE_URL=https://dackel.vomluchberg.de` stays, delete `SITE_NOINDEX`; redeploy. | Set `SITE_NOINDEX=true` again, redeploy (≈2 min). |
+| B2 | T | Custom Domain `www.dackelvomluchberg.de` (route in `src/sites/dackel/wrangler.jsonc`) + apex redirect: proxied `AAAA 100::` + Redirect Rule apex → www (301, keep path + query). `dackel.vomluchberg.de` → 301 to `https://www.dackelvomluchberg.de` (Redirect Rule in the `vomluchberg.de` zone). | Remove the Custom Domain and the rules. |
+| B3 | T | Build vars: `SITE_URL=https://www.dackelvomluchberg.de`, delete `SITE_NOINDEX`; redeploy. T-03 for the new origin. | Set `SITE_NOINDEX=true` again, redeploy (≈2 min). |
 | B4 | T | Live check + form test (CF-05) + Rich Results Test. | as B3 |
 | B5 | C | Registry: `dackel.live = true` → cross-links on Rottweiler (and training, if live) appear; luchberg profile shortened (S-04). One commit, so it can be reverted alone. | Revert that commit. |
 | B6 | T | Search Console property + sitemap (S-05). CF-06 for the dachshund Worker. | Re-enable the workers.dev route. |

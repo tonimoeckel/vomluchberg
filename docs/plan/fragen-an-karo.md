@@ -10,7 +10,7 @@ kommen in den passenden Abschnitt.
 
 ## 1. Wichtig vor dem Start (Recht und Adressen)
 
-- [x] **Domains:** Dackel: keine eigene Domain, die Seite bleibt dauerhaft unter `dackel.vomluchberg.de` (entschieden am 08.11.2026).
+- [x] **Domains:** Dackel: `dackelvomluchberg.de`, bestellt am 08.11.2026, genutzt wird `www.dackelvomluchberg.de`.
   - Training (08.11.2026): bestellt sind `alltag-kann-sport.de` (Hauptadresse) sowie `alltagkannsport.de` und `hundetraining-osterzgebirge.de` als Weiterleitung, je 5,49 € im Jahr bei INWX.
   - [ ] Noch offen: Welche Schreibweise steht auf Flyern und Visitenkarten, mit oder ohne Bindestriche? Funktionieren tun beide. *(Annahme: mit Bindestrichen, `www.alltag-kann-sport.de`, weil sie besser lesbar ist.)*
   - [ ] Möchtest du zusätzlich `karolin-riesing.de` als Weiterleitung (sichert deinen Namen)? *(Annahme: nein.)*
@@ -60,7 +60,7 @@ kommen in den passenden Abschnitt.
 - [ ] **Ein Login, drei Editoren:** Du pflegst alle drei Websites mit demselben Login. Jede Website hat ihren eigenen Editor unter ihrer Adresse + `/admin` (z. B. `vomluchberg.de/admin`). Dort siehst du beim Tippen die Vorschau genau dieser Website. Die Bereiche der anderen beiden Websites kannst du dort auch bearbeiten und speichern, nur ohne Live-Vorschau. Kommst du damit zurecht? *(Annahme: ja. Wir schreiben dir die drei Editor-Adressen auf einen Zettel.)*
 - [ ] **Neue Namen im Editor:** Die Rottweiler-Bereiche heißen im Editor dann „Rottweiler · Seiten“, „Rottweiler · Würfe“ usw., damit du sie von „Dackel · …“ und „Training · …“ unterscheiden kannst. Okay? *(Annahme: ja. Die neuen Namen kommen schon mit dem nächsten Update. Dann siehst du im Editor auch schon „Dackel · …“ und „Training · …“ mit Platzhaltertexten. Dort bitte noch nichts ändern, bis Toni Bescheid gibt.)*
 - [ ] **Bilder-Ordner:** Im Editor gibt es einen gemeinsamen Bilder-Bereich für alle drei Websites. Ist es okay, wenn du Dackel-Bilder in den Ordner „dackel“ und Trainings-Bilder in den Ordner „training“ hochlädst? Die Rottweiler-Bilder bleiben, wo sie sind. *(Annahme: ja. Falls ein Bild mal im falschen Ordner landet, geht trotzdem nichts kaputt.)*
-- [ ] **Testadressen:** Die Dackel-Seite läuft unter `dackel.vomluchberg.de` (das bleibt auch so), die Trainingsseite bis zum Start unter `training.vomluchberg.de`. Google findet diese Testadressen nicht. Ist es okay, wenn du sie dort schon befüllst und anschaust? *(Annahme: ja.)*
+- [ ] **Testadressen:** Bis zum Start laufen die Dackel- und die Trainingsseite unter `dackel.vomluchberg.de` und `training.vomluchberg.de`. Google findet diese Testadressen nicht. Ist es okay, wenn du sie dort schon befüllst und anschaust? *(Annahme: ja.)*
 - [ ] **Reihenfolge:** Darf die Dackel-Seite online gehen, sobald sie fertig ist, auch wenn die Trainingsseite noch nicht so weit ist? *(Annahme: ja.)*
 - [ ] **Querverweise:** Soll die Trainingsseite auch auf die Zuchtseiten verweisen (und umgekehrt), oder nur Rottweiler ↔ Dackel? *(Annahme: kleiner Hinweis im Footer auf allen drei Seiten.)*
 - [ ] **E-Mail mit eigener Domain:** Möchtest du Adressen wie `hallo@alltag-kann-sport.de`? *(Annahme: nein, die Gmail-Adressen bleiben. Eine kostenlose Weiterleitung an Gmail ist später möglich.)*

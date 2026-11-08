@@ -1,4 +1,4 @@
-# Domains für die Trainingsseite (und die Dackel)
+# Domains für die Dackel- und die Trainingsseite
 
 Checkliste für Karo und Toni. Sie funktioniert wie der [Domain-Umzug von vomluchberg.de](domain-umzug.md),
 nur einfacher: Die neuen Domains werden **neu bestellt**, es gibt keinen alten Provider und keinen
@@ -10,12 +10,10 @@ Cloudflare (kostenlos), die Websites laufen über Cloudflare Workers, genau wie 
 | Seite | Domain | Stand |
 | --- | --- | --- |
 | Hundetraining | **`alltag-kann-sport.de`**, dazu `alltagkannsport.de` und `hundetraining-osterzgebirge.de` als Weiterleitung | **bestellt am 08.11.2026** bei INWX, Nameserver Cloudflare (`sean`/`sloan.ns.cloudflare.com`), Zonen angelegt |
-| Rauhaardackel | **keine eigene Domain**, die Seite bleibt dauerhaft unter `dackel.vomluchberg.de` | Entscheidung 08.11.2026 |
+| Rauhaardackel | **`dackelvomluchberg.de`** | **bestellt am 08.11.2026** bei INWX, Nameserver Cloudflare (`sean`/`sloan.ns.cloudflare.com`), Zone angelegt |
 
-**Warum keine eigene Dackel-Domain?** Bei Google rankt `dackel.vomluchberg.de` genauso gut wie eine eigene
-Domain. Die Adresse zeigt, dass die Dackel zu „vom Luchberg“ gehören, kostet nichts und muss nie umziehen. Für
-den Start der Dackel-Seite muss nur noch die Sperre für Google (`noindex`) raus, an Domains ist nichts zu tun.
-Die Schritte unten gelten deshalb nur für die Trainingsseite.
+Bis zum Start laufen die Seiten unter `dackel.vomluchberg.de` und `training.vomluchberg.de`. Danach leiten diese
+Testadressen auf die neuen Domains weiter.
 
 Die Adresse wird immer mit **www** genutzt (z. B. `www.alltag-kann-sport.de`). Wer die Adresse ohne www
 eintippt, landet automatisch auch dort.
@@ -138,21 +136,21 @@ Hauptadresse zeigen und dass Google dich als Hundetrainerin in Glashütte erkenn
 
 ## 0. Vorab klären
 
-- [x] Welche Namen sollen es werden? Training: `alltag-kann-sport.de`; Dackel: keine eigene Domain (08.11.2026).
+- [x] Welche Namen sollen es werden? Training: `alltag-kann-sport.de`; Dackel: `dackelvomluchberg.de` (08.11.2026).
 - [ ] Karo: Braucht ihr E-Mail-Adressen mit der neuen Domain (z. B. `hallo@alltag-kann-sport.de`)? *Annahme: nein, die Gmail-Adressen bleiben. Eine Weiterleitung an Gmail ist später jederzeit kostenlos möglich.*
-- [ ] Toni: Prüfen, dass die Trainingsseite unter ihrer Testadresse `training.vomluchberg.de` fertig und abgestimmt ist.
+- [ ] Toni: Prüfen, dass beide Seiten unter ihrer Testadresse (`dackel.vomluchberg.de` bzw. `training.vomluchberg.de`) fertig und abgestimmt sind.
 
 ## 1. Domains bestellen
 
-- [x] Bei INWX bestellt (08.11.2026): `alltag-kann-sport.de`, `alltagkannsport.de`, `hundetraining-osterzgebirge.de`, nur die Domains, Inhaberin Karolin Riesing, Nameserver `sean.ns.cloudflare.com` und `sloan.ns.cloudflare.com`.
+- [x] Bei INWX bestellt (08.11.2026): `alltag-kann-sport.de`, `alltagkannsport.de`, `hundetraining-osterzgebirge.de` und `dackelvomluchberg.de`, nur die Domains, Inhaberin Karolin Riesing, Nameserver `sean.ns.cloudflare.com` und `sloan.ns.cloudflare.com`.
 - [ ] Prüfen: Automatische Verlängerung ist an.
 - [ ] Toni Zugang geben (zusätzlicher Nutzer, kein geteiltes Passwort), falls noch nicht geschehen.
 
 ## 2. Toni: DNS auf Cloudflare
 
-Für alle drei Domains:
+Für alle vier Domains:
 
-- [x] Cloudflare → *Add a site* → Domain eingeben → Free-Plan (08.11.2026, Zonen angelegt).
+- [x] Cloudflare → *Add a site* → Domain eingeben → Free-Plan (08.11.2026, alle vier Zonen angelegt).
 - [x] Nameserver bei INWX auf Cloudflare (bei der Bestellung eingetragen).
 - [ ] Warten, bis Cloudflare die Domains als *Active* zeigt (meist unter einer Stunde).
 - [ ] Ohne eigene E-Mail: Schutz gegen gefälschte Absender eintragen
@@ -163,8 +161,8 @@ Für alle drei Domains:
 
 ## 3. Toni: Website verbinden (erst wenn die Seite fertig ist)
 
-- [ ] Im Repo in `src/sites/training/wrangler.jsonc` die Adresse unter `routes` von `training.vomluchberg.de` auf `www.alltag-kann-sport.de` ändern und deployen. Cloudflare legt den DNS-Eintrag und das Zertifikat dabei selbst an. (Alternativ im Dashboard: *Workers & Pages* → Worker → *Settings → Domains & Routes → Add Custom Domain*.)
-- [ ] Die alte Testadresse `training.vomluchberg.de` per *Rules → Redirect Rules* in der Zone `vomluchberg.de` mit 301 auf `https://www.alltag-kann-sport.de` weiterleiten, falls Karo den Link schon verschickt hat.
+- [ ] Im Repo in `src/sites/<id>/wrangler.jsonc` die Adresse unter `routes` von `dackel.vomluchberg.de` bzw. `training.vomluchberg.de` auf `www.dackelvomluchberg.de` bzw. `www.alltag-kann-sport.de` ändern und deployen. Cloudflare legt den DNS-Eintrag und das Zertifikat dabei selbst an. (Alternativ im Dashboard: *Workers & Pages* → Worker → *Settings → Domains & Routes → Add Custom Domain*.)
+- [ ] Die alte Testadresse (`dackel.vomluchberg.de` bzw. `training.vomluchberg.de`) per *Rules → Redirect Rules* in der Zone `vomluchberg.de` mit 301 auf die neue www-Adresse weiterleiten (Pfad behalten).
 - [ ] Für die Adresse ohne www: DNS-Eintrag `AAAA` für `@` → `100::`, **Proxy an** (orange Wolke). Dann *Rules → Redirect Rules* → Vorlage „Redirect from root to www“, Statuscode 301.
 - [ ] Im Worker unter *Settings → Build → Variables*: `SITE_URL=https://www.<domain>` setzen und `SITE_NOINDEX` löschen. Neu bauen lassen.
 - [ ] TinaCloud → Projekt → *Site URLs*: `https://www.<domain>` ergänzen.
