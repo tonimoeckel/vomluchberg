@@ -17,8 +17,8 @@ terminHinweis: 'Nächster Kurs: Termine auf Anfrage'
 bild: /uploads/training/hundesport/fussarbeit-hundeplatz.jpg
 bildBeschreibung: Karolin bei der Fußarbeit mit ihrem Rottweiler auf dem Hundeplatz
 galerie:
-  - bild: /uploads/training/hundesport/training-hundeplatz.jpg
-    beschreibung: Karolin führt ihren Hund bei einer Prüfung auf dem Hundeplatz
+  - bild: /uploads/training/hundesport/igp2-2026-platz-blickkontakt.jpg
+    beschreibung: Rottweilerhündin im Sitz mit Blickkontakt zu Karolin
   - bild: /uploads/training/hundesport/drei-rottweiler-platz.jpg
     beschreibung: Drei Rottweiler liegen im Platz neben Karolin
 ---
