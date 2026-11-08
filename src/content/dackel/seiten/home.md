@@ -12,7 +12,7 @@ blocks:
       - Jagdliche Abstammung
       - Gut sozialisiert
     bild: /uploads/dackel/dackel-duo-bank.jpg
-    bildnotiz: Hanni & Bonnie
+    bildnotiz: Bonnie & Hanni
     buttons:
       - label: Welpen anfragen
         link: /kontakt
@@ -38,6 +38,10 @@ blocks:
         beschreibung: Dackelwelpe klettert über eine Matte
       - bild: /uploads/dackel/welpe-liegt-im-gras.jpg
         beschreibung: Dackelwelpe liegt in der Sonne im Gras
+      - bild: /uploads/dackel/dackel-in-der-loewenzahnwiese.jpg
+        beschreibung: Rauhaardackel liegt in der Löwenzahnwiese
+      - bild: /uploads/dackel/dackel-sitzt-im-garten.jpg
+        beschreibung: Rauhaardackel sitzt im Garten
   - _template: highlights
     kicker: Was uns wichtig ist
     ueberschrift: Familienhunde mit Dackelkopf

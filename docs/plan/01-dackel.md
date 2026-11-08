@@ -51,6 +51,11 @@ and the new files under `uploads/dackel/` (every worker ships all uploads, see `
   „Papiere“/DTK/VDH/Zuchtwart/Wurfabnahme anywhere (K5); „ADRK“ appears only in the Rottweiler hint.
   Screenshots at 390 / 1366 px, light and dark, were shown to Toni.
 
+- **Photo identity (08.11.):** Karo: Bonnie wears the purple collar. On `dackel-duo-bank.jpg` Bonnie
+  sits left, Hanni right; the profile photos `bonnie-auf-der-bank.jpg` / `hanni-auf-der-bank.jpg` are
+  crops of it. No collar visible on `dackel-in-der-loewenzahnwiese.jpg` and `dackel-sitzt-im-garten.jpg`:
+  shown without names in the home photo band until Karo says who it is (fragen-an-karo §2).
+
 **At go-live** (slice 3): set `url` + `live: true` in `src/sites/dackel/site.ts`, add
 `querverweisFeld` to `tina/collections/config.ts` and pass its text to `<Querverweis>`, shorten
 `hunde/rauhaardackel.md` (§6), point the old redirect straight to the new domain.
