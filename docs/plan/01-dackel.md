@@ -56,6 +56,13 @@ and the new files under `uploads/dackel/` (every worker ships all uploads, see `
   crops of it. No collar visible on `dackel-in-der-loewenzahnwiese.jpg` and `dackel-sitzt-im-garten.jpg`:
   shown without names in the home photo band until Karo says who it is (fragen-an-karo §2).
 
+- **Karo's answers (08.11.), see fragen-an-karo §2:** Hobbyzucht without a kennel name, so the copy
+  may say „Hobbyzucht“ (her word); K5 still holds for papers and clubs. No size class is named until
+  she has measured the dogs (`groesse` has no default, cards say „Rauhaardackel“). The father is
+  Monty (`hunde/monty.md`, no text about him). A-Wurf prepared as `wuerfe/a-wurf.md` (status
+  `vergangen`, father Monty, nothing else) until the data from Karo's Word file arrives; past
+  litters show no inquiry button.
+
 **At go-live** (slice 3): set `url` + `live: true` in `src/sites/dackel/site.ts`, add
 `querverweisFeld` to `tina/collections/config.ts` and pass its text to `<Querverweis>`, shorten
 `hunde/rauhaardackel.md` (§6), point the old redirect straight to the new domain.

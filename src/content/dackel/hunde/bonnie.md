@@ -4,7 +4,6 @@ rufname: Bonnie
 geschlecht: huendin
 kategorie: zucht
 reihenfolge: 20
-groesse: standard
 bild: /uploads/dackel/bonnie-auf-der-bank.jpg
 galerie:
   - bild: /uploads/dackel/karo-mit-dackel-und-junghund.jpg

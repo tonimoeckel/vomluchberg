@@ -24,7 +24,7 @@ blocks:
     bildPosition: links
     hervorheben: true
     inhalt: |
-      Unsere Standard-Rauhaardackel züchten wir ausschließlich für Liebhaber und Familien, wir achten dabei auf Gesundheit und Wesen.
+      Unsere Rauhaardackel züchten wir ausschließlich für Liebhaber und Familien, wir achten dabei auf Gesundheit und Wesen.
 
       Auch die Kleinen wachsen mit Familienanschluss und im Rudel auf. Sie lernen alles Wichtige für ihren neuen Lebensweg kennen.
   - _template: text

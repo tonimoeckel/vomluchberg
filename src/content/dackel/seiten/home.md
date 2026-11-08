@@ -1,10 +1,10 @@
 ---
 titel: Rauhaardackel vom Luchberg – Rauhaardackel aus Sachsen
-beschreibung: 'Standard-Rauhaardackel aus Glashütte OT Luchau (Sachsen): mit Familienanschluss im Rudel aufgewachsen, mit Blick auf Gesundheit und Wesen. Anfragen nehmen wir gern entgegen.'
+beschreibung: 'Rauhaardackel aus Hobbyzucht in Glashütte OT Luchau (Sachsen): mit Familienanschluss im Rudel aufgewachsen, mit Blick auf Gesundheit und Wesen. Anfragen nehmen wir gern entgegen.'
 blocks:
   - _template: hero
     variante: gross
-    kicker: Standard-Rauhaardackel aus Sachsen
+    kicker: Rauhaardackel aus Hobbyzucht in Sachsen
     titel: Rauhaardackel, *groß geworden* mitten im Rudel.
     untertitel: Wir züchten unsere Rauhaardackel für Liebhaber und Familien und achten dabei auf Gesundheit und Wesen. Die Kleinen wachsen mit Familienanschluss bei uns auf und lernen alles Wichtige für ihren neuen Lebensweg.
     stichpunkte:

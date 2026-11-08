@@ -55,16 +55,15 @@ describe('farbeLabel / groesseLabel', () => {
     expect(farbeLabel('sonstige')).toBe('');
   });
 
-  it('treats a missing size as standard', () => {
-    expect(groesseLabel(undefined)).toBe('Standard-Rauhaardackel');
-    expect(groesseLabel('')).toBe('Standard-Rauhaardackel');
+  it('names no size class when none is set', () => {
+    expect(groesseLabel(undefined)).toBe('');
+    expect(groesseLabel('')).toBe('');
   });
 });
 
 describe('dackelSteckbrief', () => {
   it('lists only filled rows, in display order', () => {
     expect(dackelSteckbrief({ farbe: 'wildschweinfarben', geboren: '2020-04-03T00:00:00.000Z', brustumfang: '34 cm' })).toEqual([
-      { feld: 'groesse', label: 'Größe', wert: 'Standard-Rauhaardackel' },
       { feld: 'farbe', label: 'Farbe', wert: 'wildschweinfarben' },
       { feld: 'geboren', label: 'Wurftag', wert: '03.04.2020' },
       { feld: 'brustumfang', label: 'Brustumfang', wert: '34 cm' },
@@ -72,7 +71,8 @@ describe('dackelSteckbrief', () => {
   });
 
   it('skips blank strings', () => {
-    expect(dackelSteckbrief({ eltern: '  ', abstammung: '' }).map((z) => z.feld)).toEqual(['groesse']);
+    expect(dackelSteckbrief({ eltern: '  ', abstammung: '' })).toEqual([]);
+    expect(dackelSteckbrief({ groesse: 'standard' }).map((z) => z.wert)).toEqual(['Standard-Rauhaardackel']);
   });
 
   it('shows the owner only for dogs that are not ours', () => {
@@ -85,8 +85,9 @@ describe('dackelSteckbrief', () => {
 
 describe('dackelKurzinfo', () => {
   it('joins size and colour', () => {
-    expect(dackelKurzinfo({ farbe: 'rot' })).toBe('Standard-Rauhaardackel · rot');
-    expect(dackelKurzinfo({})).toBe('Standard-Rauhaardackel');
+    expect(dackelKurzinfo({ farbe: 'rot' })).toBe('Rauhaardackel · rot');
+    expect(dackelKurzinfo({ groesse: 'zwerg' })).toBe('Zwerg-Rauhaardackel');
+    expect(dackelKurzinfo({})).toBe('Rauhaardackel');
   });
 });
 

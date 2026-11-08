@@ -12,7 +12,6 @@ kommen in den passenden Abschnitt.
 
 - [ ] **Domains:** Passen `rauhaardackel-vom-luchberg.de` und `alltag-kann-sport.de`? Beide waren am 05.11.2026 noch frei. *(Annahme: ja, genutzt wird jeweils die Adresse mit www. Bis dahin laufen die Seiten unter einer Testadresse.)*
 - [ ] **Domains bestellen:** Bestellst und bezahlst du beide Domains selbst, im selben Account wie `vomluchberg.de`? *(Annahme: ja, bei INWX, Toni bekommt Zugang.)*
-- [ ] **Verein (Dackel):** Züchtest du die Dackel in einem Verein (z. B. Deutscher Teckelklub / VDH) mit Papieren, oder als Liebhaberzucht? Das ändert, wie wir die Zucht auf der Seite beschreiben dürfen. *(Annahme: offen. Bis zur Antwort schreiben wir nichts über Verein oder Papiere.)*
 - [ ] **Erlaubnis nach § 11 Tierschutzgesetz:** Hast du sie für das Hundetraining (und ggf. die Zucht)? Welches Veterinäramt hat sie erteilt? Das gehört ins Impressum. Und dürfen diese Angaben öffentlich stehen: „Ausbildung gleichwertig zur Trainer-C-Lizenz“ und „Genehmigung nach § 11 TSchG“? *(Annahme: ja, für das Training. Die Behörde reichst du nach.)*
 - [ ] **Umsatzsteuer:** Bist du Kleinunternehmerin, oder hast du eine USt-IdNr.? *(Annahme: Kleinunternehmerin, keine USt-IdNr. im Impressum.)*
 - [ ] **Verträge fürs Training:** Wie kommt eine Buchung zustande, per Telefon, E-Mail oder erst vor Ort? Bei Verträgen per E-Mail oder Telefon kann ein Widerrufsrecht gelten, das lassen wir prüfen. *(Annahme: Absprache per Telefon/E-Mail, Bezahlung vor Ort.)*
@@ -29,15 +28,23 @@ kommen in den passenden Abschnitt.
 ## 2. Inhalte der Dackel-Seite
 
 - [ ] **Name der Seite:** Wie soll sie heißen? Gibt es für die Dackel einen eigenen Zwingernamen? *(Annahme: „Rauhaardackel vom Luchberg“.)*
+  **Antwort (08.11., über Toni):** „Da die Hunde aus Hobbyzucht stammen, gibt es keinen Zwingernamen.“
+  **Noch offen:** Darf die Seite trotzdem „Rauhaardackel vom Luchberg“ heißen? „vom Luchberg“ steht hier für den Ort (und deine Rottweiler-Seite), nicht für einen Zwinger. *(Annahme: ja.)*
 - [ ] **Logo:** Soll es ein eigenes Dackel-Logo geben (z. B. eine Silhouette wie beim Rottweiler-Logo)? *(Annahme: vorerst eine einfache Dackel-Strichzeichnung als Platzhalter.)*
 - [ ] **Hanni und Bonnie:** Auf welchen Fotos ist Hanni, auf welchen Bonnie? Sind die beiden auf dem Bank-Foto Hanni und Bonnie? Wie heißen sie mit vollem Namen, wann ist ihr Wurftag, welche Farbe haben sie (z. B. wildschweinfarben) und magst du zu jeder ein paar Sätze schreiben? *(Annahme: Bonnie ist die Hündin mit dem lila Halsband, Hanni die andere. Auf dem Bank-Foto auf der Website sitzt Bonnie links, Hanni rechts. Die übrigen Angaben bleiben leer, bis du sie schickst.)*
   **Antwort (08.11., über Toni):** „Bonnie ist die mit Lila Halsband ... ich weiß gerade nicht welches Bankfoto es ist ... auf dem einen sitzt sie links auf dem anderen rechts.“
   **Noch offen:** Auf zwei Fotos ist kein Halsband zu sehen: der Dackel, der in der Löwenzahnwiese liegt, und der Dackel, der im Garten sitzt (Seitenansicht). Wer ist das jeweils? Und ist auf dem Foto „Karo mit Bonnie und Baja“ wirklich Bonnie? Bis dahin stehen diese Fotos ohne Namen auf der Seite.
+  **Antwort (08.11., über Toni):** Größe: Hanni und Bonny „passen in jedem Fall in den Standard“. Ob Zwerg- oder Kaninchenteckel, hängt von Größe und Brustumfang ab, du könntest sie noch vermessen. *(Bis dahin nennt die Seite keine Größenklasse, nur „Rauhaardackel“.)*
+  **Noch offen:** Schreibt man „Bonnie“ oder „Bonny“? Du hast beides geschrieben. *(Bis dahin bleibt „Bonnie“.)*
 - [ ] **Der Vater unserer Dackel:** Wie heißt er, wem gehört er, und dürfen wir den Namen und den Zwinger nennen? *(Annahme: nur Foto und „Der Vater unserer Dackel“, ohne Namen.)*
+  **Antwort (08.11., über Toni):** Der Vater ist **Monty**. Eine Beschreibung von ihm hast du nicht mehr. *(Auf der Seite steht jetzt „Monty – Der Vater unserer Dackel“, mit Foto, ohne Text über ihn.)*
+  **Noch offen:** Wem gehört Monty (Besitzer oder Zwinger), und dürfen wir das nennen? *(Annahme: wir nennen es nicht.)*
 - [ ] **Würfe:** Gab es schon Dackelwürfe (Buchstabe, Datum, Eltern), und ist ein nächster Wurf geplant? Zu welchem Wurf gehören die Welpenfotos? *(Annahme: noch keine Wurfseiten. Die Welpenfotos zeigen wir als Galerie, bei „Welpen“ steht „Gerade sind keine Welpen da, meldet euch gern“.)*
+  **Antwort (08.11., über Toni):** Es gab einen **A-Wurf**, Vater ist Monty. Daten, Maße und Beschreibungen der einzelnen Welpen stehen in deiner Word-Datei, die Toni noch weitergibt. *(Auf der Seite gibt es die Wurfseite „A-Wurf“ schon, mit Vater Monty, sonst noch leer. Ein neuer Wurf ist nicht eingetragen.)*
+  **Noch offen:** Wer ist die Mutter des A-Wurfs, und gehören die Welpenfotos zum A-Wurf?
 - [ ] **Dackeltext auf der Rottweiler-Seite:** Darf dein Dackeltext auf die neue Dackel-Seite umziehen? Auf vomluchberg.de bleiben dann bei „Unsere Rauhaardackel“ nur der Satz über Hanni und Bonnie, zwei Fotos und ein Link zur Dackel-Seite. *(Annahme: ja, sobald die Dackel-Seite online ist. Doppelte Texte auf zwei Seiten mag Google nicht.)*
 - [ ] **Mehr Text (freiwillig):** Magst du noch etwas zur Aufzucht schreiben, z. B. seit wann du Dackel hast, was die Welpen beim Auszug mitbekommen und wie du die neuen Familien aussuchst? *(Annahme: wir starten mit deinem bisherigen Text.)*
-- [ ] **Steckbrief der Dackel:** Auf den Seiten von Hanni, Bonnie und dem Vater gibt es einen kleinen Steckbrief (Größe, Farbe, Wurftag, Eltern, Abstammung, Brustumfang, Gesundheit). Was davon magst du angeben? Leere Felder werden einfach nicht angezeigt. *(Annahme: vorerst nur „Standard-Rauhaardackel“.)*
+- [ ] **Steckbrief der Dackel:** Auf den Seiten von Hanni, Bonnie und Monty gibt es einen kleinen Steckbrief (Größe, Farbe, Wurftag, Eltern, Abstammung, Brustumfang, Gesundheit). Was davon magst du angeben? Leere Felder werden einfach nicht angezeigt. *(Annahme: vorerst nur „Rauhaardackel“, ohne Größenklasse, siehe oben.)*
 
 ## 3. Inhalte der Trainingsseite
 
@@ -81,3 +88,7 @@ kommen in den passenden Abschnitt.
   **Antwort (08.11., über Toni):** Ja, die Welpenfotos sind von dir.
 - [x] **Hinweis auf die Rottweiler:** Passt im Fuß der Dackel-Seite „Wir züchten auch Rottweiler im ADRK: Rottweiler vom Luchberg →“ mit dem Foto von dir, Bonnie und Baja?
   **Antwort (08.11., über Toni):** Ja.
+- [x] **Verein (Dackel):** Züchtest du die Dackel in einem Verein (z. B. Deutscher Teckelklub / VDH) mit Papieren, oder als Liebhaberzucht? Das ändert, wie wir die Zucht auf der Seite beschreiben dürfen. *(Annahme: offen. Bis zur Antwort schreiben wir nichts über Verein oder Papiere.)*
+  **Antwort (08.11., über Toni):** „Da die Hunde aus Hobbyzucht stammen, gibt es keinen Zwingernamen.“ Auf der Seite steht jetzt „Hobbyzucht“ (dein Wort), weiterhin nichts zu Papieren oder Vereinen.
+- [x] **Weitere Fotos:** Wie kommen neue Dackelfotos auf die Seite?
+  **Antwort (08.11., über Toni):** Du pflegst einen Bilder-Link (Cloud-Ordner) mit weiteren Dackelfotos, die Bilder kommen über Toni.

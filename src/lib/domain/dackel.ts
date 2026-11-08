@@ -33,7 +33,10 @@ export const dackelFarben = [
   { value: 'sonstige', label: 'sonstige' },
 ] as const;
 
-/** Size varieties; "standard" is the default and the only one bred today. */
+/**
+ * Size classes (by chest girth). Only shown once Karo has measured a dog: without a value the site
+ * names no class (Karo, 08.11.: they fit the standard; Zwerg or Kaninchen depends on the girth).
+ */
 export const dackelGroessen = [
   { value: 'standard', label: 'Standard-Rauhaardackel' },
   { value: 'zwerg', label: 'Zwerg-Rauhaardackel' },
@@ -46,8 +49,8 @@ const label = (options: readonly { value: string; label: string }[], value?: str
 /** "wildschweinfarben"; empty for unknown values and for "sonstige" (says nothing on a card). */
 export const farbeLabel = (farbe?: string | null) => (farbe === 'sonstige' ? '' : label(dackelFarben, farbe));
 
-/** "Standard-Rauhaardackel"; a missing size counts as standard. */
-export const groesseLabel = (groesse?: string | null) => label(dackelGroessen, groesse || 'standard');
+/** "Zwerg-Rauhaardackel"; empty when no size class is set. */
+export const groesseLabel = (groesse?: string | null) => label(dackelGroessen, groesse);
 
 export interface DackelInfo {
   groesse?: string | null;
@@ -80,9 +83,9 @@ export function dackelSteckbrief(hund: DackelInfo): SteckbriefZeile[] {
   return zeilen.filter((z): z is SteckbriefZeile => !!z && z.wert.trim() !== '');
 }
 
-/** Short line under a dog's name on cards: "Standard-Rauhaardackel · wildschweinfarben". */
+/** Short line under a dog's name on cards: "Rauhaardackel · wildschweinfarben" (size class when set). */
 export const dackelKurzinfo = (hund: Pick<DackelInfo, 'groesse' | 'farbe'>) =>
-  [groesseLabel(hund.groesse), farbeLabel(hund.farbe)].filter(Boolean).join(' · ');
+  [groesseLabel(hund.groesse) || 'Rauhaardackel', farbeLabel(hund.farbe)].filter(Boolean).join(' · ');
 
 type WurfInfo = { titel: string; status?: string | null };
 

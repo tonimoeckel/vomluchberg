@@ -4,7 +4,6 @@ rufname: Hanni
 geschlecht: huendin
 kategorie: zucht
 reihenfolge: 10
-groesse: standard
 bild: /uploads/dackel/hanni-auf-der-bank.jpg
 galerie:
   - bild: /uploads/dackel/dackel-duo-bank.jpg

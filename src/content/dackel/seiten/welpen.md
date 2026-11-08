@@ -6,10 +6,10 @@ blocks:
     variante: schmal
     kicker: Welpen & Würfe
     titel: Rauhaardackel-Welpen vom Luchberg
-    untertitel: Unsere Standard-Rauhaardackel züchten wir ausschließlich für Liebhaber und Familien. Auch die Kleinen wachsen mit Familienanschluss und im Rudel auf und lernen alles Wichtige für ihren neuen Lebensweg kennen.
+    untertitel: Unsere Rauhaardackel züchten wir ausschließlich für Liebhaber und Familien. Auch die Kleinen wachsen mit Familienanschluss und im Rudel auf und lernen alles Wichtige für ihren neuen Lebensweg kennen.
   - _template: wuerfe
-    kicker: Unsere Würfe
-    ueberschrift: Aktuelle und geplante Würfe
+    kicker: Würfe
+    ueberschrift: Unsere Würfe
     leer: Gerade sind keine Welpen da. Ihr könnt euch aber jederzeit unverbindlich bei uns melden.
   - _template: galerie
     variante: raster
