@@ -40,6 +40,7 @@ Legend for owners: **T** = Toni, **K** = Karo, **C** = Claude (code/docs in this
 | O7 | **No new mailboxes.** Contact stays on the Gmail addresses. Optional: Cloudflare Email Routing for a nice receive-only address (e.g. `hallo@alltag-kann-sport.de` → Gmail). Domains without mail get anti-spoofing records (null MX, `v=spf1 -all`, DMARC `p=reject`). | Karo already uses Gmail; nothing to migrate. |
 | O8 | **One TinaCloud project**, all saves commit to `main`. No Tina editorial workflow. | D2. Rebuild routing is done by the watch paths (O3), not by Tina. |
 | O9 | **Cross-link URLs come from a site registry in code**, only rendered for sites flagged `live`. The hint text is editable in each site's Tina "Einstellungen". | A link must never point to a `*.workers.dev` URL; switching a domain is one code change, not three content edits. |
+| O11 | **Interim hosts on the existing zone** (Toni, 2026-11-08): until the own domains exist, the new Workers serve `dackel.vomluchberg.de` and `training.vomluchberg.de`. Declared as Custom Domains in `src/sites/<id>/wrangler.jsonc` (`routes` with `custom_domain: true`), so every deploy creates or keeps the DNS record and certificate; the Workers Builds token has *Workers Routes: Edit* on all zones. `SITE_NOINDEX=true` stays on while a site lives there. At go-live the pattern switches to `www.<domain>` and the subdomain gets a 301 to the new domain (Redirect Rule in the `vomluchberg.de` zone). | `vomluchberg.de` is already a Cloudflare zone, so the preview has a readable address for Karo now, without waiting for the domain order. |
 | O10 | **Pfotentermin: redirect first, deactivate later, delete never (without export).** Host/path 301s in Pfotentermin's `next.config.js` (not DB-dependent) to `www.alltag-kann-sport.de` the day the training site is live; customer `/profile` URLs go to the platform instead. Tenant stays active during a ~3-month transition (deactivation also locks Karo's admin), data exported to Karo first. Redirect stays ≥ 12 months. | D9. No gap for customers or Google; customers keep their dog data; reversible via env flag. |
 
 ---
@@ -98,7 +99,7 @@ as long as I-1 holds. Mark `TINA_TOKEN` and `PUBLIC_WEB3FORMS_KEY` as secret (ma
 | Variable | `vomluchberg` | `vomluchberg-dackel` | `vomluchberg-training` |
 | --- | --- | --- | --- |
 | `SITE_ID` | `luchberg` | `dackel` | `training` |
-| `SITE_URL` | `https://www.vomluchberg.de` | before go-live: its `*.workers.dev` URL; after: `https://www.rauhaardackel-vom-luchberg.de` | before: `*.workers.dev`; after: `https://www.alltag-kann-sport.de` |
+| `SITE_URL` | `https://www.vomluchberg.de` | before go-live: `https://dackel.vomluchberg.de` (O11); after: `https://www.rauhaardackel-vom-luchberg.de` | before: `https://training.vomluchberg.de` (O11); after: `https://www.alltag-kann-sport.de` |
 | `SITE_NOINDEX` | – | `true` until go-live, then delete | `true` until go-live, then delete |
 | `PUBLIC_TINA_CLIENT_ID` | project client ID | **same** | **same** |
 | `TINA_TOKEN` | read-only token | **same** | **same** |
@@ -143,7 +144,7 @@ Notes:
 | --- | --- | --- | --- |
 | CF-01 | C | **Done** (slice 0 PR B, 2026-11-06). Add `src/sites/{dackel,training}/wrangler.jsonc` (names `vomluchberg-dackel` / `vomluchberg-training`), add `previews`/`preview_urls` to all three. The outdated 3 MiB comment in `astro.config.mjs` was fixed in the consolidation. | `DEPLOY_ADAPTER=cloudflare SITE_ID=<id> npm run build:local` + `npx wrangler deploy --dry-run` passes for all three and names the right worker. |
 | CF-02 | T | `vomluchberg` Worker: Settings → Builds → switch to **Worker Previews** (one-time, irreversible), set preview build command `npm run build:local`, preview vars (3.2), watch paths (3.3). | A push to a feature branch creates a Preview URL with `noindex`; a push to `docs/` only does not build. |
-| CF-03 | T | Create Worker `vomluchberg-dackel`: *Workers & Pages → Create → Import repository* `vomluchberg`, settings from 3.1/3.2/3.3, `SITE_NOINDEX=true`, `SITE_URL=<workers.dev URL>`. | Site reachable on `vomluchberg-dackel.<subdomain>.workers.dev`, page source contains `noindex`. |
+| CF-03 | T | Create Worker `vomluchberg-dackel`: *Workers & Pages → Create → Import repository* `vomluchberg`, settings from 3.1/3.2/3.3, `SITE_NOINDEX=true`, `SITE_URL=https://dackel.vomluchberg.de`. The first production deploy attaches the Custom Domain from the Wrangler file (O11). | Site reachable on `vomluchberg-dackel.<subdomain>.workers.dev`, page source contains `noindex`. |
 | CF-04 | T | Same for `vomluchberg-training`. | as above |
 | CF-05 | T | Create the three Web3Forms keys (with Karo's e-mails) and set them. Test each form once on production. | Karo confirms three test mails arrived. |
 | CF-06 | T | Workers & Pages → each Worker → Settings → Domains & Routes: after go-live (section 7), **disable the `workers.dev` route for production** (keep Preview URLs on). | `*.workers.dev` of the production Worker returns 404/disabled; previews still work. |
@@ -180,7 +181,7 @@ descriptions: "Bilder für die Dackel-Seite bitte im Ordner *dackel* ablegen".
 | --- | --- | --- |
 | T-01 | T | Confirm the TinaCloud plan still covers one project + Karo + Toni (tina.io/pricing). No new project needed. |
 | T-02 | T | TinaCloud → project → Configuration: confirm the repo and that `main` is the production branch. |
-| T-03 | T | TinaCloud → Site URLs: add every origin that serves `/admin` (from I-9): the three `*.workers.dev` URLs now, the three `www.` domains at go-live, `http://localhost:4321`. |
+| T-03 | T | TinaCloud → Site URLs: add every origin that serves `/admin` (from I-9): `https://dackel.vomluchberg.de` and `https://training.vomluchberg.de` now (O11), the three `www.` domains at go-live, `http://localhost:4321`. |
 | T-04 | C | After slice 0: verify `/admin` login + save on each Worker that serves an admin, and that the save triggers exactly one Worker (CF-07). |
 
 ---
