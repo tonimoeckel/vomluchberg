@@ -7,9 +7,14 @@
 	// Worker Previews for non-production branches (Workers Builds, docs/plan/03-betrieb.md §3).
 	"previews": {},
 	"preview_urls": true,
-	// Interim preview address on Karo's existing zone until the site's own domain exists
-	// (docs/plan/03-betrieb.md §3.1). Cloudflare creates the DNS record and certificate on deploy;
-	// the Workers Builds token has "Workers Routes: Edit" for the zone. Keep SITE_NOINDEX=true while
-	// the site lives here, so this host never gets indexed.
-	"routes": [{ "pattern": "training.vomluchberg.de", "custom_domain": true }]
+	// Custom Domains (docs/plan/03-betrieb.md O5/O11): the site's own domain, canonical with www
+	// (SITE_URL=https://www.alltag-kann-sport.de), the apex until a 301 rule to www exists, and the
+	// old preview host that Karo already has. Cloudflare creates DNS records and certificates on
+	// deploy (the Workers Builds token has "Workers Routes: Edit" on all zones). SITE_NOINDEX=true
+	// stays on until Karo signs off the site and the legal pages are complete.
+	"routes": [
+		{ "pattern": "www.alltag-kann-sport.de", "custom_domain": true },
+		{ "pattern": "alltag-kann-sport.de", "custom_domain": true },
+		{ "pattern": "training.vomluchberg.de", "custom_domain": true }
+	]
 }
