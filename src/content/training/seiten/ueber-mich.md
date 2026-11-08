@@ -103,9 +103,9 @@ blocks:
       - bild: /uploads/training/hundesport/fussarbeit-hundeplatz.jpg
         beschreibung: Karolin bei der Fußarbeit mit ihrem Rottweiler auf dem Hundeplatz
         titel: Fußarbeit
-      - bild: /uploads/training/hundesport/training-hundeplatz.jpg
-        beschreibung: Karolin führt ihren Hund bei einer Prüfung auf dem Hundeplatz
-        titel: Prüfung
+      - bild: /uploads/training/hundesport/igp2-2026-fuss-frontal.jpg
+        beschreibung: Karolin mit ihrer Rottweilerhündin bei Fuß – IGP-II-Prüfung im Oktober 2026
+        titel: IGP II 2026
       - bild: /uploads/training/hundesport/drei-rottweiler-platz.jpg
         beschreibung: Drei Rottweiler liegen im Platz neben Karolin
         titel: Platz

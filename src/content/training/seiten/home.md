@@ -90,8 +90,8 @@ blocks:
       - bild: /uploads/training/hundesport/apportieren-wiese.jpg
         beschreibung: Rottweiler läuft über die Wiese zu den Apportierhölzern
         titel: Apportierarbeit
-      - bild: /uploads/training/hundesport/training-hundeplatz.jpg
-        beschreibung: Karolin führt ihren Hund bei einer Prüfung auf dem Hundeplatz
+      - bild: /uploads/training/hundesport/igp2-2026-fuss-seitlich.jpg
+        beschreibung: Karolin mit ihrer Rottweilerhündin bei Fuß – IGP-II-Prüfung im Oktober 2026
         titel: Unterordnung
       - bild: /uploads/training/hundesport/drei-rottweiler-platz.jpg
         beschreibung: Drei Rottweiler liegen im Platz neben Karolin
