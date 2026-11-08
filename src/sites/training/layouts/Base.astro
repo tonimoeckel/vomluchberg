@@ -5,18 +5,19 @@ import Lightbox from '../../../components/Lightbox.astro';
 import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ThemeVorschau from '../components/ThemeVorschau.astro';
 import { getConfig } from '../lib/data';
 import { islands } from '../lib/islands';
 import { headMeta, type Seo } from '../../../lib/domain/seo';
 import { localBusinessJsonLd } from '../../../lib/domain/localBusiness';
 import { training } from '../site';
+import { farbschema } from '../lib/farbschema';
 
 type Props = Partial<Seo>;
 
 const config = (await getConfig()).data?.trainingConfig ?? null;
 const meta = headMeta(Astro.props, config?.website, training.name);
-// Keep in sync with --bg (light / dark) in ../styles/global.css.
-const themeColor = { light: '#f6f2ea', dark: '#0f1f33' };
+const schema = farbschema(config?.farbschema);
 const w = config?.website;
 const k = config?.kontakt;
 // LocalBusiness on the start page only (docs/plan/02-training.md §3 "Local SEO").
@@ -40,9 +41,10 @@ const betrieb =
 ---
 
 <!doctype html>
-<html lang="de" data-site="training">
+<html lang="de" data-site="training" data-farbe={schema.id}>
 	<head>
-		<BaseHead {...meta} themeColor={themeColor} />
+		<BaseHead {...meta} themeColor={schema.themeColor} />
+		<ThemeVorschau kopf />
 		{betrieb && <script type="application/ld+json" set:html={JSON.stringify(betrieb)} />}
 	</head>
 	<body class="flex min-h-dvh flex-col">
@@ -57,5 +59,6 @@ const betrieb =
 			<Footer config={config} />
 		</TinaIsland>
 		<Lightbox />
+		<ThemeVorschau />
 	</body>
 </html>

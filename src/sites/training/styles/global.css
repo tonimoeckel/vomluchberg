@@ -22,10 +22,18 @@
 @source '../../../components/Lightbox.astro';
 @source '../../../components/ui';
 
-/* Contrast (WCAG AA, checked 2026-11-08): white on --primary 5.0:1, --primary-ink on --bg 5.3:1 and
-   on --surface 4.9:1, --muted on --bg 6.0:1; dark: --primary-ink on --bg 7.1:1, --muted 11.5:1. */
+/* Colour schemes (src/sites/training/lib/farbschema.ts): selected by <html data-farbe="…">, the
+   default comes from trainingConfig.farbschema. Every scheme defines every colour token, light and
+   dark; :root falls back to "trainingsplatz". Only colours differ, never layout. Contrasts (text
+   ≥ 4.5:1, copper lines ≥ 3:1) and --bg = themeColor are checked by lib/farbschema.test.ts. */
 :root {
 	color-scheme: light;
+	--radius: 6px;
+}
+
+/* Trainingsplatz: navy and copper from the logo on paper (the original design). */
+:root,
+[data-farbe='trainingsplatz'] {
 	--bg: #f6f2ea; /* paper */
 	--surface: #efe8db; /* paper-2: alternating sections */
 	--surface-2: #e4edf5; /* mist-2: chips */
@@ -47,14 +55,122 @@
 	--dark-2: #10233a;
 	--on-dark: #ffffff;
 	--on-dark-muted: #e4edf5;
-	--radius: 6px;
 	--shadow: 0 26px 50px -30px rgb(20 37 58 / 0.5);
 }
 
-/* Keep --bg (light / dark) in sync with themeColor in ../layouts/Base.astro. */
+/* Bergnebel: cool mist blue, navy buttons, copper only for lines and small accents. */
+[data-farbe='bergnebel'] {
+	--bg: #f2f6fa;
+	--surface: #e4ecf4;
+	--surface-2: #d8e4ef;
+	--card: #ffffff;
+	--fg: #14253a;
+	--heading: #193450;
+	--muted: #475a6e;
+	--border: #c9d6e3;
+	--primary: #22466e;
+	--primary-hover: #193450;
+	--primary-ink: #9a4f25;
+	--copper: #b0602f;
+	--accent: #193450;
+	--accent-ink: #193450;
+	--lane: #c8d9e8;
+	--grad: linear-gradient(120deg, #193450 0%, #193450 100%);
+	--grad-soft: linear-gradient(120deg, #e4ecf4 0%, #e4ecf4 100%);
+	--dark: #193450;
+	--dark-2: #0f2136;
+	--on-dark: #ffffff;
+	--on-dark-muted: #dce8f3;
+	--shadow: 0 26px 50px -30px rgb(20 37 58 / 0.45);
+}
+
+/* Waldweg: fir green bands and headings, copper buttons, light sage paper. */
+[data-farbe='waldweg'] {
+	--bg: #f4f3ec;
+	--surface: #e9eadf;
+	--surface-2: #dfe8dc;
+	--card: #ffffff;
+	--fg: #18271f;
+	--heading: #1f3d30;
+	--muted: #4b5a50;
+	--border: #d3d5c4;
+	--primary: #a85a2f;
+	--primary-hover: #8f4a22;
+	--primary-ink: #9a4f25;
+	--copper: #b96637;
+	--accent: #1f3d30;
+	--accent-ink: #1f3d30;
+	--lane: #cddbc8;
+	--grad: linear-gradient(120deg, #1f3d30 0%, #1f3d30 100%);
+	--grad-soft: linear-gradient(120deg, #e9eadf 0%, #e9eadf 100%);
+	--dark: #1f3d30;
+	--dark-2: #142a20;
+	--on-dark: #ffffff;
+	--on-dark-muted: #dfe8dc;
+	--shadow: 0 26px 50px -30px rgb(20 40 30 / 0.45);
+}
+
+/* Erde: sand and clay with earth-brown bands; logo navy for headings and buttons, logo copper
+   for lines – the logo's original colours on earth tones. */
+[data-farbe='erde'] {
+	--bg: #f3ede3;
+	--surface: #e9dfcf;
+	--surface-2: #e2d6c3;
+	--card: #fffdf9;
+	--fg: #2a2018;
+	--heading: #193450;
+	--muted: #5a4e43;
+	--border: #d8cab5;
+	--primary: #193450;
+	--primary-hover: #10233a;
+	--primary-ink: #8c4a22;
+	--copper: #b96637;
+	--accent: #193450;
+	--accent-ink: #193450;
+	--lane: #e0cfb5;
+	--grad: linear-gradient(120deg, #3b2a1e 0%, #3b2a1e 100%);
+	--grad-soft: linear-gradient(120deg, #e9dfcf 0%, #e9dfcf 100%);
+	--dark: #3b2a1e;
+	--dark-2: #2a1e15;
+	--on-dark: #fff8ef;
+	--on-dark-muted: #ead9c4;
+	--shadow: 0 26px 50px -30px rgb(42 30 21 / 0.45);
+}
+
+/* Kreide: white and graphite, copper accents – the most neutral variant. */
+[data-farbe='kreide'] {
+	--bg: #ffffff;
+	--surface: #f4f3f1;
+	--surface-2: #eceae6;
+	--card: #ffffff;
+	--fg: #1d2024;
+	--heading: #24272b;
+	--muted: #53585f;
+	--border: #dedbd6;
+	--primary: #a85a2f;
+	--primary-hover: #8f4a22;
+	--primary-ink: #9a4f25;
+	--copper: #b96637;
+	--accent: #24272b;
+	--accent-ink: #24272b;
+	--lane: #e6e2dc;
+	--grad: linear-gradient(120deg, #24272b 0%, #24272b 100%);
+	--grad-soft: linear-gradient(120deg, #f4f3f1 0%, #f4f3f1 100%);
+	--dark: #24272b;
+	--dark-2: #17191c;
+	--on-dark: #ffffff;
+	--on-dark-muted: #e6e2dc;
+	--shadow: 0 26px 50px -30px rgb(20 20 20 / 0.4);
+}
+
+/* Dark mode follows the system. Keep --bg in sync with themeColor in ../lib/farbschema.ts. */
 @media (prefers-color-scheme: dark) {
 	:root {
 		color-scheme: dark;
+	}
+
+	:root,
+	[data-farbe='trainingsplatz'] {
 		--bg: #0f1f33;
 		--surface: #132840;
 		--surface-2: #22446a;
@@ -64,7 +180,7 @@
 		--muted: #c8d9e8;
 		--border: #2b4664;
 		--primary: #a85a2f;
-		--primary-hover: #b96637;
+		--primary-hover: #9a4f25;
 		--primary-ink: #e09a6c;
 		--copper: #c8743f;
 		--accent: #c8d9e8;
@@ -76,6 +192,106 @@
 		--dark-2: #08111e;
 		--on-dark: #f6f2ea;
 		--on-dark-muted: #c8d9e8;
+		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
+	}
+
+	[data-farbe='bergnebel'] {
+		--bg: #0c1826;
+		--surface: #112236;
+		--surface-2: #1f3a5a;
+		--card: #162b44;
+		--fg: #eef3f8;
+		--heading: #eef3f8;
+		--muted: #c3d3e3;
+		--border: #29425f;
+		--primary: #3b6fa3;
+		--primary-hover: #2f5d8a;
+		--primary-ink: #e3a274;
+		--copper: #c8743f;
+		--accent: #c8d9e8;
+		--accent-ink: #e4edf5;
+		--lane: #1f3a5a;
+		--grad: linear-gradient(120deg, #08121e 0%, #08121e 100%);
+		--grad-soft: linear-gradient(120deg, #112236 0%, #112236 100%);
+		--dark: #08121e;
+		--dark-2: #060d17;
+		--on-dark: #eef3f8;
+		--on-dark-muted: #c3d3e3;
+		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
+	}
+
+	[data-farbe='waldweg'] {
+		--bg: #0f1a15;
+		--surface: #14231c;
+		--surface-2: #23392e;
+		--card: #1a2d24;
+		--fg: #f1f0e8;
+		--heading: #f1f0e8;
+		--muted: #c9d6c8;
+		--border: #2c4337;
+		--primary: #a85a2f;
+		--primary-hover: #8f4a22;
+		--primary-ink: #e09a6c;
+		--copper: #c8743f;
+		--accent: #cddbc8;
+		--accent-ink: #dfe8dc;
+		--lane: #23392e;
+		--grad: linear-gradient(120deg, #0a130f 0%, #0a130f 100%);
+		--grad-soft: linear-gradient(120deg, #14231c 0%, #14231c 100%);
+		--dark: #0a130f;
+		--dark-2: #070e0b;
+		--on-dark: #f1f0e8;
+		--on-dark-muted: #c9d6c8;
+		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
+	}
+
+	[data-farbe='erde'] {
+		--bg: #1a1410;
+		--surface: #221a14;
+		--surface-2: #3a2e24;
+		--card: #2a2119;
+		--fg: #f3ede3;
+		--heading: #f3ede3;
+		--muted: #d6c7b3;
+		--border: #3d3026;
+		--primary: #3b6fa3;
+		--primary-hover: #2f5d8a;
+		--primary-ink: #e09a6c;
+		--copper: #c8743f;
+		--accent: #c8d9e8;
+		--accent-ink: #e4edf5;
+		--lane: #33281f;
+		--grad: linear-gradient(120deg, #110d0a 0%, #110d0a 100%);
+		--grad-soft: linear-gradient(120deg, #221a14 0%, #221a14 100%);
+		--dark: #110d0a;
+		--dark-2: #0b0806;
+		--on-dark: #f3ede3;
+		--on-dark-muted: #d6c7b3;
+		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
+	}
+
+	[data-farbe='kreide'] {
+		--bg: #141517;
+		--surface: #1b1d20;
+		--surface-2: #2b2e33;
+		--card: #212327;
+		--fg: #f2f1ee;
+		--heading: #f2f1ee;
+		--muted: #c4c2bd;
+		--border: #34373c;
+		--primary: #a85a2f;
+		--primary-hover: #8f4a22;
+		--primary-ink: #e09a6c;
+		--copper: #c8743f;
+		--accent: #e6e2dc;
+		--accent-ink: #f2f1ee;
+		--lane: #2b2e33;
+		--grad: linear-gradient(120deg, #0c0d0e 0%, #0c0d0e 100%);
+		--grad-soft: linear-gradient(120deg, #1b1d20 0%, #1b1d20 100%);
+		--dark: #0c0d0e;
+		--dark-2: #08090a;
+		--on-dark: #f2f1ee;
+		--on-dark-muted: #c4c2bd;
 		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
 	}
 }

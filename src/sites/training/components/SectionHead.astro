@@ -15,7 +15,7 @@ const feld = (name: 'kicker' | 'ueberschrift' | 'text') => tinaField(data as nev
 ---
 {(data.kicker || data.ueberschrift || data.text) && (
 	<div class={className}>
-		{data.kicker && <p class:list={['kicker', dunkel && 'text-lane']} data-tina-field={feld('kicker')}>{data.kicker}</p>}
+		{data.kicker && <p class:list={['kicker', dunkel && 'text-lane dark:text-on-dark-muted']} data-tina-field={feld('kicker')}>{data.kicker}</p>}
 		{data.ueberschrift && (
 			<Tag class:list={['display mt-2 text-[2.6rem] sm:text-6xl', dunkel && 'text-on-dark']} data-tina-field={feld('ueberschrift')}>{data.ueberschrift}</Tag>
 		)}

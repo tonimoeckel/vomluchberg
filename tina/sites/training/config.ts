@@ -1,6 +1,7 @@
 import type { TinaField } from 'tinacms';
 import { navFeld, websiteFeld } from '../../collections/fields';
 import { einstellungenCollection } from '../collections';
+import { farbschemaOptions } from '../../../src/sites/training/lib/farbschema';
 
 const textarea = { component: 'textarea' } as const;
 
@@ -61,9 +62,17 @@ const querverweis: TinaField = {
   ],
 };
 
+/** Colour scheme of the whole site (tokens in src/sites/training/styles/global.css). */
+const farbschemaFeld: TinaField = {
+  type: 'string', name: 'farbschema', label: 'Farbschema',
+  description: 'Farben der ganzen Website (hell und dunkel). Die Schrift und das Layout bleiben gleich.',
+  options: farbschemaOptions,
+};
+
 /** Settings of the training site (docs/plan/02-training.md §4.3). */
 export const TrainingConfigCollection = einstellungenCollection('training', [
   website,
+  farbschemaFeld,
   kontakt,
   social,
   anfrage,
