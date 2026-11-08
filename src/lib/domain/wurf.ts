@@ -22,8 +22,14 @@ export const sortiereWuerfe = <T extends { status?: string | null; buchstabe?: s
 /** Filename of a litter, e.g. "C" → "c-wurf". */
 export const wurfSlug = (buchstabe?: string | null) => `${(buchstabe || 'x').toLowerCase()}-wurf`;
 
-export const wuerfeListeUrl = '/wuerfe';
-export const wurfUrl = (slug: string) => `${wuerfeListeUrl}/${slug}`;
+/** URLs of a site's litter list (`listeUrl`) and its detail pages below it. */
+export const wurfUrlFuer = (listeUrl: string) => ({
+  wuerfeListeUrl: listeUrl,
+  wurfUrl: (slug: string) => `${listeUrl}/${slug}`,
+});
+
+/** Rottweiler site (luchberg): /wuerfe. */
+export const { wuerfeListeUrl, wurfUrl } = wurfUrlFuer('/wuerfe');
 
 export const wurfSeo = (wurf: { titel: string; kurztext?: string | null; bild?: string | null }): Seo => ({
   title: `${wurf.titel} vom Luchberg`,
