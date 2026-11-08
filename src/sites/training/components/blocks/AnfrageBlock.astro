@@ -1,0 +1,21 @@
+---
+// Inquiry section: intro and contact details next to the form. Preselects ?angebot=<slug>.
+import SectionHead from '../SectionHead.astro';
+import Kontaktliste from '../Kontaktliste.astro';
+import AnfrageFormular from '../AnfrageFormular.astro';
+import { getConfig, listAngeboteMitSlug, type BlockOf } from '../../lib/data';
+
+interface Props { data: BlockOf<'Anfrage'> }
+const { data } = Astro.props;
+const config = (await getConfig()).data?.trainingConfig;
+const angebote = await listAngeboteMitSlug();
+---
+<section class="py-14 sm:py-20" id="anfrage">
+	<div class="container-page grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
+		<div>
+			<SectionHead data={data} />
+			{data.kontaktZeigen && <Kontaktliste config={config} />}
+		</div>
+		<AnfrageFormular angebote={angebote} config={config} />
+	</div>
+</section>

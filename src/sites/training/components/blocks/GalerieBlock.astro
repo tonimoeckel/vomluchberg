@@ -1,0 +1,38 @@
+---
+// Photo strip with optional titles; opens in the shared lightbox (<a data-lightbox>).
+import { tinaField } from '@tinacms/astro/tina-field';
+import SectionHead from '../SectionHead.astro';
+import { hintergrundKlasse } from './hintergrund';
+import type { BlockOf } from '../../lib/data';
+
+interface Props { data: BlockOf<'Galerie'> }
+const { data } = Astro.props;
+const dunkel = data.hintergrund === 'dunkel';
+const bilder = (data.bilder ?? []).filter((b) => b?.bild);
+const stichworte = (data.stichworte ?? []).filter(Boolean);
+const gruppe = `galerie-${(data.ueberschrift ?? 'bilder').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+---
+<section class:list={['py-14 sm:py-20', hintergrundKlasse(data.hintergrund)]}>
+	<div class="container-page">
+		<SectionHead data={data} dunkel={dunkel} />
+		{stichworte.length > 0 && (
+			<ul class="mt-6 flex flex-wrap gap-2" data-tina-field={tinaField(data, 'stichworte')}>
+				{stichworte.map((s) => <li class:list={[dunkel ? 'rounded border border-lane/60 px-2.5 py-1 text-sm text-on-dark-muted' : 'chip']}>{s}</li>)}
+			</ul>
+		)}
+		{bilder.length > 0 && (
+			<ul class="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+				{bilder.map((b, i) => (
+					<li class:list={['relative overflow-hidden rounded-card', i === 0 && bilder.length % 2 === 1 && 'col-span-2 sm:col-span-1']} data-tina-field={tinaField(b!)}>
+						<a href={b!.bild!} data-lightbox={gruppe} data-caption={b!.beschreibung ?? ''} class="group block">
+							<img src={b!.bild!} alt={b!.beschreibung ?? ''} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover group-hover:opacity-90" />
+							{b!.titel && (
+								<span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[rgb(12_26_42/0.85)] to-transparent px-4 pt-10 pb-3 font-display font-semibold uppercase tracking-[0.1em] text-white">{b!.titel}</span>
+							)}
+						</a>
+					</li>
+				))}
+			</ul>
+		)}
+	</div>
+</section>

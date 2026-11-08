@@ -1,0 +1,18 @@
+---
+// Karo's logo: the dark version on light backgrounds, the light version in dark mode (or always, with `hell`).
+import { tinaField } from '@tinacms/astro/tina-field';
+import type { CmsConfig } from '../lib/data';
+
+interface Props { website?: CmsConfig['website'] | null; hell?: boolean; class?: string }
+const { website: w, hell = false, class: className = 'h-12 w-auto' } = Astro.props;
+const alt = 'Karolin Riesing – Alltag kann Sport';
+const src = hell ? (w?.logoDunkel ?? w?.logo) : w?.logo;
+---
+{src ? (
+	<picture data-tina-field={w ? tinaField(w, hell ? 'logoDunkel' : 'logo') : undefined}>
+		{!hell && w?.logoDunkel && <source srcset={w.logoDunkel} media="(prefers-color-scheme: dark)" />}
+		<img src={src} alt={alt} width="332" height="200" class={className} />
+	</picture>
+) : (
+	<span class="display text-2xl" data-tina-field={w ? tinaField(w, 'name') : undefined}>{w?.name}</span>
+)}

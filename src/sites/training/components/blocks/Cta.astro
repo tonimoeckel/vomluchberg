@@ -1,5 +1,5 @@
 ---
-// Skeleton call to action (real design: slice 2).
+// Call to action on a navy band with lane lines (shared cta template: titel, text, buttons).
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { BlockOf } from '../../lib/data';
 interface Props { data: BlockOf<'Cta'> }
@@ -7,13 +7,21 @@ const { data } = Astro.props;
 const buttons = (data.buttons ?? []).filter((b) => b !== null);
 ---
 <section class="py-12 sm:py-16">
-	<div class="container-page rounded-card bg-dark px-6 py-12 text-center text-on-dark">
-		{data.titel && <h2 class="text-3xl font-bold" data-tina-field={tinaField(data, 'titel')}>{data.titel}</h2>}
-		{data.text && <p class="mx-auto mt-4 max-w-2xl text-on-dark/80" data-tina-field={tinaField(data, 'text')}>{data.text}</p>}
-		{buttons.length > 0 && (
-			<div class="mt-8 flex flex-wrap justify-center gap-3">
-				{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class="btn-primary">{b.label}</a>)}
+	<div class="container-page">
+		<div class="relative overflow-hidden rounded-card bg-dark px-6 py-12 text-on-dark sm:px-12 sm:py-14">
+			<div class="lanes absolute -right-[10%] -top-1/4 h-[150%] w-1/2 opacity-15" aria-hidden="true"></div>
+			<div class="relative max-w-2xl">
+				{data.titel && <h2 class="display text-[2.6rem] text-on-dark sm:text-6xl" data-tina-field={tinaField(data, 'titel')}>{data.titel}</h2>}
+				{data.text && <p class="mt-4 text-lg text-on-dark-muted" data-tina-field={tinaField(data, 'text')}>{data.text}</p>}
+				{buttons.length > 0 && (
+					<div class="mt-8 flex flex-wrap gap-3">
+						{buttons.map((b) => (
+							<a data-tina-field={tinaField(b)} href={b.link} rel={b.link?.startsWith('http') ? 'noopener' : undefined}
+								class={b.stil === 'sekundaer' ? 'btn-hell' : 'btn-primary'}>{b.label}</a>
+						))}
+					</div>
+				)}
 			</div>
-		)}
+		</div>
 	</div>
 </section>
