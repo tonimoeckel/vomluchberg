@@ -19,7 +19,7 @@ npm run dev          # Tina local mode + Astro → http://localhost:4321, CMS at
 npm run dev:dackel   # same for another site (dev:training); SITE_ID picks the site
 npm run build:local  # offline build, no TinaCloud creds needed – use this to verify changes
 npm run build:local:all  # luchberg, dackel, training one after another (never run two builds in parallel)
-npm run build        # production build against TinaCloud (needs PUBLIC_TINA_CLIENT_ID + TINA_TOKEN)
+npm run build        # production build against TinaCloud (needs PUBLIC_TINA_CLIENT_ID + TINA_TOKEN); Workers Builds of a branch other than main build locally instead (scripts/build.mjs)
 npx astro check      # must stay at 0 errors / 0 warnings
 npm test             # vitest unit tests for the pure modules in src/lib
 ```
@@ -81,6 +81,11 @@ Plan and reasoning: `docs/plan/00-multisite.md` (rulings R1–R7 in `docs/plan/R
 - **Workers:** `vomluchberg`, `vomluchberg-dackel`, `vomluchberg-training`, all with build command `npm run build`, deploy command `npx wrangler deploy` and Worker Previews on. Non-luchberg sites pass `configPath: src/sites/<id>/wrangler.jsonc` to the adapter; the build writes `dist/server/wrangler.json` and `.wrangler/deploy/config.json`, which both `wrangler deploy` and `wrangler preview` follow.
 - **noindex:** `SITE_NOINDEX=true` makes a build disallow robots and add meta `noindex` (new sites on `*.workers.dev` before launch). Builds of a branch other than `main` (`WORKERS_CI_BRANCH`, i.e. Worker Previews) are noindex automatically; `SITE_NOINDEX=false` overrides that.
 - Uploads are not pruned per site: every worker ships all of `public/uploads`. `src/sites/content.test.ts` fails on references to missing images and warns when a new site uses images outside its own folder.
+
+## Pull requests
+
+- After opening a PR (or pushing to one), **subscribe to its activity and watch it without being asked**: failing checks, review comments, merge conflicts. If the cause is in the repo, reproduce it, fix it and push (with the usual checks). If it is not (e.g. a Cloudflare dashboard setting), say so once on the PR and tell Toni what is needed. Keep watching until the PR is merged or closed.
+- Base new PRs on `main`. Stacked PRs (base = another PR's branch) get lost when the lower PR is merged first, as happened with #4.
 
 ## Gotchas
 
