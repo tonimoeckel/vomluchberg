@@ -10,8 +10,11 @@ kommen in den passenden Abschnitt.
 
 ## 1. Wichtig vor dem Start (Recht und Adressen)
 
-- [ ] **Domains:** Passen `rauhaardackel-vom-luchberg.de` und `alltag-kann-sport.de`? Beide waren am 05.11.2026 noch frei. *(Annahme: ja, genutzt wird jeweils die Adresse mit www. Bis dahin laufen die Seiten unter einer Testadresse.)*
-- [ ] **Domains bestellen:** Bestellst und bezahlst du beide Domains selbst, im selben Account wie `vomluchberg.de`? *(Annahme: ja, bei INWX, Toni bekommt Zugang.)*
+- [x] **Domains:** Dackel: `dackelvomluchberg.de`, bestellt am 08.11.2026, genutzt wird `www.dackelvomluchberg.de`.
+  - Training (08.11.2026): bestellt sind `alltag-kann-sport.de` (Hauptadresse) sowie `alltagkannsport.de` und `hundetraining-osterzgebirge.de` als Weiterleitung, je 5,49 € im Jahr bei INWX.
+  - [ ] Noch offen: Welche Schreibweise steht auf Flyern und Visitenkarten, mit oder ohne Bindestriche? Funktionieren tun beide. *(Annahme: mit Bindestrichen, `www.alltag-kann-sport.de`, weil sie besser lesbar ist.)*
+  - [ ] Möchtest du zusätzlich `karolin-riesing.de` als Weiterleitung (sichert deinen Namen)? *(Annahme: nein.)*
+- [x] **Domains bestellen:** Bei INWX bestellt am 08.11.2026, Inhaberin Karo.
 - [ ] **Verein (Dackel):** Züchtest du die Dackel in einem Verein (z. B. Deutscher Teckelklub / VDH) mit Papieren, oder als Liebhaberzucht? Das ändert, wie wir die Zucht auf der Seite beschreiben dürfen. *(Annahme: offen. Bis zur Antwort schreiben wir nichts über Verein oder Papiere.)*
 - [ ] **Erlaubnis nach § 11 Tierschutzgesetz:** Hast du sie für das Hundetraining (und ggf. die Zucht)? Welches Veterinäramt hat sie erteilt? Das gehört ins Impressum. Und dürfen diese Angaben öffentlich stehen: „Ausbildung gleichwertig zur Trainer-C-Lizenz“ und „Genehmigung nach § 11 TSchG“? *(Annahme: ja, für das Training. Die Behörde reichst du nach.)*
 - [ ] **Umsatzsteuer:** Bist du Kleinunternehmerin, oder hast du eine USt-IdNr.? *(Annahme: Kleinunternehmerin, keine USt-IdNr. im Impressum.)*
@@ -61,7 +64,7 @@ kommen in den passenden Abschnitt.
 - [ ] **Ein Login, drei Editoren:** Du pflegst alle drei Websites mit demselben Login. Jede Website hat ihren eigenen Editor unter ihrer Adresse + `/admin` (z. B. `vomluchberg.de/admin`). Dort siehst du beim Tippen die Vorschau genau dieser Website. Die Bereiche der anderen beiden Websites kannst du dort auch bearbeiten und speichern, nur ohne Live-Vorschau. Kommst du damit zurecht? *(Annahme: ja. Wir schreiben dir die drei Editor-Adressen auf einen Zettel.)*
 - [ ] **Neue Namen im Editor:** Die Rottweiler-Bereiche heißen im Editor dann „Rottweiler · Seiten“, „Rottweiler · Würfe“ usw., damit du sie von „Dackel · …“ und „Training · …“ unterscheiden kannst. Okay? *(Annahme: ja. Die neuen Namen kommen schon mit dem nächsten Update. Dann siehst du im Editor auch schon „Dackel · …“ und „Training · …“ mit Platzhaltertexten. Dort bitte noch nichts ändern, bis Toni Bescheid gibt.)*
 - [ ] **Bilder-Ordner:** Im Editor gibt es einen gemeinsamen Bilder-Bereich für alle drei Websites. Ist es okay, wenn du Dackel-Bilder in den Ordner „dackel“ und Trainings-Bilder in den Ordner „training“ hochlädst? Die Rottweiler-Bilder bleiben, wo sie sind. *(Annahme: ja. Falls ein Bild mal im falschen Ordner landet, geht trotzdem nichts kaputt.)*
-- [ ] **Testadressen:** Bis die neuen Domains da sind, laufen die Dackel- und die Trainingsseite unter `dackel.vomluchberg.de` und `training.vomluchberg.de`. Google findet diese Testadressen nicht. Ist es okay, wenn du sie dort schon befüllst und anschaust? *(Annahme: ja.)*
+- [ ] **Testadressen:** Bis zum Start laufen die Dackel- und die Trainingsseite unter `dackel.vomluchberg.de` und `training.vomluchberg.de`. Google findet diese Testadressen nicht. Ist es okay, wenn du sie dort schon befüllst und anschaust? *(Annahme: ja.)*
 - [ ] **Reihenfolge:** Darf die Dackel-Seite online gehen, sobald sie fertig ist, auch wenn die Trainingsseite noch nicht so weit ist? *(Annahme: ja.)*
 - [ ] **Querverweise:** Soll die Trainingsseite auch auf die Zuchtseiten verweisen (und umgekehrt), oder nur Rottweiler ↔ Dackel? *(Annahme: kleiner Hinweis im Footer auf allen drei Seiten.)*
 - [ ] **E-Mail mit eigener Domain:** Möchtest du Adressen wie `hallo@alltag-kann-sport.de`? *(Annahme: nein, die Gmail-Adressen bleiben. Eine kostenlose Weiterleitung an Gmail ist später möglich.)*
