@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, sessionDrivers } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 import tina from '@tinacms/astro/integration';
@@ -66,6 +66,11 @@ export default defineConfig({
 	site: getSiteUrl(),
 	output: 'static',
 	adapter: await getAdapter(),
+	// The sites never use Astro.session. Without an explicit driver the Cloudflare adapter adds a
+	// `SESSION` KV binding without an id; `wrangler deploy` auto-provisions it, but Worker Previews
+	// reject it ("binding SESSION of type kv_namespace must have a namespace_id specified"), which
+	// failed every branch build. An in-memory driver needs no binding on any of the three workers.
+	session: { driver: sessionDrivers.memory() },
 	redirects: site.redirects,
 	integrations: [multisite(SITE_ID), sitemap(), icon(), tina()],
 	build: { inlineStylesheets: 'always' },
