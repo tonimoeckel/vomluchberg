@@ -39,12 +39,14 @@ einmal prüfen.
 | `hundetraining-karolin-riesing.de` | ja | eindeutig | sehr lang (32 Zeichen), drei Bindestriche |
 | `hundetraining-glashuette.de` | ja | Ort + Leistung, spricht lokale Suchen an | „ue“ statt „ü“ (Tippfehler), bindet an Glashütte; Kunden aus Dresden fühlen sich weniger gemeint. Der Ort in der Domain bringt bei Google heute kaum noch etwas. |
 | `hundetraining-glashütte.de` | ja | wie oben, mit echtem Umlaut | Umlaut-Domains machen in E-Mails, auf manchen Handys und in Formularen Ärger. Nicht empfohlen. |
-| `hundetraining-osterzgebirge.de` | ja | ganze Region | lang, klingt nach Verzeichnis/Portal, nicht nach dir |
+| `hundetraining-osterzgebirge.de` | ja | ganze Region | lang, klingt nach Verzeichnis/Portal, nicht nach dir; Verwechslung mit dem Hundesportverein möglich (Karo, 08.11.2026) |
 | `hundeschule-osterzgebirge.de`, `hundeschule-glashuette.de` | ja | wie oben | „Hundeschule“ passt nicht ganz (Training nur auf Anfrage, kein fester Schulbetrieb); klingt nach Portal |
 | `hundetraining-luchau.de` | ja | sehr lokal | „Luchau“ kennt außerhalb kaum jemand |
 | `hundetraining-vom-luchberg.de`, `training-vom-luchberg.de`, `luchberg-training.de`, `hundetraining-luchberg.de` | ja | Familienname mit der Zucht | Verwechslung mit der Rottweiler-Zucht; das Training ist für alle Rassen |
 | `alltag-und-sport.de`, `sport-und-alltag-mit-hund.de` | ja | nimmt den Hero-Satz „Sport & Alltag mit Hund“ auf | weicht vom Markennamen ab, Verwechslungsgefahr |
-| `alltag-kann-sport-hundetraining.de` | ja | Marke + Leistung | zu lang |
+| `alltag-kann-sport-hundetraining.de`, `hundetraining-alltag-kann-sport.de` | ja | Marke + Leistung | zu lang |
+| `hund-kann-sport.de`, `hundkannsport.de` | ja | kurz, nah an der Marke, mit „Hund“ | weicht vom Markennamen ab; „Hund“ in der Domain bringt bei Google kaum etwas |
+| `hund-alltag-sport.de` | ja | mit „Hund“ | wie oben, etwas holprig |
 | `hundetraining-erzgebirge.de` | **nein** (vergeben) | – | – |
 | `alltagkannsport.com`, `karolinriesing.com` | ja | – | Für eine Kundschaft in Sachsen unnötig; `.de` reicht. |
 | `alltagkannsport.dog`, `alltag-kann-sport.dog`, `karolinriesing.dog` | ja | witzig | Kaum bekannt, wird oft für einen Tippfehler gehalten, teurer als `.de`. Nicht nötig. |
@@ -63,6 +65,10 @@ einmal prüfen.
   (Tiere) wäre ein Grund, noch einmal zu sprechen.
 
 ### Empfehlung
+
+> **Stand 08.11.2026:** Karo gefällt `alltagkannsport.de`. Bestellt werden beide Schreibweisen
+> (`alltag-kann-sport.de` und `alltagkannsport.de`, je ca. 6 € im Jahr bei INWX). Offen ist nur, welche
+> davon die Hauptadresse wird (Annahme: mit Bindestrichen, siehe unten).
 
 **Hauptadresse: `www.alltag-kann-sport.de`.** Dazu **`alltagkannsport.de`** als Weiterleitung.
 

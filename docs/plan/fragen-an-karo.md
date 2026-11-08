@@ -10,12 +10,10 @@ kommen in den passenden Abschnitt.
 
 ## 1. Wichtig vor dem Start (Recht und Adressen)
 
-- [ ] **Domains:** Passt `rauhaardackel-vom-luchberg.de` für die Dackel? *(Annahme: ja, am 05.11.2026 frei.)* Für das Training haben wir Vorschläge mit Vor- und Nachteilen zusammengestellt ([`domains-neue-seiten.md`](../domains-neue-seiten.md), „Domain für die Trainingsseite – Vorschläge“). Bitte eine auswählen:
-  - **`alltag-kann-sport.de`** (Empfehlung, euer Markenname), dazu `alltagkannsport.de` als Weiterleitung, damit es auch ohne Bindestriche klappt
-  - `karolin-riesing.de`, falls du den Namen „Alltag kann Sport“ nicht behalten möchtest
-  - `hundetraining-riesing.de`, falls Name und Leistung in der Adresse stehen sollen
-
-  Möchtest du zusätzlich `karolin-riesing.de` als Weiterleitung auf die Trainingsseite (sichert deinen Namen, kostet ein paar Euro im Jahr)? Alle waren am 08.11.2026 frei. *(Annahme: `alltag-kann-sport.de` + `alltagkannsport.de`, ohne `karolin-riesing.de`. Genutzt wird jeweils die Adresse mit www. Bis dahin laufen die Seiten unter einer Testadresse.)*
+- [ ] **Domains:** Passt `rauhaardackel-vom-luchberg.de` für die Dackel? *(Annahme: ja, am 05.11.2026 frei. Karo schickt ihre Antwort per Mail.)*
+  - Training, Antwort von Karo (08.11.2026): **`alltagkannsport.de`** gefällt ihr; `hundetraining-osterzgebirge.de` eher nicht (Verwechslung mit dem Hundesportverein). Es werden beide Schreibweisen bestellt, `alltag-kann-sport.de` und `alltagkannsport.de` (je ca. 6 € im Jahr bei INWX), eine leitet auf die andere weiter.
+  - [ ] Noch offen: Welche Schreibweise steht auf Flyern und Visitenkarten, mit oder ohne Bindestriche? Funktionieren tun beide. *(Annahme: mit Bindestrichen, `www.alltag-kann-sport.de`, weil sie besser lesbar ist.)*
+  - [ ] Möchtest du zusätzlich `karolin-riesing.de` als Weiterleitung (sichert deinen Namen)? *(Annahme: nein.)*
 - [ ] **Domains bestellen:** Bestellst und bezahlst du beide Domains selbst, im selben Account wie `vomluchberg.de`? *(Annahme: ja, bei INWX, Toni bekommt Zugang.)*
 - [ ] **Verein (Dackel):** Züchtest du die Dackel in einem Verein (z. B. Deutscher Teckelklub / VDH) mit Papieren, oder als Liebhaberzucht? Das ändert, wie wir die Zucht auf der Seite beschreiben dürfen. *(Annahme: offen. Bis zur Antwort schreiben wir nichts über Verein oder Papiere.)*
 - [ ] **Erlaubnis nach § 11 Tierschutzgesetz:** Hast du sie für das Hundetraining (und ggf. die Zucht)? Welches Veterinäramt hat sie erteilt? Das gehört ins Impressum. Und dürfen diese Angaben öffentlich stehen: „Ausbildung gleichwertig zur Trainer-C-Lizenz“ und „Genehmigung nach § 11 TSchG“? *(Annahme: ja, für das Training. Die Behörde reichst du nach.)*
