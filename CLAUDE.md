@@ -2,7 +2,7 @@
 
 Websites for **Karo (Karolin Riesing)**, owner of the ADRK Rottweiler kennel "vom Luchberg" in Glashütte OT Luchau (Saxony). One repo builds three sites (see *Multi-site* below): `luchberg` (vomluchberg.de, live), `dackel` (Rauhaardackel) and `training` (Hundetraining "Alltag kann Sport"); the last two are skeletons until slices 1 and 2 (`docs/plan/`). Toni is the technical implementer; Karo is non-technical and edits simple content herself via TinaCMS. Layout/design/structural changes are Toni's job.
 
-- Talk to Toni in **German**. Code, comments, commits and docs are in English, except `docs/domain-umzug.md` and `docs/plan/fragen-an-karo.md`, which Karo also reads.
+- Talk to Toni in **German**. Code, comments, commits and docs are in English, except `docs/domain-umzug.md`, `docs/plan/fragen-an-karo.md` and `docs/karo/besser-gefunden-werden.md`, which Karo also reads.
 - **All site content is German**, written in an informal "ihr/euch" tone.
 
 ## Stack
