@@ -1,0 +1,18 @@
+---
+// The margin trail of the sub pages (lib/faehrte.ts): a dog walks down the right-hand page margin as
+// the visitor scrolls and sits down at the end of the page. Each print fades in on its own CSS view
+// timeline when it reaches the lower part of the screen and settles to a faint mark once it is passed
+// (global.css, .faehrte). Without scroll-driven animations or with reduced motion: the faint trail,
+// static. Only in the margin, never over text; no script.
+import Pfotenspur from './Pfotenspur.astro';
+import { faehrte, type FaehrteArt } from '../lib/faehrte';
+import { PFOTE_MASKE } from '../lib/pfotenspur';
+
+interface Props { art: FaehrteArt }
+const { art } = Astro.props;
+const f = faehrte(art);
+---
+<div class:list={['faehrte pfoten', `faehrte-${art}`]} style={`--pfote-maske:${PFOTE_MASKE};--ende:${f.endeHoehe}px`} aria-hidden="true">
+	<div class="faehrte-weg"><Pfotenspur pfoten={f.weg} /></div>
+	<div class="faehrte-ende"><Pfotenspur pfoten={f.ende} /></div>
+</div>

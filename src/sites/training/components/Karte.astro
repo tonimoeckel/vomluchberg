@@ -7,21 +7,26 @@
 // (lib/pfotenspur.ts, CSS opacity keyframes, paused off screen). Each route is its own group, so the CSS
 // can pick the routes that the layout leaves visible (global.css, .karte-pfoten-route). With reduced
 // motion: the static map. The track itself is always drawn.
+// "spur" (the footer map): the same prints along the whole forest track, static and faint, as if the dog had
+// walked it earlier. Nothing moves.
 // "orte" (the contact map only): labelled pins for the kinds of training places (lib/orte.ts), symbolic
 // positions; they drop in one after another as the map scrolls into view (CSS view timeline).
 import { karte, pfotenwege } from '../lib/karte';
-import { pfotenspur } from '../lib/pfotenspur';
+import { PFOTE, pfotenspur } from '../lib/pfotenspur';
 import { ortPunkte } from '../lib/orte';
 import type { Ort } from '../lib/orte';
 
 import type { KarteOptionen } from '../lib/karte';
 
-interface Props { beschriftet?: boolean; gipfel?: boolean; bewegt?: boolean; orte?: Ort[]; optionen?: KarteOptionen; class?: string }
-const { beschriftet = false, gipfel = true, bewegt = false, orte, optionen, class: klasse } = Astro.props;
+interface Props { beschriftet?: boolean; gipfel?: boolean; bewegt?: boolean; spur?: boolean; orte?: Ort[]; optionen?: KarteOptionen; class?: string }
+const { beschriftet = false, gipfel = true, bewegt = false, spur = false, orte, optionen, class: klasse } = Astro.props;
 const k = karte(optionen);
 // One pass per route; the route's start in the cycle comes from the CSS (--route-start), the print's
 // offset within its pass from lib/pfotenspur.ts.
 const routen = bewegt ? pfotenwege(k).map((route, i) => pfotenspur(route, { seed: 5 + i, hoechstens: i === 2 ? 7 : 12 })) : [];
+// The footer's static trail; its own symbol id, since the start page has the hero map too.
+const spurPfoten = spur && !bewegt ? pfotenspur(k.wegLinie, { schritt: 44, versatz: 7, hoechstens: 32, seed: 3 }) : [];
+const pfoteId = bewegt ? 'karte-pfote' : 'karte-pfote-spur';
 const pins = orte?.length ? ortPunkte(k, orte) : [];
 ---
 <svg class:list={['karte', bewegt && 'karte-bewegt', pins.length > 0 && 'karte-mit-orten', klasse]} viewBox={`0 0 ${k.breite} ${k.hoehe}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
@@ -29,11 +34,14 @@ const pins = orte?.length ? ortPunkte(k, orte) : [];
 	{k.linien.map((l) => <path d={l.d} class:list={['karte-linie', l.stark && 'karte-linie-stark']} />)}
 	<path d={k.bach} class="karte-fluss" />
 	<path d={k.weg} class="karte-weg" />
+	{(bewegt || spurPfoten.length > 0) && <defs><path id={pfoteId} d={PFOTE} /></defs>}
+	{spurPfoten.length > 0 && (
+		<g class="karte-spur">
+			{spurPfoten.map((p) => <use href={`#${pfoteId}`} transform={`translate(${p.x} ${p.y}) rotate(${p.winkel})`} />)}
+		</g>
+	)}
 	{bewegt && (
 		<>
-			<defs>
-				<path id="karte-pfote" d="M-7.1 0a4.4 5.1 0 1 0 8.7 0a4.4 5.1 0 1 0-8.7 0M2 -5.8a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0M4.5 -2.1a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0M4.5 2.1a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0M2 5.8a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0" />
-			</defs>
 			<g class="karte-pfoten">
 				{routen.map((spur, i) => (
 					<g class={`karte-pfoten-route karte-pfoten-route-${i + 1}`}>
