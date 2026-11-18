@@ -1,5 +1,6 @@
 ---
-// Training ground, e-mail (phone only when set) and Instagram, as shown next to the inquiry form.
+// Training ground, e-mail (phone only when set) and Instagram as a ruled list (dl), shown next to the
+// inquiry form. Icons inline, never in a tile.
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from '../../../components/ui/Icon.astro';
 import type { CmsConfig } from '../lib/data';
@@ -8,37 +9,40 @@ interface Props { config?: CmsConfig | null }
 const { config } = Astro.props;
 const k = config?.kontakt;
 const s = config?.social;
-const titel = 'block font-display text-xl font-extrabold uppercase tracking-[0.02em] text-heading';
-const link = 'text-muted underline decoration-copper underline-offset-2 hover:text-primary-ink';
+const zeile = 'grid grid-cols-[1.5rem_minmax(0,1fr)] gap-x-3 border-b border-border py-5';
+const titel = 'font-display text-[1.375rem] font-extrabold uppercase leading-tight text-heading';
+const icon = 'mt-0.5 size-6 text-accent';
 ---
 {k && (
-	<ul class="mt-8 grid gap-5" data-tina-field={config ? tinaField(config, 'kontakt') : undefined}>
-		<li class="flex items-start gap-3.5">
-			<span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name="map-pin" class="size-6" /></span>
-			<span class="text-[0.97rem] text-muted">
-				<b class={titel}>{k.ortName || 'Trainingsort'}</b>
-				{[k.strasse, k.ort].filter(Boolean).join(', ')}
-				{k.ortText && <span class="block">{k.ortText}</span>}
-				{k.mapsLink && <a href={k.mapsLink} rel="noopener" class={link}>In Google Maps öffnen</a>}
-			</span>
-		</li>
+	<dl class="regel mt-10" data-tina-field={config ? tinaField(config, 'kontakt') : undefined}>
+		<div class={zeile}>
+			<Icon name="map-pin" class={icon} aria-hidden="true" />
+			<div>
+				<dt class={titel}>{k.ortName || 'Trainingsort'}</dt>
+				<dd class="mt-1 text-muted">
+					{[k.strasse, k.ort].filter(Boolean).join(', ')}
+					{k.ortText && <span class="mt-1 block max-w-[52ch]">{k.ortText}</span>}
+					{k.mapsLink && <a href={k.mapsLink} rel="noopener" class="textlink mt-1 inline-block">In Google Maps öffnen</a>}
+				</dd>
+			</div>
+		</div>
 		{k.email && (
-			<li class="flex items-start gap-3.5">
-				<span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name="mail" class="size-6" /></span>
-				<span><b class={titel}>E-Mail</b><a href={`mailto:${k.email}`} class:list={[link, 'break-all']}>{k.email}</a></span>
-			</li>
+			<div class={zeile}>
+				<Icon name="mail" class={icon} aria-hidden="true" />
+				<div><dt class={titel}>E-Mail</dt><dd class="mt-1"><a href={`mailto:${k.email}`} class="textlink break-all">{k.email}</a></dd></div>
+			</div>
 		)}
 		{k.telefon && (
-			<li class="flex items-start gap-3.5">
-				<span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name="phone" class="size-6" /></span>
-				<span><b class={titel}>Telefon</b><a href={`tel:${k.telefon.replace(/[^+\d]/g, '')}`} class={link}>{k.telefon}</a></span>
-			</li>
+			<div class={zeile}>
+				<Icon name="phone" class={icon} aria-hidden="true" />
+				<div><dt class={titel}>Telefon</dt><dd class="mt-1"><a href={`tel:${k.telefon.replace(/[^+\d]/g, '')}`} class="textlink">{k.telefon}</a></dd></div>
+			</div>
 		)}
 		{s?.instagram && (
-			<li class="flex items-start gap-3.5" data-tina-field={tinaField(s, 'instagram')}>
-				<span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name="brand-instagram" class="size-6" /></span>
-				<span><b class={titel}>Instagram</b><a href={s.instagram} rel="noopener" class={link}>{s.instagramName || 'Instagram'}</a></span>
-			</li>
+			<div class={zeile} data-tina-field={tinaField(s, 'instagram')}>
+				<Icon name="brand-instagram" class={icon} aria-hidden="true" />
+				<div><dt class={titel}>Instagram</dt><dd class="mt-1"><a href={s.instagram} rel="noopener" class="textlink">{s.instagramName || 'Instagram'}</a></dd></div>
+			</div>
 		)}
-	</ul>
+	</dl>
 )}

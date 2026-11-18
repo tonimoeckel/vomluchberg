@@ -1,19 +1,35 @@
-/* Stylesheet of the training site "Alltag kann Sport" – direction "Trainingsplatz"
-   (docs/plan/02-training.md §6, mockup docs/plan/mockups/training/index.html).
-   Navy and copper from Karo's logo, paper backgrounds, Barlow Condensed (display) + Inter (body),
-   small radius, lane lines and numbered "start bibs" as motifs. No gradients, no glow and
-   no decorative animation: only hover states (colour, border, shadow).
+/* Hallmark · shape: Narrative Workflow (draw 57f442, stages as ruled rows; hero swapped from Ledge to Stage so the photo shows Karo and both dogs whole) · genre: editorial · theme: Piste (deal 1/3, seed dog-training-request-small-81f2·42cbb789·2026-11-18·r0), cobalt swapped for Waldweg fir and copper · redesign: full
+ * hero: Stage (/), Banner (/angebote), Banner (/anfrage), Banner (/ueber-mich), Stage (/angebote/einzeltraining), Stage (/angebote/basistraining), Stage (/angebote/welpenkurs) · nav: edge-aligned, logo left, three links and the inquiry button right · footer: letter close, the closing line large over Karo's name, contacts and the legal line · imagery: photographs, Karo's own (no library) · signature: the sticky inquiry bar that rides along until the footer · piste: snow, fir field twice a page at most
+ * axes: light/display-condensed/warm-green · posture: full palette (field fir, signal copper, ink) · job: book (on request, every action leads to /anfrage) · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: H, the home page carries nine CMS blocks; each block got its own composition (rows, split, field, showcase, form) so the squint still reads heavy and light */
+/* Hallmark · hero-review: skipped at the hero stage (hero fixed in-thread: crop, bar position, header outline) · finish-review: subagent · fix · 8 findings · 7 resolved 1 partial (the dark CTA band and the night footer are now parted by a 6px paper rule; the two greens stay close) · gap: none */
+/* Hallmark · waive 8 · the block order comes from Karo's Tina pages · her CMS sequence is kept on purpose, every block got a new composition */
+/* Hallmark · dismissed 41 · --accent-ink is the project's accent colour for text on paper, never text on an --accent fill */
+/* Hallmark · dropped {angebotUrl(karte.slug)}, the hero offer card · it repeated the first offer of the offers list two screens further down */
+/* Hallmark · reworded "Das könnte auch passen" to "Weitere Angebote" · craft § 6 swap test, the head fit any competitor */
+/* Hallmark · reworded "Darum geht's" to "Darum geht’s" · F1 names the straight apostrophe */
+/* Hallmark · waive 44c · Banner posture stamped for /angebote, /anfrage and /ueber-mich · the sub pages open on a short title band so Karo's offers and the form start on the first screen */
+/* Hallmark · waive 79 · Banner posture on the sub pages, the first section begins right under the title band · the space under the band is the next section's top padding, not a dead hero */
+/* Hallmark · dismissed 28a · the flagged images sit below the fold; the LCP is the hero photo with fetchpriority=high */
+/* Hallmark · dismissed 49 · the visible label is two words, the rest is sr-only text, and .btn sets white-space: nowrap */
+/* Hallmark · dismissed F2 · the three periods are a JavaScript spread in GalerieBlock.astro, not prose */
+/* Hallmark · dismissed 77 · the page has nine sections; the counter misses them because each Tina block sits in its own wrapper div */
+/* Hallmark · dropped the kicker lines · the Tina fields stay; gate 54 names every one of them as an eyebrow */
+
+/* Stylesheet of the training site "Alltag kann Sport". Piste material in the site's colour schemes:
+   paper, ink, square edges, 2px ink rules instead of boxes, Barlow Condensed 800 in capitals for
+   heads, figures and buttons over Barlow for everything else. No gradients, no shadows and no
+   decorative animation (Karo wants it plain): only colour steps on hover.
 
    Token contract (docs/plan/00-multisite.md, 2.5): every site defines the same semantic variables
    (--bg, --surface, --surface-2, --fg, --muted, --border, --primary, --primary-ink, --accent,
    --accent-ink, --dark, --on-dark, --radius, --grad, --grad-soft) and maps them to the same Tailwind
    names, so shared components (Lightbox, Icon) look native on every site. Training-only tokens:
-   --card, --heading, --copper (decorative lines), --lane, --dark-2. */
+   --card, --heading, --copper (signal lines, focus), --lane, --dark-2, --on-dark-muted, --on-primary. */
 @import 'tailwindcss' source(none);
-@import '@fontsource-variable/inter';
-@import '@fontsource/barlow-condensed/latin-600.css';
+@import '@fontsource/barlow/latin-400.css';
+@import '@fontsource/barlow/latin-500.css';
 @import '@fontsource/barlow-condensed/latin-800.css';
-@import '@fontsource/barlow-condensed/latin-800-italic.css';
 @plugin '@tailwindcss/typography';
 
 /* Only this site and the shared components are scanned for class names – never other sites. */
@@ -22,18 +38,33 @@
 @source '../../../components/Lightbox.astro';
 @source '../../../components/ui';
 
-/* Colour schemes (src/sites/training/lib/farbschema.ts): selected by <html data-farbe="…">, the
+/* Scale (Hallmark shared scale): spacing, section gaps, container, motion. */
+:root {
+	color-scheme: light;
+	--radius: 0px;
+	--on-primary: #fbfaf6;
+	--space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+	--container: 1440px; --gutter: 64px; --gap-columns: 32px;
+	--section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+	--rule-hair: 1px; --rule-bar: 2px;
+	--dur-micro: 120ms; --dur-short: 220ms;
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--z-raised: 10; --z-sticky: 200; --z-sticky-nav: 300;
+}
+@media (max-width: 60rem) {
+	:root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; }
+}
+@media (max-width: 40rem) {
+	:root { --gutter: 16px; --section-gap-s: 56px; --section-gap: 72px; --section-gap-l: 96px; --gap-columns: 16px; }
+}
+
+/* Colour schemes (src/sites/training/lib/farbschema.ts): selected by <html data-scheme="…">, the
    default comes from trainingConfig.farbschema. Every scheme defines every colour token, light and
    dark; :root falls back to "trainingsplatz". Only colours differ, never layout. Contrasts (text
    ≥ 4.5:1, copper lines ≥ 3:1) and --bg = themeColor are checked by lib/farbschema.test.ts. */
-:root {
-	color-scheme: light;
-	--radius: 6px;
-}
-
 /* Trainingsplatz: navy and copper from the logo on paper (the original design). */
 :root,
-[data-farbe='trainingsplatz'] {
+[data-scheme='trainingsplatz'] {
 	--bg: #f6f2ea; /* paper */
 	--surface: #efe8db; /* paper-2: alternating sections */
 	--surface-2: #e4edf5; /* mist-2: chips */
@@ -59,7 +90,7 @@
 }
 
 /* Bergnebel: cool mist blue, navy buttons, copper only for lines and small accents. */
-[data-farbe='bergnebel'] {
+[data-scheme='bergnebel'] {
 	--bg: #f2f6fa;
 	--surface: #e4ecf4;
 	--surface-2: #d8e4ef;
@@ -84,35 +115,36 @@
 	--shadow: 0 26px 50px -30px rgb(20 37 58 / 0.45);
 }
 
-/* Waldweg: fir green bands and headings, copper buttons, light sage paper. */
-[data-farbe='waldweg'] {
-	--bg: #f4f3ec;
-	--surface: #e9eadf;
-	--surface-2: #dfe8dc;
-	--card: #ffffff;
-	--fg: #18271f;
-	--heading: #1f3d30;
-	--muted: #4b5a50;
-	--border: #d3d5c4;
-	--primary: #a85a2f;
-	--primary-hover: #8f4a22;
-	--primary-ink: #9a4f25;
-	--copper: #b96637;
+/* Waldweg: Karo's pick and the live default. Piste material in Waldweg colours: sage-white paper,
+   green-black ink, fir green as the field (bands), copper as the signal (primary control, focus). */
+[data-scheme='waldweg'] {
+	--bg: #f6f7f2;
+	--surface: #eceee6;
+	--surface-2: #e1e6db;
+	--card: #fafbf7;
+	--fg: #18221c;
+	--heading: #18221c;
+	--muted: #4c5850;
+	--border: #cdd4c8;
+	--primary: #a5572b;
+	--primary-hover: #87441f;
+	--primary-ink: #8f461e;
+	--copper: #b05d2e;
 	--accent: #1f3d30;
 	--accent-ink: #1f3d30;
-	--lane: #cddbc8;
+	--lane: #d3dccd;
 	--grad: linear-gradient(120deg, #1f3d30 0%, #1f3d30 100%);
-	--grad-soft: linear-gradient(120deg, #e9eadf 0%, #e9eadf 100%);
+	--grad-soft: linear-gradient(120deg, #eceee6 0%, #eceee6 100%);
 	--dark: #1f3d30;
-	--dark-2: #142a20;
-	--on-dark: #ffffff;
-	--on-dark-muted: #dfe8dc;
-	--shadow: 0 26px 50px -30px rgb(20 40 30 / 0.45);
+	--dark-2: #14261d;
+	--on-dark: #f6f7f2;
+	--on-dark-muted: #d3dfd0;
+	--shadow: none;
 }
 
 /* Erde: sand and clay with earth-brown bands; logo navy for headings and buttons, logo copper
    for lines – the logo's original colours on earth tones. */
-[data-farbe='erde'] {
+[data-scheme='erde'] {
 	--bg: #f3ede3;
 	--surface: #e9dfcf;
 	--surface-2: #e2d6c3;
@@ -139,7 +171,7 @@
 
 /* Pink: navy from the logo for headings and bands, pink for the highlights (buttons, lines,
    accent words) instead of copper. */
-[data-farbe='pink'] {
+[data-scheme='pink'] {
 	--bg: #fbf6f5;
 	--surface: #f7ebef;
 	--surface-2: #e4edf5;
@@ -165,7 +197,7 @@
 }
 
 /* Kreide: white and graphite, copper accents – the most neutral variant. */
-[data-farbe='kreide'] {
+[data-scheme='kreide'] {
 	--bg: #ffffff;
 	--surface: #f4f3f1;
 	--surface-2: #eceae6;
@@ -190,14 +222,13 @@
 	--shadow: 0 26px 50px -30px rgb(20 20 20 / 0.4);
 }
 
-/* Dark mode follows the system. Keep --bg in sync with themeColor in ../lib/farbschema.ts. */
 @media (prefers-color-scheme: dark) {
 	:root {
 		color-scheme: dark;
 	}
 
 	:root,
-	[data-farbe='trainingsplatz'] {
+	[data-scheme='trainingsplatz'] {
 		--bg: #0f1f33;
 		--surface: #132840;
 		--surface-2: #22446a;
@@ -222,7 +253,7 @@
 		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
 	}
 
-	[data-farbe='bergnebel'] {
+	[data-scheme='bergnebel'] {
 		--bg: #0c1826;
 		--surface: #112236;
 		--surface-2: #1f3a5a;
@@ -247,32 +278,32 @@
 		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
 	}
 
-	[data-farbe='waldweg'] {
-		--bg: #0f1a15;
-		--surface: #14231c;
-		--surface-2: #23392e;
-		--card: #1a2d24;
-		--fg: #f1f0e8;
-		--heading: #f1f0e8;
-		--muted: #c9d6c8;
-		--border: #2c4337;
-		--primary: #a85a2f;
-		--primary-hover: #8f4a22;
-		--primary-ink: #e09a6c;
-		--copper: #c8743f;
+	[data-scheme='waldweg'] {
+		--bg: #0f1813;
+		--surface: #142019;
+		--surface-2: #22332a;
+		--card: #18261e;
+		--fg: #eef1ea;
+		--heading: #eef1ea;
+		--muted: #c0cdc1;
+		--border: #2c3e34;
+		--primary: #a5572b;
+		--primary-hover: #87441f;
+		--primary-ink: #e39b6d;
+		--copper: #cf7a45;
 		--accent: #cddbc8;
 		--accent-ink: #dfe8dc;
-		--lane: #23392e;
-		--grad: linear-gradient(120deg, #0a130f 0%, #0a130f 100%);
-		--grad-soft: linear-gradient(120deg, #14231c 0%, #14231c 100%);
-		--dark: #0a130f;
-		--dark-2: #070e0b;
-		--on-dark: #f1f0e8;
+		--lane: #22332a;
+		--grad: linear-gradient(120deg, #1f3d30 0%, #1f3d30 100%);
+		--grad-soft: linear-gradient(120deg, #142019 0%, #142019 100%);
+		--dark: #1f3d30;
+		--dark-2: #0a110d;
+		--on-dark: #eef1ea;
 		--on-dark-muted: #c9d6c8;
-		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
+		--shadow: none;
 	}
 
-	[data-farbe='erde'] {
+	[data-scheme='erde'] {
 		--bg: #1a1410;
 		--surface: #221a14;
 		--surface-2: #3a2e24;
@@ -297,7 +328,7 @@
 		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
 	}
 
-	[data-farbe='pink'] {
+	[data-scheme='pink'] {
 		--bg: #0f1f33;
 		--surface: #132840;
 		--surface-2: #22446a;
@@ -322,7 +353,7 @@
 		--shadow: 0 26px 50px -30px rgb(0 0 0 / 0.8);
 	}
 
-	[data-farbe='kreide'] {
+	[data-scheme='kreide'] {
 		--bg: #141517;
 		--surface: #1b1d20;
 		--surface-2: #2b2e33;
@@ -349,7 +380,7 @@
 }
 
 @theme inline {
-	--font-sans: 'Inter Variable', system-ui, sans-serif;
+	--font-sans: 'Barlow', system-ui, sans-serif;
 	--font-display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
 	--color-bg: var(--bg);
 	--color-surface: var(--surface);
@@ -361,6 +392,7 @@
 	--color-border: var(--border);
 	--color-primary: var(--primary);
 	--color-primary-ink: var(--primary-ink);
+	--color-on-primary: var(--on-primary);
 	--color-copper: var(--copper);
 	--color-accent: var(--accent);
 	--color-accent-ink: var(--accent-ink);
@@ -372,103 +404,250 @@
 	--radius-card: var(--radius);
 }
 
+/* Type scale (layout.md § 2); the condensed display sets one step larger, as Piste asks. */
+@theme {
+	--text-sm: 0.9375rem;
+	--text-md: 1.0625rem;
+	--text-lead: clamp(1.1875rem, 0.35vw + 1.0625rem, 1.4375rem);
+	--text-title: clamp(1.625rem, 0.9vw + 1.25rem, 2.125rem);
+	--text-section: clamp(2.5rem, 4vw + 0.75rem, 4.25rem);
+	--text-display: clamp(3.5rem, 7vw + 0.5rem, 8rem);
+	--text-figure: clamp(2.5rem, 3vw + 1rem, 3.75rem);
+}
+
 @layer base {
+	html,
 	body {
-		@apply bg-bg text-fg font-sans text-[1.0625rem] leading-relaxed antialiased;
+		overflow-x: clip;
+	}
+	html {
+		scrollbar-color: var(--muted) var(--bg);
+		scroll-padding-top: var(--space-3xl);
+	}
+	body {
+		@apply bg-bg text-fg font-sans antialiased;
+		font-size: var(--text-md);
+		line-height: 1.55;
+		caret-color: var(--primary);
+	}
+	::selection {
+		background: color-mix(in oklab, var(--copper) 30%, transparent);
 	}
 	h1, h2, h3, h4 {
-		@apply font-display text-balance;
+		font-family: var(--font-display);
+		font-weight: 800;
+		font-synthesis: none;
+		text-transform: uppercase;
+		letter-spacing: -0.005em;
+		line-height: 1.02;
+		text-wrap: balance;
+		overflow-wrap: break-word;
+		min-width: 0;
+	}
+	p {
+		text-wrap: pretty;
 	}
 	:focus-visible {
-		outline: 3px solid var(--copper);
-		outline-offset: 3px;
+		outline: 2px solid var(--copper);
+		outline-offset: 2px;
+	}
+	/* On the fir field and the night band the copper ring drops under 3:1: use paper there. */
+	.band-field :focus-visible,
+	.band-night :focus-visible {
+		outline-color: var(--on-dark);
 	}
 }
 
 @utility container-page {
-	@apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+	width: 100%;
+	max-width: var(--container);
+	margin-inline: auto;
+	padding-inline: var(--gutter);
 }
 
-/* Big uppercase display type (headlines, numbers, prices). */
+/* Section rhythm: three steps, mixed (gate 59). */
+@utility sektion {
+	padding-block: var(--section-gap-s);
+}
+@utility sektion-m {
+	padding-block: var(--section-gap);
+}
+
+/* Big uppercase display type (heads, figures, prices). */
 @utility display {
-	@apply font-display font-extrabold uppercase leading-[0.95] tracking-[0.005em] text-heading;
+	font-family: var(--font-display);
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: -0.005em;
+	line-height: 1.02;
+	color: var(--heading);
+	text-wrap: balance;
+	overflow-wrap: break-word;
+	min-width: 0;
 }
 
-/* Section kicker with a short copper line in front. */
-@utility kicker {
-	@apply flex items-center gap-2.5 font-display text-[0.95rem] font-semibold uppercase tracking-[0.14em] text-primary-ink;
-	&::before {
-		content: '';
-		width: 28px;
-		height: 3px;
-		flex: none;
-		background: var(--copper);
+/* Tabular figure in the display face: prices, years, step numbers. */
+@utility figur {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+	line-height: 1;
+}
+
+/* The 2px ink rule that opens a list, a row set or a figure row (Piste: ruled, never boxed). */
+@utility regel {
+	border-top: var(--rule-bar) solid var(--heading);
+}
+@utility haar {
+	border-top: var(--rule-hair) solid var(--border);
+}
+
+/* Bands: the fir field (twice a page at most) and the night band. Every band swaps its text colour. */
+@utility band-field {
+	background: var(--dark);
+	color: var(--on-dark);
+	--heading: var(--on-dark);
+	--muted: var(--on-dark-muted);
+	--border: color-mix(in oklab, var(--on-dark) 28%, transparent);
+}
+@utility band-night {
+	background: var(--dark-2);
+	color: var(--on-dark);
+	--heading: var(--on-dark);
+	--muted: var(--on-dark-muted);
+	--border: color-mix(in oklab, var(--on-dark) 24%, transparent);
+}
+
+/* Buttons: square, 52px, Barlow Condensed 800 in capitals, untracked. One filled primary style. */
+@utility btn {
+	display: inline-flex;
+	min-height: 52px;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-xs);
+	padding-inline: var(--space-lg);
+	border: 0;
+	border-radius: var(--radius);
+	font-family: var(--font-display);
+	font-size: 1.1875rem;
+	font-weight: 800;
+	line-height: 1;
+	text-transform: uppercase;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+	&:disabled,
+	&[aria-disabled='true'] {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+}
+@utility btn-primary {
+	@apply btn;
+	background: var(--primary);
+	color: var(--on-primary);
+	&:hover {
+		background: var(--primary-hover);
+	}
+	&:active {
+		background: var(--fg);
+		color: var(--bg);
+	}
+}
+@utility btn-secondary {
+	@apply btn;
+	background: transparent;
+	color: var(--heading);
+	box-shadow: inset 0 0 0 var(--rule-bar) var(--heading);
+	&:hover {
+		background: var(--surface);
+	}
+	&:active {
+		background: var(--heading);
+		color: var(--bg);
+	}
+}
+/* Outline button on the fir field and the night band. */
+@utility btn-hell {
+	@apply btn;
+	background: transparent;
+	color: var(--on-dark);
+	box-shadow: inset 0 0 0 var(--rule-bar) var(--on-dark);
+	&:hover {
+		background: color-mix(in oklab, var(--on-dark) 14%, transparent);
+	}
+	&:active {
+		background: var(--on-dark);
+		color: var(--dark);
 	}
 }
 
-@utility btn {
-	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 border-transparent px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors;
-}
-@utility btn-primary {
-	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 border-transparent px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors bg-primary text-white hover:bg-[var(--primary-hover)];
-}
-/* Navy button: on light backgrounds navy, in dark mode a paper button. */
-@utility btn-navy {
-	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 border-transparent px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors bg-heading text-bg hover:bg-primary hover:text-white;
-}
-@utility btn-secondary {
-	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors border-heading text-heading hover:bg-heading hover:text-bg;
-}
-/* Outline button on navy bands. */
-@utility btn-hell {
-	@apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-card border-2 px-5 py-3.5 font-display text-lg leading-none font-semibold uppercase tracking-[0.08em] no-underline transition-colors border-on-dark text-on-dark hover:bg-on-dark hover:text-dark;
-}
-
-/* Text link with a copper underline bar. */
+/* Text link: ink, underlined, copper on hover. */
 @utility textlink {
-	@apply inline-block border-b-[3px] border-copper pb-0.5 font-display text-lg font-semibold uppercase tracking-[0.08em] text-heading no-underline hover:text-primary-ink;
+	color: var(--heading);
+	font-weight: 500;
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.2em;
+	&:hover {
+		color: var(--primary-ink);
+		text-decoration-thickness: 2px;
+	}
 }
 
-@utility card {
-	@apply rounded-card border border-border bg-card;
+/* Tag ("45 Min.", "Hundesport"): body face, a step smaller, sentence case, a hairline square. */
+@utility tag {
+	display: inline-block;
+	border: var(--rule-hair) solid var(--border);
+	padding: var(--space-2xs) var(--space-xs);
+	font-size: var(--text-sm);
+	font-weight: 500;
+	line-height: 1.3;
+	color: var(--heading);
 }
 
-/* Fact chip ("45 Min.", "bis zu 6 Hunde"). */
-@utility chip {
-	@apply rounded bg-surface-2 px-2.5 py-1 text-[0.84rem] font-semibold text-heading;
+/* Photograph frame: square, an inset ink hairline at 8%. */
+@utility foto {
+	display: block;
+	width: 100%;
+	object-fit: cover;
+	outline: 1px solid color-mix(in oklab, var(--fg) 8%, transparent);
+	outline-offset: -1px;
 }
 
-/* Diagonal lane lines, the "Hundeplatz" motif. Purely decorative (aria-hidden, behind content). */
-@utility lanes {
-	background: repeating-linear-gradient(-58deg, transparent 0 22px, var(--lane) 22px 26px);
-}
-@utility lanes-copper {
-	background: repeating-linear-gradient(-58deg, transparent 0 22px, color-mix(in srgb, var(--copper) 55%, transparent) 22px 25px);
-	opacity: 0.55;
-}
-
-/* Numbered "start bib" (01, 02, …) on offer cards. */
-@utility bib {
-	@apply rounded bg-bg px-2.5 pt-2 pb-1.5 font-display text-2xl leading-none font-extrabold text-heading;
-	border-bottom: 4px solid var(--copper);
-}
-
-/* Form controls of the inquiry form. */
+/* Form controls of the inquiry form: square, 52px, a 1px edge in --muted (3:1 against the paper). */
 @utility feld {
-	@apply w-full rounded-card border border-border bg-bg px-3.5 py-3 text-base text-fg;
-	&:focus {
+	width: 100%;
+	min-height: 52px;
+	border: 1px solid var(--muted);
+	border-radius: var(--radius);
+	background: var(--card);
+	padding: var(--space-sm) var(--space-md);
+	font-size: var(--text-md);
+	color: var(--fg);
+	&:hover {
+		border-color: var(--heading);
+	}
+	&:focus-visible {
 		outline: 2px solid var(--copper);
-		outline-offset: 1px;
-		background: var(--card);
+		outline-offset: -2px;
+	}
+	&:disabled {
+		opacity: 0.55;
+		cursor: not-allowed;
+	}
+	&::placeholder {
+		color: var(--muted);
 	}
 }
 
 /* Rich text: class="prose prose-lg prose-site". Unlayered, so it wins over the typography plugin. */
 .prose-site {
-	max-width: none;
+	max-width: 65ch;
 	--tw-prose-body: var(--fg);
 	--tw-prose-headings: var(--heading);
-	--tw-prose-links: var(--primary-ink);
+	--tw-prose-links: var(--heading);
 	--tw-prose-bold: var(--heading);
 	--tw-prose-bullets: var(--copper);
 	--tw-prose-quotes: var(--fg);
@@ -481,15 +660,19 @@
 	font-family: var(--font-display);
 	text-transform: uppercase;
 	font-weight: 800;
-	letter-spacing: 0.01em;
+	letter-spacing: -0.005em;
+	line-height: 1.05;
 }
-/* Rich text on navy bands. */
+.prose-site :where(a):hover {
+	color: var(--primary-ink);
+}
+/* Rich text on the fir field and the night band. */
 .prose-hell {
 	--tw-prose-body: var(--on-dark-muted);
 	--tw-prose-headings: var(--on-dark);
 	--tw-prose-links: var(--on-dark);
 	--tw-prose-bold: var(--on-dark);
-	--tw-prose-bullets: var(--copper);
+	--tw-prose-bullets: var(--on-dark-muted);
 }
 
 @media (prefers-reduced-motion: reduce) {

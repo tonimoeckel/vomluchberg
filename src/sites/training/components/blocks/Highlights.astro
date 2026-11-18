@@ -1,6 +1,9 @@
 ---
-// Tiles in four looks: "kacheln" (cards with icon), "band" (navy facts band), "schritte"
-// (numbered steps 01, 02, …) and "werte" (compact numbered grid).
+// Facts and lists in four looks, all ruled, never boxed (Piste):
+// "band"     the facts row: four facts across under a 2px ink rule, parted by hairlines
+// "schritte" the process as ruled rows under the head: a real <ol>, each stage a numeral, a title, a line
+// "werte"    two columns of numbered values, each under its own ink rule
+// "kacheln"  three across, an icon inline before each title, under a hairline
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from '../../../../components/ui/Icon.astro';
 import SectionHead from '../SectionHead.astro';
@@ -10,56 +13,64 @@ interface Props { data: BlockOf<'Highlights'> }
 const { data } = Astro.props;
 const items = (data.items ?? []).filter((i) => i !== null);
 const darstellung = data.darstellung ?? 'kacheln';
-const nr = (i: number) => String(i + 1).padStart(2, '0');
 ---
 {darstellung === 'band' ? (
-	<section class="bg-dark text-on-dark">
-		<div class="container-page py-7">
-			<SectionHead data={data} dunkel class="mb-6" />
-			<ul class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-				{items.map((it) => (
-					<li class="flex items-center gap-3.5 text-[0.95rem] text-on-dark-muted" data-tina-field={tinaField(it)}>
-						{it.icon && <Icon name={it.icon} class="size-9 shrink-0 text-copper" />}
-						<span><b class="block font-display text-[1.35rem] font-extrabold uppercase leading-tight tracking-[0.02em] text-on-dark">{it.titel}</b>{it.text}</span>
+	<section class="pt-16 pb-20 sm:pt-20 sm:pb-24">
+		<div class="container-page">
+			<SectionHead data={data} class="mb-10" />
+			<ul class="regel grid sm:grid-cols-2 lg:grid-cols-4">
+				{items.map((it, i) => (
+					<li class:list={['grid content-start gap-1.5 border-border py-6 sm:pr-8', i > 0 && 'max-sm:haar', i % 2 === 1 && 'sm:border-l sm:pl-8', i > 1 && 'sm:max-lg:haar', i === 2 && 'lg:border-l lg:pl-8']} data-tina-field={tinaField(it)}>
+						<b class="display block text-title">{it.titel}</b>
+						{it.text && <span class="text-muted">{it.text}</span>}
 					</li>
 				))}
 			</ul>
 		</div>
 	</section>
-) : (
-	<section class="py-14 sm:py-20">
+) : darstellung === 'schritte' ? (
+	<section class="sektion">
 		<div class="container-page">
-			<SectionHead data={data} />
-			{darstellung === 'schritte' && (
-				<ol class="mt-9 grid gap-6 md:grid-cols-3">
+			<SectionHead data={data} geteilt class="mb-14" />
+			<ol class="regel">
+				{items.map((it, i) => (
+					<li class="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-6 border-b border-border py-8 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-x-8" data-tina-field={tinaField(it)}>
+						<span class="figur text-[clamp(3.5rem,4vw+1.5rem,6rem)] leading-[0.85] text-accent" aria-hidden="true">{i + 1}</span>
+						<span class="self-center">
+							<h3 class="display text-title">{it.titel}</h3>
+							{it.text && <p class="mt-2 max-w-[60ch] text-lg text-fg">{it.text}</p>}
+						</span>
+					</li>
+				))}
+			</ol>
+		</div>
+	</section>
+) : (
+	<section class="sektion">
+		<div class="container-page">
+			<SectionHead data={data} geteilt class="mb-14" />
+			{darstellung === 'werte' && (
+				<ol class="grid gap-x-[var(--gap-columns)] gap-y-10 md:grid-cols-2">
 					{items.map((it, i) => (
-						<li class="relative rounded-b-card border-t-4 border-heading bg-card px-6 pt-6 pb-6" data-tina-field={tinaField(it)}>
-							<span class="absolute right-4 top-2.5 font-display text-6xl font-extrabold leading-none text-lane" aria-hidden="true">{nr(i)}</span>
-							<h3 class="display relative max-w-[75%] text-[1.6rem] leading-[1.05]">{it.titel}</h3>
-							{it.text && <p class="relative mt-2 text-[0.98rem] text-muted">{it.text}</p>}
+						<li class="regel grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-6 pt-6 sm:grid-cols-[6rem_minmax(0,1fr)]" data-tina-field={tinaField(it)}>
+							<span class="figur text-[clamp(3.5rem,3vw+2rem,5.25rem)] leading-[0.85] text-accent" aria-hidden="true">{i + 1}</span>
+							<span>
+								<h3 class="display text-[clamp(1.875rem,1.5vw+1.25rem,2.75rem)]">{it.titel}</h3>
+								{it.text && <p class="mt-2 text-lg text-fg">{it.text}</p>}
+							</span>
 						</li>
 					))}
 				</ol>
 			)}
-			{darstellung === 'werte' && (
-				<ul class="mt-8 grid gap-px overflow-hidden rounded-card border border-border bg-border sm:grid-cols-2">
-					{items.map((it, i) => (
-						<li class="bg-bg px-5 py-4" data-tina-field={tinaField(it)}>
-							<b class="block font-display text-2xl font-extrabold uppercase leading-none text-heading"><span class="mr-1.5 text-copper">{nr(i)}</span>{it.titel}</b>
-							{it.text && <span class="text-[0.92rem] text-muted">{it.text}</span>}
-						</li>
-					))}
-				</ul>
-			)}
 			{darstellung === 'kacheln' && (
-				<ul class="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+				<ul class="grid gap-x-[var(--gap-columns)] gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
 					{items.map((it) => (
-						<li class="card flex gap-4 p-5" data-tina-field={tinaField(it)}>
-							{it.icon && <span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name={it.icon} class="size-6" /></span>}
-							<span>
-								<h3 class="font-display text-xl font-extrabold uppercase leading-tight tracking-[0.02em] text-heading">{it.titel}</h3>
-								{it.text && <p class="mt-1 text-[0.95rem] text-muted">{it.text}</p>}
-							</span>
+						<li class="haar pt-5" data-tina-field={tinaField(it)}>
+							<h3 class="display flex items-start gap-3 text-title">
+								{it.icon && <Icon name={it.icon} class="mt-[0.15em] size-6 shrink-0 text-accent" aria-hidden="true" />}
+								<span>{it.titel}</span>
+							</h3>
+							{it.text && <p class="mt-2 text-muted">{it.text}</p>}
 						</li>
 					))}
 				</ul>

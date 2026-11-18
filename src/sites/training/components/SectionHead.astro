@@ -1,24 +1,27 @@
 ---
-// Kicker, display headline and lead of a section. Pass the block object to make the fields editable.
+// Head block of a section: the display head and one lead line. The kicker field is not shown (an
+// eyebrow, Hallmark gate 54); it stays in Tina. Pass the block object to make the fields editable.
+// "geteilt": head on the left, the lead on the right with the baselines aligned (layout.md § 4).
 import { tinaField } from '@tinacms/astro/tina-field';
 
 interface Props {
-	data: Record<string, unknown> & { kicker?: string | null; ueberschrift?: string | null; text?: string | null };
+	data: Record<string, unknown> & { ueberschrift?: string | null; text?: string | null };
 	/** Headline level (h1 on pages without a hero). */
 	as?: 'h1' | 'h2';
-	dunkel?: boolean;
+	geteilt?: boolean;
 	class?: string;
 }
-const { data, as: Tag = 'h2', dunkel = false, class: className } = Astro.props;
+const { data, as: Tag = 'h2', geteilt = false, class: className } = Astro.props;
 // tinaField() is typed per document; the heading fields are shared by several block types.
-const feld = (name: 'kicker' | 'ueberschrift' | 'text') => tinaField(data as never, name as never);
+const feld = (name: 'ueberschrift' | 'text') => tinaField(data as never, name as never);
 ---
-{(data.kicker || data.ueberschrift || data.text) && (
-	<div class={className}>
-		{data.kicker && <p class:list={['kicker', dunkel && 'text-lane dark:text-on-dark-muted']} data-tina-field={feld('kicker')}>{data.kicker}</p>}
+{(data.ueberschrift || data.text) && (
+	<div class:list={[geteilt && 'grid gap-x-[var(--gap-columns)] gap-y-5 lg:grid-cols-12 lg:items-end', className]}>
 		{data.ueberschrift && (
-			<Tag class:list={['display mt-2 text-[2.6rem] sm:text-6xl', dunkel && 'text-on-dark']} data-tina-field={feld('ueberschrift')}>{data.ueberschrift}</Tag>
+			<Tag class:list={['display max-w-[22ch] text-section', geteilt && 'lg:col-span-7']} data-tina-field={feld('ueberschrift')}>{data.ueberschrift}</Tag>
 		)}
-		{data.text && <p class:list={['mt-4 max-w-[60ch] text-lg', dunkel ? 'text-on-dark-muted' : 'text-muted']} data-tina-field={feld('text')}>{data.text}</p>}
+		{data.text && (
+			<p class:list={['max-w-[52ch] text-lead leading-snug text-muted', geteilt ? 'lg:col-span-5 lg:pb-1.5' : 'mt-5']} data-tina-field={feld('text')}>{data.text}</p>
+		)}
 	</div>
 )}

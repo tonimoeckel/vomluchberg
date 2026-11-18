@@ -1,0 +1,35 @@
+[
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "site",
+  "shape": "Narrative Workflow",
+  "theme": "piste",
+  "axes": "light/display-condensed/warm-green",
+  "hero": "Stage",
+  "nav": "edge-aligned",
+  "footer": "letter close",
+  "imagery": "photographs, the client own",
+  "photos": [],
+  "entry": "none",
+  "sections": [
+   "Stage hero",
+   "inquiry bar",
+   "facts row",
+   "offer rows",
+   "split",
+   "quote on field",
+   "step rows",
+   "showcase",
+   "form"
+  ],
+  "signature": "sticky inquiry bar",
+  "waived": [
+   "8",
+   "44c",
+   "79"
+  ],
+  "prompt": "dog training on request in a small Saxon mountain town, fir green and copper",
+  "date": "2026-11-18"
+ }
+]

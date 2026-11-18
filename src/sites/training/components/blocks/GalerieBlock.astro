@@ -1,38 +1,45 @@
 ---
-// Photo strip with optional titles; opens in the shared lightbox (<a data-lightbox>).
+// Photos as a showcase: the head block, the first photo across all twelve columns, the next two at
+// seven and five beneath it, any further ones three across. Titles are captions under the photos.
+// Every photo opens in the shared lightbox (<a data-lightbox>).
 import { tinaField } from '@tinacms/astro/tina-field';
 import SectionHead from '../SectionHead.astro';
-import { hintergrundKlasse } from './hintergrund';
 import type { BlockOf } from '../../lib/data';
 
 interface Props { data: BlockOf<'Galerie'> }
 const { data } = Astro.props;
 const dunkel = data.hintergrund === 'dunkel';
-const bilder = (data.bilder ?? []).filter((b) => b?.bild);
+const hg = dunkel ? 'band-night' : data.hintergrund === 'sand' ? 'bg-surface' : '';
+const bilder = (data.bilder ?? []).filter((b) => b?.bild).map((b) => b!);
 const stichworte = (data.stichworte ?? []).filter(Boolean);
 const gruppe = `galerie-${(data.ueberschrift ?? 'bilder').toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+const [erstes, ...rest] = bilder;
+const paar = rest.slice(0, 2);
 ---
-<section class:list={['py-14 sm:py-20', hintergrundKlasse(data.hintergrund)]}>
+<section class:list={['sektion-m', hg]}>
 	<div class="container-page">
-		<SectionHead data={data} dunkel={dunkel} />
+		<SectionHead data={data} geteilt />
 		{stichworte.length > 0 && (
-			<ul class="mt-6 flex flex-wrap gap-2" data-tina-field={tinaField(data, 'stichworte')}>
-				{stichworte.map((s) => <li class:list={[dunkel ? 'rounded border border-lane/60 px-2.5 py-1 text-sm text-on-dark-muted' : 'chip']}>{s}</li>)}
+			<ul class="mt-8 flex flex-wrap gap-2" aria-label="Disziplinen" data-tina-field={tinaField(data, 'stichworte')}>
+				{stichworte.map((s) => <li class="tag">{s}</li>)}
 			</ul>
 		)}
-		{bilder.length > 0 && (
-			<ul class="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+		{erstes && (
+			<div class="mt-14 grid gap-x-[var(--gap-columns)] gap-y-10 md:grid-cols-12">
 				{bilder.map((b, i) => (
-					<li class:list={['relative overflow-hidden rounded-card', i === 0 && bilder.length % 2 === 1 && 'col-span-2 sm:col-span-1']} data-tina-field={tinaField(b!)}>
-						<a href={b!.bild!} data-lightbox={gruppe} data-caption={b!.beschreibung ?? ''} class="group block">
-							<img src={b!.bild!} alt={b!.beschreibung ?? ''} loading="lazy" decoding="async" class="aspect-[3/2] w-full object-cover group-hover:opacity-90" />
-							{b!.titel && (
-								<span class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[color-mix(in_srgb,var(--dark-2)_85%,transparent)] to-transparent px-4 pt-10 pb-3 font-display font-semibold uppercase tracking-[0.1em] text-white">{b!.titel}</span>
-							)}
+					<figure data-tina-field={tinaField(b)} class:list={[
+						i === 0 && 'md:col-span-12',
+						i > 0 && i <= paar.length && (paar.length === 1 ? 'md:col-span-12' : i === 1 ? 'md:col-span-7' : 'md:col-span-5'),
+						i > paar.length && 'md:col-span-4',
+					]}>
+						<a href={b!.bild!} data-lightbox={gruppe} data-caption={b.beschreibung ?? ''} class="block hover:opacity-90">
+							<img src={b!.bild!} alt={b.beschreibung ?? ''} width="1600" height="1067" loading="lazy" decoding="async"
+								class:list={['foto', i === 0 ? 'aspect-[16/9] lg:aspect-[21/9]' : 'aspect-[4/3] md:h-[min(30vw,440px)] md:aspect-auto']} />
 						</a>
-					</li>
+						{b.titel && <figcaption class="mt-3 text-[0.9375rem] font-medium text-muted">{b.titel}</figcaption>}
+					</figure>
 				))}
-			</ul>
+			</div>
 		)}
 	</div>
 </section>

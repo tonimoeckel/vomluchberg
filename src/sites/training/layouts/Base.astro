@@ -41,14 +41,14 @@ const betrieb =
 ---
 
 <!doctype html>
-<html lang="de" data-site="training" data-farbe={schema.id}>
+<html lang="de" class="overflow-x-clip" data-site="training" data-scheme={schema.id}>
 	<head>
 		<BaseHead {...meta} themeColor={schema.themeColor} />
 		<ThemeVorschau kopf />
 		{betrieb && <script type="application/ld+json" set:html={JSON.stringify(betrieb)} />}
 	</head>
-	<body class="flex min-h-dvh flex-col">
-		<a href="#inhalt" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 btn-primary">Zum Inhalt springen</a>
+	<body class="flex min-h-dvh flex-col overflow-x-clip">
+		<a href="#inhalt" class="btn-primary fixed top-4 left-4 z-50 -translate-y-[300%] focus:translate-y-0">Zum Inhalt springen</a>
 		<TinaIsland name="global" wrapper={islands.global.wrapper}>
 			<Header config={config} />
 		</TinaIsland>

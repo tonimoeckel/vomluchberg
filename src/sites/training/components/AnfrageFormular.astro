@@ -24,12 +24,12 @@ const anfrage = config?.anfrage;
 const web3key = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 // Without a form service and without JS, the browser's mail program gets the fields as plain text.
 const action = web3key ? 'https://api.web3forms.com/submit' : email ? `mailto:${email}` : undefined;
-const legende = 'flex items-center gap-2.5 p-0 font-display text-xl font-extrabold uppercase tracking-[0.04em] text-heading';
-const nummer = 'grid size-7 place-items-center rounded bg-dark font-display text-base text-on-dark';
-const label = 'grid gap-1.5 text-[0.9rem] font-semibold';
+const legende = 'mb-5 flex items-baseline gap-3 p-0 font-display text-[1.625rem] font-extrabold uppercase leading-none text-heading';
+const nummer = 'figur text-accent';
+const label = 'grid gap-2 text-[0.9375rem] font-medium text-heading';
 ---
 <form id="formular" method="post" action={action} enctype={web3key ? undefined : 'text/plain'}
-	class="card grid scroll-mt-28 gap-6 border-t-[6px] border-t-copper p-5 sm:p-8"
+	class="regel grid scroll-mt-28 gap-10 pt-8"
 	data-anfrage data-mail={email} data-optionen={JSON.stringify(optionen)} data-url-vorauswahl={vorausgewaehlt ? undefined : ''}
 	data-danke={anfrage?.danke ?? 'Danke! Eure Anfrage ist angekommen – ich melde mich persönlich bei euch.'}>
 	{web3key && <input type="hidden" name="access_key" value={web3key} />}
@@ -37,8 +37,8 @@ const label = 'grid gap-1.5 text-[0.9rem] font-semibold';
 	{web3key && <input type="hidden" name="from_name" value="Alltag kann Sport Website" />}
 	<input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
 
-	<fieldset class="grid gap-4">
-		<legend class={legende}><span class={nummer}>1</span>Welches Training?</legend>
+	<fieldset class="grid gap-5">
+		<legend class={legende}><span class={nummer} aria-hidden="true">1</span>Welches Training?</legend>
 		<label class={label}>Angebot *
 			<select required name={f.angebot} class="feld">
 				<option value="" selected={!auswahl}>Bitte wählen …</option>
@@ -47,8 +47,8 @@ const label = 'grid gap-1.5 text-[0.9rem] font-semibold';
 		</label>
 	</fieldset>
 
-	<fieldset class="grid gap-4">
-		<legend class={legende}><span class={nummer}>2</span>Über euch</legend>
+	<fieldset class="grid gap-5">
+		<legend class={legende}><span class={nummer} aria-hidden="true">2</span>Über euch</legend>
 		<div class="grid gap-4 sm:grid-cols-2">
 			<label class={label}>Name *<input required name={f.name} autocomplete="name" class="feld" /></label>
 			<label class={label}>E-Mail *<input required type="email" name={f.email} autocomplete="email" class="feld" /></label>
@@ -56,8 +56,8 @@ const label = 'grid gap-1.5 text-[0.9rem] font-semibold';
 		<label class={label}>Telefon (optional, für einen Rückruf)<input type="tel" name={f.telefon} autocomplete="tel" class="feld" /></label>
 	</fieldset>
 
-	<fieldset class="grid gap-4">
-		<legend class={legende}><span class={nummer}>3</span>Über euren Hund</legend>
+	<fieldset class="grid gap-5">
+		<legend class={legende}><span class={nummer} aria-hidden="true">3</span>Über euren Hund</legend>
 		<div class="grid gap-4 sm:grid-cols-[1.2fr_1fr_0.8fr]">
 			<label class={label}>Name<input name={f.hundName} class="feld" /></label>
 			<label class={label}>Rasse / Mix<input name={f.hundRasse} class="feld" /></label>
@@ -69,29 +69,29 @@ const label = 'grid gap-1.5 text-[0.9rem] font-semibold';
 		</label>
 	</fieldset>
 
-	<fieldset class="grid gap-4">
-		<legend class={legende}><span class={nummer}>4</span>Wann passt es euch?</legend>
+	<fieldset class="grid gap-5">
+		<legend class={legende}><span class={nummer} aria-hidden="true">4</span>Wann passt es euch?</legend>
 		<div class="flex flex-wrap gap-2" role="group" aria-label="Wunschzeiten">
 			{wunschzeiten.map((z) => (
 				<label class="cursor-pointer">
 					<input type="checkbox" name={f.zeiten} value={z} class="peer sr-only" />
-					<span class="inline-block rounded border border-border bg-bg px-3 py-2 text-[0.9rem] font-semibold hover:border-heading peer-checked:border-heading peer-checked:bg-heading peer-checked:text-bg peer-focus-visible:outline-2 peer-focus-visible:outline-copper">{z}</span>
+					<span class="inline-flex min-h-11 items-center border border-muted bg-card px-4 text-[0.9375rem] font-medium text-heading hover:border-heading active:bg-surface peer-disabled:cursor-not-allowed peer-disabled:opacity-55 peer-checked:border-heading peer-checked:bg-heading peer-checked:text-bg peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-copper">{z}</span>
 				</label>
 			))}
 		</div>
 		<label class={label}>Sonstiges zu Zeiten (optional)<input name={f.zeitenText} placeholder="z. B. ab Mitte Mai, nicht mittwochs" class="feld" /></label>
 	</fieldset>
 
-	<label class="flex items-start gap-3 text-[0.88rem] text-muted">
-		<input required type="checkbox" name="datenschutz" value="ja" class="mt-1 size-[18px] shrink-0 accent-[var(--primary)]" />
-		<span>Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verwendet werden. Mehr in der <a href="/datenschutz" class="font-semibold text-primary-ink underline">Datenschutzerklärung</a>. *</span>
+	<label class="flex items-start gap-3 text-[0.9375rem] text-muted">
+		<input required type="checkbox" name="datenschutz" value="ja" class="mt-0.5 size-5 shrink-0 accent-[var(--primary)]" />
+		<span>Ich bin einverstanden, dass meine Angaben zur Beantwortung meiner Anfrage verwendet werden. Mehr in der <a href="/datenschutz" class="textlink">Datenschutzerklärung</a>. *</span>
 	</label>
 	<div>
-		<button type="submit" class="btn-primary">Anfrage senden →</button>
-		{!web3key && <p class="mt-2 text-sm text-muted">Beim Absenden öffnet sich euer E-Mail-Programm mit der fertigen Nachricht.</p>}
+		<button type="submit" class="btn-primary">Anfrage senden</button>
+		{!web3key && <p class="mt-3 text-[0.9375rem] text-muted">Beim Absenden öffnet sich euer E-Mail-Programm mit der fertigen Nachricht.</p>}
 	</div>
-	{anfrage?.hinweis && <p class="text-[0.88rem] text-muted" data-tina-field={tinaField(anfrage, 'hinweis')}>{anfrage.hinweis}</p>}
-	<p role="status" data-status class="text-[0.95rem] font-semibold text-heading empty:hidden"></p>
+	{anfrage?.hinweis && <p class="-mt-6 text-[0.9375rem] text-muted" data-tina-field={tinaField(anfrage, 'hinweis')}>{anfrage.hinweis}</p>}
+	<p role="status" data-status class="text-lg font-medium text-heading empty:hidden"></p>
 </form>
 
 <script>
