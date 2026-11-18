@@ -1,37 +1,48 @@
 # Slice 4 – "Rückruf": a small jump-and-run after an inquiry (training site)
 
-Status: **preview built** (2026-11-18, branch `claude/training-rueckruf-spiel-plan`). Numbered 04
-because `03-betrieb.md` already holds slice 3. Builds on the redesign "Waldboden" (branch
-`claude/upbeat-goodall-kzb1nc`, not yet on `main`). Open questions for Karo: section
-"6. Rückruf-Spiel" in [`fragen-an-karo.md`](fragen-an-karo.md).
+Status: **preview built, second version "Ansprache"** (2026-11-18, branch
+`claude/training-rueckruf-spiel-plan`). Numbered 04 because `03-betrieb.md` already holds slice 3.
+Open questions for Karo: section "6. Ansprache-Spiel" in [`fragen-an-karo.md`](fragen-an-karo.md).
 
-**Preview for Karo (instead of the standalone prototype, at Toni's request):** the game is built
-into the training site but only reachable by URL parameter, like the secret theme preview:
-`?rueckruf` on any page opens it, `?rueckruf=welpe|junghund|pruefung` preselects the level
-(combinable with `&themes=active&thema=<id>`). Nothing on the site links to it and it is not
-offered after an inquiry yet. Screenshots: [`mockups/training/rueckruf/`](mockups/training/rueckruf/)
-(01–07 desktop Waldweg light, 08–09 phone dark "Erde", 10 "Pink" level Prüfung).
+## 0. Current version: "Ansprache" (supersedes §1–§4 where they differ)
 
-What exists (steps P, 1 and most of 2 of §9, without the form hook and without Tina):
+Toni's redesign after playing the first version ("Rückruf", a run towards you with three levels and
+1–5 paws):
 
-- `src/sites/training/lib/karte.ts`: `gelaende()` exported (height field, valley, track control
-  points); `karte()` uses it, output byte-identical (checked by snapshot before/after).
-- `lib/rueckruf/profil.ts`, `level.ts`, `physik.ts`, `texte.ts`: pure, tested in
-  `rueckruf.test.ts`, including a bot that wins every level with 5 paws, a run that never calls
-  (the dog runs off) and one that never jumps (stumbles only, still arrives).
-- `lib/rueckruf/zeichnen.ts`, `spiel.ts`: canvas drawing in the scheme tokens, `<dialog>`, fixed
-  120 Hz timestep, jump buffer, pause on `visibilitychange`/blur, `ResizeObserver`, vertical camera
-  that keeps the ground under the dog at one height, best paws in `localStorage`.
-- `components/RueckrufVorschau.astro` (loader, 183 bytes) in `layouts/Base.astro`; the game chunk is
-  10.6 kB gzip and only fetched with the parameter.
+- **Name:** "Ansprache" (addressing your dog), not "Rückruf".
+- **You give the dog a name** before the run ("Wie heißt euer Hund?", default "Bruno", kept in
+  `localStorage`). It appears in your call ("Hanni!"), the help line and the end line.
+- **You and your dog run together**, you on the lead behind it, and jump together: one input
+  jumps, you take off at the spot where your dog took off (`absprung` in `physik.ts`).
+- **Two inputs:** jump = Space / ArrowUp / tap anywhere on the stage; Ansprache = **tap the dog**
+  (hit radius 46 units around its body, `HUND_RADIUS`) or Enter. Without a distraction an
+  Ansprache costs nothing ("Ja?").
+- **Distraction:** the dog notices it 270 units ahead (on screen also on a phone), a ring shows the
+  window. Ansprache in time: "Fein!", 50 points plus up to 100 for speed. Too late: the dog runs
+  off ("Weg ist Hanni: das Reh war spannender.") and **the run ends**. Obstacles only cost 25
+  points and a stumble.
+- **Endless and ever harder** (`schwierigkeit(t)` in `strecke.ts`): speed 230 → 420 units/s, the
+  window 1.25 s → 0.25 s (after about two minutes shorter than a human reaction, so every run ends),
+  distractions every 7 s → 1.8 s, obstacles denser; from 40 s obstacles may lie in a distraction's
+  zone (jump and speak at once), from 70 s double obstacles.
+- **Score:** 1 point per metre, 10 per obstacle cleared, 50–150 per Ansprache, −25 per stumble.
+  End screen: score, best score (`localStorage`), "Nochmal", "Anderer Hund", link to `/angebote`.
+- **Track:** the map's forest track walked back and forth (`welt()` in `strecke.ts`), the Müglitz at
+  every crossing with a level ford around it, the Luchberg in the background on every pass.
+
+**Preview:** `?ansprache` on any page of the training site (the old `?rueckruf` still works),
+combinable with `&themes=active&thema=<id>`. Nothing links to it and it is not offered after an
+inquiry. Screenshots: [`mockups/training/ansprache/`](mockups/training/ansprache/).
+
+Code: `src/sites/training/lib/ansprache/` (`profil`, `strecke`, `physik`, `texte` pure and tested in
+`ansprache.test.ts`, incl. bots: quick reactions survive 90 s without a stumble, 0.32 s reactions
+always lose between 40 and 200 s, no Ansprache loses at the first distraction; `zeichnen`, `spiel`
+for canvas and dialog), loader `components/AnspracheVorschau.astro` in `layouts/Base.astro`.
 
 Still open before it may be offered: Karo's yes, the hook after a Web3Forms success (§3), the Tina
-switch (§6), the reduced-motion rule for the real entry (the URL preview ignores it, it is an
-explicit opt-in), a real-phone fps and touch check. Known gap: in dark mode the ink colour is
-light, so the Rottweiler is drawn light; decide whether that is fine or needs its own token.
-
-**Gate:** no further build step before Karo has played the preview and said yes. If she says no,
-remove the loader from `Base.astro` and `lib/rueckruf/`; this file stays as a record.
+switch (§6), the reduced-motion rule for the real entry, a real-phone check. In dark mode the ink
+colour is light, so the Rottweiler is drawn light. If Karo says no: remove the loader from
+`Base.astro` and `lib/ansprache/`.
 
 ## 1. Summary
 
