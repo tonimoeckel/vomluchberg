@@ -14,7 +14,7 @@
 /* Hallmark · dismissed 77 · the page has nine sections; the counter misses them because each Tina block sits in its own wrapper div */
 /* Hallmark · dropped the kicker lines · the Tina fields stay; gate 54 names every one of them as an eyebrow */
 /* Hallmark · swapped Furrow's tangerine for Garden's leaf green as the signal · Karo asked for forest; clay keeps Furrow's role as the edge on the map only */
-/* Hallmark · dropped Furrow's motion (pins landing, the loupe) · no decorative animation; the map is an SVG built at build time · since 2026-11-18 subtle motion tied to the map or the way to the inquiry is allowed (transform/opacity only, static and reduced-motion fallbacks; CLAUDE.md, Training site) · reviewed together 2026-11-18: one loop (hero paw prints) and one scroll-bound piece (the inquiry bar's progress line) on the start page, the self-drawing track and the step lines dropped (scroll-choreography budget, gate F8), one signal colour and line weight (--signal, --signal-strich) · paw trails beyond the start page (2026-11-18): the sub pages' margin trail is their one scroll-bound piece (one view timeline per print, only in the right margin, none on phones), the footer map's trail is static, the 404 trail is laid once on load; the start page gets nothing new */
+/* Hallmark · dropped Furrow's motion (pins landing, the loupe) · no decorative animation; the map is an SVG built at build time · since 2026-11-18 subtle motion tied to the map or the way to the inquiry is allowed (transform/opacity only, static and reduced-motion fallbacks; CLAUDE.md, Training site) · reviewed together 2026-11-18: the start page's one motion is the hero paw trail (Toni wants the paws as the site's motif); the self-drawing track, the step lines and the inquiry bar's progress line dropped, the contact map pins stand still there (scroll-choreography budget, gate F8); one signal colour (--signal) · paw trails beyond the start page (2026-11-18): the sub pages' margin trail is their one scroll-bound piece (one view timeline per print, only in the right margin, none on phones), the footer map's trail is static, the 404 trail is laid once on load; the start page gets nothing new */
 /* Hallmark · offers as a pile (angebote block, darstellung stapel, AngeboteStapel.astro) · survey sheets on card paper with a 1px ink edge, flat: no shadow, the depth is the 14px offsets and the covered sheet receding (scale 0.94, a 50 % paper veil, transform/opacity on the next sheet's view timeline) · the { 01 } index in mono is a survey sheet number, the one mono use besides heights and times · plain list on low screens and with one offer */
 /* Hallmark · dismissed F8 · the offer pile is an opt-in look of the angebote block (default liste); on the start page it would be a second scroll-bound piece beside the inquiry bar's line, over the budget reviewed on 2026-11-18, so switching it on there is Toni's and Karo's call */
 /* Hallmark · dismissed F8 · the offer fan (AngeboteFaecher.astro) is opt-in (darstellung faecher, default liste); on a page that uses it, it is a second scroll-bound piece beside the bar's progress line, which Toni decides when he switches it on (a pinned stage, transform and opacity only, a scroll-snap row as the fallback) */
@@ -26,9 +26,9 @@
    times only, hairlines and a 1px ink rule over lists, flat paper (only the notebook card lifts),
    6px moulded keys, a generated survey map of the Luchberg. No gradients, colour steps on hover.
    Motion only where it is tied to the map or the way to the inquiry (transform and opacity, with a
-   static fallback): on the start page the hero's paw trail and the inquiry bar's progress line, on the
-   sub pages the paw trail down the margin, on the 404 page a trail laid once; the footer map's trail is
-   static. No generic fade-ins, no parallax.
+   static fallback): on the start page only the hero's paw trail, on the sub pages the paw trail down
+   the margin (and the contact map's pins dropping in), on the 404 page a trail laid once; the footer
+   map's trail is static. No generic fade-ins, no parallax.
 
    Token contract (docs/plan/00-multisite.md, 2.5): every site defines the same semantic variables
    (--bg, --surface, --surface-2, --fg, --muted, --border, --primary, --primary-ink, --accent,
@@ -61,12 +61,10 @@
 	--rule-hair: 1px; --rule-bar: 1px;
 	--dur-micro: 120ms; --dur-short: 220ms;
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-	/* Motion (CLAUDE.md, Training site): one signal colour and one line weight for everything that moves,
-	   so the paw trail and the inquiry bar's progress line read as one system in every scheme. Scroll-bound
-	   pieces run linear (progress follows the thumb one to one). --signal is --primary-ink: AA on paper in
-	   every scheme (farbschema.test.ts), unlike --primary, which is the button fill (navy in "erde"). */
+	/* Motion (CLAUDE.md, Training site): one signal colour for everything that moves, so the paw prints
+	   read as one system in every scheme. --signal is --primary-ink: AA on paper in every scheme
+	   (farbschema.test.ts), unlike --primary, which is the button fill (navy in "erde"). */
 	--signal: var(--primary-ink);
-	--signal-strich: 2px;
 	--pfoten-zyklus: 30s; /* the karte-pfote keyframes are written for this length */
 	--z-raised: 10; --z-sticky: 200; --z-sticky-nav: 300;
 	/* Map colours, mixed from the scheme so every scheme gets its own map. */
@@ -835,8 +833,8 @@
 	}
 }
 /* Contact map pins: they drop in one after another while the map scrolls into view (its own view
-   timeline, named on the map's HTML frame: Chromium gives an SVG root no view timeline). Without
-   support or with reduced motion they simply stand there. */
+   timeline, named on the map's HTML frame: Chromium gives an SVG root no view timeline). On the start
+   page, without support or with reduced motion they simply stand there. */
 @media (prefers-reduced-motion: no-preference) {
 	@supports (animation-timeline: view()) {
 		:has(> .karte-mit-orten) {
@@ -846,6 +844,10 @@
 			animation: karte-ort-fallen ease-out both;
 			animation-timeline: --karte-orte;
 			animation-range: cover calc(12% + var(--i) * 7%) cover calc(24% + var(--i) * 7%);
+		}
+		/* Not on the start page: its one motion is the hero's paw trail (a page with the moving map). */
+		:root:has(.karte-bewegt) .karte-ort {
+			animation: none;
 		}
 	}
 }
