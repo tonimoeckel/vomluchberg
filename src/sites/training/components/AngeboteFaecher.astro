@@ -1,0 +1,229 @@
+---
+// The offers as a fan of notebook cards over the survey sketch (angebote block, darstellung "faecher").
+// On wide screens with scroll-driven animations the stage pins under the inquiry bar while the page
+// scrolls on, and the cards travel from right to left: each one rests once upright in the centre, its
+// neighbours sit tilted outwards and lower, cut off by the screen edge, like a hand of cards. The track
+// is a named view timeline; every card gets its own animation range from its index (--i) and the
+// number of cards (--n). Only transform and opacity move, no per-frame JS.
+// Base (phones, no support, reduced motion, no JS): a horizontal scroll-snap row of the same cards,
+// nothing pinned, everything visible. DOM order = reading order; a tiny focus script scrolls the
+// window to the card that takes keyboard focus while the stage is pinned.
+// The pause at each card (--ruhe: 0.15 steps) is also baked into the keyframe stops and the script.
+import { tinaField } from '@tinacms/astro/tina-field';
+import Karte from './Karte.astro';
+import { anfrageUrl, angebotFakten, angebotUrl, formatEuro, preisEinheiten } from '../../../lib/domain/angebot';
+import type { AngebotListItem } from '../lib/data';
+
+interface Props { angebote: AngebotListItem[] }
+const { angebote } = Astro.props;
+const n = angebote.length;
+const bewegt = n > 1;
+const nummer = (i: number) => String(i + 1).padStart(2, '0');
+---
+<div class:list={['faecher', bewegt && 'faecher-bewegt']} style={`--n:${n}`} data-n={n}>
+	<div class="faecher-buehne">
+		{bewegt && <Karte gipfel={false} class="faecher-grund" />}
+		<ul class="faecher-reihe" aria-label="Angebote">
+			{angebote.map((a, i) => {
+				const titel = a.kurztitel || a.titel;
+				const preisSichtbar = a.preis != null && a.preisAnzeigen !== false;
+				const einheit = preisEinheiten.find((e) => e.value === a.preisEinheit)?.label ?? 'Termin';
+				return (
+					<li class="faecher-platz" style={`--i:${i}`} data-i={i}>
+						<article class="faecher-karte notiz">
+							<p class="faecher-nummer zahl" aria-hidden="true">{`{ ${nummer(i)} }`}</p>
+							{a.bild && <img src={a.bild} alt={a.bildBeschreibung ?? ''} width="800" height="600" loading="lazy" decoding="async" class="faecher-bild foto bg-surface" data-tina-field={tinaField(a, 'bild')} />}
+							<div class="faecher-text">
+								<h3 class="display text-[clamp(2rem,1.6vw+1.4rem,2.875rem)]">
+									<a href={angebotUrl(a.slug)} class="no-underline decoration-2 underline-offset-[0.15em] hover:text-primary-ink hover:underline" data-tina-field={tinaField(a, 'kurztitel')}>{titel}</a>
+								</h3>
+								{a.untertitel && <p class="mt-1.5 text-lead font-medium leading-snug text-heading" data-tina-field={tinaField(a, 'untertitel')}>{a.untertitel}</p>}
+								{a.kurzbeschreibung && <p class="faecher-kurz mt-2.5 text-muted" data-tina-field={tinaField(a, 'kurzbeschreibung')}>{a.kurzbeschreibung}</p>}
+								<ul class="mt-4 flex flex-wrap gap-2" aria-label="Eckdaten">
+									{angebotFakten(a).map((f) => <li class="tag">{f}</li>)}
+								</ul>
+							</div>
+							<div class="faecher-fuss haar">
+								{preisSichtbar && (
+									<p class="text-heading" data-tina-field={tinaField(a, 'preis')}>
+										<span class="figur text-[1.75rem]">{formatEuro(a.preis!)}</span>
+										<span class="text-sm text-muted"> pro {einheit}</span>
+									</p>
+								)}
+								<div class="faecher-aktionen">
+									<a href={angebotUrl(a.slug)} class="textlink">Details<span class="sr-only"> zu {titel}</span></a>
+									<a href={`${anfrageUrl(a.slug)}#formular`} class="btn-primary">Anfragen<span class="sr-only">: {titel}</span></a>
+								</div>
+							</div>
+						</article>
+					</li>
+				);
+			})}
+		</ul>
+	</div>
+</div>
+{bewegt && (
+	<script is:inline>
+		// Keyboard focus on a card of the pinned stage: scroll the window to where that card is centred
+		// (the card's range from the CSS, --ruhe = 0.15). Only while the fan runs (an animation is set).
+		(() => { const s = document.currentScript.previousElementSibling; s.addEventListener('focusin', (e) => { const p = e.target.closest('.faecher-platz'); if (!p || getComputedStyle(p).animationName === 'none') return; const n = +s.dataset.n, r = 0.15, b = s.firstElementChild, l = parseFloat(getComputedStyle(s).getPropertyValue('--leiste')) || 0; const top = s.getBoundingClientRect().top + scrollY - l + ((+p.dataset.i + r) / (n - 1 + 2 * r)) * (s.offsetHeight - b.offsetHeight); scrollTo({ top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }); })();
+	</script>
+)}
+
+<style>
+	.faecher {
+		--leiste: 0px;
+		--ruhe: 0.15;
+		--schritt: 85svh;
+	}
+	/* The start page's sticky inquiry bar (76px + two hairlines): the stage pins right below it. */
+	:global(html:has(.anfrage-leiste)) .faecher {
+		--leiste: 78px;
+	}
+
+	/* Base: a scroll-snap row of cards, capped to the container. */
+	.faecher-reihe {
+		display: flex;
+		justify-content: safe center;
+		gap: var(--gap-columns);
+		max-width: var(--container);
+		margin: 0 auto;
+		padding: var(--space-xs) var(--gutter) var(--space-lg);
+		overflow-x: auto;
+		overscroll-behavior-x: contain;
+		/* Without it Chromium lets the page itself scroll sideways by the row's overflow. */
+		contain: paint;
+		scroll-snap-type: x mandatory;
+		scroll-padding-inline: var(--gutter);
+		list-style: none;
+	}
+	.faecher-platz {
+		display: flex;
+		flex: 1 0 min(22rem, 84vw);
+		max-width: 30rem;
+		scroll-snap-align: center;
+	}
+	.faecher-karte {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		gap: var(--space-md);
+		padding: var(--space-lg);
+	}
+	.faecher-nummer {
+		font-size: var(--text-sm);
+		color: var(--muted);
+	}
+	.faecher-bild {
+		aspect-ratio: 4 / 3;
+	}
+	.faecher-kurz {
+		max-width: 46ch;
+	}
+	.faecher-fuss {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-sm) var(--space-md);
+		margin-top: auto;
+		padding-top: var(--space-md);
+	}
+	.faecher-aktionen {
+		display: flex;
+		align-items: center;
+		gap: var(--space-lg);
+		margin-left: auto;
+	}
+	/* The map is rendered by Karte.astro, outside this component's scope. */
+	.faecher-buehne > :global(.faecher-grund) {
+		display: none;
+	}
+
+	/* The fan: wide and tall enough screens, scroll-driven animations, no reduced motion. */
+	@media (prefers-reduced-motion: no-preference) and (min-width: 64rem) and (min-height: 40rem) {
+		@supports (animation-timeline: view()) {
+			.faecher-bewegt {
+				/* Card width and the step to a neighbour: on wide screens the neighbours still reach the edge. */
+				--b: min(30rem, 34vw);
+				--x: max(calc(var(--b) * 1.08), calc(50vw - var(--b) * 0.2));
+				height: calc(100svh - var(--leiste) + (var(--n) - 1 + 2 * var(--ruhe)) * var(--schritt));
+				view-timeline: --faecher block;
+				view-timeline-inset: var(--leiste) 0px;
+			}
+			.faecher-bewegt .faecher-buehne {
+				position: sticky;
+				top: var(--leiste);
+				display: grid;
+				height: calc(100svh - var(--leiste));
+				overflow: clip;
+			}
+			.faecher-bewegt .faecher-buehne > :global(.faecher-grund) {
+				display: block;
+				grid-area: 1 / 1;
+				mask-image: radial-gradient(ellipse 34% 46% at 50% 52%, transparent 60%, var(--fg) 100%);
+			}
+			.faecher-bewegt .faecher-reihe {
+				display: grid;
+				grid-area: 1 / 1;
+				place-items: center;
+				width: 100%;
+				max-width: none;
+				padding: var(--space-xl) 0;
+				overflow: visible;
+				contain: none;
+				scroll-snap-type: none;
+			}
+			.faecher-bewegt .faecher-platz {
+				grid-area: 1 / 1;
+				width: var(--b);
+				height: min(100%, 44rem);
+				transform-origin: 50% 100%;
+				will-change: transform;
+				animation: faecher-lauf linear both;
+				animation-timeline: --faecher;
+				/* Card i rests in the centre at step i; its run spans steps i - 2 to i + 2. */
+				animation-range:
+					contain calc((var(--i) - 2 + var(--ruhe)) / (var(--n) - 1 + 2 * var(--ruhe)) * 100%)
+					contain calc((var(--i) + 2 + var(--ruhe)) / (var(--n) - 1 + 2 * var(--ruhe)) * 100%);
+			}
+			/* The card keeps to the stage; the photograph gives way first when the stage is short. */
+			.faecher-bewegt .faecher-karte {
+				min-height: 0;
+			}
+			.faecher-bewegt .faecher-bild {
+				flex: 1 1 0;
+				min-height: 4rem;
+				aspect-ratio: auto;
+			}
+		}
+	}
+	/* Five stops (out right, right, centre, left, out left), each held for the pause: 0.15 of a step
+	   is 3.75 % of the four-step run. */
+	@keyframes faecher-lauf {
+		0%, 3.75% {
+			transform: translateX(calc(var(--x) * 2)) translateY(14%) rotate(20deg);
+			opacity: 0;
+			animation-timing-function: ease-in-out;
+		}
+		21.25%, 28.75% {
+			transform: translateX(var(--x)) translateY(7%) rotate(10deg);
+			opacity: 1;
+			animation-timing-function: ease-in-out;
+		}
+		46.25%, 53.75% {
+			transform: translateX(0) translateY(0) rotate(0deg);
+			opacity: 1;
+			animation-timing-function: ease-in-out;
+		}
+		71.25%, 78.75% {
+			transform: translateX(calc(var(--x) * -1)) translateY(7%) rotate(-10deg);
+			opacity: 1;
+			animation-timing-function: ease-in-out;
+		}
+		96.25%, 100% {
+			transform: translateX(calc(var(--x) * -2)) translateY(14%) rotate(-20deg);
+			opacity: 0;
+		}
+	}
+</style>

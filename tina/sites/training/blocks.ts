@@ -134,6 +134,15 @@ export const angeboteBlock: Template = {
     ueberschrift,
     einleitung,
     { type: 'string', name: 'auswahl', label: 'Welche Angebote?', options: [...angeboteBlockAuswahl] },
+    {
+      // Same name and type as the highlights block's field (sibling-field rule, CLAUDE.md).
+      type: 'string', name: 'darstellung', label: 'Darstellung',
+      description: 'Leer = Liste. Beim Fächer wandern die Karten beim Runterscrollen von rechts nach links durchs Bild.',
+      options: [
+        { value: 'liste', label: 'Liste mit Linien (Standard)' },
+        { value: 'faecher', label: 'Kartenfächer, der beim Scrollen durchläuft' },
+      ],
+    },
     { type: 'boolean', name: 'alleLink', label: 'Link „Alle Angebote“ zeigen' },
   ],
 };
