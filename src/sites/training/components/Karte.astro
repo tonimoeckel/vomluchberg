@@ -3,9 +3,10 @@
 // in contour lines, the forest as dots, a track, the river. Static SVG, built at build time: no
 // script, no tiles. "beschriftet" adds the two real names; otherwise it is a quiet
 // ground for the hero. "gipfel={false}" drops the summit dot where text runs over the map. Always decorative for screen readers (the facts are in the text beside it).
-// "bewegt" (the start page's hero only): the track draws itself on the first scroll (a clip rect,
-// scroll-driven, global.css) and a dog's paw prints walk across the map now and then (lib/pfotenspur.ts,
-// CSS opacity keyframes, paused off screen). Without support or with reduced motion: the static map.
+// "bewegt" (the start page's hero only): a dog's paw prints walk across the map now and then
+// (lib/pfotenspur.ts, CSS opacity keyframes, paused off screen). Each route is its own group, so the CSS
+// can pick the routes that the layout leaves visible (global.css, .karte-pfoten-route). With reduced
+// motion: the static map. The track itself is always drawn.
 import { karte, pfotenwege } from '../lib/karte';
 import { pfotenspur } from '../lib/pfotenspur';
 
@@ -14,28 +15,29 @@ import type { KarteOptionen } from '../lib/karte';
 interface Props { beschriftet?: boolean; gipfel?: boolean; bewegt?: boolean; optionen?: KarteOptionen; class?: string }
 const { beschriftet = false, gipfel = true, bewegt = false, optionen, class: klasse } = Astro.props;
 const k = karte(optionen);
-// One pass per route, staggered in a 30 s cycle (the keyframes in global.css assume that length).
-const START = [1.5, 11, 21];
-const pfoten = bewegt
-	? pfotenwege(k).flatMap((route, i) => pfotenspur(route, { seed: 5 + i, hoechstens: i === 2 ? 7 : 12 }).map((p) => ({ ...p, zeit: Math.round((START[i] + p.zeit) * 100) / 100 })))
-	: [];
+// One pass per route; the route's start in the cycle comes from the CSS (--route-start), the print's
+// offset within its pass from lib/pfotenspur.ts.
+const routen = bewegt ? pfotenwege(k).map((route, i) => pfotenspur(route, { seed: 5 + i, hoechstens: i === 2 ? 7 : 12 })) : [];
 ---
 <svg class:list={['karte', bewegt && 'karte-bewegt', klasse]} viewBox={`0 0 ${k.breite} ${k.hoehe}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
 	<path d={k.wald} class="karte-wald" />
 	{k.linien.map((l) => <path d={l.d} class:list={['karte-linie', l.stark && 'karte-linie-stark']} />)}
 	<path d={k.bach} class="karte-fluss" />
-	{bewegt ? (
+	<path d={k.weg} class="karte-weg" />
+	{bewegt && (
 		<>
 			<defs>
-				<clipPath id="karte-weg-spur"><rect x="-10" y="0" width={k.breite + 20} height={k.hoehe} class="karte-weg-rahmen" /></clipPath>
 				<path id="karte-pfote" d="M-7.1 0a4.4 5.1 0 1 0 8.7 0a4.4 5.1 0 1 0-8.7 0M2 -5.8a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0M4.5 -2.1a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0M4.5 2.1a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0M2 5.8a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0" />
 			</defs>
-			<path d={k.weg} class="karte-weg" clip-path="url(#karte-weg-spur)" />
 			<g class="karte-pfoten">
-				{pfoten.map((p) => <use href="#karte-pfote" transform={`translate(${p.x} ${p.y}) rotate(${p.winkel})`} style={`animation-delay:${p.zeit}s`} />)}
+				{routen.map((spur, i) => (
+					<g class={`karte-pfoten-route karte-pfoten-route-${i + 1}`}>
+						{spur.map((p) => <use href="#karte-pfote" transform={`translate(${p.x} ${p.y}) rotate(${p.winkel})`} style={`--pfote:${p.zeit}s`} />)}
+					</g>
+				))}
 			</g>
 		</>
-	) : <path d={k.weg} class="karte-weg" />}
+	)}
 	{gipfel && <circle cx={k.gipfel.x} cy={k.gipfel.y} r="5" class="karte-punkt" />}
 	{beschriftet && (
 		<>
