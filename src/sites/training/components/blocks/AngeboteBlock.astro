@@ -1,10 +1,12 @@
 ---
-// Automatic list of the visible offers (filter: all / group / single), set as a price list
-// (darstellung "liste", the default) or as a pile of sheets to scroll through ("stapel", AngeboteStapel).
+// Automatic list of the visible offers (filter: all / group / single). "darstellung": "liste" (default)
+// sets them as a ruled price list, "stapel" as a pile of sheets to scroll through (AngeboteStapel),
+// "faecher" as a fan of cards that travels across a pinned stage while the page scrolls (AngeboteFaecher).
 import { tinaField } from '@tinacms/astro/tina-field';
 import SectionHead from '../SectionHead.astro';
 import AngebotKarte from '../AngebotKarte.astro';
 import AngeboteStapel from '../AngeboteStapel.astro';
+import AngeboteFaecher from '../AngeboteFaecher.astro';
 import { angeboteListeUrl, sichtbareAngebote } from '../../../../lib/domain/angebot';
 import { listAngeboteMitSlug, type BlockOf } from '../../lib/data';
 
@@ -13,11 +15,12 @@ const { data } = Astro.props;
 const angebote = sichtbareAngebote(await listAngeboteMitSlug(), data.auswahl);
 const kopf = Boolean(data.ueberschrift || data.text);
 const stapel = data.darstellung === 'stapel';
+const faecher = data.darstellung === 'faecher' && angebote.length > 0;
 ---
 <section class:list={[kopf ? 'sektion-m' : 'pt-4 pb-[var(--section-gap-s)]']} id="angebote">
 	<div class="container-page">
 		{kopf && <SectionHead data={data} geteilt class="mb-14" />}
-		{angebote.length > 0 && stapel ? (
+		{faecher ? null : angebote.length > 0 && stapel ? (
 			<AngeboteStapel angebote={angebote} />
 		) : angebote.length > 0 ? (
 			<div class="regel">
@@ -26,6 +29,11 @@ const stapel = data.darstellung === 'stapel';
 		) : (
 			<p class="regel pt-6 text-muted">Gerade sind keine Angebote eingetragen. Schreibt mir gern trotzdem eine Anfrage.</p>
 		)}
-		{data.alleLink && <p class="mt-8"><a href={angeboteListeUrl} class="textlink text-lg" data-tina-field={tinaField(data, 'alleLink')}>Alle Angebote mit Details</a></p>}
 	</div>
+	{faecher && <AngeboteFaecher angebote={angebote} />}
+	{data.alleLink && (
+		<div class="container-page">
+			<p class:list={[faecher ? 'mt-4' : 'mt-8']}><a href={angeboteListeUrl} class="textlink text-lg" data-tina-field={tinaField(data, 'alleLink')}>Alle Angebote mit Details</a></p>
+		</div>
+	)}
 </section>

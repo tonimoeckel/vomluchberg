@@ -1,5 +1,26 @@
 [
  {
+  "mode": "build",
+  "scope": "component",
+  "shape": "Narrative Workflow",
+  "theme": "furrow+garden",
+  "axes": "light/grotesk-sans/chromatic-green",
+  "hero": "Stage",
+  "nav": "edge-aligned",
+  "footer": "letter close",
+  "imagery": "Karo photographs + survey sketch",
+  "photos": [],
+  "entry": "component: offer fan",
+  "fingerprint": "waldboden-offer-fan",
+  "sections": [
+   "offers"
+  ],
+  "signature": "survey sketch behind a pinned fan of notebook cards",
+  "waived": [],
+  "prompt": "offers block variant faecher: pinned scroll-driven card fan",
+  "date": "2026-11-18"
+ },
+ {
   "shape": "Narrative Workflow",
   "theme": "furrow+garden",
   "axes": "light/grotesk-sans/chromatic-green",

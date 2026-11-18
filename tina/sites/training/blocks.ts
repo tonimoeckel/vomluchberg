@@ -135,11 +135,13 @@ export const angeboteBlock: Template = {
     einleitung,
     { type: 'string', name: 'auswahl', label: 'Welche Angebote?', options: [...angeboteBlockAuswahl] },
     {
+      // Same name and type as the highlights block's field (sibling-field rule, CLAUDE.md).
       type: 'string', name: 'darstellung', label: 'Darstellung',
-      description: 'Liste: alle Angebote untereinander. Kartenstapel: beim Scrollen schiebt sich eine Karte nach der anderen über die vorige.',
+      description: 'Liste: alle Angebote untereinander. Kartenstapel: beim Scrollen schiebt sich eine Karte nach der anderen über die vorige. Kartenfächer: die Karten wandern beim Runterscrollen von rechts nach links durchs Bild.',
       options: [
         { value: 'liste', label: 'Liste (Standard)' },
         { value: 'stapel', label: 'Kartenstapel zum Durchscrollen' },
+        { value: 'faecher', label: 'Kartenfächer, der beim Scrollen durchläuft' },
       ],
     },
     { type: 'boolean', name: 'alleLink', label: 'Link „Alle Angebote“ zeigen' },
