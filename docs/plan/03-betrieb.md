@@ -117,15 +117,24 @@ on web3forms.com when creating the keys.
 
 ### 3.3 Build watch paths
 
-Rule of thumb: everything triggers all three, **except** content and uploads that belong to another site.
-Patterns follow the dashboard's wildcard syntax (`*` matches across `/` in the Workers Builds UI – check
-the hint text in the dashboard when entering them; adjust to `**` if the UI asks for it).
+Rule of thumb: everything triggers all three, **except** content, uploads and code that belong to another
+site, and files that never reach a build. The dashboard's `*` matches zero or more characters, **including
+`/`** (Cloudflare docs, checked 2026-11-18). So `docs/*` covers the whole folder, and a pattern like `*.md`
+would match every Markdown file in the repo, Karo's content in `src/content/**` included: never use it, name
+the root files instead. Watch paths apply to preview builds as well; there is no branch filter and no
+`[skip ci]` marker in Workers Builds. A push with 20+ commits or 3000+ changed files always builds.
 
-| Worker | Include | Exclude |
+Common excludes for all three Workers: `docs/*`, `migration/*`, `.claude/*`, `.hallmark/*`, `*.test.ts`,
+`README.md`, `CLAUDE.md`, `HANDOFF.md` (agent skills, design logs, tests and docs never reach `dist/`).
+
+| Worker | Include | Exclude (plus the common ones) |
 | --- | --- | --- |
-| `vomluchberg` | `*` | `src/content/dackel/*`, `src/content/training/*`, `public/uploads/dackel/*`, `public/uploads/training/*`, `docs/*`, `migration/*`, `*.md` in repo root |
-| `vomluchberg-dackel` | `*` | `src/content/seiten/*`, `src/content/hunde/*`, `src/content/wuerfe/*`, `src/content/aktuelles/*`, `src/content/config/*`, `src/content/training/*`, `public/uploads/galerie/*`, `public/uploads/header/*`, `public/uploads/hunde/*`, `public/uploads/news/*`, `public/uploads/rudel/*`, `public/uploads/seiten/*`, `public/uploads/wuerfe/*`, `public/uploads/training/*`, `docs/*`, `migration/*` |
-| `vomluchberg-training` | `*` | same luchberg folders as above, plus `src/content/dackel/*`, `public/uploads/dackel/*`, `docs/*`, `migration/*` |
+| `vomluchberg` | `*` | `src/sites/dackel/*`, `src/sites/training/*`, `src/content/dackel/*`, `src/content/training/*`, `public/uploads/dackel/*`, `public/uploads/training/*` |
+| `vomluchberg-dackel` | `*` | `src/sites/luchberg/*`, `src/sites/training/*`, `src/content/seiten/*`, `src/content/hunde/*`, `src/content/wuerfe/*`, `src/content/aktuelles/*`, `src/content/config/*`, `src/content/training/*`, `public/uploads/training/*` |
+| `vomluchberg-training` | `*` | `src/sites/luchberg/*`, `src/sites/dackel/*`, `src/content/seiten/*`, `src/content/hunde/*`, `src/content/wuerfe/*`, `src/content/aktuelles/*`, `src/content/config/*`, `src/content/dackel/*`, `public/uploads/dackel/*` |
+
+The luchberg upload folders are not excluded for the other two: every Worker ships all of `public/uploads`
+(no per-site pruning, see the multi-site notes in `CLAUDE.md`).
 
 Notes:
 
