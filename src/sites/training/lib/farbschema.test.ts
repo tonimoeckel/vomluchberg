@@ -39,6 +39,7 @@ const FARBTOKENS = [
 /** [text, background, minimum] – text pairs need 4.5:1, copper lines and button areas 3:1. */
 const PAARE: [string, string, number][] = [
   ...['bg', 'surface', 'card', 'surface-2'].flatMap((h): [string, string, number][] => [['fg', h, 4.5], ['heading', h, 4.5]]),
+  // primary-ink on bg also covers the reached step numbers (Highlights "schritte").
   ...['bg', 'surface', 'card'].flatMap((h): [string, string, number][] => [['muted', h, 4.5], ['primary-ink', h, 4.5]]),
   ['accent-ink', 'bg', 4.5],
   ['accent-ink', 'surface', 4.5],
@@ -52,7 +53,7 @@ const PAARE: [string, string, number][] = [
   ['copper', 'bg', 3], // lines, numbers, large accent words, focus ring
   ['copper', 'surface', 3],
   ['copper', 'card', 3],
-  ['primary', 'bg', 3],
+  ['primary', 'bg', 3], // also the scroll lines of the inquiry bar and the steps (Highlights "schritte")
 ];
 
 describe('training colour schemes', () => {
