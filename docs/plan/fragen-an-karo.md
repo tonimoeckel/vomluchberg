@@ -101,16 +101,12 @@ kommen in den passenden Abschnitt.
 - [ ] **Daten:** Toni exportiert deine Kunden- und Anfragedaten aus Pfotentermin für dich. Wie lange möchtest du danach noch in Pfotentermin nachschauen können, bevor die Daten dort gelöscht werden? *(Annahme: 3 Monate. Rechnungen, falls Pfotentermin welche erstellt hat, musst du selbst aufbewahren.)*
 - [ ] **Alte Links:** Wo steht die Pfotentermin-Adresse noch überall (Flyer, Visitenkarten, Facebook, Instagram, Vereinsseiten)? *(Annahme: du tauschst sie nach dem Start selbst aus.)*
 
-## 6. Ansprache-Spiel (Idee, nur nach deinem Ja)
+## 6. Ansprache-Spiel
 
-Idee: Wer eine Anfrage abgeschickt hat, sieht unter dem Dankeschön einen kleinen Knopf zu einem Spiel. Ihr gebt eurem Hund einen Namen und lauft dann gemeinsam an der Leine den Waldweg unter dem Luchberg entlang. Zusammen springt ihr über Wurzeln, Baumstämme und die Müglitz. Wird euer Hund auf ein Reh, ein Eichhörnchen, einen Jogger, einen anderen Hund oder eine Wurst aufmerksam, müsst ihr ihn rechtzeitig ansprechen (auf den Hund tippen). Klappt das, gibt es „Fein!“ und Punkte. Kommt die Ansprache zu spät, ist der Hund weg und das Spiel vorbei („Weg ist Hanni: das Reh war spannender.“). Es wird immer schneller, bis es irgendwann nicht mehr zu schaffen ist. Am Ende stehen eure Punkte und ihr könnt es nochmal versuchen. Es startet nie von selbst, kein Ton, keine Cookies. Toni zeigt es dir auf deinem Handy, eingebaut wird es nur, wenn es dir gefällt.
+Auf der Trainingsseite gibt es ein kleines Spiel: Ihr gebt eurem Hund einen Namen und lauft gemeinsam an der Leine den Waldweg unter dem Luchberg entlang, springt über Wurzeln, Baumstämme und die Müglitz. Wird euer Hund auf eine Ablenkung aufmerksam, müsst ihr ihn rechtzeitig ansprechen (auf den Hund tippen), sonst ist er weg. Es wird immer schneller, am Ende stehen eure Punkte. Toni entscheidet, ob und wo es auf die Seite kommt. Von dir brauchen wir nur zwei Inhalte:
 
-- [ ] **K-R1 Grundsätzlich:** Bei der Dackel-Seite wolltest du keine Spiele und Animationen, weil sie Besucher nerven könnten. Dieses Spiel sieht nur, wer schon eine Anfrage geschickt hat, und nur, wenn er auf den Knopf drückt. Ist das für dich in Ordnung? *(Annahme: auf der Website ist es zuerst ausgeschaltet, du kannst es im Editor selbst einschalten.)*
-- [ ] **K-R2 Lieber etwas Kleineres?** Statt Spiel ginge auch ein kurzer Tipp von dir zur Ansprache unter dem Dankeschön (ohne Bewegung). Was ist dir lieber: Spiel, Tipp oder nichts? *(Annahme: Spiel ansehen, dann entscheiden.)*
 - [ ] **K-R3 Welcher Hund läuft?** Im Moment ein Rottweiler (wie in deinem Logo). Lieber ein Dackel oder beide zur Auswahl? *(Annahme: der Rottweiler.)*
-- [ ] **K-R4 Auch auf der Fehlerseite?** Wer eine falsche Adresse aufruft, landet auf „Diese Seite gibt es nicht (mehr)“. Dort könnte ein kleiner Link zum Spiel stehen. *(Annahme: nein, nur nach der Anfrage.)*
 - [ ] **K-R5 Deine Sätze und Ablenkungen:** Passen „Fein!“, „Weg ist Hanni: das Reh war spannender.“ und „Genau das üben wir im Training.“? Welche Ablenkungen kennst du von deinen Kunden am besten (Reh, Hase, Jogger, Radfahrer, andere Hunde, Futter …)? *(Annahme: wir schreiben Vorschläge, du siehst sie durch.)*
-- [ ] **K-R6 Schwierigkeit:** Ist es am Anfang ruhig genug und wird es schnell genug schwer? *(Annahme: nach etwa ein bis zwei Minuten ist für fast alle Schluss.)*
 
 ## Erledigt
 

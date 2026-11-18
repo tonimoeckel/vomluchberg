@@ -2,7 +2,12 @@
 
 Status: **preview built, second version "Ansprache"** (2026-11-18, branch
 `claude/training-rueckruf-spiel-plan`). Numbered 04 because `03-betrieb.md` already holds slice 3.
-Open questions for Karo: section "6. Ansprache-Spiel" in [`fragen-an-karo.md`](fragen-an-karo.md).
+Content questions for Karo (which dog, texts): section "6. Ansprache-Spiel" in
+[`fragen-an-karo.md`](fragen-an-karo.md).
+
+**Decision (Toni, 2026-11-18):** Karo does not need to approve the training site's design, motion
+or this game; Toni decides. The prototype gate and the approval questions of the first plan
+(§2, §9 "Karo decides", §10) are dropped; read them as history.
 
 ## 0. Current version: "Ansprache" (supersedes §1–§4 where they differ)
 
@@ -39,10 +44,9 @@ Code: `src/sites/training/lib/ansprache/` (`profil`, `strecke`, `physik`, `texte
 always lose between 40 and 200 s, no Ansprache loses at the first distraction; `zeichnen`, `spiel`
 for canvas and dialog), loader `components/AnspracheVorschau.astro` in `layouts/Base.astro`.
 
-Still open before it may be offered: Karo's yes, the hook after a Web3Forms success (§3), the Tina
-switch (§6), the reduced-motion rule for the real entry, a real-phone check. In dark mode the ink
-colour is light, so the Rottweiler is drawn light. If Karo says no: remove the loader from
-`Base.astro` and `lib/ansprache/`.
+Still open before it is offered after an inquiry (Toni's call): the hook after a Web3Forms
+success (§3), the Tina switch (§6), the reduced-motion rule for the real entry, a real-phone check.
+In dark mode the ink colour is light, so the Rottweiler is drawn light.
 
 ## 1. Summary
 
@@ -71,8 +75,8 @@ Why it can still be different this time:
 
 - **Nobody sees it who did not ask for it.** G and H sat on the page every visitor reads. This one
   appears only after someone has sent an inquiry, and only as a button. It never moves on its own.
-  It is interactive, not decorative, so it does not break the rule, but Karo must agree to that
-  reading (question K-R1).
+  It is interactive, not decorative, so it does not break the rule (Toni decides, see the
+  decision at the top).
 - **It carries her message.** "Rückruf", "Impulskontrolle", "rechtzeitig rufen" are training
   content. A friendly failure line ("Das Reh war spannender. Genau das üben wir im Training.") is
   a small piece of her voice that a visitor remembers and might repeat to friends.
@@ -117,7 +121,7 @@ Decisions (working assumptions):
 3. **No `/danke` page.** It would need a redirect after the fetch, an indexable URL that people can
    open without an inquiry (a gate in reverse), and it would change the no-JS POST flow. Not worth it.
 4. **Optional second entry: the 404 page** (A3), behind the same Tina switch, as a quiet link
-   below "Zur Startseite". Decide with Karo (K-R4).
+   below "Zur Startseite". Toni decides.
 5. **Never** a gate before the form, never a teaser on other pages, no "play while you wait"
    before sending.
 
@@ -232,7 +236,7 @@ Minimal, schema identical for every `SITE_ID` (as always):
 
 - `trainingConfig.rueckruf` (object "Rückruf-Spiel nach der Anfrage"):
   - `aktiv` (boolean, "Spiel nach dem Absenden anbieten"). **Empty = off**, so the feature ships
-    dark and Karo switches it on herself after approving.
+    dark and is switched on when Toni decides.
   - `einladung` (string, the sentence above the button; default in code).
   - `aufDerFehlerseite` (boolean, the 404 entry, only if K-R4 is yes).
 - Finish and failure lines stay in `texte.ts` for the first version (there are ~15 of them and
@@ -278,7 +282,7 @@ in, plus a small scheme switcher so Karo sees two or three schemes.
 | Step | Session | Content | Effort |
 | --- | --- | --- | --- |
 | P | Prototype | `docs/plan/mockups/training/rueckruf/index.html`: Junghund level only, Rottweiler, obstacles + 3 distraction kinds + the stream, signal window, paws, finish lines. Shown to Karo on her phone. | 1 session |
-| — | **Karo decides** | yes / no / alternative A1–A3, answers K-R1…K-R6 | – |
+| — | ~~Karo decides~~ | dropped: Toni decides (decision at the top); Karo only answers K-R3/K-R5 | – |
 | 1 | Pure modules | `karte.ts` refactor (byte-identical output), `profil`, `level`, `physik`, `wertung`, `texte` with tests | 1 session |
 | 2 | Game + hook | `spiel.ts` (canvas, loop, input, lifecycle, tokens), panel after the form in the success branch, reduced-motion check, Tina `rueckruf` fields + lock, `build:local:all`, luchberg `dist/client` diff (must be identical) | 1 session |
 | 3 | Tuning | three levels, real-phone check (fps, touch latency), bundle size, a11y pass (keyboard only, VoiceOver/TalkBack: the thank-you is read and the game does not trap focus) | ½–1 session |
@@ -289,7 +293,7 @@ a phone test with Karo. If Karo says no after P, the cost was one session.
 
 ## 10. Risks
 
-- Karo says no (likely, given D11): that is the reason for the prototype gate.
+- ~~Karo says no~~: no longer a gate, Toni decides.
 - Other sessions on the training site touch the same files: `karte.ts`/`Karte.astro` (hero paw
   prints and track drawing) and possibly `AnfrageFormular.astro`/`AnfrageLeiste.astro` (scroll
   hints). Step 1 and 2 rebase onto whatever lands first; keep the form hook to a few lines.
