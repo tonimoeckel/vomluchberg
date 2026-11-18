@@ -1,10 +1,12 @@
 ---
 // Where and how to reach Karo, next to the inquiry form. The training place opens as a notebook card
 // (the one lifted surface) on the survey sketch of the Luchberg; e-mail, phone (only when set) and
-// Instagram follow as a ruled list (dl). Icons inline, never in a tile.
+// Instagram follow as a ruled list (dl). Icons inline, never in a tile. The kinds of training places
+// (kontakt.orte, defaults in lib/orte.ts) are pins on the map and, for screen readers, a list in the card.
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from '../../../components/ui/Icon.astro';
 import Karte from './Karte.astro';
+import { orte } from '../lib/orte';
 import type { CmsConfig } from '../lib/data';
 
 interface Props { config?: CmsConfig | null }
@@ -14,12 +16,13 @@ const s = config?.social;
 const zeile = 'grid grid-cols-[1.5rem_minmax(0,1fr)] gap-x-3 border-b border-border py-5';
 const titel = 'font-display text-[1.25rem] font-semibold leading-tight text-heading';
 const icon = 'mt-0.5 size-6 text-accent';
+const treffpunkte = orte(k?.orte);
 ---
 {k && (
 	<div class="mt-10" data-tina-field={config ? tinaField(config, 'kontakt') : undefined}>
 		<figure>
 			<div class="relative overflow-hidden rounded-[var(--radius)] border border-border bg-bg">
-				<Karte beschriftet class="aspect-square h-auto sm:aspect-[4/3]" />
+				<Karte beschriftet orte={treffpunkte} class="aspect-square h-auto sm:aspect-[4/3]" />
 			</div>
 			<div class="notiz relative -mt-14 ml-6 mr-3 sm:ml-16 sm:mr-6">
 				<div class="flex items-center gap-3 bg-heading px-5 py-3 text-bg">
@@ -30,10 +33,21 @@ const icon = 'mt-0.5 size-6 text-accent';
 					<p class="font-medium text-heading">{[k.ort, k.region].filter(Boolean).join(', ')}</p>
 					{k.strasse && <p class="text-muted">{k.strasse}</p>}
 					{k.ortText && <p class="mt-2 max-w-[52ch] text-fg">{k.ortText}</p>}
+					<ul class="mt-4 flex flex-wrap gap-x-6 gap-y-2" aria-label="Mögliche Treffpunkte" data-tina-field={k.orte ? tinaField(k, 'orte') : undefined}>
+						{treffpunkte.map((o) => (
+							<li class="flex items-center gap-2 font-medium text-heading">
+								<svg viewBox="-34 -58 68 68" class="size-5 shrink-0 text-primary-ink" aria-hidden="true" focusable="false">
+									{o.art === 'vorOrt' && <circle cy="-24" r="31" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="6 5" />}
+									<path d="M0 0C-5-13-18-22-18-35a18 18 0 1 1 36 0c0 13-13 22-18 35z" fill="currentColor" />
+								</svg>
+								{o.name}
+							</li>
+						))}
+					</ul>
 					{k.mapsLink && <a href={k.mapsLink} rel="noopener" class="textlink mt-3 inline-block">In Google Maps öffnen</a>}
 				</div>
 			</div>
-			<figcaption class="mt-3 text-[0.9375rem] text-muted">Skizze, nicht maßstabsgetreu: der Luchberg über dem Müglitztal.</figcaption>
+			<figcaption class="mt-3 text-[0.9375rem] text-muted">Skizze, nicht maßstabsgetreu: der Luchberg über dem Müglitztal. Die Treffpunkte sind nur angedeutet.</figcaption>
 		</figure>
 		<dl class="regel mt-8">
 			{k.email && (
