@@ -10,6 +10,7 @@ import { getConfig } from '../lib/data';
 import { islands } from '../lib/islands';
 import { farbschema } from '../lib/farbschema';
 import { headMeta, type Seo } from '../lib/domain/seo';
+import { localBusinessJsonLd } from '../lib/domain/localBusiness';
 import { luchberg } from '../sites/luchberg/site';
 
 type Props = Partial<Seo>;
@@ -18,12 +19,32 @@ const config = (await getConfig()).data?.config ?? null;
 const meta = headMeta(Astro.props, config?.website, luchberg.name);
 const schema = farbschema(config?.farbschema);
 const showSwitcher = import.meta.env.PUBLIC_FARBVORSCHAU === 'true';
+const w = config?.website;
+const k = config?.kontakt;
+const s = config?.social;
+// LocalBusiness on the start page only, like the training site (Google's local results).
+const betrieb =
+	Astro.url.pathname === '/' &&
+	localBusinessJsonLd({
+		name: [w?.name ?? luchberg.name, w?.untertitel].filter(Boolean).join(' – '),
+		url: Astro.site?.href ?? Astro.url.origin,
+		beschreibung: w?.beschreibung,
+		bild: w?.teilenBild,
+		logo: w?.logo,
+		strasse: k?.strasse,
+		ort: k?.ort,
+		region: 'Sachsen',
+		email: k?.email,
+		telefon: k?.telefon,
+		sameAs: [s?.facebook, s?.instagram, s?.workingDog],
+	});
 ---
 
 <!doctype html>
 <html lang="de" data-farbe={schema.id} data-farbe-standard={schema.id}>
 	<head>
 		<BaseHead {...meta} themeColor={schema.themeColor} />
+		{betrieb && <script type="application/ld+json" set:html={JSON.stringify(betrieb)} />}
 		<script is:inline>
 			// Colour preview (for reviewing with Karo): ?farbe=neon is remembered, ?farbe=<standard> forgets it.
 			try {

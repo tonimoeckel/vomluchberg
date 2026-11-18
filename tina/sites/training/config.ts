@@ -26,6 +26,15 @@ const kontakt: TinaField = {
     { type: 'string', name: 'telefon', label: 'Telefon (leer = nicht zeigen)' },
     { type: 'string', name: 'email', label: 'E-Mail (hierhin gehen auch die Anfragen ohne Formular-Dienst)' },
     { type: 'string', name: 'mapsLink', label: 'Link „In Google Maps öffnen“' },
+    {
+      type: 'object', name: 'orte', label: 'Treffpunkte auf der Karte',
+      description: 'Beschriftung der drei Stecknadeln auf der Kartenskizze (leer = Standardtext). Die Punkte sind nur angedeutet, keine echten Orte.',
+      fields: [
+        { type: 'string', name: 'hundeplatz', label: 'Hundeplatz', description: 'Standard: „Hundeplatz“' },
+        { type: 'string', name: 'waldparkplatz', label: 'Waldparkplatz', description: 'Standard: „Waldparkplatz“' },
+        { type: 'string', name: 'vorOrt', label: 'Bei euch', description: 'Standard: „Bei euch vor Ort“' },
+      ],
+    },
   ],
 };
 

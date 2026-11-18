@@ -7,19 +7,24 @@
 // (lib/pfotenspur.ts, CSS opacity keyframes, paused off screen). Each route is its own group, so the CSS
 // can pick the routes that the layout leaves visible (global.css, .karte-pfoten-route). With reduced
 // motion: the static map. The track itself is always drawn.
+// "orte" (the contact map only): labelled pins for the kinds of training places (lib/orte.ts), symbolic
+// positions; they drop in one after another as the map scrolls into view (CSS view timeline).
 import { karte, pfotenwege } from '../lib/karte';
 import { pfotenspur } from '../lib/pfotenspur';
+import { ortPunkte } from '../lib/orte';
+import type { Ort } from '../lib/orte';
 
 import type { KarteOptionen } from '../lib/karte';
 
-interface Props { beschriftet?: boolean; gipfel?: boolean; bewegt?: boolean; optionen?: KarteOptionen; class?: string }
-const { beschriftet = false, gipfel = true, bewegt = false, optionen, class: klasse } = Astro.props;
+interface Props { beschriftet?: boolean; gipfel?: boolean; bewegt?: boolean; orte?: Ort[]; optionen?: KarteOptionen; class?: string }
+const { beschriftet = false, gipfel = true, bewegt = false, orte, optionen, class: klasse } = Astro.props;
 const k = karte(optionen);
 // One pass per route; the route's start in the cycle comes from the CSS (--route-start), the print's
 // offset within its pass from lib/pfotenspur.ts.
 const routen = bewegt ? pfotenwege(k).map((route, i) => pfotenspur(route, { seed: 5 + i, hoechstens: i === 2 ? 7 : 12 })) : [];
+const pins = orte?.length ? ortPunkte(k, orte) : [];
 ---
-<svg class:list={['karte', bewegt && 'karte-bewegt', klasse]} viewBox={`0 0 ${k.breite} ${k.hoehe}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+<svg class:list={['karte', bewegt && 'karte-bewegt', pins.length > 0 && 'karte-mit-orten', klasse]} viewBox={`0 0 ${k.breite} ${k.hoehe}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
 	<path d={k.wald} class="karte-wald" />
 	{k.linien.map((l) => <path d={l.d} class:list={['karte-linie', l.stark && 'karte-linie-stark']} />)}
 	<path d={k.bach} class="karte-fluss" />
@@ -46,6 +51,16 @@ const routen = bewegt ? pfotenwege(k).map((route, i) => pfotenspur(route, { seed
 			<text x={k.fluss.x} y={k.fluss.y} dx="-0.6em" text-anchor="end" class="karte-name karte-name-fluss">Müglitz</text>
 		</>
 	)}
+	{pins.map((p, i) => (
+		<g transform={`translate(${p.x} ${p.y})`}>
+			<g class="karte-ort" style={`--i:${i}`}>
+				{p.art === 'vorOrt' && <circle r="64" class="karte-umkreis" />}
+				<path d="M0 0C-5-13-18-22-18-35a18 18 0 1 1 36 0c0 13-13 22-18 35z" class="karte-pin" />
+				<circle cy="-35" r="6.5" class="karte-pin-kern" />
+				<text x={p.anker === 'start' ? 28 : -28} y="-35" dy="0.35em" text-anchor={p.anker} class="karte-ort-name">{p.name}</text>
+			</g>
+		</g>
+	))}
 </svg>
 {bewegt && (
 	<script is:inline>
