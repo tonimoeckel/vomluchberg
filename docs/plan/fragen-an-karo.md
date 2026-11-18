@@ -5,9 +5,9 @@ Bis dahin arbeiten wir mit den **Annahmen** in Klammern weiter. Bitte bei jeder 
 direkt darunter eintragen und die Frage abhaken.
 
 Die Fragen sind nach Wichtigkeit sortiert: Abschnitt 1 brauchen wir vor dem Start der Seiten,
-Abschnitt 2 und 3 machen die Inhalte besser, Abschnitt 4 und 5 betreffen den Ablauf, Abschnitt 6 und 7
-sind Ideen und Entwürfe zum Anschauen. Neue Fragen
-kommen in den passenden Abschnitt.
+Abschnitt 2 und 3 machen die Inhalte besser, Abschnitt 4 und 5 betreffen den Ablauf, Abschnitt 6 ist
+eine Idee zum Anschauen, Abschnitt 7 fragt nach deiner Beratung im Quiz. Neue Fragen kommen in den
+passenden Abschnitt.
 
 ## 1. Wichtig vor dem Start (Recht und Adressen)
 
@@ -107,6 +107,21 @@ Auf der Trainingsseite gibt es ein kleines Spiel: Ihr gebt eurem Hund einen Name
 
 - [ ] **K-R3 Welcher Hund läuft?** Im Moment ein Rottweiler (wie in deinem Logo). Lieber ein Dackel oder beide zur Auswahl? *(Annahme: der Rottweiler.)*
 - [ ] **K-R5 Deine Sätze und Ablenkungen:** Passen „Fein!“, „Weg ist Hanni: das Reh war spannender.“ und „Genau das üben wir im Training.“? Welche Ablenkungen kennst du von deinen Kunden am besten (Reh, Hase, Jogger, Radfahrer, andere Hunde, Futter …)? *(Annahme: wir schreiben Vorschläge, du siehst sie durch.)*
+
+## 7. Quiz „Welches Training passt?“
+
+So sieht das Ergebnis aus: Bild `docs/plan/mockups/training/bewegung/04-quiz-ergebnis.png`.
+
+- [ ] **K-Q1 Zuordnung:** Das Quiz auf der Startseite und bei „Angebote“ stellt drei Fragen (Alter des Hundes, was ihr euch wünscht, allein oder in der Gruppe) und empfiehlt dann ein Angebot (Bild `04-quiz-ergebnis.png`). Würdest du die Leute im Gespräch genauso beraten?
+  - „Allein mit mir“ → immer **Einzeltraining**.
+  - **Welpe** → **Welpenkurs**. Ausnahme: Welpe + „konkretes Problem im Alltag“ + „ist uns egal“ → Einzeltraining.
+  - **Junghund oder erwachsener Hund** + „Grundlagen“ (Gruppe oder egal) → **Basistraining**.
+  - Junghund oder erwachsener Hund + „konkretes Problem“ oder „sportliche Übungen“ + „ist uns egal“ → **Einzeltraining**.
+  - Junghund oder erwachsener Hund + „konkretes Problem“ oder „sportliche Übungen“ + „kleine Gruppe“ → **persönliche Beratung** („Schreibt mir, was ihr euch wünscht, und ich sage euch, was passt.“), weil es dafür keinen Gruppenkurs gibt.
+  - Ist ein Angebot gerade ausgeblendet, empfiehlt das Quiz ebenfalls die persönliche Beratung.
+
+  *(Annahme: passt so. Fragen an dich dazu: Darf ein Junghund noch in den Welpenkurs, und ab welchem Alter? Gibt es Sport oder Problemhunde in einer Gruppe, z. B. im Verein?)*
+- [ ] **K-Q2 Texte:** Passen die Fragen, Antworten und die Sätze unter der Empfehlung (z. B. „Im Basistraining übt ihr in einer kleinen Gruppe Orientierung, Leinenführigkeit und Impulskontrolle für den Alltag.“)? Fragen und Antworten kannst du im Editor selbst ändern, die Sätze unter der Empfehlung ändert Toni. *(Annahme: passen.)*
 
 ## Erledigt
 

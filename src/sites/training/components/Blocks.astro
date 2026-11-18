@@ -20,8 +20,8 @@ interface Props { data?: CmsPage | null }
 const { data } = Astro.props;
 const blocks = (data?.blocks ?? []).filter((b) => b !== null);
 // The start page's hero (variante "gross") is followed by the sticky inquiry bar; the outer <div>
-// is the bar's sticky range (it pins to the top until the footer) and, as "anfrage-strecke", the
-// timeline of the bar's progress line (AnfrageLeiste.astro).
+// is the bar's sticky range (it pins to the top until the footer); "anfrage-strecke" also tells
+// sticky blocks below it to start under the bar (AngeboteStapel.astro).
 const leiste = blocks.find((b) => blockName(b.__typename) === 'Hero' && (b as BlockOf<'Hero'>).variante === 'gross') as BlockOf<'Hero'> | undefined;
 ---
 <div class:list={[leiste && 'anfrage-strecke']}>
