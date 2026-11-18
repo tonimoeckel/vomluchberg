@@ -140,7 +140,7 @@ export interface Gelaende {
 
 /**
  * The terrain behind the sketch: height field, valley and track. Shared by `karte()` and the
- * "Rückruf" game (lib/rueckruf/profil.ts), which samples the height along the track.
+ * "Ansprache" game (lib/ansprache/profil.ts), which samples the height along the track.
  */
 export function gelaende(optionen: KarteOptionen = {}): Gelaende {
   const { breite = 1200, hoehe = 800, seed = 11, gipfelX = 0.36, gipfelY = 0.42 } = optionen;

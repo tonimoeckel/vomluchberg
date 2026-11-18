@@ -101,39 +101,12 @@ kommen in den passenden Abschnitt.
 - [ ] **Daten:** Toni exportiert deine Kunden- und Anfragedaten aus Pfotentermin für dich. Wie lange möchtest du danach noch in Pfotentermin nachschauen können, bevor die Daten dort gelöscht werden? *(Annahme: 3 Monate. Rechnungen, falls Pfotentermin welche erstellt hat, musst du selbst aufbewahren.)*
 - [ ] **Alte Links:** Wo steht die Pfotentermin-Adresse noch überall (Flyer, Visitenkarten, Facebook, Instagram, Vereinsseiten)? *(Annahme: du tauschst sie nach dem Start selbst aus.)*
 
-## 6. Rückruf-Spiel (Idee, nur nach deinem Ja)
+## 6. Ansprache-Spiel
 
-Idee: Wer eine Anfrage abgeschickt hat, sieht unter dem Dankeschön einen kleinen Knopf „Eine Runde Rückruf“. Dann läuft euer Hund auf dem Waldweg unter dem Luchberg zu euch zurück, springt über Wurzeln, einen Baumstamm und die Müglitz. Reh, Eichhörnchen, Jogger, ein anderer Hund oder eine Wurst lenken ihn ab: Wer im richtigen Moment ruft, behält ihn bei sich. Am Ende sitzt er vor euch („Sitz. Vorbildlicher Rückruf!“, bis zu 5 Pfoten). Es startet nie von selbst, kein Ton, keine Cookies. Toni zeigt dir zuerst einen Entwurf zum Ausprobieren auf deinem Handy, gebaut wird nur, wenn er dir gefällt.
+Auf der Trainingsseite gibt es ein kleines Spiel: Ihr gebt eurem Hund einen Namen und lauft gemeinsam an der Leine den Waldweg unter dem Luchberg entlang, springt über Wurzeln, Baumstämme und die Müglitz. Wird euer Hund auf eine Ablenkung aufmerksam, müsst ihr ihn rechtzeitig ansprechen (auf den Hund tippen), sonst ist er weg. Es wird immer schneller, am Ende stehen eure Punkte. Toni entscheidet, ob und wo es auf die Seite kommt. Von dir brauchen wir nur zwei Inhalte:
 
-- [ ] **K-R1 Grundsätzlich:** Bei der Dackel-Seite wolltest du keine Spiele und Animationen, weil sie Besucher nerven könnten. Dieses Spiel sieht nur, wer schon eine Anfrage geschickt hat, und nur, wenn er auf den Knopf drückt. Ist das für dich in Ordnung? *(Annahme: wir bauen nur den Entwurf und warten auf dein Ja. Auf der Website ist es zuerst ausgeschaltet, du kannst es im Editor selbst einschalten.)*
-- [ ] **K-R2 Lieber etwas Kleineres?** Statt Spiel ginge auch ein kurzer Rückruf-Tipp von dir unter dem Dankeschön (ohne Bewegung). Was ist dir lieber: Spiel, Tipp oder nichts? *(Annahme: Entwurf vom Spiel ansehen, dann entscheiden.)*
-- [ ] **K-R3 Welcher Hund läuft?** Ein Rottweiler (wie in deinem Logo), ein Dackel oder beide zur Auswahl? Der Dackel würde unter dem Baumstamm durchlaufen statt zu springen. *(Annahme: zuerst nur der Rottweiler.)*
-- [ ] **K-R4 Auch auf der Fehlerseite?** Wer eine falsche Adresse aufruft, landet auf „Diese Seite gibt es nicht (mehr)“. Dort könnte ein kleiner Link stehen: „Hier hat sich jemand verlaufen. Ruft ihn zurück!“ *(Annahme: nein, nur nach der Anfrage.)*
-- [ ] **K-R5 Deine Sätze:** Am Ende kommt ein Satz, z. B. „Das Reh war spannender. Genau das üben wir im Training.“ Magst du diese Sätze selbst schreiben oder durchsehen? Welche Ablenkungen kennst du von deinen Kunden am besten (Reh, Hase, Jogger, Radfahrer, andere Hunde, Futter …)? *(Annahme: wir schreiben Vorschläge, du siehst sie durch.)*
-- [ ] **K-R6 Schwierigkeit:** Drei Stufen wie deine Angebote, „Welpe“, „Junghund“ und „Prüfung“? Oder lieber nur eine einfache Runde? *(Annahme: drei Stufen, im Entwurf erst nur „Junghund“.)*
-
-## 7. Bewegung auf der Startseite und Quiz „Welches Training passt?“
-
-Zum Anschauen: Bilder und zwei kurze Videos im Ordner `docs/plan/mockups/training/bewegung/` (Toni schickt sie dir auch direkt). Auf der Startseite bewegt sich jetzt genau zweierlei, beides leise und ohne Ton:
-
-1. **Die Pfotenspur:** Auf der Landkarte hinter „Alltag kann Sport.“ tauchen nach dem Laden ein paar Pfotenabdrücke auf und verblassen wieder, als würde ein Hund über die Karte traben (auf dem Computer am Weg unter den Knöpfen und am Luchberg, auf dem Handy neben den Knöpfen). Nach etwa anderthalb Minuten hört es von selbst auf. Video: `start-scroll-desktop.mp4`, kurz: `pfoten.gif`.
-2. **Die Linie unter der Anfrage-Leiste:** Beim Runterscrollen füllt sich die Linie unter „Training anfragen“ langsam bis zum Anfrageformular (Bild `03-anfrageleiste-linie.png`).
-
-Wer auf seinem Gerät „Bewegung reduzieren“ eingestellt hat, sieht beides nicht, die Seite ist dann ganz ruhig. Zwei weitere Effekte (ein Weg, der sich beim Scrollen selbst zeichnet, und aufleuchtende Schritte bei „So läuft’s ab“) haben wir wieder herausgenommen, weil es zusammen zu unruhig war.
-
-- [ ] **K-B1 Bewegung insgesamt:** Bei der Dackel-Seite wolltest du keine Animationen. Ist dir diese leise Bewegung auf der Trainingsseite recht, oder soll die Startseite auch ganz still sein? *(Annahme: so lassen, bis du die Videos gesehen hast. Ganz still wäre in wenigen Minuten umgestellt.)*
-- [ ] **K-B2 Pfotenspur:** Gefällt dir die Pfotenspur? Zu auffällig, zu blass, zu häufig? Stört sie auf dem Handy neben den Knöpfen? *(Annahme: gefällt dir. Sonst wird sie blasser oder fällt weg.)*
-- [ ] **K-B3 Linie unter der Anfrage-Leiste:** Fällt sie dir überhaupt auf, und hilft sie? *(Annahme: sie bleibt, weil sie kaum stört.)*
-- [ ] **K-B4 Quiz, Zuordnung:** Das Quiz auf der Startseite und bei „Angebote“ stellt drei Fragen (Alter des Hundes, was ihr euch wünscht, allein oder in der Gruppe) und empfiehlt dann ein Angebot (Bild `04-quiz-ergebnis.png`). Würdest du die Leute im Gespräch genauso beraten?
-  - „Allein mit mir“ → immer **Einzeltraining**.
-  - **Welpe** → **Welpenkurs**. Ausnahme: Welpe + „konkretes Problem im Alltag“ + „ist uns egal“ → Einzeltraining.
-  - **Junghund oder erwachsener Hund** + „Grundlagen“ (Gruppe oder egal) → **Basistraining**.
-  - Junghund oder erwachsener Hund + „konkretes Problem“ oder „sportliche Übungen“ + „ist uns egal“ → **Einzeltraining**.
-  - Junghund oder erwachsener Hund + „konkretes Problem“ oder „sportliche Übungen“ + „kleine Gruppe“ → **persönliche Beratung** („Schreibt mir, was ihr euch wünscht, und ich sage euch, was passt.“), weil es dafür keinen Gruppenkurs gibt.
-  - Ist ein Angebot gerade ausgeblendet, empfiehlt das Quiz ebenfalls die persönliche Beratung.
-
-  *(Annahme: passt so. Fragen an dich dazu: Darf ein Junghund noch in den Welpenkurs, und ab welchem Alter? Gibt es Sport oder Problemhunde in einer Gruppe, z. B. im Verein?)*
-- [ ] **K-B5 Quiz, Texte:** Passen die Fragen, Antworten und die Sätze unter der Empfehlung (z. B. „Im Basistraining übt ihr in einer kleinen Gruppe Orientierung, Leinenführigkeit und Impulskontrolle für den Alltag.“)? Fragen und Antworten kannst du im Editor selbst ändern, die Sätze unter der Empfehlung ändert Toni. *(Annahme: passen.)*
+- [ ] **K-R3 Welcher Hund läuft?** Im Moment ein Rottweiler (wie in deinem Logo). Lieber ein Dackel oder beide zur Auswahl? *(Annahme: der Rottweiler.)*
+- [ ] **K-R5 Deine Sätze und Ablenkungen:** Passen „Fein!“, „Weg ist Hanni: das Reh war spannender.“ und „Genau das üben wir im Training.“? Welche Ablenkungen kennst du von deinen Kunden am besten (Reh, Hase, Jogger, Radfahrer, andere Hunde, Futter …)? *(Annahme: wir schreiben Vorschläge, du siehst sie durch.)*
 
 ## Erledigt
 
