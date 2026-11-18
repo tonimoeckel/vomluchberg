@@ -1,10 +1,20 @@
 ---
+// 404: someone ran off. A paw trail runs across the page and out over its right edge (lib/faehrte.ts,
+// laid once on load, global.css .weggelaufen); decorative, under the text.
 import Base from '../layouts/Base.astro';
+import Pfotenspur from '../components/Pfotenspur.astro';
+import { abgehauen } from '../lib/faehrte';
+import { PFOTE_MASKE } from '../lib/pfotenspur';
 ---
 <Base title="Seite nicht gefunden">
-	<section class="container-page grid min-h-[60svh] content-center gap-8 py-24">
-		<h1 class="display max-w-[16ch] text-[clamp(2.75rem,3.6vw+1rem,4.75rem)]">Diese Seite gibt es nicht (mehr).</h1>
-		<p class="text-lead text-muted">Fehler 404: Die Adresse ist falsch oder die Seite wurde verschoben.</p>
-		<p><a href="/" class="btn-primary">Zur Startseite</a></p>
+	<section class="relative isolate overflow-clip">
+		<div class="pfoten weggelaufen absolute right-0 bottom-0 -z-10 h-[260px] w-[1400px]" style={`--pfote-maske:${PFOTE_MASKE}`} aria-hidden="true">
+			<Pfotenspur pfoten={abgehauen()} zeit />
+		</div>
+		<div class="container-page grid min-h-[60svh] content-center gap-8 pt-24 pb-48">
+			<h1 class="display max-w-[16ch] text-[clamp(2.75rem,3.6vw+1rem,4.75rem)]">Diese Seite gibt es nicht (mehr).</h1>
+			<p class="text-lead text-muted">Hier ist wohl jemand abgehauen. Oder die Adresse stimmt nicht mehr.</p>
+			<p><a href="/" class="btn-primary">Zur Startseite</a></p>
+		</div>
 	</section>
 </Base>

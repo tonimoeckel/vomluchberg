@@ -5,6 +5,12 @@
 
 import { zufall } from './karte';
 
+/** The one paw shape of the site (pad and four toes, toes pointing east, about 16 x 16 units round
+ * the origin). Karte.astro uses it as an SVG path, the page trails (Pfotenspur.astro) as a CSS mask. */
+export const PFOTE = 'M-7.1 0a4.4 5.1 0 1 0 8.7 0a4.4 5.1 0 1 0-8.7 0M2 -5.8a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0M4.5 -2.1a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0M4.5 2.1a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0M2 5.8a2 2 0 1 0 3.9 0a2 2 0 1 0-3.9 0';
+/** The paw as a CSS mask image (data URI), for HTML prints. */
+export const PFOTE_MASKE = `url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' viewBox='-8 -8 17 16'><path d='${PFOTE}'/></svg>`)}")`;
+
 export interface Punkt {
   x: number;
   y: number;
@@ -27,6 +33,8 @@ export interface SpurOptionen {
   hoechstens?: number;
   /** the trot: the two alternating intervals between prints, in seconds (short, long) */
   takt?: [number, number];
+  /** random turn of a print, in degrees either way of the walking direction (a puppy wobbles more) */
+  wackeln?: number;
   seed?: number;
 }
 
@@ -62,7 +70,7 @@ export function punktBei(linie: Punkt[], s: number): { p: Punkt; t: Punkt } {
  * trot (short, long, short, long …), not a march.
  */
 export function pfotenspur(route: Punkt[], optionen: SpurOptionen = {}): Pfote[] {
-  const { schritt = 34, versatz = 6, hoechstens = 12, takt = [0.3, 0.5], seed = 1 } = optionen;
+  const { schritt = 34, versatz = 6, hoechstens = 12, takt = [0.3, 0.5], wackeln = 5, seed = 1 } = optionen;
   const r = zufall(seed);
   const gesamt = laenge(route);
   const spur: Pfote[] = [];
@@ -77,11 +85,29 @@ export function pfotenspur(route: Punkt[], optionen: SpurOptionen = {}): Pfote[]
     // Left of the walking direction is (t.y, -t.x) when y points down.
     const seite = links ? 1 : -1;
     const v = versatz * (0.85 + r() * 0.3);
-    const winkel = (Math.atan2(t.y, t.x) * 180) / Math.PI + (r() - 0.5) * 10 - seite * 4;
+    const winkel = (Math.atan2(t.y, t.x) * 180) / Math.PI + (r() - 0.5) * 2 * wackeln - seite * 4;
     spur.push({ x: rund(p.x + t.y * v * seite), y: rund(p.y - t.x * v * seite), winkel: Math.round(winkel), seite: links ? 'links' : 'rechts', zeit: Math.round(zeit * 100) / 100 });
     s += schritt * (i % 2 === 0 ? 0.92 : 1.08) * (0.94 + r() * 0.12);
     zeit += takt[i % 2] * (0.9 + r() * 0.2);
     links = !links;
   }
   return spur;
+}
+
+/**
+ * A dog sitting at `p`, facing `winkel`: the two front paws side by side, the hind paws a little behind
+ * and wider, turned out. `abstand` is the gap between the front paws (the hind paws scale with it).
+ */
+export function sitzen(p: Punkt, winkel: number, abstand = 12): Pfote[] {
+  const b = (winkel * Math.PI) / 180;
+  const t = { x: Math.cos(b), y: Math.sin(b) }, l = { x: t.y, y: -t.x };
+  const bei = (vor: number, quer: number, dreh: number, seite: Pfote['seite']): Pfote => ({
+    x: rund(p.x + t.x * vor + l.x * quer),
+    y: rund(p.y + t.y * vor + l.y * quer),
+    winkel: Math.round(winkel + dreh),
+    seite,
+    zeit: 0,
+  });
+  const a = abstand / 2;
+  return [bei(-abstand * 1.6, a * 2.1, -14, 'links'), bei(-abstand * 1.6, -a * 2.1, 14, 'rechts'), bei(0, a, -3, 'links'), bei(0, -a, 3, 'rechts')];
 }
