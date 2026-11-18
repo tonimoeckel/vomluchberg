@@ -100,6 +100,17 @@ kommen in den passenden Abschnitt.
 - [ ] **Daten:** Toni exportiert deine Kunden- und Anfragedaten aus Pfotentermin für dich. Wie lange möchtest du danach noch in Pfotentermin nachschauen können, bevor die Daten dort gelöscht werden? *(Annahme: 3 Monate. Rechnungen, falls Pfotentermin welche erstellt hat, musst du selbst aufbewahren.)*
 - [ ] **Alte Links:** Wo steht die Pfotentermin-Adresse noch überall (Flyer, Visitenkarten, Facebook, Instagram, Vereinsseiten)? *(Annahme: du tauschst sie nach dem Start selbst aus.)*
 
+## 6. Rückruf-Spiel (Idee, nur nach deinem Ja)
+
+Idee: Wer eine Anfrage abgeschickt hat, sieht unter dem Dankeschön einen kleinen Knopf „Eine Runde Rückruf“. Dann läuft euer Hund auf dem Waldweg unter dem Luchberg zu euch zurück, springt über Wurzeln, einen Baumstamm und die Müglitz. Reh, Eichhörnchen, Jogger, ein anderer Hund oder eine Wurst lenken ihn ab: Wer im richtigen Moment ruft, behält ihn bei sich. Am Ende sitzt er vor euch („Sitz. Vorbildlicher Rückruf!“, bis zu 5 Pfoten). Es startet nie von selbst, kein Ton, keine Cookies. Toni zeigt dir zuerst einen Entwurf zum Ausprobieren auf deinem Handy, gebaut wird nur, wenn er dir gefällt.
+
+- [ ] **K-R1 Grundsätzlich:** Bei der Dackel-Seite wolltest du keine Spiele und Animationen, weil sie Besucher nerven könnten. Dieses Spiel sieht nur, wer schon eine Anfrage geschickt hat, und nur, wenn er auf den Knopf drückt. Ist das für dich in Ordnung? *(Annahme: wir bauen nur den Entwurf und warten auf dein Ja. Auf der Website ist es zuerst ausgeschaltet, du kannst es im Editor selbst einschalten.)*
+- [ ] **K-R2 Lieber etwas Kleineres?** Statt Spiel ginge auch ein kurzer Rückruf-Tipp von dir unter dem Dankeschön (ohne Bewegung). Was ist dir lieber: Spiel, Tipp oder nichts? *(Annahme: Entwurf vom Spiel ansehen, dann entscheiden.)*
+- [ ] **K-R3 Welcher Hund läuft?** Ein Rottweiler (wie in deinem Logo), ein Dackel oder beide zur Auswahl? Der Dackel würde unter dem Baumstamm durchlaufen statt zu springen. *(Annahme: zuerst nur der Rottweiler.)*
+- [ ] **K-R4 Auch auf der Fehlerseite?** Wer eine falsche Adresse aufruft, landet auf „Diese Seite gibt es nicht (mehr)“. Dort könnte ein kleiner Link stehen: „Hier hat sich jemand verlaufen. Ruft ihn zurück!“ *(Annahme: nein, nur nach der Anfrage.)*
+- [ ] **K-R5 Deine Sätze:** Am Ende kommt ein Satz, z. B. „Das Reh war spannender. Genau das üben wir im Training.“ Magst du diese Sätze selbst schreiben oder durchsehen? Welche Ablenkungen kennst du von deinen Kunden am besten (Reh, Hase, Jogger, Radfahrer, andere Hunde, Futter …)? *(Annahme: wir schreiben Vorschläge, du siehst sie durch.)*
+- [ ] **K-R6 Schwierigkeit:** Drei Stufen wie deine Angebote, „Welpe“, „Junghund“ und „Prüfung“? Oder lieber nur eine einfache Runde? *(Annahme: drei Stufen, im Entwurf erst nur „Junghund“.)*
+
 ## Erledigt
 
 - [x] **Design der Dackel-Seite:** Was soll die Seite ausstrahlen, wie soll sie sich vom Rottweiler-Design unterscheiden?
