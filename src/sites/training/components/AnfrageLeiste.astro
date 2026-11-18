@@ -1,8 +1,10 @@
 ---
 // The sticky inquiry bar (the page's signature): the hero's "hinweis" and its first button. It sits
 // right below the start page's hero, then pins to the top of the screen until the footer. Pure CSS
-// (position: sticky inside the block wrapper of Blocks.astro), no JS, no animation. Text hidden on phones, where the
-// hero shows it instead.
+// (position: sticky inside the block wrapper of Blocks.astro), no JS. Text hidden on phones, where the
+// hero shows it instead. Its bottom hairline fills in the signal colour on the way down to the inquiry
+// form (the start page's last block), a scroll-driven scaleX; without support or with reduced motion
+// it stays the plain hairline.
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { BlockOf } from '../lib/data';
 
@@ -11,10 +13,41 @@ const { data } = Astro.props;
 const knopf = (data.buttons ?? []).find((b) => b && b.stil !== 'sekundaer') ?? null;
 ---
 {(data.hinweis || knopf) && (
-	<aside aria-label="Training anfragen" class="sticky top-0 z-[var(--z-sticky)] border-y border-heading bg-bg">
+	<aside aria-label="Training anfragen" class="anfrage-leiste sticky top-0 z-[var(--z-sticky)] border-y border-heading bg-bg">
 		<div class="container-page flex min-h-[76px] items-center justify-between gap-6 py-3">
 			{data.hinweis && <p class="hidden max-w-[70ch] font-medium text-heading sm:block" data-tina-field={tinaField(data, 'hinweis')}>{data.hinweis}</p>}
 			{knopf?.link && <a href={knopf.link} class="btn-primary w-full sm:w-auto sm:shrink-0" data-tina-field={tinaField(knopf)}>{knopf.label}</a>}
 		</div>
 	</aside>
 )}
+
+<style>
+	/* Progress along the way to the form. The bar only exists on the start page, whose last block is
+	   the inquiry form. The timeline is the bar's sticky range (Blocks.astro, .anfrage-strecke): 0 once
+	   the header has scrolled away, full when the end of the form block reaches the bar's lower edge,
+	   the moment the bar lets go. Decorative, no ARIA. */
+	@supports (animation-timeline: view()) {
+		@media (prefers-reduced-motion: no-preference) {
+			:global(.anfrage-strecke) {
+				view-timeline: --anfrage-strecke block;
+			}
+			.anfrage-leiste::after {
+				content: '';
+				position: absolute;
+				inset-inline: 0;
+				bottom: -1px;
+				height: 2px;
+				background: var(--primary);
+				transform: scaleX(0);
+				transform-origin: left;
+				pointer-events: none;
+				animation: anfrage-weg linear both;
+				animation-timeline: --anfrage-strecke;
+				animation-range: cover 100vh cover calc(100% - 78px);
+			}
+		}
+	}
+	@keyframes anfrage-weg {
+		to { transform: scaleX(1); }
+	}
+</style>

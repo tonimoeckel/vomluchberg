@@ -40,6 +40,10 @@ blocks:
     text: Entdeckt das passende Training für euch – von individueller Einzelbetreuung bis hin zu Gruppenkursen.
     auswahl: alle
     alleLink: true
+  - _template: quiz
+    kicker: Orientierung
+    ueberschrift: Welches Training passt zu euch?
+    text: Drei kurze Fragen, dann seht ihr, womit ihr am besten startet. Ihr könnt danach direkt anfragen.
   - _template: text
     kicker: Eure Trainerin
     ueberschrift: Karolin Riesing

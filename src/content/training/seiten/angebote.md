@@ -10,6 +10,10 @@ blocks:
     hinweis: 'Alle Angebote gibt es nur auf Anfrage: Ihr schickt mir eine Nachricht, ich melde mich persönlich bei euch.'
   - _template: angebote
     auswahl: alle
+  - _template: quiz
+    kicker: Orientierung
+    ueberschrift: Welches Training passt zu euch?
+    text: Drei kurze Fragen, dann seht ihr, womit ihr am besten startet. Ihr könnt danach direkt anfragen.
   - _template: highlights
     darstellung: schritte
     kicker: So läuft’s ab

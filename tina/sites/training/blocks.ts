@@ -6,6 +6,7 @@
  */
 import type { Template, TinaField } from 'tinacms';
 import { angeboteBlockAuswahl } from '../../../src/lib/domain/angebot';
+import { quizFragen } from '../../../src/lib/domain/trainingQuiz';
 
 const kicker: TinaField = { type: 'string', name: 'kicker', label: 'Kleine Zeile über der Überschrift' };
 const ueberschrift: TinaField = { type: 'string', name: 'ueberschrift', label: 'Überschrift' };
@@ -174,5 +175,29 @@ export const anfrageBlock: Template = {
     ueberschrift,
     einleitung,
     { type: 'boolean', name: 'kontaktZeigen', label: 'Kontaktdaten neben dem Formular zeigen' },
+  ],
+};
+
+/**
+ * "Welches Training passt?" quiz. One object per question (`alter`, `ziel`, `rahmen`) holds the
+ * question and its answer labels; the answers themselves and the mapping to an offer are fixed in
+ * src/lib/domain/trainingQuiz.ts. Empty labels fall back to the texts there.
+ */
+export const quizBlock: Template = {
+  name: 'quiz',
+  label: 'Quiz „Welches Training passt?“',
+  ui: { defaultItem: { ueberschrift: 'Welches Training passt zu euch?' } },
+  fields: [
+    kicker,
+    ueberschrift,
+    einleitung,
+    ...quizFragen.map((f): TinaField => ({
+      type: 'object', name: f.id, label: `Frage: ${f.frage}`,
+      description: 'Leer lassen = Standardtext. Welche Antwort zu welchem Angebot führt, ist fest eingestellt.',
+      fields: [
+        { type: 'string', name: 'frage', label: 'Frage', description: `Standard: ${f.frage}` },
+        ...f.antworten.map((a): TinaField => ({ type: 'string', name: a.value, label: `Antwort „${a.label}“`, description: `Standard: ${a.label}` })),
+      ],
+    })),
   ],
 };

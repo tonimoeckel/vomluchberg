@@ -38,6 +38,8 @@ export interface Karte {
   fluss: { x: number; y: number };
   /** the forest track */
   weg: string;
+  /** the forest track as a polyline (for the paw trail) */
+  wegLinie: { x: number; y: number }[];
   /** forest symbols: one path of zero-length strokes ("M x y h0"), drawn as dots with round caps */
   wald: string;
 }
@@ -110,6 +112,15 @@ function verketten(segmente: [string, string][]): string[][] {
     if (linie.length > 1) linien.push(linie);
   }
   return linien;
+}
+
+/** Points on a cubic Bézier curve (n pieces). */
+function kubisch(a: number[], b: number[], c: number[], d: number[], n: number) {
+  return Array.from({ length: n + 1 }, (_, i) => {
+    const t = i / n, u = 1 - t;
+    const f = (k: number) => rund(u * u * u * a[k] + 3 * u * u * t * b[k] + 3 * u * t * t * c[k] + t * t * t * d[k]);
+    return { x: f(0), y: f(1) };
+  });
 }
 
 const pfad = (punkte: string[]) => 'M' + punkte.map((p) => p.replace(',', ' ')).join('L');
@@ -204,8 +215,11 @@ export function karte(optionen: KarteOptionen = {}): Karte {
   const bach = pfad(flussPunkte);
   const fluss = { x: rund(talX(hoehe * 0.6)), y: rund(hoehe * 0.6) };
 
-  const p = w.map(([x, y]) => `${rund(x)} ${rund(y)}`);
-  const weg = `M${p[0]}C${p[1]} ${p[2]} ${p[3]}S${p[4]} ${p[5]}`;
+  // Forest track: a gentle curve across the lower slopes, two cubic pieces (the second one smooth).
+  const wp = w.map(([x, y]) => [rund(x), rund(y)]);
+  const weg = `M${wp[0][0]} ${wp[0][1]}C${wp[1].join(' ')} ${wp[2].join(' ')} ${wp[3].join(' ')}S${wp[4].join(' ')} ${wp[5].join(' ')}`;
+  const spiegel = [2 * wp[3][0] - wp[2][0], 2 * wp[3][1] - wp[2][1]];
+  const wegLinie = [...kubisch(wp[0], wp[1], wp[2], wp[3], 24), ...kubisch(wp[3], spiegel, wp[4], wp[5], 24).slice(1)];
 
   // Forest: symbols on a jittered grid wherever a second noise field says "wood".
   const waldNoise = rauschen(seed + 101);
@@ -220,5 +234,26 @@ export function karte(optionen: KarteOptionen = {}): Karte {
     }
   }
 
-  return { breite, hoehe, linien, bach, gipfel: { x: rund(gipfel.x), y: rund(gipfel.y) }, fluss, weg, wald: punkte.join('') };
+  return { breite, hoehe, linien, bach, gipfel: { x: rund(gipfel.x), y: rund(gipfel.y) }, fluss, weg, wegLinie, wald: punkte.join('') };
+}
+
+/**
+ * Routes for the paw trail over the hero (Karte with "pfoten"), in viewBox units:
+ * the forest track up to the middle of the map (lies under the text column on wide screens),
+ * a stretch along a contour of the cone and up towards the summit (approached from the north-west,
+ * away from its labels), and a short line down the slope in the middle of the map (the part a
+ * phone shows, beside the hero's keys).
+ */
+export function pfotenwege(k: Karte): { x: number; y: number }[][] {
+  const { breite, hoehe, gipfel } = k;
+  const waldweg = k.wegLinie.filter((p) => p.x >= breite * 0.01 && p.x <= breite * 0.4);
+  const radius = breite * 0.09;
+  const hoehenlinie: { x: number; y: number }[] = [];
+  for (let w = 170; w <= 290; w += 10) {
+    const b = (w * Math.PI) / 180;
+    hoehenlinie.push({ x: rund(gipfel.x + Math.cos(b) * radius), y: rund(gipfel.y + Math.sin(b) * radius) });
+  }
+  hoehenlinie.push({ x: rund(gipfel.x + radius * 0.05), y: rund(gipfel.y - radius * 0.55) }, { x: rund(gipfel.x - radius * 0.1), y: rund(gipfel.y - radius * 0.16) });
+  const hang = kubisch([breite * 0.665, hoehe * 0.27], [breite * 0.61, hoehe * 0.32], [breite * 0.56, hoehe * 0.4], [breite * 0.525, hoehe * 0.5], 8);
+  return [waldweg, hoehenlinie, hang];
 }

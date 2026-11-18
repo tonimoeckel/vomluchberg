@@ -11,6 +11,7 @@ import Zitat from './blocks/Zitat.astro';
 import GalerieBlock from './blocks/GalerieBlock.astro';
 import Cta from './blocks/Cta.astro';
 import AnfrageBlock from './blocks/AnfrageBlock.astro';
+import Quiz from './blocks/Quiz.astro';
 import AnfrageLeiste from './AnfrageLeiste.astro';
 import { blockName } from '../../../lib/tina-typename';
 import type { BlockOf, CmsPage } from '../lib/data';
@@ -19,10 +20,11 @@ interface Props { data?: CmsPage | null }
 const { data } = Astro.props;
 const blocks = (data?.blocks ?? []).filter((b) => b !== null);
 // The start page's hero (variante "gross") is followed by the sticky inquiry bar; the outer <div>
-// is the bar's sticky range (it pins to the top until the footer).
+// is the bar's sticky range (it pins to the top until the footer) and, as "anfrage-strecke", the
+// timeline of the bar's progress line (AnfrageLeiste.astro).
 const leiste = blocks.find((b) => blockName(b.__typename) === 'Hero' && (b as BlockOf<'Hero'>).variante === 'gross') as BlockOf<'Hero'> | undefined;
 ---
-<div>
+<div class:list={[leiste && 'anfrage-strecke']}>
 {blocks.map((block) => (
 	<>
 	<div data-tina-field={tinaField(block)}>
@@ -37,6 +39,7 @@ const leiste = blocks.find((b) => blockName(b.__typename) === 'Hero' && (b as Bl
 				case 'Galerie': return <GalerieBlock data={block as BlockOf<'Galerie'>} />;
 				case 'Cta': return <Cta data={block as BlockOf<'Cta'>} />;
 				case 'Anfrage': return <AnfrageBlock data={block as BlockOf<'Anfrage'>} />;
+				case 'Quiz': return <Quiz data={block as BlockOf<'Quiz'>} />;
 			}
 		})()}
 	</div>
