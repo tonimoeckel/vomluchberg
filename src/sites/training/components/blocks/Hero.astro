@@ -2,7 +2,8 @@
 // Page head in two postures. The start page's head sits on the survey sketch of the Luchberg (Karte).
 // "gross" (start page, Stage): the head, the sentence and the actions on five columns, Karo's photo
 //   whole (3:2, Karo and both dogs) on seven, filling the first screen. The "hinweis" moves into the
-//   sticky inquiry bar (AnfrageLeiste, rendered by Blocks.astro); on phones it also stays here.
+//   sticky inquiry bar (AnfrageLeiste, rendered by Blocks.astro); on phones it also stays here, on a
+//   patch of paper like the photo caption, so the forest dots don't run through it.
 // "schmal" (sub pages, Banner): the head on seven columns, the photo (if any) on five.
 // The kicker field is shown only on the start page, as the photo's caption under it (a place, not an eyebrow).
 import { tinaField } from '@tinacms/astro/tina-field';
@@ -30,7 +31,7 @@ const knopf = (stil: string | null | undefined) => (stil === 'sekundaer' ? 'btn-
 						{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class={knopf(b.stil)}>{b.label}</a>)}
 					</div>
 				)}
-				{data.hinweis && <p class="mt-5 max-w-[44ch] text-[0.9375rem] text-muted sm:hidden" data-tina-field={tinaField(data, 'hinweis')}>{data.hinweis}</p>}
+				{data.hinweis && <p class="mt-5 w-fit max-w-[44ch] bg-bg py-1 pr-2 text-[0.9375rem] text-muted sm:hidden" data-tina-field={tinaField(data, 'hinweis')}>{data.hinweis}</p>}
 			</div>
 			{data.bild && (
 				<figure class="lg:col-span-7" data-tina-field={tinaField(data, 'bild')}>
