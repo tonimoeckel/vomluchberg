@@ -763,6 +763,65 @@
 		fill: var(--water);
 		font-style: normal;
 	}
+	/* The hero's paw trail (Karte "bewegt"): one paw shape, reused per print (the copies inherit the
+	   fill from their <use>), hidden unless it walks. */
+	.karte-pfoten {
+		display: none;
+		fill: var(--primary-ink);
+	}
+}
+
+/* Hero motion (Karte "bewegt", agreed exception to "no animation"): only opacity and transform.
+   With reduced motion or without support nothing moves: the track is drawn, there are no prints. */
+@media (prefers-reduced-motion: no-preference) {
+	/* The forest track draws itself from left to right over the first 40vh of scrolling: a clip rect
+	   grows (scaleX), so the dashes stay as they are. */
+	@supports (animation-timeline: scroll()) {
+		.karte-weg-rahmen {
+			transform-box: fill-box;
+			transform-origin: 0 50%;
+			animation: karte-weg-zeichnen linear both;
+			animation-timeline: scroll(root);
+			animation-range: 0 40vh;
+		}
+	}
+	/* Paw prints: each fades in, rests and fades out in a 30 s cycle; the per-print delay from
+	   lib/pfotenspur.ts makes them a trotting trail. Three routes take turns; three cycles, then quiet. */
+	.karte-pfoten {
+		display: inline;
+	}
+	.karte-pfoten use {
+		opacity: 0;
+		animation: karte-pfote 30s linear 3 both;
+	}
+	.karte-ruht .karte-pfoten use {
+		animation-play-state: paused;
+	}
+}
+@keyframes karte-weg-zeichnen {
+	from {
+		transform: scaleX(0);
+	}
+	to {
+		transform: scaleX(1);
+	}
+}
+@keyframes karte-pfote {
+	0% {
+		opacity: 0;
+	}
+	1.2% {
+		opacity: 0.55;
+	}
+	5.5% {
+		opacity: 0.55;
+	}
+	11% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 0;
+	}
 }
 
 /* Rich text: class="prose prose-lg prose-site". Unlayered, so it wins over the typography plugin. */
