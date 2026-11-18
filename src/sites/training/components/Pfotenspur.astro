@@ -1,0 +1,12 @@
+---
+// Paw prints as plain HTML elements (one empty <i> each), for the page trails: the margin trail
+// (Faehrte.astro) and the 404 page. Position, turn and the print's time offset are custom properties;
+// the paw shape is the CSS mask --pfote-maske, which the parent sets once (lib/pfotenspur.ts, PFOTE_MASKE).
+// Styled and animated in global.css (.pfoten). Decorative: the parent is aria-hidden.
+import type { Pfote } from '../lib/pfotenspur';
+
+interface Props { pfoten: Pfote[]; zeit?: boolean }
+const { pfoten, zeit = false } = Astro.props;
+const r = (v: number) => Math.round(v);
+---
+{pfoten.map((p) => <i style={`--x:${r(p.x)};--y:${r(p.y)};--a:${p.winkel}${zeit ? `;--t:${p.zeit}s` : ''}`} />)}

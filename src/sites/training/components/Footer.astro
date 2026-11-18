@@ -1,6 +1,6 @@
 ---
 // Footer of the training site, a letter close on the night band, the survey sketch behind it: the closing line large with Karo's
-// name beneath it, then pages, contact and the hint to the Rottweiler kennel (D7), then the legal line.
+// name beneath it (the map carries a faint, static paw trail along its track), then pages, contact and the hint to the Rottweiler kennel (D7), then the legal line.
 import { tinaField } from '@tinacms/astro/tina-field';
 import Karte from './Karte.astro';
 import Logo from './Logo.astro';
@@ -18,7 +18,7 @@ const link = 'text-on-dark underline-offset-[0.2em] hover:underline';
 const titel = 'mb-4 font-sans text-[0.9375rem] font-medium normal-case tracking-normal text-on-dark-muted';
 ---
 <footer class="band-night relative isolate overflow-hidden border-t-[6px] border-bg pt-20 pb-10 sm:pt-24">
-	<Karte gipfel={false} class="karte-ausblenden absolute inset-x-0 top-0 -z-10 h-[420px] opacity-70" />
+	<Karte gipfel={false} spur class="karte-ausblenden absolute inset-x-0 top-0 -z-10 h-[420px] opacity-70" />
 	<div class="container-page">
 		<div class="grid gap-x-[var(--gap-columns)] gap-y-10 lg:grid-cols-12 lg:items-end">
 			<div class="lg:col-span-8">
