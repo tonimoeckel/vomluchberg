@@ -1,0 +1,247 @@
+---
+// The offers as a pile of survey sheets you flip through by scrolling (angebote block, darstellung
+// "stapel"). Every sheet is a sticky <li> with a slightly lower top than the one before, so the next
+// sheet slides up over the last and the edges of the pile stay visible. The sheet being covered
+// recedes (a little smaller, dimmed): a CSS scroll-driven animation on the view timeline of the
+// *next* sheet (timeline-scope on the list), transform and opacity only, global.css (.stapel).
+// Fallbacks: without scroll-driven animations the sticky pile works without the receding; with
+// reduced motion nothing animates; on low screens (or when a sheet would not fit, measured once by
+// the script below) it is a plain list. DOM order = reading order; real links and headings.
+import { tinaField } from '@tinacms/astro/tina-field';
+import Karte from './Karte.astro';
+import { anfrageUrl, angebotFakten, angebotUrl, artLabel, formatEuro, preisEinheiten } from '../../../lib/domain/angebot';
+import type { AngebotListItem } from '../lib/data';
+
+interface Props { angebote: AngebotListItem[] }
+const { angebote } = Astro.props;
+const n = angebote.length;
+const zwei = (i: number) => String(i + 1).padStart(2, '0');
+const timeline = (a: AngebotListItem) => `--stapel-${a.slug}`;
+---
+<div class="stapel" data-stapel={n > 1 ? '' : undefined} style={`--n:${n};timeline-scope:${angebote.map(timeline).join(',')}`}>
+	<ol class="stapel-liste" role="list">
+		{angebote.map((a, i) => {
+			const naechstes = angebote[i + 1];
+			const preisSichtbar = a.preis != null && a.preisAnzeigen !== false;
+			const einheit = preisEinheiten.find((e) => e.value === a.preisEinheit)?.label ?? 'Termin';
+			const url = angebotUrl(a.slug);
+			const titel = a.kurztitel || a.titel;
+			const art = artLabel(a.art);
+			return (
+				<li class="stapel-platz" style={`--i:${i};view-timeline-name:${timeline(a)}`}>
+					<article class:list={['stapel-karte', naechstes && 'stapel-bedeckt']} style={naechstes ? `--nach:${timeline(naechstes)}` : undefined} aria-labelledby={`stapel-${a.slug}`}>
+						<a href={url} class="stapel-bild" tabindex="-1" aria-hidden="true">
+							{a.bild ? (
+								<img src={a.bild} alt="" width="800" height="600" loading="lazy" decoding="async" data-tina-field={tinaField(a, 'bild')} />
+							) : (
+								<Karte optionen={{ breite: 800, hoehe: 600, seed: 21 + i * 7, gipfelX: 0.3 + (i % 3) * 0.2, gipfelY: 0.45 }} />
+							)}
+						</a>
+						<div class="stapel-text">
+							<p class="flex items-baseline justify-between gap-4">
+								<span class="zahl text-sm text-muted" aria-hidden="true">{`{ ${zwei(i)} }`}</span>
+								{art && <span class="tag">{art}</span>}
+							</p>
+							<h3 id={`stapel-${a.slug}`} class="display mt-3 text-[clamp(1.75rem,1.6vw+1.25rem,2.75rem)]">
+								<a href={url} class="no-underline decoration-2 underline-offset-[0.15em] hover:text-primary-ink hover:underline" data-tina-field={tinaField(a, 'kurztitel')}>{titel}</a>
+							</h3>
+							{a.untertitel && <p class="mt-2 text-lead font-medium leading-snug text-heading" data-tina-field={tinaField(a, 'untertitel')}>{a.untertitel}</p>}
+							{a.kurzbeschreibung && <p class="stapel-beschreibung mt-3 max-w-[52ch] text-muted" data-tina-field={tinaField(a, 'kurzbeschreibung')}>{a.kurzbeschreibung}</p>}
+							<ul class="mt-5 flex flex-wrap gap-2" aria-label="Eckdaten">
+								{angebotFakten(a).map((f) => <li class="tag">{f}</li>)}
+								{a.aufAnfrage && <li class="tag">Auf Anfrage</li>}
+							</ul>
+							<div class="stapel-fuss">
+								{preisSichtbar && (
+									<p class="text-heading" data-tina-field={tinaField(a, 'preis')}>
+										<span class="figur text-[clamp(1.75rem,1.2vw+1.25rem,2.5rem)]">{formatEuro(a.preis!)}</span>
+										<span class="text-sm text-muted"> pro {einheit}</span>
+									</p>
+								)}
+								<p class="flex flex-wrap gap-3">
+									<a href={`${anfrageUrl(a.slug)}#formular`} class="btn-primary">Anfragen<span class="sr-only">: {titel}</span></a>
+									<a href={url} class="btn-secondary">Details<span class="sr-only"> zu {titel}</span></a>
+								</p>
+							</div>
+						</div>
+					</article>
+				</li>
+			);
+		})}
+	</ol>
+</div>
+
+<script>
+	// Runs once per pile (and again on resize, debounced), never per frame:
+	// 1. All sheets get the height of the tallest, so the pile is even. If that does not fit the screen
+	//    under the inquiry bar, the pile becomes a plain list (data-stapel="flach").
+	// 2. Keyboard focus on a covered sheet scrolls back to the moment that sheet landed on top.
+	function einrichten(stapel: HTMLElement) {
+		const plaetze = [...stapel.querySelectorAll<HTMLElement>('.stapel-platz')];
+		const karten = plaetze.map((p) => p.firstElementChild as HTMLElement);
+		const messen = () => {
+			// Natural heights first (as a list), then the pile; flat if the first, tallest sheet would not fit.
+			stapel.dataset.stapel = 'messen';
+			stapel.style.setProperty('--stapel-h', `${Math.max(...karten.map((k) => k.offsetHeight))}px`);
+			stapel.dataset.stapel = '';
+			const oben = parseFloat(getComputedStyle(plaetze[0]).top) || 0;
+			if (karten[0].offsetHeight + oben + 24 > window.innerHeight) stapel.dataset.stapel = 'flach';
+		};
+		messen();
+		let warten = 0;
+		window.addEventListener('resize', () => {
+			clearTimeout(warten);
+			warten = window.setTimeout(messen, 200);
+		});
+		stapel.addEventListener('focusin', (e) => {
+			if (stapel.dataset.stapel !== '') return;
+			const platz = (e.target as HTMLElement).closest<HTMLElement>('.stapel-platz');
+			const i = platz ? plaetze.indexOf(platz) : -1;
+			const naechster = plaetze[i + 1];
+			if (!platz || !naechster) return;
+			// Covered: the next sheet already lies over this one.
+			if (naechster.getBoundingClientRect().top >= platz.getBoundingClientRect().bottom - 1) return;
+			// The sheet's resting place in the flow: the list top plus the heights and gaps before it.
+			const liste = stapel.firstElementChild as HTMLElement;
+			let y = liste.getBoundingClientRect().top + window.scrollY;
+			for (const p of plaetze.slice(0, i + 1)) y += (parseFloat(getComputedStyle(p).marginTop) || 0) + (p === platz ? 0 : p.offsetHeight);
+			window.scrollTo({ top: y - (parseFloat(getComputedStyle(platz).top) || 0), behavior: 'instant' });
+		});
+	}
+	document.querySelectorAll<HTMLElement>('[data-stapel]').forEach(einrichten);
+</script>
+
+<style>
+	/* The sheet: card paper, a 1px ink edge, 6px corners, flat (the pile's depth comes from the
+	   offsets and the receding sheets, not from shadows). Photo flush on the left (on top on phones). */
+	.stapel {
+		--stapel-oben: var(--space-lg);
+		--stapel-versatz: 14px;
+	}
+	/* On the start page the sticky inquiry bar (76px + its rules) sits above the pile. */
+	:global(.anfrage-strecke) .stapel {
+		--stapel-oben: calc(78px + var(--space-lg));
+	}
+	.stapel-liste {
+		display: grid;
+		gap: var(--space-lg);
+	}
+	.stapel-karte {
+		position: relative;
+		display: grid;
+		grid-template-rows: auto minmax(0, 1fr);
+		overflow: hidden;
+		border: var(--rule-hair) solid var(--heading);
+		border-radius: var(--radius);
+		background: var(--card);
+	}
+	.stapel-bild {
+		display: block;
+		height: clamp(7rem, 15svh, 9.5rem);
+		background: var(--surface);
+	}
+	.stapel-bild img,
+	.stapel-bild :global(.karte) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: 50% 30%;
+	}
+	.stapel-text {
+		display: flex;
+		min-width: 0;
+		flex-direction: column;
+		padding: var(--space-md) var(--space-md) var(--space-lg);
+	}
+	.stapel-fuss {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: end;
+		justify-content: space-between;
+		gap: var(--space-md);
+		margin-top: auto;
+		padding-top: var(--space-md);
+	}
+	@media (min-width: 48rem) {
+		.stapel-karte {
+			grid-template-rows: none;
+			grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+		}
+		.stapel-bild {
+			height: auto;
+			min-height: 100%;
+			border-right: var(--rule-hair) solid var(--heading);
+		}
+		.stapel-text {
+			padding: var(--space-xl);
+		}
+		.stapel-fuss {
+			padding-top: var(--space-lg);
+		}
+	}
+	@media (max-width: 47.99rem) {
+		.stapel-bild {
+			border-bottom: var(--rule-hair) solid var(--heading);
+		}
+	}
+
+	/* The pile: only with more than one sheet, on screens tall enough, and unless the script found a
+	   sheet that does not fit ("flach"). */
+	@media (min-height: 44rem) {
+		.stapel[data-stapel=''] .stapel-liste {
+			display: block;
+		}
+		/* A sticky box keeps its margin box inside the list's content box: the scroll distance between
+		   two sheets is a top margin, and the hold of the finished pile is content after the last one. */
+		.stapel[data-stapel=''] .stapel-liste::after {
+			content: '';
+			display: block;
+			height: 16svh;
+		}
+		.stapel[data-stapel=''] .stapel-platz {
+			position: sticky;
+			top: calc(var(--stapel-oben) + var(--i) * var(--stapel-versatz));
+		}
+		.stapel[data-stapel=''] .stapel-platz + .stapel-platz {
+			margin-top: 30svh;
+		}
+		.stapel[data-stapel=''] .stapel-karte {
+			/* Every sheet ends on the same line, so the pile leaves the screen as one: each one is a step
+			   shorter than the one before. At least the tallest sheet (measured), at most what fits. */
+			min-height: calc(max(var(--stapel-h, 0px) + (var(--n) - 1) * var(--stapel-versatz), min(30rem, calc(100svh - var(--stapel-oben) - var(--space-lg)))) - var(--i) * var(--stapel-versatz));
+		}
+		/* Receding: while the next sheet travels from the bottom of the screen to its place on the
+		   pile, the one below shrinks a little towards its top edge and a paper veil dims it. */
+		@media (prefers-reduced-motion: no-preference) {
+			@supports (animation-timeline: view()) {
+				.stapel[data-stapel=''] .stapel-bedeckt {
+					transform-origin: 50% 0;
+					animation: stapel-zurueck linear both;
+					animation-timeline: var(--nach);
+					animation-range: cover calc((100svh - var(--stapel-oben)) * 0.35) cover calc(100svh - var(--stapel-oben) - (var(--i) + 1) * var(--stapel-versatz));
+				}
+				.stapel[data-stapel=''] .stapel-bedeckt::after {
+					content: '';
+					position: absolute;
+					inset: 0;
+					background: var(--bg);
+					opacity: 0;
+					pointer-events: none;
+					animation: stapel-schleier linear both;
+					animation-timeline: var(--nach);
+					animation-range: cover calc((100svh - var(--stapel-oben)) * 0.35) cover calc(100svh - var(--stapel-oben) - (var(--i) + 1) * var(--stapel-versatz));
+				}
+			}
+		}
+	}
+	@keyframes stapel-zurueck {
+		to {
+			transform: scale(0.94);
+		}
+	}
+	@keyframes stapel-schleier {
+		to {
+			opacity: 0.5;
+		}
+	}
+</style>
