@@ -14,7 +14,7 @@ blocks:
       Karolin Riesing\
       Alltag kann Sport – Hundetraining\
       Dorfstr. 2d, 01768 Glashütte OT Luchau\
-      E-Mail: bruosdonnalina2018@gmail.com
+      E-Mail: karolinriesing@gmail.com
 
       ## Kurz gesagt
 

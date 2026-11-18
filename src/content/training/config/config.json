@@ -2,22 +2,21 @@
   "website": {
     "name": "Alltag kann Sport",
     "untertitel": "Hundetraining Karolin Riesing",
-    "beschreibung": "Hundetraining für echte Alltagssituationen in Glashütte (Osterzgebirge): Einzeltraining, Basistraining und Welpenkurs bei Karolin Riesing – klar, fair, verständlich. Nur auf Anfrage.",
+    "beschreibung": "Hundetraining für echte Alltagssituationen in Glashütte und Umgebung (Sachsen): Einzeltraining, Basistraining und Welpenkurs bei Karolin Riesing – klar, fair, verständlich. Nur auf Anfrage.",
     "logo": "/uploads/training/logo/logo.png",
     "logoDunkel": "/uploads/training/logo/logo-hell.png",
     "teilenBild": "/uploads/training/start/spaziergang-feldweg.jpg",
-    "fusszeile": "Hundetraining für echte Alltagssituationen in Glashütte, Osterzgebirge (Sachsen)."
+    "fusszeile": "Hundetraining für echte Alltagssituationen in Glashütte, Sachsen und Umgebung."
   },
-  "farbschema": "trainingsplatz",
+  "farbschema": "waldweg",
   "kontakt": {
     "name": "Karolin Riesing",
-    "ortName": "Trainingsgelände Glashütte",
-    "strasse": "Dorfstr. 2d",
-    "ort": "01768 Glashütte",
+    "ortName": "Trainingsort: nach Absprache",
+    "ort": "Glashütte",
     "region": "Osterzgebirge, Sachsen",
-    "ortText": "Im Herzen des Osterzgebirges, umgeben von Natur – der perfekte Ort für entspanntes Training mit eurem Hund.",
-    "email": "bruosdonnalina2018@gmail.com",
-    "mapsLink": "https://maps.google.com/?q=Dorfstr.+2d,+01768+Glash%C3%BCtte"
+    "ortText": "Ich trainiere in Glashütte, Sachsen und Umgebung – mal auf dem Hundeplatz, mal auf einem ruhigen Waldparkplatz oder auch bei euch vor Ort. Wo wir uns treffen, sprechen wir gemeinsam ab.",
+    "telefon": "0173 3665494",
+    "email": "karolinriesing@gmail.com"
   },
   "social": {
     "instagram": "https://www.instagram.com/karoriesing_caninepure",
@@ -28,9 +27,18 @@
     "danke": "Danke! Eure Anfrage ist angekommen – ich melde mich persönlich bei euch."
   },
   "nav": [
-    { "titel": "Angebote", "link": "/angebote" },
-    { "titel": "Über mich", "link": "/ueber-mich" },
-    { "titel": "Anfrage", "link": "/anfrage" }
+    {
+      "titel": "Angebote",
+      "link": "/angebote"
+    },
+    {
+      "titel": "Über mich",
+      "link": "/ueber-mich"
+    },
+    {
+      "titel": "Anfrage",
+      "link": "/anfrage"
+    }
   ],
   "menueButton": {
     "label": "Training anfragen",

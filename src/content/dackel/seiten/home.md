@@ -24,8 +24,8 @@ blocks:
     variante: band
     ueberschrift: Fotos unserer Dackel
     bilder:
-      - bild: /uploads/dackel/a-wurf-alfons.jpg
-        beschreibung: Alfons aus dem A-Wurf mit gelbem Spielzeug
+      - bild: /uploads/dackel/a-wurf-alma.jpg
+        beschreibung: Alma aus dem A-Wurf mit gelbem Spielzeug
       - bild: /uploads/dackel/hanni-auf-der-wiese.jpg
         beschreibung: Hanni auf der Löwenzahnwiese
       - bild: /uploads/dackel/zwei-junghunde-auf-dem-hof.jpg
@@ -34,8 +34,8 @@ blocks:
         beschreibung: Junger Rauhaardackel schnuppert an einem Weidenkorb
       - bild: /uploads/dackel/welpe-auf-dem-teppich.jpg
         beschreibung: Dackelwelpe liegt auf dem Teppich
-      - bild: /uploads/dackel/a-wurf-arthur.jpg
-        beschreibung: Arthur aus dem A-Wurf klettert über eine Matte
+      - bild: /uploads/dackel/a-wurf-alfons.jpg
+        beschreibung: Alfons aus dem A-Wurf klettert über eine Matte
       - bild: /uploads/dackel/welpe-liegt-im-gras.jpg
         beschreibung: Dackelwelpe liegt in der Sonne im Gras
       - bild: /uploads/dackel/gustav-in-der-loewenzahnwiese.jpg
@@ -69,10 +69,10 @@ blocks:
     bilder:
       - bild: /uploads/dackel/welpe-pirscht-durchs-gras.jpg
         beschreibung: Dackelwelpe pirscht durchs Gras
+      - bild: /uploads/dackel/a-wurf-arthur.jpg
+        beschreibung: Arthur aus dem A-Wurf mit gelbem Spielzeug
       - bild: /uploads/dackel/a-wurf-alma.jpg
         beschreibung: Alma aus dem A-Wurf mit gelbem Spielzeug
-      - bild: /uploads/dackel/a-wurf-alfons.jpg
-        beschreibung: Alfons aus dem A-Wurf mit gelbem Spielzeug
     buttons:
       - label: Jetzt unverbindlich anfragen
         link: /kontakt

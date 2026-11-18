@@ -16,7 +16,7 @@ blocks:
 
       **Kontakt**
 
-      E-Mail: bruosdonnalina2018@gmail.com\
+      E-Mail: karolinriesing@gmail.com\
       Kontaktformular: [Training anfragen](/anfrage)
 
       **Erlaubnis nach § 11 Abs. 1 Satz 1 Nr. 8 Buchst. f Tierschutzgesetz** (Ausbildung von Hunden für Dritte und Anleitung der Ausbildung durch die Halter)

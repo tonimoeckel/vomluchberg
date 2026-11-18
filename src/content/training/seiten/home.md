@@ -1,10 +1,10 @@
 ---
 titel: Hundetraining in Glashütte
-beschreibung: 'Hundetraining für echte Alltagssituationen in Glashütte (Osterzgebirge): Einzeltraining, Basistraining und Welpenkurs bei Karolin Riesing – klar, fair, verständlich. Nur auf Anfrage.'
+beschreibung: 'Hundetraining für echte Alltagssituationen in Glashütte und Umgebung (Sachsen): Einzeltraining, Basistraining und Welpenkurs bei Karolin Riesing – klar, fair, verständlich. Nur auf Anfrage.'
 blocks:
   - _template: hero
     variante: gross
-    kicker: Hundetraining · Glashütte, Osterzgebirge
+    kicker: Hundetraining · Glashütte, Sachsen & Umgebung
     titel: Alltag kann
     akzent: Sport.
     untertitel: 'Hundetraining für echte Alltagssituationen – mit sportlichen Übungen für Fokus und Bindung. In kleinen Gruppen oder im Einzeltraining: klar, fair und verständlich.'
@@ -74,7 +74,7 @@ blocks:
       - titel: Wir sprechen uns
         text: Ich melde mich bei euch, wir klären Ziele, Termin und Treffpunkt.
       - titel: Los geht’s
-        text: Wir trainieren draußen in Glashütte – im echten Alltag, mit sportlichen Übungen.
+        text: Wir trainieren draußen in Glashütte und Umgebung, am vereinbarten Treffpunkt – im echten Alltag, mit sportlichen Übungen.
   - _template: galerie
     kicker: Hundesport
     ueberschrift: Sportliche Leidenschaft & Leistung
