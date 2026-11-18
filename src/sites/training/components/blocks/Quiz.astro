@@ -1,0 +1,156 @@
+---
+// "Welches Training passt?": three questions as radio tiles, one recommended offer below them.
+// Rules in src/lib/domain/trainingQuiz.ts. One result card per possible result is pre-rendered
+// (hidden); the script shows the matching card in the live region. Without JS the cards stay
+// hidden and the offers are listed below the questions as plain links.
+import { tinaField } from '@tinacms/astro/tina-field';
+import SectionHead from '../SectionHead.astro';
+import { anfrageUrl, angebotUrl, sichtbareAngebote } from '../../../../lib/domain/angebot';
+import { beratungOption } from '../../../../lib/domain/anfrage';
+import { beratung, quizFragen, quizGruende } from '../../../../lib/domain/trainingQuiz';
+import { listAngeboteMitSlug, type BlockOf } from '../../lib/data';
+
+interface Props { data: BlockOf<'Quiz'> }
+const { data } = Astro.props;
+const angebote = sichtbareAngebote(await listAngeboteMitSlug());
+const sichtbar = angebote.map((a) => a.slug);
+const id = 'quiz';
+
+type Texte = Record<string, string | null | undefined> | null | undefined;
+const fragen = quizFragen.map((f) => {
+	const texte = data[f.id] as Texte;
+	// tinaField() is typed per document; the question objects all have the same shape.
+	const feld = (name: string) => (texte ? tinaField(texte as never, name as never) : undefined);
+	return {
+		...f,
+		frage: texte?.frage || f.frage,
+		feld: feld('frage'),
+		antworten: f.antworten.map((a) => ({ ...a, label: texte?.[a.value] || a.label, feld: feld(a.value) })),
+	};
+});
+
+// Result cards: every visible offer that has a reason, then the advice card.
+const karten = [
+	...angebote.flatMap((a) => (a.slug in quizGruende && a.slug !== beratung
+		? [{ slug: a.slug, titel: a.kurztitel || a.titel, untertitel: a.untertitel, grund: quizGruende[a.slug as keyof typeof quizGruende], mehr: angebotUrl(a.slug) }]
+		: [])),
+	{ slug: beratung, titel: 'Persönliche Beratung', untertitel: beratungOption.label, grund: quizGruende.beratung, mehr: null },
+];
+---
+<section class="sektion-m" id={id}>
+	<div class="container-page">
+		<SectionHead data={data} geteilt class="mb-12" />
+		<form class="regel grid gap-x-[var(--gap-columns)] gap-y-10 pt-8 lg:grid-cols-3" data-quiz data-sichtbar={JSON.stringify(sichtbar)}>
+			{fragen.map((f, i) => (
+				<fieldset class="min-w-0">
+					<legend class="display mb-5 text-title" data-tina-field={f.feld}><span class="zahl mr-2 text-[0.8em] text-muted">{i + 1}</span>{f.frage}</legend>
+					<div class="grid gap-3">
+						{f.antworten.map((a) => (
+							<label class="quiz-kachel">
+								<input type="radio" name={f.id} value={a.value} class="quiz-radio" />
+								<span data-tina-field={a.feld}>{a.label}</span>
+							</label>
+						))}
+					</div>
+				</fieldset>
+			))}
+		</form>
+
+		<div class="mt-10" aria-live="polite" data-quiz-ergebnis>
+			<p class="text-muted" data-quiz-hinweis hidden>Wählt bei jeder Frage eine Antwort, dann zeige ich euch hier das passende Training.</p>
+			{karten.map((k) => (
+				<article class="quiz-ergebnis grid gap-x-[var(--gap-columns)] gap-y-5 md:grid-cols-12 md:items-end" data-quiz-karte={k.slug} hidden>
+					<div class="md:col-span-8">
+						<h3 class="display text-[clamp(2rem,2vw+1.25rem,2.75rem)]">{k.titel}</h3>
+						{k.untertitel && <p class="mt-2 text-lead font-medium leading-snug text-heading">{k.untertitel}</p>}
+						<p class="mt-3 max-w-[56ch] text-muted">{k.grund}</p>
+					</div>
+					<div class="flex flex-wrap items-center gap-x-6 gap-y-3 md:col-span-4 md:justify-end">
+						{k.mehr && <a href={k.mehr} class="textlink">Mehr zum Angebot<span class="sr-only">: {k.titel}</span></a>}
+						<a href={`${anfrageUrl(k.slug)}#formular`} class="btn-primary">Damit anfragen<span class="sr-only">: {k.titel}</span></a>
+					</div>
+				</article>
+			))}
+		</div>
+
+		<div class="mt-10 haar pt-6" data-quiz-ohne-js>
+			<p class="text-muted">Direkt anfragen:</p>
+			<ul class="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+				{karten.map((k) => <li><a href={`${anfrageUrl(k.slug)}#formular`} class="textlink">{k.slug === beratung ? beratungOption.label : k.titel}</a></li>)}
+			</ul>
+		</div>
+	</div>
+</section>
+
+<style>
+	/* Answer tile: a hairline 6px key on card paper; colour and border states only, no motion. */
+	.quiz-kachel {
+		display: flex;
+		min-height: 56px;
+		align-items: center;
+		gap: var(--space-sm);
+		border: 1px solid var(--muted);
+		border-radius: var(--radius);
+		background: var(--card);
+		padding: var(--space-sm) var(--space-md);
+		color: var(--fg);
+		font-weight: 500;
+		line-height: 1.35;
+		cursor: pointer;
+		transition: border-color var(--dur-micro) var(--ease-out), background-color var(--dur-micro) var(--ease-out);
+	}
+	.quiz-kachel:hover {
+		border-color: var(--heading);
+	}
+	.quiz-kachel:has(:checked) {
+		border-color: var(--primary);
+		background: color-mix(in oklab, var(--primary) 12%, var(--card));
+		box-shadow: inset 0 0 0 1px var(--primary);
+	}
+	.quiz-kachel:has(:focus-visible) {
+		outline: 2px solid var(--primary);
+		outline-offset: 2px;
+	}
+	.quiz-radio {
+		flex: none;
+		width: 1.25rem;
+		height: 1.25rem;
+		margin: 0;
+		accent-color: var(--primary);
+	}
+	/* The tile carries the focus ring. */
+	.quiz-radio:focus-visible {
+		outline: none;
+	}
+	.quiz-ergebnis {
+		border-top: var(--rule-bar) solid var(--heading);
+		padding-top: var(--space-lg);
+	}
+	@media (forced-colors: active) {
+		.quiz-kachel:has(:checked) {
+			border-width: 3px;
+		}
+	}
+</style>
+
+<script>
+	import { quizAntworten, quizEmpfehlung } from '../../../../lib/domain/trainingQuiz';
+
+	for (const form of document.querySelectorAll<HTMLFormElement>('form[data-quiz]')) {
+		const bereich = form.parentElement!;
+		const sichtbar: string[] = JSON.parse(form.dataset.sichtbar ?? '[]');
+		const hinweis = bereich.querySelector<HTMLElement>('[data-quiz-hinweis]');
+		const karten = [...bereich.querySelectorAll<HTMLElement>('[data-quiz-karte]')];
+		// With JS the result card replaces the plain link list.
+		bereich.querySelector<HTMLElement>('[data-quiz-ohne-js]')?.setAttribute('hidden', '');
+
+		const zeigen = () => {
+			const antworten = quizAntworten(new FormData(form));
+			const slug = antworten ? quizEmpfehlung(antworten, sichtbar).slug : null;
+			if (hinweis) hinweis.hidden = slug !== null;
+			for (const k of karten) k.hidden = k.dataset.quizKarte !== slug;
+		};
+		form.addEventListener('change', zeigen);
+		zeigen();
+	}
+</script>
