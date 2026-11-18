@@ -770,6 +770,31 @@
 		display: none;
 		fill: var(--primary-ink);
 	}
+	/* The contact map's pins (Karte "orte"): ink-copper pins, a dashed radius for "bei euch", labels
+	   with a paper halo so the contours never cut through them. */
+	.karte .karte-pin {
+		fill: var(--primary-ink);
+	}
+	.karte-pin-kern {
+		fill: var(--card);
+	}
+	.karte-umkreis {
+		fill: color-mix(in oklab, var(--primary-ink) 8%, transparent);
+		stroke: var(--primary-ink);
+		stroke-width: 1.5;
+		stroke-dasharray: 7 6;
+		vector-effect: non-scaling-stroke;
+	}
+	.karte-ort-name {
+		fill: var(--heading);
+		font-family: var(--font-sans);
+		font-weight: 500;
+		font-size: 38px;
+		paint-order: stroke;
+		stroke: var(--bg);
+		stroke-width: 10px;
+		stroke-linejoin: round;
+	}
 }
 
 /* Hero motion (Karte "bewegt", agreed exception to "no animation"): only opacity and transform.
@@ -797,6 +822,31 @@
 	}
 	.karte-ruht .karte-pfoten use {
 		animation-play-state: paused;
+	}
+}
+/* Contact map pins: they drop in one after another while the map scrolls into view (its own view
+   timeline, named on the map's HTML frame: Chromium gives an SVG root no view timeline). Without
+   support or with reduced motion they simply stand there. */
+@media (prefers-reduced-motion: no-preference) {
+	@supports (animation-timeline: view()) {
+		:has(> .karte-mit-orten) {
+			view-timeline-name: --karte-orte;
+		}
+		.karte-ort {
+			animation: karte-ort-fallen ease-out both;
+			animation-timeline: --karte-orte;
+			animation-range: cover calc(12% + var(--i) * 7%) cover calc(24% + var(--i) * 7%);
+		}
+	}
+}
+@keyframes karte-ort-fallen {
+	from {
+		opacity: 0;
+		transform: translateY(-40px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
 	}
 }
 @keyframes karte-weg-zeichnen {
