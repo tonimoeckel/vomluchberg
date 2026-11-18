@@ -134,6 +134,14 @@ export const angeboteBlock: Template = {
     ueberschrift,
     einleitung,
     { type: 'string', name: 'auswahl', label: 'Welche Angebote?', options: [...angeboteBlockAuswahl] },
+    {
+      type: 'string', name: 'darstellung', label: 'Darstellung',
+      description: 'Liste: alle Angebote untereinander. Kartenstapel: beim Scrollen schiebt sich eine Karte nach der anderen über die vorige.',
+      options: [
+        { value: 'liste', label: 'Liste (Standard)' },
+        { value: 'stapel', label: 'Kartenstapel zum Durchscrollen' },
+      ],
+    },
     { type: 'boolean', name: 'alleLink', label: 'Link „Alle Angebote“ zeigen' },
   ],
 };
