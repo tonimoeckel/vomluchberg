@@ -1,10 +1,11 @@
 ---
 // Automatic list of the visible offers (filter: all / group / single). "darstellung": "liste" (default)
-// sets them as a ruled price list, "faecher" as a fan of cards that travels across a pinned stage
-// while the page scrolls (AngeboteFaecher.astro).
+// sets them as a ruled price list, "stapel" as a pile of sheets to scroll through (AngeboteStapel),
+// "faecher" as a fan of cards that travels across a pinned stage while the page scrolls (AngeboteFaecher).
 import { tinaField } from '@tinacms/astro/tina-field';
 import SectionHead from '../SectionHead.astro';
 import AngebotKarte from '../AngebotKarte.astro';
+import AngeboteStapel from '../AngeboteStapel.astro';
 import AngeboteFaecher from '../AngeboteFaecher.astro';
 import { angeboteListeUrl, sichtbareAngebote } from '../../../../lib/domain/angebot';
 import { listAngeboteMitSlug, type BlockOf } from '../../lib/data';
@@ -13,12 +14,15 @@ interface Props { data: BlockOf<'Angebote'> }
 const { data } = Astro.props;
 const angebote = sichtbareAngebote(await listAngeboteMitSlug(), data.auswahl);
 const kopf = Boolean(data.ueberschrift || data.text);
+const stapel = data.darstellung === 'stapel';
 const faecher = data.darstellung === 'faecher' && angebote.length > 0;
 ---
 <section class:list={[kopf ? 'sektion-m' : 'pt-4 pb-[var(--section-gap-s)]']} id="angebote">
 	<div class="container-page">
 		{kopf && <SectionHead data={data} geteilt class="mb-14" />}
-		{faecher ? null : angebote.length > 0 ? (
+		{faecher ? null : angebote.length > 0 && stapel ? (
+			<AngeboteStapel angebote={angebote} />
+		) : angebote.length > 0 ? (
 			<div class="regel">
 				{angebote.map((a) => <AngebotKarte angebot={a} />)}
 			</div>
