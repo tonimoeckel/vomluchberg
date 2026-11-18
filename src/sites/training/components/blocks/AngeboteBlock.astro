@@ -1,8 +1,10 @@
 ---
-// Automatic list of the visible offers (filter: all / group / single), set as a price list.
+// Automatic list of the visible offers (filter: all / group / single), set as a price list
+// (darstellung "liste", the default) or as a pile of sheets to scroll through ("stapel", AngeboteStapel).
 import { tinaField } from '@tinacms/astro/tina-field';
 import SectionHead from '../SectionHead.astro';
 import AngebotKarte from '../AngebotKarte.astro';
+import AngeboteStapel from '../AngeboteStapel.astro';
 import { angeboteListeUrl, sichtbareAngebote } from '../../../../lib/domain/angebot';
 import { listAngeboteMitSlug, type BlockOf } from '../../lib/data';
 
@@ -10,11 +12,14 @@ interface Props { data: BlockOf<'Angebote'> }
 const { data } = Astro.props;
 const angebote = sichtbareAngebote(await listAngeboteMitSlug(), data.auswahl);
 const kopf = Boolean(data.ueberschrift || data.text);
+const stapel = data.darstellung === 'stapel';
 ---
 <section class:list={[kopf ? 'sektion-m' : 'pt-4 pb-[var(--section-gap-s)]']} id="angebote">
 	<div class="container-page">
 		{kopf && <SectionHead data={data} geteilt class="mb-14" />}
-		{angebote.length > 0 ? (
+		{angebote.length > 0 && stapel ? (
+			<AngeboteStapel angebote={angebote} />
+		) : angebote.length > 0 ? (
 			<div class="regel">
 				{angebote.map((a) => <AngebotKarte angebot={a} />)}
 			</div>
