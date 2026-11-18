@@ -4,7 +4,7 @@ beschreibung: 'Karolin Riesing: Übungsleiterin im Hundesportverein seit 2019, A
 blocks:
   - _template: hero
     variante: schmal
-    kicker: Glashütte, Sachsen
+    kicker: Glashütte, Sachsen & Umgebung
     titel: Karolin Riesing
     untertitel: Hundetrainerin mit Herz und Erfahrung
     bild: /uploads/training/karolin/karolin-mit-hunden-wiese.jpg

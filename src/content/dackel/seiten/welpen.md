@@ -18,16 +18,16 @@ blocks:
     bilder:
       - bild: /uploads/dackel/welpe-pirscht-durchs-gras.jpg
         beschreibung: Dackelwelpe pirscht durchs Gras
-      - bild: /uploads/dackel/a-wurf-alfons.jpg
-        beschreibung: Alfons aus dem A-Wurf mit gelbem Spielzeug
       - bild: /uploads/dackel/a-wurf-alma.jpg
         beschreibung: Alma aus dem A-Wurf mit gelbem Spielzeug
+      - bild: /uploads/dackel/a-wurf-arthur.jpg
+        beschreibung: Arthur aus dem A-Wurf mit gelbem Spielzeug
       - bild: /uploads/dackel/welpe-liegt-im-gras.jpg
         beschreibung: Dackelwelpe liegt in der Sonne im Gras
       - bild: /uploads/dackel/welpe-auf-dem-teppich.jpg
         beschreibung: Dackelwelpe liegt auf dem Teppich
-      - bild: /uploads/dackel/a-wurf-arthur.jpg
-        beschreibung: Arthur aus dem A-Wurf klettert über eine Matte
+      - bild: /uploads/dackel/a-wurf-alfons.jpg
+        beschreibung: Alfons aus dem A-Wurf klettert über eine Matte
       - bild: /uploads/dackel/zwei-junghunde-auf-dem-hof.jpg
         beschreibung: Zwei junge Rauhaardackel sitzen auf dem Hof
       - bild: /uploads/dackel/junghund-am-weidenkorb.jpg

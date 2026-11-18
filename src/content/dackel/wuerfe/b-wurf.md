@@ -7,7 +7,7 @@ vater: Gustav
 vaterLink: /unsere-dackel/gustav
 mutter: Hanni
 mutterLink: /unsere-dackel/hanni
-bild: /uploads/dackel/b-wurf-bruno.jpg
+bild: /uploads/dackel/b-wurf-bax.jpg
 welpen:
   - name: Bax
     bild: /uploads/dackel/b-wurf-bax.jpg
