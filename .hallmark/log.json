@@ -1,5 +1,38 @@
 [
  {
+  "shape": "Narrative Workflow",
+  "theme": "furrow+garden",
+  "axes": "light/grotesk-sans/chromatic-green",
+  "hero": "Stage",
+  "nav": "edge-aligned",
+  "footer": "letter close",
+  "imagery": "photographs + generated survey map",
+  "photos": [],
+  "entry": "redesign",
+  "fingerprint": "waldboden-luchberg-map",
+  "sections": [
+   "hero",
+   "anfrage-leiste",
+   "facts",
+   "offers",
+   "about",
+   "quote",
+   "steps",
+   "gallery",
+   "inquiry",
+   "footer"
+  ],
+  "signature": "survey sketch of the Luchberg (576 m) and the Muglitz valley",
+  "waived": [
+   "8",
+   "44c",
+   "79"
+  ],
+  "prompt": "redesign training site, forest direction, mix of Furrow and Garden",
+  "date": "2026-11-18",
+  "mode": "build"
+ },
+ {
   "mode": "redesign",
   "depth": "full",
   "scope": "site",

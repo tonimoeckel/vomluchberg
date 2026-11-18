@@ -25,7 +25,7 @@ export function starten() {
   if (!('themes' in html.dataset) || document.getElementById('theme-vorschau')) return;
   const aktuell = () => farbschema(html.dataset.scheme);
 
-  const box = el('div', 'fixed bottom-3 right-3 z-50 w-[min(19rem,calc(100%-1.5rem))] border-2 border-heading bg-bg p-3 text-fg');
+  const box = el('div', 'fixed bottom-3 right-3 z-50 w-[min(19rem,calc(100%-1.5rem))] border border-heading bg-bg p-3 text-fg');
   box.id = 'theme-vorschau';
   box.setAttribute('role', 'region');
   box.setAttribute('aria-label', 'Farbvorschau');
@@ -36,12 +36,12 @@ export function starten() {
   schliessen.type = 'button';
   kopf.append(schliessen);
 
-  const name = el('p', 'mt-1 font-display text-2xl font-extrabold uppercase leading-none text-heading');
+  const name = el('p', 'mt-1 font-display text-2xl font-semibold leading-none text-heading');
   name.setAttribute('aria-live', 'polite');
 
   const liste = el('div', 'mt-3 grid grid-cols-2 gap-1.5');
   const knoepfe = FARBSCHEMATA.map((s) => {
-    const b = el('button', 'flex min-h-11 cursor-pointer items-center gap-2 border-2 border-transparent px-2 py-1.5 text-left text-[0.9375rem] font-medium leading-tight text-fg hover:bg-surface aria-pressed:border-heading');
+    const b = el('button', 'flex min-h-11 cursor-pointer items-center gap-2 border border-transparent px-2 py-1.5 text-left text-[0.9375rem] font-medium leading-tight text-fg hover:bg-surface aria-pressed:border-heading');
     b.type = 'button';
     b.dataset.thema = s.id;
     b.title = s.tinaLabel;

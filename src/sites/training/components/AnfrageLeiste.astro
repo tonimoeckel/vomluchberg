@@ -11,7 +11,7 @@ const { data } = Astro.props;
 const knopf = (data.buttons ?? []).find((b) => b && b.stil !== 'sekundaer') ?? null;
 ---
 {(data.hinweis || knopf) && (
-	<aside aria-label="Training anfragen" class="sticky top-0 z-[var(--z-sticky)] border-y-2 border-heading bg-bg">
+	<aside aria-label="Training anfragen" class="sticky top-0 z-[var(--z-sticky)] border-y border-heading bg-bg">
 		<div class="container-page flex min-h-[76px] items-center justify-between gap-6 py-3">
 			{data.hinweis && <p class="hidden max-w-[70ch] font-medium text-heading sm:block" data-tina-field={tinaField(data, 'hinweis')}>{data.hinweis}</p>}
 			{knopf?.link && <a href={knopf.link} class="btn-primary w-full sm:w-auto sm:shrink-0" data-tina-field={tinaField(knopf)}>{knopf.label}</a>}

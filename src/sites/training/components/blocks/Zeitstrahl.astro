@@ -14,8 +14,8 @@ const stationen = (data.stationen ?? []).filter((s) => s !== null);
 		<ol class="regel" data-tina-field={tinaField(data, 'stationen')}>
 			{stationen.map((s) => (
 				<li class="grid gap-x-[var(--gap-columns)] gap-y-2 border-b border-border py-7 md:grid-cols-12 md:items-baseline" data-tina-field={tinaField(s)}>
-					{s.zeit && <p class="figur text-[clamp(1.75rem,1.5vw+1.25rem,2.5rem)] uppercase text-accent md:col-span-3">{s.zeit}</p>}
-					{s.titel && <h3 class="display text-title md:col-span-4">{s.titel}</h3>}
+					{s.zeit && <p class="figur text-[clamp(1.75rem,1.5vw+1.25rem,2.5rem)] text-accent md:col-span-3">{s.zeit}</p>}
+					{s.titel && <h3 class:list={['display text-title', s.beschreibung ? 'md:col-span-4' : 'md:col-span-9']}>{s.titel}</h3>}
 					{s.beschreibung && <p class="max-w-[52ch] text-muted md:col-span-5">{s.beschreibung}</p>}
 				</li>
 			))}

@@ -1,6 +1,6 @@
 ---
 // Header of the training site: logo at the left edge, the menu and the inquiry button at the right,
-// a 2px ink rule beneath. Below md the menu folds into a <details> (no JS, no animation).
+// a 1px ink rule beneath. Below md the menu folds into a <details> (no JS, no animation).
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from '../../../components/ui/Icon.astro';
 import Logo from './Logo.astro';
@@ -14,7 +14,7 @@ const pfad = Astro.url.pathname.replace(/\/$/, '') || '/';
 const aktiv = (link: string) => link !== '/' && (pfad === link || pfad.startsWith(`${link}/`));
 const linkKlasse = 'underline-offset-[0.35em] decoration-2 hover:text-primary-ink hover:underline';
 ---
-<header class="relative z-30 border-b-2 border-heading bg-bg">
+<header class="relative z-30 border-b border-heading bg-bg">
 	<div class="container-page flex h-[76px] items-center justify-between gap-6">
 		<a href="/" aria-label="Alltag kann Sport – Startseite" class="shrink-0">
 			<Logo website={config?.website} class="h-11 w-auto sm:h-[52px]" />
@@ -30,10 +30,10 @@ const linkKlasse = 'underline-offset-[0.35em] decoration-2 hover:text-primary-in
 			{button?.label && button.link && <a href={button.link} class="btn-secondary" data-tina-field={tinaField(button)}>{button.label}</a>}
 		</nav>
 		<details class="group relative md:hidden">
-			<summary class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-3 font-medium text-heading shadow-[inset_0_0_0_2px_var(--heading)] hover:bg-surface [&::-webkit-details-marker]:hidden">
+			<summary class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-3 font-medium text-heading rounded-[var(--radius)] border border-muted bg-card hover:border-heading [&::-webkit-details-marker]:hidden">
 				<Icon name="menu-2" class="size-5 group-open:hidden" /><Icon name="x" class="hidden size-5 group-open:block" />Menü
 			</summary>
-			<nav aria-label="Hauptmenü (mobil)" class="absolute right-0 top-full mt-3 w-72 border-2 border-heading bg-bg p-4">
+			<nav aria-label="Hauptmenü (mobil)" class="absolute right-0 top-full mt-3 w-72 rounded-[var(--radius)] border border-heading bg-bg p-4 shadow-[var(--shadow)]">
 				<ul class="grid text-lg font-medium">
 					{nav.map((n) => (
 						<li class="border-b border-border last:border-b-0">

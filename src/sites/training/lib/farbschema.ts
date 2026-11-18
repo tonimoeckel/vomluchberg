@@ -39,9 +39,9 @@ export const FARBSCHEMATA: readonly Farbschema[] = [
   {
     id: 'waldweg',
     label: 'Waldweg',
-    tinaLabel: 'Waldweg (Tannengrün & Kupfer)',
-    swatch: punkt('#f6f7f2', '#1f3d30', '#a5572b'),
-    themeColor: { light: '#f6f7f2', dark: '#0f1813' },
+    tinaLabel: 'Waldweg (Hafer, Waldgrün & Blattgrün)',
+    swatch: punkt('#f4efe0', '#1f3a29', '#3a6b2a'),
+    themeColor: { light: '#f4efe0', dark: '#111a14' },
   },
   {
     id: 'erde',

@@ -17,7 +17,7 @@ const text = data.zitat?.replace(/^[„"“]|[“"”]$/g, '');
 					<p class="text-[clamp(1.625rem,1.6vw+1.1rem,2.5rem)] font-medium leading-[1.3] text-on-dark [hanging-punctuation:first]">„{text}“</p>
 				</blockquote>
 			)}
-			{data.autor && <figcaption class="mt-8 border-t-2 border-on-dark pt-4 text-lg font-medium text-on-dark-muted" data-tina-field={tinaField(data, 'autor')}>{data.autor}</figcaption>}
+			{data.autor && <figcaption class="mt-8 border-t border-on-dark pt-4 text-lg font-medium text-on-dark-muted" data-tina-field={tinaField(data, 'autor')}>{data.autor}</figcaption>}
 		</div>
 	</figure>
 </section>

@@ -39,7 +39,7 @@ const jsonLd = a && angebotJsonLd({ ...a, slug }, { name: config?.website?.name 
 				</nav>
 				<div class="grid gap-x-[var(--gap-columns)] gap-y-10 lg:grid-cols-12 lg:items-center">
 					<div class:list={[a.bild ? 'lg:col-span-6' : 'lg:col-span-9']}>
-						<h1 class="display text-[clamp(3rem,4vw+1.25rem,5.5rem)]" data-tina-field={tinaField(a, 'titel')}>{a.titel}</h1>
+						<h1 class="display text-[clamp(2.75rem,3.4vw+1rem,4.5rem)]" data-tina-field={tinaField(a, 'titel')}>{a.titel}</h1>
 						{a.untertitel && <p class="mt-4 text-lead font-medium leading-snug text-heading" data-tina-field={tinaField(a, 'untertitel')}>{a.untertitel}</p>}
 						{a.kurzbeschreibung && <p class="mt-4 max-w-[52ch] text-muted" data-tina-field={tinaField(a, 'kurzbeschreibung')}>{a.kurzbeschreibung}</p>}
 						<ul class="mt-6 flex flex-wrap gap-2" aria-label="Eckdaten">

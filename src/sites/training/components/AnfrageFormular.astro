@@ -24,7 +24,7 @@ const anfrage = config?.anfrage;
 const web3key = import.meta.env.PUBLIC_WEB3FORMS_KEY;
 // Without a form service and without JS, the browser's mail program gets the fields as plain text.
 const action = web3key ? 'https://api.web3forms.com/submit' : email ? `mailto:${email}` : undefined;
-const legende = 'mb-5 flex items-baseline gap-3 p-0 font-display text-[1.625rem] font-extrabold uppercase leading-none text-heading';
+const legende = 'mb-5 flex items-baseline gap-3 p-0 font-display text-[1.625rem] font-semibold leading-none text-heading';
 const nummer = 'figur text-accent';
 const label = 'grid gap-2 text-[0.9375rem] font-medium text-heading';
 ---
@@ -75,7 +75,7 @@ const label = 'grid gap-2 text-[0.9375rem] font-medium text-heading';
 			{wunschzeiten.map((z) => (
 				<label class="cursor-pointer">
 					<input type="checkbox" name={f.zeiten} value={z} class="peer sr-only" />
-					<span class="inline-flex min-h-11 items-center border border-muted bg-card px-4 text-[0.9375rem] font-medium text-heading hover:border-heading active:bg-surface peer-disabled:cursor-not-allowed peer-disabled:opacity-55 peer-checked:border-heading peer-checked:bg-heading peer-checked:text-bg peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-copper">{z}</span>
+					<span class="inline-flex min-h-11 items-center rounded-[var(--radius)] border border-muted bg-card px-4 text-[0.9375rem] font-medium text-heading hover:border-heading active:bg-surface peer-disabled:cursor-not-allowed peer-disabled:opacity-55 peer-checked:border-heading peer-checked:bg-heading peer-checked:text-bg peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary">{z}</span>
 				</label>
 			))}
 		</div>

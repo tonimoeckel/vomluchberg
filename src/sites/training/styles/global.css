@@ -1,13 +1,10 @@
-/* Hallmark · shape: Narrative Workflow (draw 57f442, stages as ruled rows; hero swapped from Ledge to Stage so the photo shows Karo and both dogs whole) · genre: editorial · theme: Piste (deal 1/3, seed dog-training-request-small-81f2·42cbb789·2026-11-18·r0), cobalt swapped for Waldweg fir and copper · redesign: full
- * hero: Stage (/), Banner (/angebote), Banner (/anfrage), Banner (/ueber-mich), Stage (/angebote/einzeltraining), Stage (/angebote/basistraining), Stage (/angebote/welpenkurs) · nav: edge-aligned, logo left, three links and the inquiry button right · footer: letter close, the closing line large over Karo's name, contacts and the legal line · imagery: photographs, Karo's own (no library) · signature: the sticky inquiry bar that rides along until the footer · piste: snow, fir field twice a page at most
- * axes: light/display-condensed/warm-green · posture: full palette (field fir, signal copper, ink) · job: book (on request, every action leads to /anfrage) · contrast: pass · fold: pass · v2.0.0 */
-/* Hallmark · pre-emit critique: P4 H4 E4 S4 R5 V4 · weakest: H, the home page carries nine CMS blocks; each block got its own composition (rows, split, field, showcase, form) so the squint still reads heavy and light */
-/* Hallmark · hero-review: skipped at the hero stage (hero fixed in-thread: crop, bar position, header outline) · finish-review: subagent · fix · 8 findings · 7 resolved 1 partial (the dark CTA band and the night footer are now parted by a 6px paper rule; the two greens stay close) · gap: none */
+/* Hallmark · shape: Narrative Workflow, kept from the first redesign (the block order is Karo's) · genre: editorial · theme: Furrow × Garden (by request: Furrow's survey map, Red Hat faces and moulded keys; Garden's oat paper, forest-green ink, leaf-green signal and flat hairline surfaces) · redesign: full
+ * hero: Stage over the survey map (/), Banner (/angebote), Banner (/anfrage), Banner (/ueber-mich), Stage (/angebote/einzeltraining|basistraining|welpenkurs) · nav: edge-aligned, logo left, three links and the inquiry key right · footer: letter close on the forest field, the map behind the closing line · imagery: Karo's own photographs (no library) and a generated survey sketch · signature: the survey sketch of the Luchberg (576 m) and the Müglitz valley, drawn as contours behind the hero and as the training-place card on /anfrage
+ * axes: light/grotesk-sans/chromatic-green · posture: committed (leaf green signal under 5 %, clay only on the map) · job: book (on request, every action leads to /anfrage) · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V4 · weakest: H, nine CMS blocks on the home page; the map, the moss tint and the forest field part them */
+/* Hallmark · hero-review: in-thread at the hero stage (map faded behind the text) · finish-review: subagent · fix · 8 findings · 7 resolved 1 partial (gate 83 on /ueber-mich: the lead gallery photo is now a 5:2 strip; Karo's own photographs stay) · gap: none */
 /* Hallmark · waive 8 · the block order comes from Karo's Tina pages · her CMS sequence is kept on purpose, every block got a new composition */
 /* Hallmark · dismissed 41 · --accent-ink is the project's accent colour for text on paper, never text on an --accent fill */
-/* Hallmark · dropped {angebotUrl(karte.slug)}, the hero offer card · it repeated the first offer of the offers list two screens further down */
-/* Hallmark · reworded "Das könnte auch passen" to "Weitere Angebote" · craft § 6 swap test, the head fit any competitor */
-/* Hallmark · reworded "Darum geht's" to "Darum geht’s" · F1 names the straight apostrophe */
 /* Hallmark · waive 44c · Banner posture stamped for /angebote, /anfrage and /ueber-mich · the sub pages open on a short title band so Karo's offers and the form start on the first screen */
 /* Hallmark · waive 79 · Banner posture on the sub pages, the first section begins right under the title band · the space under the band is the next section's top padding, not a dead hero */
 /* Hallmark · dismissed 28a · the flagged images sit below the fold; the LCP is the hero photo with fetchpriority=high */
@@ -15,21 +12,27 @@
 /* Hallmark · dismissed F2 · the three periods are a JavaScript spread in GalerieBlock.astro, not prose */
 /* Hallmark · dismissed 77 · the page has nine sections; the counter misses them because each Tina block sits in its own wrapper div */
 /* Hallmark · dropped the kicker lines · the Tina fields stay; gate 54 names every one of them as an eyebrow */
+/* Hallmark · swapped Furrow's tangerine for Garden's leaf green as the signal · Karo asked for forest; clay keeps Furrow's role as the edge on the map only */
+/* Hallmark · dropped Furrow's motion (pins landing, the loupe) · Karo wants no decorative animation; the map is a static SVG built at build time */
+/* Hallmark · the map is a sketch, not to scale · only the Luchberg cone (576 m, a basalt Quellkuppe on Glashütte land) and the Müglitz valley east of it are taken from the region (de.wikipedia.org, Luchberg); no invented place names */
 
-/* Stylesheet of the training site "Alltag kann Sport". Piste material in the site's colour schemes:
-   paper, ink, square edges, 2px ink rules instead of boxes, Barlow Condensed 800 in capitals for
-   heads, figures and buttons over Barlow for everything else. No gradients, no shadows and no
-   decorative animation (Karo wants it plain): only colour steps on hover.
+/* Stylesheet of the training site "Alltag kann Sport". Waldboden: oat paper, forest-green ink,
+   Red Hat Display 600 heads in sentence case over Red Hat Text, Red Hat Mono for heights and
+   times only, hairlines and a 1px ink rule over lists, flat paper (only the notebook card lifts),
+   6px moulded keys, a generated survey map of the Luchberg. No gradients and no decorative
+   animation (Karo wants it plain): only colour steps on hover.
 
    Token contract (docs/plan/00-multisite.md, 2.5): every site defines the same semantic variables
    (--bg, --surface, --surface-2, --fg, --muted, --border, --primary, --primary-ink, --accent,
    --accent-ink, --dark, --on-dark, --radius, --grad, --grad-soft) and maps them to the same Tailwind
    names, so shared components (Lightbox, Icon) look native on every site. Training-only tokens:
-   --card, --heading, --copper (signal lines, focus), --lane, --dark-2, --on-dark-muted, --on-primary. */
+   --card, --heading, --copper (map edge, lines), --lane (moss tint), --dark-2, --on-dark-muted,
+   --on-primary, and the map colours --contour, --water, --forest. */
 @import 'tailwindcss' source(none);
-@import '@fontsource/barlow/latin-400.css';
-@import '@fontsource/barlow/latin-500.css';
-@import '@fontsource/barlow-condensed/latin-800.css';
+@import '@fontsource/red-hat-display/latin-600.css';
+@import '@fontsource/red-hat-text/latin-400.css';
+@import '@fontsource/red-hat-text/latin-500.css';
+@import '@fontsource/red-hat-mono/latin-500.css';
 @plugin '@tailwindcss/typography';
 
 /* Only this site and the shared components are scanned for class names – never other sites. */
@@ -38,18 +41,24 @@
 @source '../../../components/Lightbox.astro';
 @source '../../../components/ui';
 
-/* Scale (Hallmark shared scale): spacing, section gaps, container, motion. */
+/* Scale (Hallmark shared scale): spacing, section gaps, container, radii, motion. */
 :root {
 	color-scheme: light;
-	--radius: 0px;
-	--on-primary: #fbfaf6;
+	--radius: 6px; /* keys, fields, chips, photographs */
+	--radius-notiz: 14px; /* the notebook card */
+	--on-primary: #fdfcf6;
 	--space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
 	--container: 1440px; --gutter: 64px; --gap-columns: 32px;
-	--section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
-	--rule-hair: 1px; --rule-bar: 2px;
+	--section-gap-s: 112px; --section-gap: 136px; --section-gap-l: 168px;
+	--rule-hair: 1px; --rule-bar: 1px;
 	--dur-micro: 120ms; --dur-short: 220ms;
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 	--z-raised: 10; --z-sticky: 200; --z-sticky-nav: 300;
+	/* Map colours, mixed from the scheme so every scheme gets its own map. */
+	--contour: color-mix(in oklab, var(--copper) 55%, var(--bg));
+	--contour-strong: color-mix(in oklab, var(--copper) 80%, var(--bg));
+	--forest: color-mix(in oklab, var(--accent) 38%, var(--bg));
+	--water: color-mix(in oklab, #4f7590 80%, var(--bg));
 }
 @media (max-width: 60rem) {
 	:root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; }
@@ -115,31 +124,32 @@
 	--shadow: 0 26px 50px -30px rgb(20 37 58 / 0.45);
 }
 
-/* Waldweg: Karo's pick and the live default. Piste material in Waldweg colours: sage-white paper,
-   green-black ink, fir green as the field (bands), copper as the signal (primary control, focus). */
+/* Waldweg: Karo's pick and the live default. Waldboden material: oat paper with a green cast,
+   deep forest-green ink, one leaf green as the signal (primary control, focus), clay for the map's
+   edge, the forest green as the field. */
 [data-scheme='waldweg'] {
-	--bg: #f6f7f2;
-	--surface: #eceee6;
-	--surface-2: #e1e6db;
-	--card: #fafbf7;
-	--fg: #18221c;
-	--heading: #18221c;
-	--muted: #4c5850;
-	--border: #cdd4c8;
-	--primary: #a5572b;
-	--primary-hover: #87441f;
-	--primary-ink: #8f461e;
-	--copper: #b05d2e;
-	--accent: #1f3d30;
-	--accent-ink: #1f3d30;
-	--lane: #d3dccd;
-	--grad: linear-gradient(120deg, #1f3d30 0%, #1f3d30 100%);
-	--grad-soft: linear-gradient(120deg, #eceee6 0%, #eceee6 100%);
-	--dark: #1f3d30;
-	--dark-2: #14261d;
-	--on-dark: #f6f7f2;
-	--on-dark-muted: #d3dfd0;
-	--shadow: none;
+	--bg: #f4efe0;
+	--surface: #ebe5d1;
+	--surface-2: #e3dec6;
+	--card: #fbf9f1;
+	--fg: #1a2a1f;
+	--heading: #16291d;
+	--muted: #4a5848;
+	--border: #d4cdb5;
+	--primary: #3a6b2a;
+	--primary-hover: #2e5821;
+	--primary-ink: #356226;
+	--copper: #a5532a;
+	--accent: #1f3d2b;
+	--accent-ink: #1f3d2b;
+	--lane: #dfe2c8;
+	--grad: linear-gradient(120deg, #1f3d2b 0%, #1f3d2b 100%);
+	--grad-soft: linear-gradient(120deg, #ebe5d1 0%, #ebe5d1 100%);
+	--dark: #1f3a29;
+	--dark-2: #13241a;
+	--on-dark: #f4efe0;
+	--on-dark-muted: #d6dcc7;
+	--shadow: 0 1px 2px rgb(26 42 31 / 0.08), 0 24px 44px -20px rgb(26 42 31 / 0.4);
 }
 
 /* Erde: sand and clay with earth-brown bands; logo navy for headings and buttons, logo copper
@@ -279,28 +289,28 @@
 	}
 
 	[data-scheme='waldweg'] {
-		--bg: #0f1813;
-		--surface: #142019;
-		--surface-2: #22332a;
-		--card: #18261e;
-		--fg: #eef1ea;
-		--heading: #eef1ea;
-		--muted: #c0cdc1;
-		--border: #2c3e34;
-		--primary: #a5572b;
-		--primary-hover: #87441f;
-		--primary-ink: #e39b6d;
-		--copper: #cf7a45;
-		--accent: #cddbc8;
-		--accent-ink: #dfe8dc;
-		--lane: #22332a;
-		--grad: linear-gradient(120deg, #1f3d30 0%, #1f3d30 100%);
-		--grad-soft: linear-gradient(120deg, #142019 0%, #142019 100%);
-		--dark: #1f3d30;
-		--dark-2: #0a110d;
-		--on-dark: #eef1ea;
-		--on-dark-muted: #c9d6c8;
-		--shadow: none;
+		--bg: #111a14;
+		--surface: #17231b;
+		--surface-2: #233328;
+		--card: #1b281f;
+		--fg: #eeead9;
+		--heading: #eeead9;
+		--muted: #c3cbb6;
+		--border: #2e3e33;
+		--primary: #447a33;
+		--primary-hover: #3a6b2a;
+		--primary-ink: #a8cf8a;
+		--copper: #d08250;
+		--accent: #cfdcc0;
+		--accent-ink: #dfe7d3;
+		--lane: #233328;
+		--grad: linear-gradient(120deg, #1f3a29 0%, #1f3a29 100%);
+		--grad-soft: linear-gradient(120deg, #17231b 0%, #17231b 100%);
+		--dark: #1f3a29;
+		--dark-2: #0b130e;
+		--on-dark: #eeead9;
+		--on-dark-muted: #cbd3bf;
+		--shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 24px 44px -20px rgb(0 0 0 / 0.7);
 	}
 
 	[data-scheme='erde'] {
@@ -380,8 +390,9 @@
 }
 
 @theme inline {
-	--font-sans: 'Barlow', system-ui, sans-serif;
-	--font-display: 'Barlow Condensed', 'Arial Narrow', system-ui, sans-serif;
+	--font-sans: 'Red Hat Text', system-ui, sans-serif;
+	--font-display: 'Red Hat Display', 'Red Hat Text', system-ui, sans-serif;
+	--font-mono: 'Red Hat Mono', ui-monospace, monospace;
 	--color-bg: var(--bg);
 	--color-surface: var(--surface);
 	--color-surface-2: var(--surface-2);
@@ -404,15 +415,15 @@
 	--radius-card: var(--radius);
 }
 
-/* Type scale (layout.md § 2); the condensed display sets one step larger, as Piste asks. */
+/* Type scale (layout.md § 2): Red Hat Display is wide, so the display steps sit lower than Piste's. */
 @theme {
 	--text-sm: 0.9375rem;
 	--text-md: 1.0625rem;
 	--text-lead: clamp(1.1875rem, 0.35vw + 1.0625rem, 1.4375rem);
-	--text-title: clamp(1.625rem, 0.9vw + 1.25rem, 2.125rem);
-	--text-section: clamp(2.5rem, 4vw + 0.75rem, 4.25rem);
-	--text-display: clamp(3.5rem, 7vw + 0.5rem, 8rem);
-	--text-figure: clamp(2.5rem, 3vw + 1rem, 3.75rem);
+	--text-title: clamp(1.5rem, 0.8vw + 1.2rem, 1.875rem);
+	--text-section: clamp(2.25rem, 3vw + 1rem, 3.75rem);
+	--text-display: clamp(3rem, 5vw + 1rem, 6.25rem);
+	--text-figure: clamp(2.25rem, 2.5vw + 1rem, 3.25rem);
 }
 
 @layer base {
@@ -431,15 +442,14 @@
 		caret-color: var(--primary);
 	}
 	::selection {
-		background: color-mix(in oklab, var(--copper) 30%, transparent);
+		background: color-mix(in oklab, var(--primary) 24%, transparent);
 	}
 	h1, h2, h3, h4 {
 		font-family: var(--font-display);
-		font-weight: 800;
+		font-weight: 600;
 		font-synthesis: none;
-		text-transform: uppercase;
-		letter-spacing: -0.005em;
-		line-height: 1.02;
+		letter-spacing: -0.03em;
+		line-height: 1.04;
 		text-wrap: balance;
 		overflow-wrap: break-word;
 		min-width: 0;
@@ -448,10 +458,10 @@
 		text-wrap: pretty;
 	}
 	:focus-visible {
-		outline: 2px solid var(--copper);
+		outline: 2px solid var(--primary);
 		outline-offset: 2px;
 	}
-	/* On the fir field and the night band the copper ring drops under 3:1: use paper there. */
+	/* On the forest field and the night band the green ring drops under 3:1: use paper there. */
 	.band-field :focus-visible,
 	.band-night :focus-visible {
 		outline-color: var(--on-dark);
@@ -473,28 +483,36 @@
 	padding-block: var(--section-gap);
 }
 
-/* Big uppercase display type (heads, figures, prices). */
+/* Display type (heads, figures, prices): Red Hat Display 600, sentence case, tight. */
 @utility display {
 	font-family: var(--font-display);
-	font-weight: 800;
-	text-transform: uppercase;
-	letter-spacing: -0.005em;
-	line-height: 1.02;
+	font-weight: 600;
+	letter-spacing: -0.03em;
+	line-height: 1.04;
 	color: var(--heading);
 	text-wrap: balance;
 	overflow-wrap: break-word;
 	min-width: 0;
 }
 
-/* Tabular figure in the display face: prices, years, step numbers. */
+/* Tabular figure in the display face: prices, step numbers. */
 @utility figur {
 	font-family: var(--font-display);
-	font-weight: 800;
+	font-weight: 600;
+	letter-spacing: -0.03em;
 	font-variant-numeric: tabular-nums;
 	line-height: 1;
 }
 
-/* The 2px ink rule that opens a list, a row set or a figure row (Piste: ruled, never boxed). */
+/* Survey figures in mono (heights, times): a step smaller than the text beside them. */
+@utility zahl {
+	font-family: var(--font-mono);
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: 0;
+}
+
+/* A 1px ink rule over a list or a row set, hairlines between rows (Furrow's ruled lists). */
 @utility regel {
 	border-top: var(--rule-bar) solid var(--heading);
 }
@@ -502,41 +520,51 @@
 	border-top: var(--rule-hair) solid var(--border);
 }
 
-/* Bands: the fir field (twice a page at most) and the night band. Every band swaps its text colour. */
+/* Bands: the forest field (twice a page at most), the night band (footer) and the moss tint. */
 @utility band-field {
 	background: var(--dark);
 	color: var(--on-dark);
 	--heading: var(--on-dark);
 	--muted: var(--on-dark-muted);
-	--border: color-mix(in oklab, var(--on-dark) 28%, transparent);
+	--border: color-mix(in oklab, var(--on-dark) 26%, transparent);
+	--contour: color-mix(in oklab, var(--on-dark) 22%, var(--dark));
+	--contour-strong: color-mix(in oklab, var(--on-dark) 34%, var(--dark));
+	--forest: color-mix(in oklab, var(--on-dark) 16%, var(--dark));
+	--water: color-mix(in oklab, var(--on-dark) 30%, var(--dark));
 }
 @utility band-night {
 	background: var(--dark-2);
 	color: var(--on-dark);
 	--heading: var(--on-dark);
 	--muted: var(--on-dark-muted);
-	--border: color-mix(in oklab, var(--on-dark) 24%, transparent);
+	--border: color-mix(in oklab, var(--on-dark) 22%, transparent);
+	--contour: color-mix(in oklab, var(--on-dark) 16%, var(--dark-2));
+	--contour-strong: color-mix(in oklab, var(--on-dark) 26%, var(--dark-2));
+	--forest: color-mix(in oklab, var(--on-dark) 11%, var(--dark-2));
+	--water: color-mix(in oklab, var(--on-dark) 22%, var(--dark-2));
+}
+@utility band-moos {
+	background: var(--lane);
 }
 
-/* Buttons: square, 52px, Barlow Condensed 800 in capitals, untracked. One filled primary style. */
+/* Keys: Furrow's moulded 6px keys, 50px, Red Hat Text 500 in sentence case. One filled primary. */
 @utility btn {
 	display: inline-flex;
-	min-height: 52px;
+	min-height: 50px;
 	align-items: center;
 	justify-content: center;
 	gap: var(--space-xs);
 	padding-inline: var(--space-lg);
-	border: 0;
+	border: var(--rule-hair) solid transparent;
 	border-radius: var(--radius);
-	font-family: var(--font-display);
-	font-size: 1.1875rem;
-	font-weight: 800;
+	font-family: var(--font-sans);
+	font-size: var(--text-md);
+	font-weight: 500;
 	line-height: 1;
-	text-transform: uppercase;
 	text-decoration: none;
 	white-space: nowrap;
 	cursor: pointer;
-	transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+	transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
 	&:disabled,
 	&[aria-disabled='true'] {
 		opacity: 0.55;
@@ -546,44 +574,45 @@
 @utility btn-primary {
 	@apply btn;
 	background: var(--primary);
+	border-color: color-mix(in oklab, var(--primary) 78%, var(--fg));
 	color: var(--on-primary);
+	box-shadow: inset 0 1px 0 color-mix(in oklab, var(--on-primary) 26%, transparent), inset 0 -1px 0 color-mix(in oklab, var(--fg) 14%, transparent);
 	&:hover {
 		background: var(--primary-hover);
 	}
 	&:active {
-		background: var(--fg);
-		color: var(--bg);
+		box-shadow: inset 0 2px 3px color-mix(in oklab, var(--fg) 30%, transparent);
 	}
 }
 @utility btn-secondary {
 	@apply btn;
-	background: transparent;
+	background: var(--card);
+	border-color: var(--muted);
 	color: var(--heading);
-	box-shadow: inset 0 0 0 var(--rule-bar) var(--heading);
+	box-shadow: inset 0 1px 0 var(--card), 0 1px 1px color-mix(in oklab, var(--fg) 10%, transparent);
 	&:hover {
-		background: var(--surface);
+		border-color: var(--heading);
+		background: var(--bg);
 	}
 	&:active {
-		background: var(--heading);
-		color: var(--bg);
+		box-shadow: inset 0 2px 3px color-mix(in oklab, var(--fg) 16%, transparent);
 	}
 }
-/* Outline button on the fir field and the night band. */
+/* Outline key on the forest field and the night band. */
 @utility btn-hell {
 	@apply btn;
 	background: transparent;
 	color: var(--on-dark);
-	box-shadow: inset 0 0 0 var(--rule-bar) var(--on-dark);
+	border-color: var(--on-dark);
 	&:hover {
 		background: color-mix(in oklab, var(--on-dark) 14%, transparent);
 	}
 	&:active {
-		background: var(--on-dark);
-		color: var(--dark);
+		background: color-mix(in oklab, var(--on-dark) 24%, transparent);
 	}
 }
 
-/* Text link: ink, underlined, copper on hover. */
+/* Text link: ink, underlined, the line turning leaf green on hover (Garden). */
 @utility textlink {
 	color: var(--heading);
 	font-weight: 500;
@@ -591,15 +620,17 @@
 	text-decoration-thickness: 1px;
 	text-underline-offset: 0.2em;
 	&:hover {
-		color: var(--primary-ink);
+		text-decoration-color: var(--primary);
 		text-decoration-thickness: 2px;
 	}
 }
 
-/* Tag ("45 Min.", "Hundesport"): body face, a step smaller, sentence case, a hairline square. */
+/* Chip ("45 Min.", "Hundesport"): body face, a step smaller, sentence case, a hairline 6px key. */
 @utility tag {
 	display: inline-block;
 	border: var(--rule-hair) solid var(--border);
+	border-radius: var(--radius);
+	background: color-mix(in oklab, var(--heading) 5%, transparent);
 	padding: var(--space-2xs) var(--space-xs);
 	font-size: var(--text-sm);
 	font-weight: 500;
@@ -607,16 +638,29 @@
 	color: var(--heading);
 }
 
-/* Photograph frame: square, an inset ink hairline at 8%. */
+/* Photograph frame: 6px corners and an inset hairline (Garden), no shadow. */
 @utility foto {
 	display: block;
 	width: 100%;
 	object-fit: cover;
-	outline: 1px solid color-mix(in oklab, var(--fg) 8%, transparent);
+	border-radius: var(--radius);
+	outline: 1px solid color-mix(in oklab, var(--fg) 10%, transparent);
 	outline-offset: -1px;
 }
 
-/* Form controls of the inquiry form: square, 52px, a 1px edge in --muted (3:1 against the paper). */
+/* The notebook card (Furrow's waterproof page): the one surface that lifts. Card paper on an 8px
+   grid, a 1px ink ring, 14px corners. */
+@utility notiz {
+	border-radius: var(--radius-notiz);
+	background:
+		linear-gradient(color-mix(in oklab, var(--border) 45%, transparent) 1px, transparent 1px) 0 0 / 8px 8px,
+		linear-gradient(90deg, color-mix(in oklab, var(--border) 45%, transparent) 1px, transparent 1px) 0 0 / 8px 8px,
+		var(--card);
+	box-shadow: 0 0 0 1px var(--heading), var(--shadow);
+	overflow: hidden;
+}
+
+/* Form controls of the inquiry form: 6px, 52px, a 1px edge in --muted (3:1 against the paper). */
 @utility feld {
 	width: 100%;
 	min-height: 52px;
@@ -630,7 +674,7 @@
 		border-color: var(--heading);
 	}
 	&:focus-visible {
-		outline: 2px solid var(--copper);
+		outline: 2px solid var(--primary);
 		outline-offset: -2px;
 	}
 	&:disabled {
@@ -642,6 +686,85 @@
 	}
 }
 
+/* The survey sketch (components/Karte.astro). Strokes stay hairline at any size. In the base layer,
+   so utilities (size, position) win. */
+@layer base {
+	.karte {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	/* A clearing around the text block: the map fades where the head, the sentence and the keys sit. */
+	.karte-lichtung {
+		mask-image: radial-gradient(ellipse 30% 26% at 21% 60%, color-mix(in oklab, var(--fg) 18%, transparent) 70%, var(--fg) 100%);
+	}
+	/* Behind the footer's closing line: the map fades out towards the links. */
+	.karte-ausblenden {
+		mask-image: linear-gradient(to bottom, var(--fg) 0 30%, transparent 85%);
+	}
+	@media (max-width: 64rem) {
+		.karte-lichtung {
+			mask-image: radial-gradient(ellipse 75% 22% at 40% 24%, color-mix(in oklab, var(--fg) 18%, transparent) 70%, var(--fg) 100%);
+		}
+	}
+	.karte path {
+		fill: none;
+		vector-effect: non-scaling-stroke;
+	}
+	.karte-linie {
+		stroke: var(--contour);
+		stroke-width: 1;
+	}
+	.karte-linie-stark {
+		stroke: var(--contour-strong);
+		stroke-width: 1.6;
+	}
+	.karte-wald {
+		stroke: var(--forest);
+		stroke-width: 5;
+		stroke-linecap: round;
+	}
+	.karte path.karte-wald {
+		vector-effect: none;
+	}
+	.karte-fluss {
+		stroke: var(--water);
+		stroke-width: 2.5;
+		stroke-linecap: round;
+	}
+	.karte-weg {
+		stroke: var(--muted);
+		stroke-width: 1.25;
+		stroke-dasharray: 8 6;
+	}
+	.karte-punkt {
+		fill: var(--heading);
+	}
+	.karte-name {
+		fill: var(--heading);
+		font-family: var(--font-sans);
+		font-weight: 500;
+		font-size: 44px;
+	}
+	.karte-hoehe {
+		fill: var(--muted);
+		font-family: var(--font-mono);
+		font-weight: 500;
+		font-size: 34px;
+	}
+	/* Labels on a map drawn large (the hero): the SVG scales up, so the type is set smaller. */
+	.karte-gross .karte-name {
+		font-size: 17px;
+	}
+	.karte-gross .karte-hoehe {
+		font-size: 14px;
+	}
+	.karte-name-fluss {
+		fill: var(--water);
+		font-style: normal;
+	}
+}
+
 /* Rich text: class="prose prose-lg prose-site". Unlayered, so it wins over the typography plugin. */
 .prose-site {
 	max-width: 65ch;
@@ -649,24 +772,23 @@
 	--tw-prose-headings: var(--heading);
 	--tw-prose-links: var(--heading);
 	--tw-prose-bold: var(--heading);
-	--tw-prose-bullets: var(--copper);
+	--tw-prose-bullets: var(--primary);
 	--tw-prose-quotes: var(--fg);
-	--tw-prose-quote-borders: var(--copper);
+	--tw-prose-quote-borders: var(--primary);
 	--tw-prose-counters: var(--muted);
 	--tw-prose-captions: var(--muted);
 	--tw-prose-hr: var(--border);
 }
 .prose-site :where(h2, h3) {
 	font-family: var(--font-display);
-	text-transform: uppercase;
-	font-weight: 800;
-	letter-spacing: -0.005em;
-	line-height: 1.05;
+	font-weight: 600;
+	letter-spacing: -0.025em;
+	line-height: 1.1;
 }
 .prose-site :where(a):hover {
-	color: var(--primary-ink);
+	text-decoration-color: var(--primary);
 }
-/* Rich text on the fir field and the night band. */
+/* Rich text on the forest field and the night band. */
 .prose-hell {
 	--tw-prose-body: var(--on-dark-muted);
 	--tw-prose-headings: var(--on-dark);

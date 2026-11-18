@@ -1,0 +1,27 @@
+---
+// The survey sketch of Karo's home ground (lib/karte.ts): the Luchberg cone and the Müglitz valley
+// in contour lines, the forest as dots, a track, the river. Static SVG, built at build time: no
+// script, no tiles, no animation. "beschriftet" adds the two real names; otherwise it is a quiet
+// ground for the hero. "gipfel={false}" drops the summit dot where text runs over the map. Always decorative for screen readers (the facts are in the text beside it).
+import { karte } from '../lib/karte';
+
+import type { KarteOptionen } from '../lib/karte';
+
+interface Props { beschriftet?: boolean; gipfel?: boolean; optionen?: KarteOptionen; class?: string }
+const { beschriftet = false, gipfel = true, optionen, class: klasse } = Astro.props;
+const k = karte(optionen);
+---
+<svg class:list={['karte', klasse]} viewBox={`0 0 ${k.breite} ${k.hoehe}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+	<path d={k.wald} class="karte-wald" />
+	{k.linien.map((l) => <path d={l.d} class:list={['karte-linie', l.stark && 'karte-linie-stark']} />)}
+	<path d={k.bach} class="karte-fluss" />
+	<path d={k.weg} class="karte-weg" />
+	{gipfel && <circle cx={k.gipfel.x} cy={k.gipfel.y} r="5" class="karte-punkt" />}
+	{beschriftet && (
+		<>
+			<text x={k.gipfel.x} y={k.gipfel.y} dx="0.6em" dy="-0.35em" class="karte-name">Luchberg</text>
+			<text x={k.gipfel.x} y={k.gipfel.y} dx="0.75em" dy="1.05em" class="karte-hoehe">576 m</text>
+			<text x={k.fluss.x} y={k.fluss.y} dx="-0.6em" text-anchor="end" class="karte-name karte-name-fluss">Müglitz</text>
+		</>
+	)}
+</svg>

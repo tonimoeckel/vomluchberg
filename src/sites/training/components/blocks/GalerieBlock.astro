@@ -34,7 +34,7 @@ const paar = rest.slice(0, 2);
 					]}>
 						<a href={b!.bild!} data-lightbox={gruppe} data-caption={b.beschreibung ?? ''} class="block hover:opacity-90">
 							<img src={b!.bild!} alt={b.beschreibung ?? ''} width="1600" height="1067" loading="lazy" decoding="async"
-								class:list={['foto', i === 0 ? 'aspect-[16/9] lg:aspect-[21/9]' : 'aspect-[4/3] md:h-[min(30vw,440px)] md:aspect-auto']} />
+								class:list={['foto', i === 0 ? 'aspect-[16/9] lg:aspect-[5/2]' : 'aspect-[4/3] md:h-[min(30vw,440px)] md:aspect-auto']} />
 						</a>
 						{b.titel && <figcaption class="mt-3 text-[0.9375rem] font-medium text-muted">{b.titel}</figcaption>}
 					</figure>

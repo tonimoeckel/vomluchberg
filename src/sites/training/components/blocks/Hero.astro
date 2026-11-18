@@ -1,11 +1,12 @@
 ---
-// Page head in two postures.
+// Page head in two postures. The start page's head sits on the survey sketch of the Luchberg (Karte).
 // "gross" (start page, Stage): the head, the sentence and the actions on five columns, Karo's photo
 //   whole (3:2, Karo and both dogs) on seven, filling the first screen. The "hinweis" moves into the
 //   sticky inquiry bar (AnfrageLeiste, rendered by Blocks.astro); on phones it also stays here.
 // "schmal" (sub pages, Banner): the head on seven columns, the photo (if any) on five.
 // The kicker field is shown only on the start page, as the photo's caption under it (a place, not an eyebrow).
 import { tinaField } from '@tinacms/astro/tina-field';
+import Karte from '../Karte.astro';
 import type { BlockOf } from '../../lib/data';
 
 interface Props { data: BlockOf<'Hero'> }
@@ -15,10 +16,11 @@ const gross = data.variante === 'gross';
 const knopf = (stil: string | null | undefined) => (stil === 'sekundaer' ? 'btn-secondary' : 'btn-primary');
 ---
 {gross ? (
-	<section class="flex min-h-[calc(100svh-76px)] items-center py-10 sm:py-12">
+	<section class="relative isolate flex min-h-[calc(100svh-76px)] items-center overflow-hidden py-10 sm:py-12">
+		<Karte beschriftet optionen={{ gipfelX: 0.27, gipfelY: 0.19, waldSchwelle: 0.63 }} class="karte-lichtung karte-gross absolute inset-0 -z-10 opacity-80" />
 		<div class="container-page grid w-full items-center gap-x-[var(--gap-columns)] gap-y-8 lg:grid-cols-12">
 			<div class="lg:col-span-5">
-				<h1 class="display text-[clamp(3.5rem,5vw+0.75rem,7rem)]" style="max-width:none">
+				<h1 class="display text-[clamp(3rem,3.6vw+1.25rem,5.5rem)]" style="max-width:none">
 					{data.titel && <span class="block" data-tina-field={tinaField(data, 'titel')}>{data.titel}</span>}
 					{data.akzent && <span class="block" data-tina-field={tinaField(data, 'akzent')}>{data.akzent}</span>}
 				</h1>
@@ -34,7 +36,7 @@ const knopf = (stil: string | null | undefined) => (stil === 'sekundaer' ? 'btn-
 				<figure class="lg:col-span-7" data-tina-field={tinaField(data, 'bild')}>
 					<img src={data.bild} alt={data.bildBeschreibung ?? ''} width="1600" height="1065" fetchpriority="high"
 						class="foto aspect-[3/2] max-h-[calc(100svh-76px-7rem)] object-[50%_70%]" />
-					{data.kicker && <figcaption class="mt-3 text-[0.9375rem] font-medium text-muted" data-tina-field={tinaField(data, 'kicker')}>{data.kicker}</figcaption>}
+					{data.kicker && <figcaption class="mt-3 w-fit bg-bg pr-2 text-[0.9375rem] font-medium text-muted" data-tina-field={tinaField(data, 'kicker')}>{data.kicker}</figcaption>}
 				</figure>
 			)}
 		</div>
@@ -43,7 +45,7 @@ const knopf = (stil: string | null | undefined) => (stil === 'sekundaer' ? 'btn-
 	<section>
 		<div class:list={['container-page grid gap-x-[var(--gap-columns)] gap-y-8 pt-12 pb-14 sm:pt-16 sm:pb-20 lg:grid-cols-12 lg:items-end', data.bild && 'lg:min-h-[min(56svh,560px)]']}>
 			<div class:list={[data.bild ? 'lg:col-span-7' : 'lg:col-span-10']}>
-				<h1 class="display text-[clamp(3rem,5vw+1rem,6rem)]">
+				<h1 class="display text-[clamp(2.75rem,3.6vw+1rem,4.75rem)]">
 					{data.titel && <span class="block" data-tina-field={tinaField(data, 'titel')}>{data.titel}</span>}
 					{data.akzent && <span class="block" data-tina-field={tinaField(data, 'akzent')}>{data.akzent}</span>}
 				</h1>
@@ -53,7 +55,7 @@ const knopf = (stil: string | null | undefined) => (stil === 'sekundaer' ? 'btn-
 						{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class={knopf(b.stil)}>{b.label}</a>)}
 					</div>
 				)}
-				{data.hinweis && <p class="mt-6 max-w-[52ch] border-l-2 border-copper pl-4 text-muted" data-tina-field={tinaField(data, 'hinweis')}>{data.hinweis}</p>}
+				{data.hinweis && <p class="mt-6 max-w-[52ch] haar pt-4 text-muted" data-tina-field={tinaField(data, 'hinweis')}>{data.hinweis}</p>}
 			</div>
 			{data.bild && (
 				<figure class="hidden self-stretch lg:col-span-5 lg:block" data-tina-field={tinaField(data, 'bild')}>
