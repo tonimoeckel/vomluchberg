@@ -13,8 +13,8 @@
 /* Hallmark · dismissed 77 · the page has nine sections; the counter misses them because each Tina block sits in its own wrapper div */
 /* Hallmark · dropped the kicker lines · the Tina fields stay; gate 54 names every one of them as an eyebrow */
 /* Hallmark · swapped Furrow's tangerine for Garden's leaf green as the signal · Karo asked for forest; clay keeps Furrow's role as the edge on the map only */
-/* Hallmark · dropped Furrow's motion (pins landing, the loupe) · no decorative animation; the map is an SVG built at build time · since 2026-11-18 subtle scroll-bound motion tied to the map or the way to the inquiry is allowed (transform/opacity only, CSS scroll-driven, static and reduced-motion fallbacks; the hero paw prints are the one loop; CLAUDE.md, Training site) */
-/* Hallmark · dismissed F8 · the scroll-bound pieces are the motion agreed with Toni on 2026-11-18 (CLAUDE.md, Training site), each tied to the map or the way to the inquiry: the hero track, the bar's progress line, the reached steps, the contact pins and the offer fan (AngeboteFaecher.astro, a pinned stage, transform and opacity only, a scroll-snap row as the fallback) */
+/* Hallmark · dropped Furrow's motion (pins landing, the loupe) · no decorative animation; the map is an SVG built at build time · since 2026-11-18 subtle motion tied to the map or the way to the inquiry is allowed (transform/opacity only, static and reduced-motion fallbacks; CLAUDE.md, Training site) · reviewed together 2026-11-18: one loop (hero paw prints) and one scroll-bound piece (the inquiry bar's progress line) on the start page, the self-drawing track and the step lines dropped (scroll-choreography budget, gate F8), one signal colour and line weight (--signal, --signal-strich) */
+/* Hallmark · dismissed F8 for the offer fan · AngeboteFaecher.astro is opt-in (darstellung faecher, default liste); on a page that uses it, it is a second scroll-bound piece beside the bar's progress line, which Toni decides when he switches it on (a pinned stage, transform and opacity only, a scroll-snap row as the fallback) */
 /* Hallmark · dismissed F20 · the 2 + 1 row is the offer card's fact chips wrapping in a flex row, not a grid of items */
 /* Hallmark · the map is a sketch, not to scale · only the Luchberg cone (576 m, a basalt Quellkuppe on Glashütte land) and the Müglitz valley east of it are taken from the region (de.wikipedia.org, Luchberg); no invented place names */
 
@@ -22,8 +22,9 @@
    Red Hat Display 600 heads in sentence case over Red Hat Text, Red Hat Mono for heights and
    times only, hairlines and a 1px ink rule over lists, flat paper (only the notebook card lifts),
    6px moulded keys, a generated survey map of the Luchberg. No gradients, colour steps on hover.
-   Motion only where it is scroll-bound and tied to the map or the way to the inquiry (transform
-   and opacity, with a static fallback); no generic fade-ins, no parallax.
+   Motion only where it is tied to the map or the way to the inquiry (transform and opacity, with a
+   static fallback): the hero's paw trail and the inquiry bar's progress line, nothing else on a page;
+   no generic fade-ins, no parallax.
 
    Token contract (docs/plan/00-multisite.md, 2.5): every site defines the same semantic variables
    (--bg, --surface, --surface-2, --fg, --muted, --border, --primary, --primary-ink, --accent,
@@ -56,6 +57,13 @@
 	--rule-hair: 1px; --rule-bar: 1px;
 	--dur-micro: 120ms; --dur-short: 220ms;
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	/* Motion (CLAUDE.md, Training site): one signal colour and one line weight for everything that moves,
+	   so the paw trail and the inquiry bar's progress line read as one system in every scheme. Scroll-bound
+	   pieces run linear (progress follows the thumb one to one). --signal is --primary-ink: AA on paper in
+	   every scheme (farbschema.test.ts), unlike --primary, which is the button fill (navy in "erde"). */
+	--signal: var(--primary-ink);
+	--signal-strich: 2px;
+	--pfoten-zyklus: 30s; /* the karte-pfote keyframes are written for this length */
 	--z-raised: 10; --z-sticky: 200; --z-sticky-nav: 300;
 	/* Map colours, mixed from the scheme so every scheme gets its own map. */
 	--contour: color-mix(in oklab, var(--copper) 55%, var(--bg));
@@ -770,7 +778,7 @@
 	   fill from their <use>), hidden unless it walks. */
 	.karte-pfoten {
 		display: none;
-		fill: var(--primary-ink);
+		fill: var(--signal);
 	}
 	/* The contact map's pins (Karte "orte"): ink-copper pins, a dashed radius for "bei euch", labels
 	   with a paper halo so the contours never cut through them. */
@@ -799,28 +807,19 @@
 	}
 }
 
-/* Hero motion (Karte "bewegt", agreed exception to "no animation"): only opacity and transform.
-   With reduced motion or without support nothing moves: the track is drawn, there are no prints. */
+/* Hero motion (Karte "bewegt", the start page's one loop): paw prints fade in and out, opacity only.
+   With reduced motion nothing moves: the map is static, there are no prints. The track is always drawn. */
 @media (prefers-reduced-motion: no-preference) {
-	/* The forest track draws itself from left to right over the first 40vh of scrolling: a clip rect
-	   grows (scaleX), so the dashes stay as they are. */
-	@supports (animation-timeline: scroll()) {
-		.karte-weg-rahmen {
-			transform-box: fill-box;
-			transform-origin: 0 50%;
-			animation: karte-weg-zeichnen linear both;
-			animation-timeline: scroll(root);
-			animation-range: 0 40vh;
-		}
-	}
-	/* Paw prints: each fades in, rests and fades out in a 30 s cycle; the per-print delay from
-	   lib/pfotenspur.ts makes them a trotting trail. Three routes take turns; three cycles, then quiet. */
+	/* Each print fades in, rests and fades out once per cycle; its delay is the route's start in the
+	   cycle plus the print's own offset (lib/pfotenspur.ts), which makes a trotting trail. Three cycles,
+	   then quiet. */
 	.karte-pfoten {
 		display: inline;
 	}
 	.karte-pfoten use {
 		opacity: 0;
-		animation: karte-pfote 30s linear 3 both;
+		animation: karte-pfote var(--pfoten-zyklus) linear 3 both;
+		animation-delay: calc(var(--route-start) + var(--pfote));
 	}
 	.karte-ruht .karte-pfoten use {
 		animation-play-state: paused;
@@ -851,12 +850,30 @@
 		transform: none;
 	}
 }
-@keyframes karte-weg-zeichnen {
-	from {
-		transform: scaleX(0);
+/* Only the routes the layout leaves open. Side by side (lg): the trail under the buttons, then the one
+   round the summit; the slope route would run behind the photo. Stacked (phones, tablets): the first two
+   lie outside the cropped map, so the slope route beside the text walks alone, right at the start. */
+.karte-pfoten-route-1 {
+	--route-start: 1.5s;
+}
+.karte-pfoten-route-2 {
+	--route-start: 11s;
+}
+.karte-pfoten-route-3 {
+	--route-start: 21s;
+}
+@media (min-width: 64rem) {
+	.karte-pfoten-route-3 {
+		display: none;
 	}
-	to {
-		transform: scaleX(1);
+}
+@media (max-width: 63.999rem) {
+	.karte-pfoten-route-1,
+	.karte-pfoten-route-2 {
+		display: none;
+	}
+	.karte-pfoten-route-3 {
+		--route-start: 1.5s;
 	}
 }
 @keyframes karte-pfote {
