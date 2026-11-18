@@ -1,0 +1,12 @@
+---
+/**
+ * Preview entry of the "Ansprache" game (docs/plan/04-rueckruf-spiel.md), for showing it to Karo
+ * before it is offered after an inquiry: `?ansprache` on any page opens it (`?rueckruf`, the first
+ * name of the game, still works). The game is its own chunk (lib/ansprache/spiel.ts) and is only
+ * fetched with the parameter, so normal pages carry just this loader.
+ */
+---
+<script>
+	const suche = new URLSearchParams(location.search);
+	if (suche.has('ansprache') || suche.has('rueckruf')) import('../lib/ansprache/spiel').then((m) => m.oeffnen());
+</script>

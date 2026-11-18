@@ -1,16 +1,18 @@
-// Canvas drawing of the "Rückruf" game: line art like the survey map, in the site's colour tokens
+// Canvas drawing of the "Ansprache" game: line art like the survey map, in the site's colour tokens
 // (every scheme, light and dark). No image assets. World y points up from the stage floor; the
 // stage is H units high and scaled to the canvas by spiel.ts.
 
-import type { AblenkungArt, Level } from './level';
-import type { Zustand } from './physik';
+import type { AblenkungArt, Welt } from './strecke';
+import { ABSTAND, EINHEIT_PRO_METER, type Zustand } from './physik';
 import { hinweise, meldungen } from './texte';
 
 export const H = 300;
-/** Where the dog runs on screen, as a fraction of the stage width. */
-export const HUND_X = 0.22;
+/** Where the dog runs on screen, as a fraction of the stage width (you run behind it). */
+export const HUND_X = 0.3;
 /** Screen height of the ground under the dog. */
 export const BODEN_Y = 222;
+/** Radius around the dog's body that counts as "tapping the dog", in world units. */
+export const HUND_RADIUS = 46;
 
 export interface Farben {
   bg: string; surface: string; card: string; fg: string; heading: string; muted: string; border: string;
@@ -43,49 +45,64 @@ export interface Bild {
   breite: number;
   f: Farben;
   reduziert: boolean;
+  /** the dog's name, for the help line and your call */
+  name: string;
 }
 
-/** Camera: the dog at HUND_X of the width, stopping at the end of the track. */
-export const kamera = (z: Zustand, level: Level, breite: number) =>
-  Math.min(Math.max(z.x - breite * HUND_X, 0), level.laenge - breite);
+/** Camera: horizontal offset (the dog at HUND_X of the width) and vertical lift. */
+export function kamera(z: Zustand, welt: Welt, breite: number) {
+  const kx = z.x - breite * HUND_X - (z.wegSeit >= 0 ? z.x - z.wegAb : 0);
+  const hub = H - BODEN_Y - welt.boden(z.wegSeit >= 0 ? z.wegAb : z.x);
+  return { kx, hub };
+}
 
-export function zeichne(b: Bild, z: Zustand, level: Level): void {
+/** The dog's body centre on the stage, for hit-testing a tap. */
+export function hundAufBuehne(z: Zustand, welt: Welt, breite: number) {
+  const { kx, hub } = kamera(z, welt, breite);
+  return { x: z.x - kx + 6, y: H - z.hund.y - hub - 26 };
+}
+
+export function zeichne(b: Bild, z: Zustand, welt: Welt): void {
   const { ctx, breite, f } = b;
-  const kx = kamera(z, level, breite);
-  // Vertical camera: the ground under the dog stays at the same height on screen.
-  const hub = H - BODEN_Y - level.boden(z.x);
+  const { kx, hub } = kamera(z, welt, breite);
   const sy = (y: number) => H - y - hub;
-  const boden = (sx: number) => sy(level.boden(sx + kx));
+  const boden = (sx: number) => sy(welt.boden(sx + kx));
   ctx.fillStyle = f.bg;
   ctx.fillRect(0, 0, breite, H);
 
-  // The Luchberg in the far background (cut through the summit), drawn as nested contours.
+  // The Luchberg in the far background (cut through the summit), drawn as nested contours. It
+  // comes round again on every pass along the track.
   const spanne = Math.max(breite * 2.6, 1500);
-  const bx0 = breite * 0.58 - 0.36 * spanne - kx * (b.reduziert ? 0 : 0.18);
-  ctx.lineWidth = 1.1;
-  for (let k = 0; k < 4; k++) {
-    ctx.strokeStyle = k === 0 ? f.contourStark : f.contour;
-    ctx.beginPath();
-    level.berg.forEach((v, i) => {
-      const x = bx0 + (i / (level.berg.length - 1)) * spanne;
-      const y = 214 - v * (150 - k * 30) + k * 8;
-      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-    });
-    ctx.stroke();
-  }
-  const gipfelX = bx0 + (level.berg.indexOf(Math.max(...level.berg)) / (level.berg.length - 1)) * spanne;
-  if (gipfelX > -60 && gipfelX < breite + 60) {
-    ctx.fillStyle = f.muted;
-    ctx.font = `500 11px ${SCHRIFT}`;
-    ctx.textAlign = 'center';
-    ctx.fillText('Luchberg', gipfelX, 54);
-    ctx.font = `500 10px ${MONO}`;
-    ctx.fillText('576 m', gipfelX, 67);
+  const periode = spanne + breite * 1.5;
+  const lauf = (kx * (b.reduziert ? 0 : 0.18)) % periode;
+  const bx0 = breite * 0.62 - 0.36 * spanne - lauf;
+  for (const versatz of [0, periode]) {
+    const x0 = bx0 + versatz;
+    if (x0 > breite || x0 + spanne < 0) continue;
+    ctx.lineWidth = 1.1;
+    for (let k = 0; k < 4; k++) {
+      ctx.strokeStyle = k === 0 ? f.contourStark : f.contour;
+      ctx.beginPath();
+      welt.berg.forEach((v, i) => {
+        const x = x0 + (i / (welt.berg.length - 1)) * spanne;
+        const y = 214 - v * (150 - k * 30) + k * 8;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+    }
+    const gipfelX = x0 + (welt.berg.indexOf(Math.max(...welt.berg)) / (welt.berg.length - 1)) * spanne;
+    if (gipfelX > -60 && gipfelX < breite + 60) {
+      ctx.fillStyle = f.muted;
+      ctx.font = `500 11px ${SCHRIFT}`;
+      ctx.textAlign = 'center';
+      ctx.fillText('Luchberg', gipfelX, 54);
+      ctx.font = `500 10px ${MONO}`;
+      ctx.fillText('576 m', gipfelX, 67);
+    }
   }
 
   // Forest dots, like the map's forest symbols, on a slower layer above the track.
-  const tiefe = b.reduziert ? 1 : 0.6;
-  const fx = kx * tiefe;
+  const fx = kx * (b.reduziert ? 1 : 0.6);
   ctx.fillStyle = f.forest;
   for (let gx = Math.floor(fx / 18) * 18; gx < fx + breite + 18; gx += 18) {
     const zelle = gx / 18;
@@ -124,38 +141,52 @@ export function zeichne(b: Bild, z: Zustand, level: Level): void {
   ctx.setLineDash([]);
 
   // Obstacles.
-  level.hindernisse.forEach((o) => {
+  for (const o of z.hindernisse) {
     const x = o.x - kx;
-    if (x > breite + 20 || x + o.breite < -20) return;
-    const g = boden(x + o.breite / 2);
-    hindernis(ctx, f, o.art, x, g, o.breite, z.zeit);
-  });
+    if (x > breite + 20 || x + o.breite < -20) continue;
+    hindernis(ctx, f, o.art, x, boden(x + o.breite / 2), o.breite, z.zeit);
+  }
 
-  // You, on the far bank, calling.
-  const ichX = level.laenge - 150 - kx;
-  if (ichX < breite + 30) mensch(ctx, f, ichX, boden(ichX), z.phase !== 'ziel' && !z.ende);
-
-  // Distractions.
-  level.ablenkungen.forEach((a, i) => {
+  // Distractions; they start moving once the dog has noticed them.
+  for (const a of z.ablenkungen) {
     const x = a.x - kx;
-    if (x > breite + 60 || x < -80) return;
-    // They start moving once the dog has noticed them.
-    const seit = z.bemerktUm[i] >= 0 ? Math.min(z.zeit - z.bemerktUm[i], 3) : 0;
+    if (x > breite + 60 || x < -80) continue;
+    const seit = a.bemerktUm >= 0 ? Math.min(z.zeit - a.bemerktUm, 3) : 0;
     ablenkung(ctx, f, a.art, x, boden(x), seit, z.zeit, b.reduziert);
-  });
+  }
 
-  // The dog.
-  const dx = z.x - kx;
-  const dy = sy(z.y);
-  const pose = z.phase === 'ziel' || z.ende?.art === 'ziel' ? 'sitz' : !z.amBoden ? 'luft' : z.phase === 'bemerkt' || z.phase === 'abgelenkt' ? 'schaut' : 'lauf';
-  const weg = z.phase === 'weg' ? Math.min((z.zeit - z.phaseSeit) / 1.4, 1) : 0;
+  // You and your dog, on a lead.
+  const dx = z.x - kx, dy = sy(z.hund.y);
+  const mx = z.wegSeit >= 0 ? z.wegAb - ABSTAND - kx : z.x - ABSTAND - kx;
+  const my = sy(z.mensch.y);
+  const weg = z.wegSeit >= 0 ? Math.min((z.zeit - z.wegSeit) / 1.4, 1) : 0;
+  const hand = mensch(ctx, f, mx, my, z.wegSeit >= 0 ? 0 : z.weg, !z.mensch.amBoden, z.zeit - z.gerufen < 0.6 || z.wegSeit >= 0);
+  if (weg < 0.3) {
+    ctx.strokeStyle = f.copper;
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.moveTo(hand.x, hand.y);
+    const hx = dx + 22, hy = dy - 36;
+    ctx.quadraticCurveTo((hand.x + hx) / 2, Math.max(hand.y, hy) + 14, hx, hy);
+    ctx.stroke();
+  }
+  const pose = !z.hund.amBoden ? 'luft' : z.aktiv?.status === 'bemerkt' || z.wegSeit >= 0 ? 'schaut' : 'lauf';
   ctx.globalAlpha = 1 - weg;
-  hund(ctx, f, dx, dy, z.weg, pose, z.phase === 'ziel' ? Math.min((z.zeit - z.phaseSeit) / 0.6, 1) : 1, z.zeit < z.stolperBis);
+  hund(ctx, f, dx, dy, z.weg, pose, 1, z.zeit < z.stolperBis);
   ctx.globalAlpha = 1;
 
-  // Cue: the dog has noticed something; the ring shows the recall window running out.
-  if (z.phase === 'bemerkt') {
-    const rest = 1 - (z.zeit - z.phaseSeit) / level.stufe.fenster;
+  // Your call: the dog's name in a small bubble above you.
+  if (z.zeit - z.gerufen < 0.6) {
+    ctx.font = `600 14px ${DISPLAY}`;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = f.heading;
+    ctx.fillText(`${b.name}!`, mx, my - 92);
+  }
+
+  // Cue: the dog has noticed something; the ring shows the window running out.
+  const a = z.aktiv;
+  if (a && a.status === 'bemerkt') {
+    const rest = 1 - (z.zeit - a.bemerktUm) / a.fenster;
     const cx = dx + 26, cy = dy - 66;
     ctx.fillStyle = f.primary;
     ctx.beginPath(); ctx.arc(cx, cy, 11, 0, Math.PI * 2); ctx.fill();
@@ -172,53 +203,43 @@ export function zeichne(b: Bild, z: Zustand, level: Level): void {
   if (z.meldung && z.zeit - z.meldung.zeit < 0.9) {
     const t = (z.zeit - z.meldung.zeit) / 0.9;
     ctx.globalAlpha = 1 - t * t;
-    ctx.fillStyle = z.meldung.art === 'hier' ? f.primary : f.heading;
+    ctx.fillStyle = z.meldung.art === 'fein' ? f.primary : f.heading;
     ctx.font = `600 16px ${DISPLAY}`;
     ctx.textAlign = 'center';
-    ctx.fillText(meldungen[z.meldung.art], dx + 6, dy - 74 - (b.reduziert ? 0 : t * 18));
+    ctx.fillText(meldungen[z.meldung.art], dx + 6, dy - 86 - (b.reduziert ? 0 : t * 18));
     ctx.globalAlpha = 1;
   }
 
-  hud(b, z, level);
+  hud(b, z);
 }
 
-function hud(b: Bild, z: Zustand, level: Level) {
+function hud(b: Bild, z: Zustand) {
   const { ctx, breite, f } = b;
   ctx.textAlign = 'left';
+  ctx.fillStyle = f.heading;
+  ctx.font = `600 18px ${DISPLAY}`;
+  ctx.fillText(`${Math.round(z.punkte)}`, 14, 26);
+  const breitePunkte = ctx.measureText(`${Math.round(z.punkte)}`).width;
   ctx.fillStyle = f.muted;
   ctx.font = `500 12px ${SCHRIFT}`;
-  ctx.fillText('Ablenkung', 14, 22);
-  for (let i = 0; i < level.stufe.geduld; i++) {
-    ctx.beginPath();
-    ctx.arc(84 + i * 15, 18, 5, 0, Math.PI * 2);
-    ctx.fillStyle = i < z.meter ? f.copper : f.bg;
-    ctx.fill();
-    ctx.strokeStyle = f.copper;
-    ctx.lineWidth = 1.4;
-    ctx.stroke();
-  }
-  // Progress: a hairline from the dog to you.
-  const a = breite - 150, e = breite - 16;
-  ctx.strokeStyle = f.border;
-  ctx.lineWidth = 2;
-  ctx.beginPath(); ctx.moveTo(a, 18); ctx.lineTo(e, 18); ctx.stroke();
-  const t = Math.min(z.x / level.ziel, 1);
-  ctx.strokeStyle = f.heading;
-  ctx.beginPath(); ctx.moveTo(a, 18); ctx.lineTo(a + (e - a) * t, 18); ctx.stroke();
-  ctx.fillStyle = f.heading;
-  ctx.beginPath(); ctx.arc(a + (e - a) * t, 18, 4, 0, Math.PI * 2); ctx.fill();
-  ctx.fillRect(e - 1, 12, 2, 12);
+  ctx.fillText('Punkte', 20 + breitePunkte, 26);
+  ctx.textAlign = 'right';
+  ctx.font = `500 12px ${MONO}`;
+  ctx.fillText(`${Math.round(z.strecke / EINHEIT_PRO_METER)} m`, breite - 14, 26);
 
   // One-off help lines.
   let hilfe = '';
-  const naechstes = level.hindernisse.find((o, k) => !z.getroffen[k] && o.x > z.x);
+  const naechstes = z.hindernisse.find((o) => !o.geschafft && !o.getroffen && o.x > z.x);
   if (!z.hinweis.sprung && naechstes && naechstes.x - z.x < 420) hilfe = hinweise.sprung;
-  if (z.phase === 'bemerkt' && z.ablenkung.filter((s) => s !== 'offen').length < 2) hilfe = hinweise.ruf;
+  if (z.aktiv?.status === 'bemerkt' && !z.hinweis.ansprache) hilfe = hinweise.ansprache(b.name);
   if (hilfe) {
     ctx.font = `600 15px ${DISPLAY}`;
     ctx.textAlign = 'center';
+    const w = Math.min(ctx.measureText(hilfe).width + 20, breite - 8);
+    ctx.fillStyle = f.bg;
+    ctx.fillRect(breite / 2 - w / 2, 38, w, 26);
     ctx.fillStyle = f.heading;
-    ctx.fillText(hilfe, breite / 2, 52);
+    ctx.fillText(hilfe, breite / 2, 56, breite - 16);
   }
 }
 
@@ -272,23 +293,34 @@ function hindernis(ctx: CanvasRenderingContext2D, f: Farben, art: string, x: num
   }
 }
 
-function mensch(ctx: CanvasRenderingContext2D, f: Farben, x: number, g: number, ruft: boolean) {
+/** You, running (or jumping) with the lead in your front hand. Returns the hand, for the lead. */
+function mensch(ctx: CanvasRenderingContext2D, f: Farben, x: number, g: number, weg: number, inDerLuft: boolean, ruft: boolean) {
+  const s = inDerLuft ? 0.8 : Math.sin(weg / 13);
   ctx.strokeStyle = f.heading;
   ctx.fillStyle = f.heading;
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 3.2;
   ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  const huefte = { x: x, y: g - 32 };
+  const schulter = { x: x + 4, y: g - 58 };
   ctx.beginPath();
-  ctx.moveTo(x - 7, g); ctx.lineTo(x, g - 30); ctx.lineTo(x + 7, g); // legs
-  ctx.moveTo(x, g - 30); ctx.lineTo(x, g - 58); // body
-  ctx.moveTo(x, g - 50); ctx.lineTo(x + 9, g - 34); // arm down
-  if (ruft) { ctx.moveTo(x, g - 50); ctx.lineTo(x - 12, g - 68); } else { ctx.moveTo(x, g - 50); ctx.lineTo(x - 10, g - 34); }
-  ctx.stroke();
-  ctx.beginPath(); ctx.arc(x, g - 67, 7, 0, Math.PI * 2); ctx.fill();
-  if (ruft) {
-    ctx.lineWidth = 1.4;
-    ctx.strokeStyle = f.copper;
-    for (let i = 1; i <= 2; i++) { ctx.beginPath(); ctx.arc(x - 10, g - 67, 6 + i * 6, Math.PI * 0.8, Math.PI * 1.2); ctx.stroke(); }
+  // Legs: knee and foot swing in opposite phase.
+  for (const p of [s, -s]) {
+    ctx.moveTo(huefte.x, huefte.y);
+    ctx.lineTo(huefte.x + p * 9, huefte.y + 15);
+    ctx.lineTo(huefte.x + p * 13 - (p < 0 ? 6 : 0), g - (inDerLuft ? 6 : Math.max(0, p) * 4));
   }
+  ctx.moveTo(huefte.x, huefte.y);
+  ctx.lineTo(schulter.x, schulter.y);
+  // Back arm swings, front arm holds the lead (raised while calling).
+  ctx.moveTo(schulter.x, schulter.y + 4);
+  ctx.lineTo(schulter.x - 10 * s - 4, schulter.y + 20);
+  const hand = ruft ? { x: schulter.x + 12, y: schulter.y - 14 } : { x: schulter.x + 16, y: schulter.y + 16 };
+  ctx.moveTo(schulter.x, schulter.y + 4);
+  ctx.lineTo(hand.x, hand.y);
+  ctx.stroke();
+  ctx.beginPath(); ctx.arc(schulter.x + 2, schulter.y - 10, 7, 0, Math.PI * 2); ctx.fill();
+  return hand;
 }
 
 function ablenkung(ctx: CanvasRenderingContext2D, f: Farben, art: AblenkungArt, x: number, g: number, seit: number, zeit: number, reduziert: boolean) {

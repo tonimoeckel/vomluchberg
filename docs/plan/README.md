@@ -47,7 +47,7 @@ merges trivial).
 | 1 – Dachshund site | `01-dackel.md` | Content model (dogs, litters, puppies, news?), page structure, completely new design direction, initial content from `src/content/hunde/rauhaardackel.md` + `public/uploads/rudel/dackel/`, cross-link changes on the Rottweiler site | 0 (mechanism), can plan in parallel |
 | 2 – Training site | `02-training.md` | Content inventory + migration from Pfotentermin (texts, offers, about/vita, qualifications, images from public Supabase storage), content model (offers, about, philosophy, timeline), inquiry form, design direction, legal pages | 0 (mechanism), can plan in parallel |
 | 3 – Domains, deploy & Pfotentermin sunset | `03-betrieb.md` | Domains for both new sites, Cloudflare Workers setup, TinaCloud rebuild triggers for three workers, SEO (canonical, sitemaps, Search Console), cross-link placement on all three sites, legal pages per site, redirect + deactivation of the Pfotentermin tenant | 0, 1, 2 |
-| 4 – "Rückruf" game (optional) | `04-rueckruf-spiel.md` | Small jump-and-run offered after a successful inquiry on the training site; prototype for Karo first, build only after her yes (D11 caution) | 2 (+ Waldboden redesign) |
+| 4 – "Ansprache" game (optional, first called "Rückruf") | `04-rueckruf-spiel.md` | Small jump-and-run offered after a successful inquiry on the training site; Toni decides (no approval gate by Karo, 2026-11-18) | 2 (+ Waldboden redesign) |
 
 Suggested implementation order after planning: **0 → (1 ∥ 2) → 3**. Slice 0 must land first
 because it moves files the other slices build on.

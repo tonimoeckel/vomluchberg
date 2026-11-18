@@ -1,4 +1,4 @@
-// Elevation profile of the survey map's forest track for the "Rückruf" game
+// Elevation profile of the survey map's forest track for the "Ansprache" game
 // (docs/plan/04-rueckruf-spiel.md §4.1). Pure: samples `gelaende()` from lib/karte.ts along the
 // track by arc length, so the level is the site's own map seen from the side.
 
