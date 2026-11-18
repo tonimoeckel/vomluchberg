@@ -1,59 +1,67 @@
 ---
-// Page head. "gross": start page with photo, lane lines and the card of the first offer; "schmal": sub pages.
+// Page head in two postures. The start page's head sits on the survey sketch of the Luchberg (Karte).
+// "gross" (start page, Stage): the head, the sentence and the actions on five columns, Karo's photo
+//   whole (3:2, Karo and both dogs) on seven, filling the first screen. The "hinweis" moves into the
+//   sticky inquiry bar (AnfrageLeiste, rendered by Blocks.astro); on phones it also stays here.
+// "schmal" (sub pages, Banner): the head on seven columns, the photo (if any) on five.
+// The kicker field is shown only on the start page, as the photo's caption under it (a place, not an eyebrow).
 import { tinaField } from '@tinacms/astro/tina-field';
-import { angebotFakten, angebotUrl, formatEuro, preisEinheiten } from '../../../../lib/domain/angebot';
-import { listAngeboteMitSlug, type BlockOf } from '../../lib/data';
+import Karte from '../Karte.astro';
+import type { BlockOf } from '../../lib/data';
 
 interface Props { data: BlockOf<'Hero'> }
 const { data } = Astro.props;
 const buttons = (data.buttons ?? []).filter((b) => b !== null);
 const gross = data.variante === 'gross';
-const karte = gross && data.angebotKarte ? (await listAngeboteMitSlug()).find((a) => a.sichtbar !== false) : undefined;
-const einheit = preisEinheiten.find((e) => e.value === karte?.preisEinheit)?.label ?? 'Termin';
+const knopf = (stil: string | null | undefined) => (stil === 'sekundaer' ? 'btn-secondary' : 'btn-primary');
 ---
-<section class:list={['relative overflow-hidden', gross ? 'pt-10 pb-16 sm:pt-16 sm:pb-24' : 'pt-10 pb-12 sm:pt-14 sm:pb-16']}>
-	<div class="lanes absolute -top-[8%] -left-[10%] -z-10 h-[45%] w-[55%]" aria-hidden="true"></div>
-	<div class:list={['container-page grid items-center gap-10 lg:gap-16', data.bild && (gross ? 'lg:grid-cols-[1.05fr_0.95fr]' : 'lg:grid-cols-[1.4fr_1fr]')]}>
-		<div>
-			{data.kicker && <p class="kicker" data-tina-field={tinaField(data, 'kicker')}>{data.kicker}</p>}
-			<h1 class:list={['display mt-3', gross ? 'text-[3.6rem] sm:text-8xl lg:text-[8.2rem]' : 'text-5xl sm:text-7xl']}>
-				{data.titel && <span data-tina-field={tinaField(data, 'titel')}>{data.titel}</span>}
-				{data.akzent && <> <em class="text-copper" data-tina-field={tinaField(data, 'akzent')}>{data.akzent}</em></>}
-			</h1>
-			{data.untertitel && <p class:list={['mt-6 max-w-[58ch] text-muted', gross ? 'text-xl' : 'text-lg']} data-tina-field={tinaField(data, 'untertitel')}>{data.untertitel}</p>}
-			{buttons.length > 0 && (
-				<div class="mt-8 flex flex-wrap gap-3">
-					{buttons.map((b, i) => (
-						<a data-tina-field={tinaField(b)} href={b.link}
-							class={b.stil === 'sekundaer' ? 'btn-secondary' : i === 0 && gross ? 'btn-navy' : 'btn-primary'}>{b.label}</a>
-					))}
-				</div>
-			)}
-			{data.hinweis && (
-				<p class="mt-6 flex max-w-[58ch] items-baseline gap-2.5 text-[0.95rem] text-muted" data-tina-field={tinaField(data, 'hinweis')}>
-					<span class="size-2.5 shrink-0 rounded-full bg-copper ring-4 ring-copper/20" aria-hidden="true"></span>{data.hinweis}
-				</p>
+{gross ? (
+	<section class="relative isolate flex min-h-[calc(100svh-76px)] items-center overflow-hidden py-10 sm:py-12">
+		<Karte beschriftet optionen={{ gipfelX: 0.27, gipfelY: 0.19, waldSchwelle: 0.63 }} class="karte-lichtung karte-gross absolute inset-0 -z-10 opacity-80" />
+		<div class="container-page grid w-full items-center gap-x-[var(--gap-columns)] gap-y-8 lg:grid-cols-12">
+			<div class="lg:col-span-5">
+				<h1 class="display text-[clamp(3rem,3.6vw+1.25rem,5.5rem)]" style="max-width:none">
+					{data.titel && <span class="block" data-tina-field={tinaField(data, 'titel')}>{data.titel}</span>}
+					{data.akzent && <span class="block" data-tina-field={tinaField(data, 'akzent')}>{data.akzent}</span>}
+				</h1>
+				{data.untertitel && <p class="mt-6 max-w-[40ch] text-lead leading-snug text-fg" data-tina-field={tinaField(data, 'untertitel')}>{data.untertitel}</p>}
+				{buttons.length > 0 && (
+					<div class="mt-8 flex flex-wrap gap-3">
+						{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class={knopf(b.stil)}>{b.label}</a>)}
+					</div>
+				)}
+				{data.hinweis && <p class="mt-5 max-w-[44ch] text-[0.9375rem] text-muted sm:hidden" data-tina-field={tinaField(data, 'hinweis')}>{data.hinweis}</p>}
+			</div>
+			{data.bild && (
+				<figure class="lg:col-span-7" data-tina-field={tinaField(data, 'bild')}>
+					<img src={data.bild} alt={data.bildBeschreibung ?? ''} width="1600" height="1065" fetchpriority="high"
+						class="foto aspect-[3/2] max-h-[calc(100svh-76px-7rem)] object-[50%_70%]" />
+					{data.kicker && <figcaption class="mt-3 w-fit bg-bg pr-2 text-[0.9375rem] font-medium text-muted" data-tina-field={tinaField(data, 'kicker')}>{data.kicker}</figcaption>}
+				</figure>
 			)}
 		</div>
-		{data.bild && (
-			<div class:list={['relative', gross ? 'mx-auto w-full max-w-[520px] lg:max-w-none' : 'hidden lg:block']}>
-				<div class="lanes-copper absolute -right-[12%] -bottom-[10%] -z-10 h-[60%] w-[75%]" aria-hidden="true"></div>
-				<div class:list={['overflow-hidden rounded-card shadow-[var(--shadow)]', gross ? 'aspect-[5/4] lg:aspect-[4/5]' : 'aspect-[4/3]']} data-tina-field={tinaField(data, 'bild')}>
-					<img src={data.bild} alt={data.bildBeschreibung ?? ''} class="size-full object-cover object-[50%_60%]" fetchpriority="high" />
-				</div>
-				{karte && (
-					<a href={angebotUrl(karte.slug)} class="relative -mt-8 ml-3 inline-block min-w-[230px] rounded-card border-t-[5px] border-copper bg-card px-5 py-4 no-underline shadow-[var(--shadow)] hover:bg-surface lg:absolute lg:bottom-7 lg:-left-6 lg:mt-0 lg:ml-0">
-						<small class="font-display text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-muted">{karte.kurztitel || karte.titel}</small>
-						{karte.preis != null && karte.preisAnzeigen !== false && (
-							<strong class="display my-1 block text-3xl">{formatEuro(karte.preis)} <small class="text-base text-muted">/ {einheit}</small></strong>
-						)}
-						<span class="flex flex-wrap gap-x-3 text-sm text-muted">
-							{angebotFakten(karte).filter((f) => !f.includes('Mensch-Hund')).map((f) => <span>{f}</span>)}
-							{karte.aufAnfrage && <span>Auf Anfrage</span>}
-						</span>
-					</a>
+	</section>
+) : (
+	<section>
+		<div class:list={['container-page grid gap-x-[var(--gap-columns)] gap-y-8 pt-12 pb-14 sm:pt-16 sm:pb-20 lg:grid-cols-12 lg:items-end', data.bild && 'lg:min-h-[min(56svh,560px)]']}>
+			<div class:list={[data.bild ? 'lg:col-span-7' : 'lg:col-span-10']}>
+				<h1 class="display text-[clamp(2.75rem,3.6vw+1rem,4.75rem)]">
+					{data.titel && <span class="block" data-tina-field={tinaField(data, 'titel')}>{data.titel}</span>}
+					{data.akzent && <span class="block" data-tina-field={tinaField(data, 'akzent')}>{data.akzent}</span>}
+				</h1>
+				{data.untertitel && <p class="mt-6 max-w-[52ch] text-lead leading-snug text-fg" data-tina-field={tinaField(data, 'untertitel')}>{data.untertitel}</p>}
+				{buttons.length > 0 && (
+					<div class="mt-8 flex flex-wrap gap-3">
+						{buttons.map((b) => <a data-tina-field={tinaField(b)} href={b.link} class={knopf(b.stil)}>{b.label}</a>)}
+					</div>
 				)}
+				{data.hinweis && <p class="mt-6 max-w-[52ch] haar pt-4 text-muted" data-tina-field={tinaField(data, 'hinweis')}>{data.hinweis}</p>}
 			</div>
-		)}
-	</div>
-</section>
+			{data.bild && (
+				<figure class="hidden self-stretch lg:col-span-5 lg:block" data-tina-field={tinaField(data, 'bild')}>
+					<img src={data.bild} alt={data.bildBeschreibung ?? ''} width="1200" height="1500" fetchpriority="high" class="foto h-full max-h-[560px] min-h-[380px]" />
+				</figure>
+			)}
+		</div>
+	</section>
+)}

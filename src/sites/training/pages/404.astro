@@ -2,9 +2,9 @@
 import Base from '../layouts/Base.astro';
 ---
 <Base title="Seite nicht gefunden">
-	<section class="container-page py-24 text-center">
-		<p class="text-sm font-semibold uppercase tracking-wide text-accent-ink">404</p>
-		<h1 class="mt-4 text-4xl font-bold">Diese Seite gibt es nicht (mehr).</h1>
-		<p class="mt-8"><a href="/" class="btn-primary">Zur Startseite</a></p>
+	<section class="container-page grid min-h-[60svh] content-center gap-8 py-24">
+		<h1 class="display max-w-[16ch] text-[clamp(2.75rem,3.6vw+1rem,4.75rem)]">Diese Seite gibt es nicht (mehr).</h1>
+		<p class="text-lead text-muted">Fehler 404: Die Adresse ist falsch oder die Seite wurde verschoben.</p>
+		<p><a href="/" class="btn-primary">Zur Startseite</a></p>
 	</section>
 </Base>

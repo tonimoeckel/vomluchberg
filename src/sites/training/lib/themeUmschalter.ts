@@ -23,25 +23,25 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, klasse: string, text?
 export function starten() {
   const html = document.documentElement;
   if (!('themes' in html.dataset) || document.getElementById('theme-vorschau')) return;
-  const aktuell = () => farbschema(html.dataset.farbe);
+  const aktuell = () => farbschema(html.dataset.scheme);
 
-  const box = el('div', 'fixed bottom-3 right-3 z-50 w-[min(19rem,calc(100vw-1.5rem))] rounded-card border border-border bg-card p-3 text-fg shadow-[var(--shadow)]');
+  const box = el('div', 'fixed bottom-3 right-3 z-50 w-[min(19rem,calc(100%-1.5rem))] border border-heading bg-bg p-3 text-fg');
   box.id = 'theme-vorschau';
   box.setAttribute('role', 'region');
   box.setAttribute('aria-label', 'Farbvorschau');
 
   const kopf = el('div', 'flex items-baseline justify-between gap-2');
-  kopf.append(el('p', 'font-display text-[0.8rem] font-semibold uppercase tracking-[0.14em] text-muted', 'Farbvorschau'));
-  const schliessen = el('button', 'cursor-pointer text-[0.8rem] text-muted underline hover:text-primary-ink', 'Beenden');
+  kopf.append(el('p', 'text-[0.9375rem] font-medium text-muted', 'Farbvorschau'));
+  const schliessen = el('button', 'cursor-pointer text-[0.9375rem] text-muted underline hover:text-primary-ink', 'Beenden');
   schliessen.type = 'button';
   kopf.append(schliessen);
 
-  const name = el('p', 'mt-1 font-display text-2xl font-extrabold uppercase leading-none text-heading');
+  const name = el('p', 'mt-1 font-display text-2xl font-semibold leading-none text-heading');
   name.setAttribute('aria-live', 'polite');
 
   const liste = el('div', 'mt-3 grid grid-cols-2 gap-1.5');
   const knoepfe = FARBSCHEMATA.map((s) => {
-    const b = el('button', 'flex cursor-pointer items-center gap-2 rounded-card border-2 border-transparent px-2 py-1.5 text-left text-[0.85rem] font-semibold leading-tight text-fg hover:bg-surface aria-pressed:border-copper');
+    const b = el('button', 'flex min-h-11 cursor-pointer items-center gap-2 border border-transparent px-2 py-1.5 text-left text-[0.9375rem] font-medium leading-tight text-fg hover:bg-surface aria-pressed:border-heading');
     b.type = 'button';
     b.dataset.thema = s.id;
     b.title = s.tinaLabel;
@@ -65,7 +65,7 @@ export function starten() {
   liste.addEventListener('click', (e) => {
     const b = (e.target as Element).closest<HTMLButtonElement>('[data-thema]');
     if (!b?.dataset.thema) return;
-    html.dataset.farbe = b.dataset.thema;
+    html.dataset.scheme = b.dataset.thema;
     speichern((s) => s.setItem(THEMA_KEY, b.dataset.thema!));
     // The address shows the scheme, so Karo can also just send the link.
     const url = mitVorschau(location.href, location.href, b.dataset.thema);

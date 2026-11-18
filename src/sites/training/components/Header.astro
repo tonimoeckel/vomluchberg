@@ -1,6 +1,6 @@
 ---
-// Header of the training site: logo, menu and the inquiry button. Below md the menu folds into a
-// <details> (no JS, no animation).
+// Header of the training site: logo at the left edge, the menu and the inquiry button at the right,
+// a 1px ink rule beneath. Below md the menu folds into a <details> (no JS, no animation).
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from '../../../components/ui/Icon.astro';
 import Logo from './Logo.astro';
@@ -12,31 +12,36 @@ const nav = (config?.nav ?? []).filter((n) => n !== null);
 const button = config?.menueButton;
 const pfad = Astro.url.pathname.replace(/\/$/, '') || '/';
 const aktiv = (link: string) => link !== '/' && (pfad === link || pfad.startsWith(`${link}/`));
+const linkKlasse = 'underline-offset-[0.35em] decoration-2 hover:text-primary-ink hover:underline';
 ---
-<header class="relative z-30 border-b border-border bg-bg">
-	<div class="container-page flex h-[74px] items-center justify-between gap-4">
+<header class="relative z-30 border-b border-heading bg-bg">
+	<div class="container-page flex h-[76px] items-center justify-between gap-6">
 		<a href="/" aria-label="Alltag kann Sport – Startseite" class="shrink-0">
 			<Logo website={config?.website} class="h-11 w-auto sm:h-[52px]" />
 		</a>
-		<nav aria-label="Hauptmenü" class="hidden items-center gap-7 md:flex">
-			<ul class="flex items-center gap-7 font-display text-lg font-semibold uppercase tracking-[0.08em]" data-tina-field={config ? tinaField(config, 'nav') : undefined}>
+		<nav aria-label="Hauptmenü" class="hidden items-center gap-10 md:flex">
+			<ul class="flex items-center gap-8 text-[1.0625rem] font-medium" data-tina-field={config ? tinaField(config, 'nav') : undefined}>
 				{nav.map((n) => (
 					<li><a href={n.link} aria-current={aktiv(n.link) ? 'page' : undefined}
-						class:list={['no-underline hover:text-primary-ink', aktiv(n.link) ? 'text-primary-ink' : 'text-heading']}
+						class:list={[linkKlasse, aktiv(n.link) ? 'text-heading underline' : 'text-heading no-underline']}
 						data-tina-field={tinaField(n)}>{n.titel}</a></li>
 				))}
 			</ul>
-			{button?.label && button.link && <a href={button.link} class="btn-primary px-4 py-3 text-base" data-tina-field={tinaField(button)}>{button.label}</a>}
+			{button?.label && button.link && <a href={button.link} class="btn-secondary" data-tina-field={tinaField(button)}>{button.label}</a>}
 		</nav>
 		<details class="group relative md:hidden">
-			<summary class="flex cursor-pointer list-none items-center gap-2 rounded-card border-2 border-heading px-3 py-2 font-display font-semibold uppercase tracking-[0.08em] text-heading [&::-webkit-details-marker]:hidden">
+			<summary class="flex min-h-11 cursor-pointer list-none items-center gap-2 px-3 font-medium text-heading rounded-[var(--radius)] border border-muted bg-card hover:border-heading [&::-webkit-details-marker]:hidden">
 				<Icon name="menu-2" class="size-5 group-open:hidden" /><Icon name="x" class="hidden size-5 group-open:block" />Menü
 			</summary>
-			<nav aria-label="Hauptmenü (mobil)" class="absolute right-0 top-full mt-3 w-64 rounded-card border border-border bg-card p-3 shadow-[var(--shadow)]">
-				<ul class="grid font-display text-xl font-semibold uppercase tracking-[0.06em]">
-					{nav.map((n) => <li><a href={n.link} class="block rounded px-3 py-2.5 text-heading no-underline hover:bg-surface hover:text-primary-ink">{n.titel}</a></li>)}
+			<nav aria-label="Hauptmenü (mobil)" class="absolute right-0 top-full mt-3 w-72 rounded-[var(--radius)] border border-heading bg-bg p-4 shadow-[var(--shadow)]">
+				<ul class="grid text-lg font-medium">
+					{nav.map((n) => (
+						<li class="border-b border-border last:border-b-0">
+							<a href={n.link} aria-current={aktiv(n.link) ? 'page' : undefined} class="block py-3 text-heading no-underline hover:text-primary-ink">{n.titel}</a>
+						</li>
+					))}
 				</ul>
-				{button?.label && button.link && <a href={button.link} class="btn-primary mt-2 w-full">{button.label}</a>}
+				{button?.label && button.link && <a href={button.link} class="btn-primary mt-3 w-full">{button.label}</a>}
 			</nav>
 		</details>
 	</div>

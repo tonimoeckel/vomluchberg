@@ -1,42 +1,41 @@
 ---
-// Offer card with its start number ("01"), facts, price and the inquiry button.
+// One offer as a row of the price list: the photo, the title and what it is, the facts as tags, the
+// price set large and the inquiry button. Rows are parted by hairlines; the list opens on a 2px ink rule.
 import { tinaField } from '@tinacms/astro/tina-field';
 import { anfrageUrl, angebotFakten, angebotUrl, artLabel, formatEuro, preisEinheiten } from '../../../lib/domain/angebot';
 import type { AngebotListItem } from '../lib/data';
 
-interface Props { angebot: AngebotListItem; nummer: number; ueberschrift?: 'h2' | 'h3' }
-const { angebot: a, nummer, ueberschrift: H = 'h3' } = Astro.props;
+interface Props { angebot: AngebotListItem; ueberschrift?: 'h2' | 'h3' }
+const { angebot: a, ueberschrift: H = 'h3' } = Astro.props;
 const preisSichtbar = a.preis != null && a.preisAnzeigen !== false;
 const einheit = preisEinheiten.find((e) => e.value === a.preisEinheit)?.label ?? 'Termin';
 const url = angebotUrl(a.slug);
+const art = artLabel(a.art);
 ---
-<article class="card flex flex-col overflow-hidden transition-[box-shadow,border-color] hover:border-copper hover:shadow-[var(--shadow)]">
-	<a href={url} class="relative block aspect-[4/3] overflow-hidden bg-surface" tabindex="-1" aria-hidden="true">
-		{a.bild && <img src={a.bild} alt="" loading="lazy" decoding="async" class="size-full object-cover" data-tina-field={tinaField(a, 'bild')} />}
-		<span class="bib absolute left-3.5 top-3.5">{String(nummer).padStart(2, '0')}</span>
-		<span class="absolute right-3.5 top-3.5 rounded bg-dark px-2.5 py-1.5 font-display text-[0.8rem] font-semibold uppercase tracking-[0.12em] text-on-dark">
-			{a.aufAnfrage ? 'Auf Anfrage' : artLabel(a.art)}
-		</span>
+<article class="grid gap-x-[var(--gap-columns)] gap-y-6 border-b border-border py-8 md:grid-cols-12 md:py-10">
+	<a href={url} class="block md:col-span-4" tabindex="-1" aria-hidden="true">
+		{a.bild && <img src={a.bild} alt="" width="800" height="600" loading="lazy" decoding="async" class="foto aspect-[4/3] bg-surface" data-tina-field={tinaField(a, 'bild')} />}
 	</a>
-	<div class="flex flex-1 flex-col p-5 sm:p-6">
-		<H class="display text-[2rem]"><a href={url} class="no-underline hover:text-primary-ink" data-tina-field={tinaField(a, 'kurztitel')}>{a.kurztitel || a.titel}</a></H>
-		{a.untertitel && <p class="mt-1 font-display text-lg font-semibold italic leading-tight text-primary-ink" data-tina-field={tinaField(a, 'untertitel')}>{a.untertitel}</p>}
-		{a.kurzbeschreibung && <p class="mt-3 text-[0.98rem] text-muted" data-tina-field={tinaField(a, 'kurzbeschreibung')}>{a.kurzbeschreibung}</p>}
-		<ul class="mt-auto flex flex-wrap gap-1.5 pt-5" aria-label="Eckdaten">
-			{angebotFakten(a).map((f) => <li class="chip">{f}</li>)}
+	<div class="md:col-span-5">
+		<H class="display text-[clamp(2rem,2vw+1.25rem,2.75rem)]">
+			<a href={url} class="no-underline decoration-2 underline-offset-[0.15em] hover:text-primary-ink hover:underline" data-tina-field={tinaField(a, 'kurztitel')}>{a.kurztitel || a.titel}</a>
+		</H>
+		{a.untertitel && <p class="mt-2 text-lead font-medium leading-snug text-heading" data-tina-field={tinaField(a, 'untertitel')}>{a.untertitel}</p>}
+		{a.kurzbeschreibung && <p class="mt-3 max-w-[52ch] text-muted" data-tina-field={tinaField(a, 'kurzbeschreibung')}>{a.kurzbeschreibung}</p>}
+		<ul class="mt-5 flex flex-wrap gap-2" aria-label="Eckdaten">
+			{art && <li class="tag">{art}</li>}
+			{angebotFakten(a).map((f) => <li class="tag">{f}</li>)}
+			{a.aufAnfrage && <li class="tag">Auf Anfrage</li>}
 		</ul>
-		{a.terminHinweis && (
-			<p class="mt-4 flex items-baseline gap-2 text-sm text-muted" data-tina-field={tinaField(a, 'terminHinweis')}>
-				<span class="size-2 shrink-0 translate-y-[-1px] rounded-full bg-copper" aria-hidden="true"></span>{a.terminHinweis}
+		{a.terminHinweis && <p class="mt-4 text-[0.9375rem] text-muted" data-tina-field={tinaField(a, 'terminHinweis')}>{a.terminHinweis}</p>}
+	</div>
+	<div class="flex flex-wrap items-end justify-between gap-4 md:col-span-3 md:flex-col md:items-end md:justify-end md:text-right">
+		{preisSichtbar && (
+			<p class="text-heading" data-tina-field={tinaField(a, 'preis')}>
+				<span class="figur block text-figure">{formatEuro(a.preis!)}</span>
+				<span class="text-[0.9375rem] text-muted">pro {einheit}</span>
 			</p>
 		)}
-		<div class="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-dashed border-border pt-4">
-			{preisSichtbar ? (
-				<p class="font-display text-[2rem] font-extrabold leading-none text-heading" data-tina-field={tinaField(a, 'preis')}>
-					{formatEuro(a.preis!)} <small class="text-sm font-semibold uppercase tracking-[0.06em] text-muted">/ {einheit}</small>
-				</p>
-			) : <span></span>}
-			<a href={`${anfrageUrl(a.slug)}#formular`} class="btn-primary px-4 py-3 text-base">Anfrage senden<span class="sr-only">: {a.kurztitel || a.titel}</span></a>
-		</div>
+		<a href={`${anfrageUrl(a.slug)}#formular`} class="btn-primary">Anfrage senden<span class="sr-only">: {a.kurztitel || a.titel}</span></a>
 	</div>
 </article>

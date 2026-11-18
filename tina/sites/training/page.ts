@@ -8,6 +8,7 @@ import {
   trainingHighlightsBlock,
   trainingTextBlock,
   zeitstrahlBlock,
+  quizBlock,
   zitatBlock,
 } from './blocks';
 
@@ -22,4 +23,5 @@ export const TrainingPageCollection = seitenCollection('training', [
   trainingGalerieBlock,
   ctaBlock,
   anfrageBlock,
+  quizBlock,
 ]);

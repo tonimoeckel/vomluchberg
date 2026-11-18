@@ -1,44 +1,59 @@
 ---
-// Training ground, e-mail (phone only when set) and Instagram, as shown next to the inquiry form.
+// Where and how to reach Karo, next to the inquiry form. The training place opens as a notebook card
+// (the one lifted surface) on the survey sketch of the Luchberg; e-mail, phone (only when set) and
+// Instagram follow as a ruled list (dl). Icons inline, never in a tile.
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from '../../../components/ui/Icon.astro';
+import Karte from './Karte.astro';
 import type { CmsConfig } from '../lib/data';
 
 interface Props { config?: CmsConfig | null }
 const { config } = Astro.props;
 const k = config?.kontakt;
 const s = config?.social;
-const titel = 'block font-display text-xl font-extrabold uppercase tracking-[0.02em] text-heading';
-const link = 'text-muted underline decoration-copper underline-offset-2 hover:text-primary-ink';
+const zeile = 'grid grid-cols-[1.5rem_minmax(0,1fr)] gap-x-3 border-b border-border py-5';
+const titel = 'font-display text-[1.25rem] font-semibold leading-tight text-heading';
+const icon = 'mt-0.5 size-6 text-accent';
 ---
 {k && (
-	<ul class="mt-8 grid gap-5" data-tina-field={config ? tinaField(config, 'kontakt') : undefined}>
-		<li class="flex items-start gap-3.5">
-			<span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name="map-pin" class="size-6" /></span>
-			<span class="text-[0.97rem] text-muted">
-				<b class={titel}>{k.ortName || 'Trainingsort'}</b>
-				{[k.strasse, k.ort].filter(Boolean).join(', ')}
-				{k.ortText && <span class="block">{k.ortText}</span>}
-				{k.mapsLink && <a href={k.mapsLink} rel="noopener" class={link}>In Google Maps öffnen</a>}
-			</span>
-		</li>
-		{k.email && (
-			<li class="flex items-start gap-3.5">
-				<span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name="mail" class="size-6" /></span>
-				<span><b class={titel}>E-Mail</b><a href={`mailto:${k.email}`} class:list={[link, 'break-all']}>{k.email}</a></span>
-			</li>
-		)}
-		{k.telefon && (
-			<li class="flex items-start gap-3.5">
-				<span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name="phone" class="size-6" /></span>
-				<span><b class={titel}>Telefon</b><a href={`tel:${k.telefon.replace(/[^+\d]/g, '')}`} class={link}>{k.telefon}</a></span>
-			</li>
-		)}
-		{s?.instagram && (
-			<li class="flex items-start gap-3.5" data-tina-field={tinaField(s, 'instagram')}>
-				<span class="flex size-11 shrink-0 items-center justify-center rounded-card bg-dark text-on-dark"><Icon name="brand-instagram" class="size-6" /></span>
-				<span><b class={titel}>Instagram</b><a href={s.instagram} rel="noopener" class={link}>{s.instagramName || 'Instagram'}</a></span>
-			</li>
-		)}
-	</ul>
+	<div class="mt-10" data-tina-field={config ? tinaField(config, 'kontakt') : undefined}>
+		<figure>
+			<div class="relative overflow-hidden rounded-[var(--radius)] border border-border bg-bg">
+				<Karte beschriftet class="aspect-square h-auto sm:aspect-[4/3]" />
+			</div>
+			<div class="notiz relative -mt-14 ml-6 mr-3 sm:ml-16 sm:mr-6">
+				<div class="flex items-center gap-3 bg-heading px-5 py-3 text-bg">
+					<Icon name="map-pin" class="size-5 shrink-0" aria-hidden="true" />
+					<p class="font-medium">{k.ortName || 'Trainingsort'}</p>
+				</div>
+				<div class="px-5 py-5">
+					<p class="font-medium text-heading">{[k.ort, k.region].filter(Boolean).join(', ')}</p>
+					{k.strasse && <p class="text-muted">{k.strasse}</p>}
+					{k.ortText && <p class="mt-2 max-w-[52ch] text-fg">{k.ortText}</p>}
+					{k.mapsLink && <a href={k.mapsLink} rel="noopener" class="textlink mt-3 inline-block">In Google Maps öffnen</a>}
+				</div>
+			</div>
+			<figcaption class="mt-3 text-[0.9375rem] text-muted">Skizze, nicht maßstabsgetreu: der Luchberg über dem Müglitztal.</figcaption>
+		</figure>
+		<dl class="regel mt-8">
+			{k.email && (
+				<div class={zeile}>
+					<Icon name="mail" class={icon} aria-hidden="true" />
+					<div><dt class={titel}>E-Mail</dt><dd class="mt-1"><a href={`mailto:${k.email}`} class="textlink break-all">{k.email}</a></dd></div>
+				</div>
+			)}
+			{k.telefon && (
+				<div class={zeile}>
+					<Icon name="phone" class={icon} aria-hidden="true" />
+					<div><dt class={titel}>Telefon</dt><dd class="mt-1"><a href={`tel:${k.telefon.replace(/[^+\d]/g, '')}`} class="textlink">{k.telefon}</a></dd></div>
+				</div>
+			)}
+			{s?.instagram && (
+				<div class={zeile} data-tina-field={tinaField(s, 'instagram')}>
+					<Icon name="brand-instagram" class={icon} aria-hidden="true" />
+					<div><dt class={titel}>Instagram</dt><dd class="mt-1"><a href={s.instagram} rel="noopener" class="textlink">{s.instagramName || 'Instagram'}</a></dd></div>
+				</div>
+			)}
+		</dl>
+	</div>
 )}

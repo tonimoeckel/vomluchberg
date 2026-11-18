@@ -1,6 +1,6 @@
 // Colour schemes of the training site and its secret preview switch.
 // Pure TS – also bundled into the Tina admin via tina/sites/training/config.ts.
-// Tokens live in ../styles/global.css ([data-farbe='<id>'], light + dark); ids and --bg must stay
+// Tokens live in ../styles/global.css ([data-scheme='<id>'], light + dark); ids and --bg must stay
 // in sync with it (checked by farbschema.test.ts, which also checks the WCAG contrasts).
 
 export interface Farbschema {
@@ -39,9 +39,9 @@ export const FARBSCHEMATA: readonly Farbschema[] = [
   {
     id: 'waldweg',
     label: 'Waldweg',
-    tinaLabel: 'Waldweg (Tannengrün & Kupfer)',
-    swatch: punkt('#f4f3ec', '#1f3d30', '#a85a2f'),
-    themeColor: { light: '#f4f3ec', dark: '#0f1a15' },
+    tinaLabel: 'Waldweg (Hafer, Waldgrün & Blattgrün)',
+    swatch: punkt('#f4efe0', '#1f3a29', '#3a6b2a'),
+    themeColor: { light: '#f4efe0', dark: '#111a14' },
   },
   {
     id: 'erde',
@@ -134,7 +134,7 @@ export function vorschauStarten(
     // Storage blocked (private mode, settings): the URL alone still works, links carry it on.
   }
   if (!aktiv) return false;
-  if (thema) html.dataset.farbe = thema;
+  if (thema) html.dataset.scheme = thema;
   html.dataset.themes = '';
   return true;
 }

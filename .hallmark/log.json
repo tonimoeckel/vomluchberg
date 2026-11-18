@@ -1,0 +1,68 @@
+[
+ {
+  "shape": "Narrative Workflow",
+  "theme": "furrow+garden",
+  "axes": "light/grotesk-sans/chromatic-green",
+  "hero": "Stage",
+  "nav": "edge-aligned",
+  "footer": "letter close",
+  "imagery": "photographs + generated survey map",
+  "photos": [],
+  "entry": "redesign",
+  "fingerprint": "waldboden-luchberg-map",
+  "sections": [
+   "hero",
+   "anfrage-leiste",
+   "facts",
+   "offers",
+   "about",
+   "quote",
+   "steps",
+   "gallery",
+   "inquiry",
+   "footer"
+  ],
+  "signature": "survey sketch of the Luchberg (576 m) and the Muglitz valley",
+  "waived": [
+   "8",
+   "44c",
+   "79"
+  ],
+  "prompt": "redesign training site, forest direction, mix of Furrow and Garden",
+  "date": "2026-11-18",
+  "mode": "build"
+ },
+ {
+  "mode": "redesign",
+  "depth": "full",
+  "scope": "site",
+  "shape": "Narrative Workflow",
+  "theme": "piste",
+  "axes": "light/display-condensed/warm-green",
+  "hero": "Stage",
+  "nav": "edge-aligned",
+  "footer": "letter close",
+  "imagery": "photographs, the client own",
+  "photos": [],
+  "entry": "none",
+  "sections": [
+   "Stage hero",
+   "inquiry bar",
+   "facts row",
+   "offer rows",
+   "split",
+   "quote on field",
+   "step rows",
+   "showcase",
+   "form"
+  ],
+  "signature": "sticky inquiry bar",
+  "waived": [
+   "8",
+   "44c",
+   "79"
+  ],
+  "prompt": "dog training on request in a small Saxon mountain town, fir green and copper",
+  "date": "2026-11-18"
+ }
+]

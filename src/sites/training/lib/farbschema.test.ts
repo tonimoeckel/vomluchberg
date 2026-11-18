@@ -23,9 +23,9 @@ const dunkelStart = css.indexOf('@media (prefers-color-scheme: dark)');
 /** Tokens per scheme id ("" = :root only) in one part of the stylesheet. */
 function schemata(teil: string): Record<string, Tokens> {
   const out: Record<string, Tokens> = {};
-  for (const [, selektor, rumpf] of teil.matchAll(/([^{}]*\[data-farbe='[a-z-]+'\][^{}]*)\{([^{}]*)\}/g)) {
+  for (const [, selektor, rumpf] of teil.matchAll(/([^{}]*\[data-scheme='[a-z-]+'\][^{}]*)\{([^{}]*)\}/g)) {
     const tokens = Object.fromEntries([...rumpf.matchAll(/--([a-z0-9-]+):\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
-    for (const [, id] of selektor.matchAll(/\[data-farbe='([a-z-]+)'\]/g)) out[id] = { ...out[id], ...tokens };
+    for (const [, id] of selektor.matchAll(/\[data-scheme='([a-z-]+)'\]/g)) out[id] = { ...out[id], ...tokens };
   }
   return out;
 }
@@ -118,7 +118,7 @@ function speicher(start: Record<string, string> = {}): Speicher & { daten: Recor
     removeItem: (k) => void delete daten[k],
   };
 }
-const html = () => ({ dataset: { farbe: 'trainingsplatz' } as Record<string, string | undefined> });
+const html = () => ({ dataset: { scheme: 'trainingsplatz' } as Record<string, string | undefined> });
 
 describe('vorschauStarten', () => {
   it('uses the central parameter ?themes=active', () => {
@@ -133,24 +133,24 @@ describe('vorschauStarten', () => {
     expect(vorschauStarten(vorschauConfig, '?thema=kreide', s, h)).toBe(false);
     expect(vorschauStarten(vorschauConfig, '?themes=yes', s, h)).toBe(false);
     expect(s.daten).toEqual({});
-    expect(h.dataset).toEqual({ farbe: 'trainingsplatz' });
+    expect(h.dataset).toEqual({ scheme: 'trainingsplatz' });
   });
 
   it('turns on with ?themes=active and remembers it for the session', () => {
     const s = speicher();
     const h = html();
     expect(vorschauStarten(vorschauConfig, '?themes=active&thema=waldweg', s, h)).toBe(true);
-    expect(h.dataset).toEqual({ farbe: 'waldweg', themes: '' });
+    expect(h.dataset).toEqual({ scheme: 'waldweg', themes: '' });
     const h2 = html();
     expect(vorschauStarten(vorschauConfig, '?seite=2', s, h2)).toBe(true);
-    expect(h2.dataset.farbe).toBe('waldweg');
+    expect(h2.dataset.scheme).toBe('waldweg');
   });
 
   it('ignores unknown schemes', () => {
     const s = speicher({ themes: 'active', 'themes-thema': 'neon' });
     const h = html();
     expect(vorschauStarten(vorschauConfig, '?thema=<script>', s, h)).toBe(true);
-    expect(h.dataset.farbe).toBe('trainingsplatz');
+    expect(h.dataset.scheme).toBe('trainingsplatz');
   });
 
   it('turns off with any other value of the parameter', () => {
@@ -167,7 +167,7 @@ describe('vorschauStarten', () => {
     };
     const h = html();
     expect(vorschauStarten(vorschauConfig, '?themes=active&thema=bergnebel', kaputt, h)).toBe(true);
-    expect(h.dataset.farbe).toBe('bergnebel');
+    expect(h.dataset.scheme).toBe('bergnebel');
     expect(vorschauStarten(vorschauConfig, '', kaputt, html())).toBe(false);
     expect(vorschauStarten(vorschauConfig, '?themes=active', null, html())).toBe(true);
   });
@@ -176,7 +176,7 @@ describe('vorschauStarten', () => {
     const fn = new Function(`return (${vorschauStarten.toString()})`)() as typeof vorschauStarten;
     const h = html();
     expect(fn(vorschauConfig, '?themes=active&thema=kreide', speicher(), h)).toBe(true);
-    expect(h.dataset.farbe).toBe('kreide');
+    expect(h.dataset.scheme).toBe('kreide');
   });
 });
 

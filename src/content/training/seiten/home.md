@@ -4,10 +4,10 @@ beschreibung: 'Hundetraining für echte Alltagssituationen in Glashütte und Umg
 blocks:
   - _template: hero
     variante: gross
-    kicker: Hundetraining · Glashütte, Sachsen & Umgebung
+    kicker: Hundetraining in Glashütte, Sachsen und Umgebung
     titel: Alltag kann
     akzent: Sport.
-    untertitel: 'Hundetraining für echte Alltagssituationen – mit sportlichen Übungen für Fokus und Bindung. In kleinen Gruppen oder im Einzeltraining: klar, fair und verständlich.'
+    untertitel: Hundetraining für echte Alltagssituationen, mit sportlichen Übungen für Fokus und Bindung.
     bild: /uploads/training/start/spaziergang-feldweg.jpg
     bildBeschreibung: Karolin geht mit Rottweiler und Dackel an lockerer Leine einen Feldweg entlang
     buttons:
@@ -40,6 +40,10 @@ blocks:
     text: Entdeckt das passende Training für euch – von individueller Einzelbetreuung bis hin zu Gruppenkursen.
     auswahl: alle
     alleLink: true
+  - _template: quiz
+    kicker: Orientierung
+    ueberschrift: Welches Training passt zu euch?
+    text: Drei kurze Fragen, dann seht ihr, womit ihr am besten startet. Ihr könnt danach direkt anfragen.
   - _template: text
     kicker: Eure Trainerin
     ueberschrift: Karolin Riesing
