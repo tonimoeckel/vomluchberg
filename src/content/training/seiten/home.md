@@ -39,6 +39,7 @@ blocks:
     ueberschrift: Das passende Training für euch zwei
     text: Entdeckt das passende Training für euch – von individueller Einzelbetreuung bis hin zu Gruppenkursen.
     auswahl: alle
+    darstellung: faecher
     alleLink: true
   - _template: quiz
     kicker: Orientierung
