@@ -6,6 +6,7 @@ import TinaIsland from '@tinacms/astro/TinaIsland.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ThemeVorschau from '../components/ThemeVorschau.astro';
+import RueckrufVorschau from '../components/RueckrufVorschau.astro';
 import { getConfig } from '../lib/data';
 import { islands } from '../lib/islands';
 import { headMeta, type Seo } from '../../../lib/domain/seo';
@@ -60,5 +61,6 @@ const betrieb =
 		</TinaIsland>
 		<Lightbox />
 		<ThemeVorschau />
+		<RueckrufVorschau />
 	</body>
 </html>

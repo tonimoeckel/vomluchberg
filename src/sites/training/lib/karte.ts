@@ -114,10 +114,26 @@ function verketten(segmente: [string, string][]): string[][] {
 
 const pfad = (punkte: string[]) => 'M' + punkte.map((p) => p.replace(',', ' ')).join('L');
 
-export function karte(optionen: KarteOptionen = {}): Karte {
-  const { breite = 1200, hoehe = 800, zelle = 10, seed = 11, stufen = 15, gipfelX = 0.36, gipfelY = 0.42, waldSchwelle = 0.56 } = optionen;
+export interface Gelaende {
+  breite: number;
+  hoehe: number;
+  noise: (x: number, y: number) => number;
+  gipfel: { x: number; y: number };
+  /** x of the valley floor (the Müglitz) at a given y */
+  talX: (y: number) => number;
+  /** unnormalised height at a map point */
+  hoeheBei: (x: number, y: number) => number;
+  /** the forest track: start point, then two cubic segments (the second one smooth, as in SVG "S") */
+  weg: [number, number][];
+}
+
+/**
+ * The terrain behind the sketch: height field, valley and track. Shared by `karte()` and the
+ * "Rückruf" game (lib/rueckruf/profil.ts), which samples the height along the track.
+ */
+export function gelaende(optionen: KarteOptionen = {}): Gelaende {
+  const { breite = 1200, hoehe = 800, seed = 11, gipfelX = 0.36, gipfelY = 0.42 } = optionen;
   const noise = rauschen(seed);
-  const spalten = Math.ceil(breite / zelle), zeilen = Math.ceil(hoehe / zelle);
   // Height field: rolling noise, a steep cone (the Luchberg) and a valley cut east of it (the Müglitz).
   const gipfel = { x: breite * gipfelX, y: hoehe * gipfelY };
   const talX = (y: number) => breite * 0.82 + Math.sin((y / hoehe) * 3.2 + 0.6) * breite * 0.045;
@@ -128,6 +144,19 @@ export function karte(optionen: KarteOptionen = {}): Karte {
     const tal = Math.exp(-(((x - talX(y)) / (breite * 0.09)) ** 2));
     return n * 0.5 + kegel * 0.75 - tal * 0.3;
   };
+  // Forest track: a gentle curve across the lower slopes.
+  const weg: [number, number][] = [
+    [-10, hoehe * 0.78],
+    [breite * 0.28, hoehe * 0.62], [breite * 0.48, hoehe * 0.92], [breite * 0.72, hoehe * 0.7],
+    [breite * 0.95, hoehe * 0.42], [breite + 10, hoehe * 0.38],
+  ];
+  return { breite, hoehe, noise, gipfel, talX, hoeheBei, weg };
+}
+
+export function karte(optionen: KarteOptionen = {}): Karte {
+  const { zelle = 10, seed = 11, stufen = 15, waldSchwelle = 0.56 } = optionen;
+  const { breite, hoehe, noise, gipfel, talX, hoeheBei, weg: w } = gelaende(optionen);
+  const spalten = Math.ceil(breite / zelle), zeilen = Math.ceil(hoehe / zelle);
   const feld: number[][] = [];
   for (let j = 0; j <= zeilen; j++) {
     feld.push([]);
@@ -175,8 +204,8 @@ export function karte(optionen: KarteOptionen = {}): Karte {
   const bach = pfad(flussPunkte);
   const fluss = { x: rund(talX(hoehe * 0.6)), y: rund(hoehe * 0.6) };
 
-  // Forest track: a gentle curve across the lower slopes.
-  const weg = `M${-10} ${rund(hoehe * 0.78)}C${rund(breite * 0.28)} ${rund(hoehe * 0.62)} ${rund(breite * 0.48)} ${rund(hoehe * 0.92)} ${rund(breite * 0.72)} ${rund(hoehe * 0.7)}S${rund(breite * 0.95)} ${rund(hoehe * 0.42)} ${breite + 10} ${rund(hoehe * 0.38)}`;
+  const p = w.map(([x, y]) => `${rund(x)} ${rund(y)}`);
+  const weg = `M${p[0]}C${p[1]} ${p[2]} ${p[3]}S${p[4]} ${p[5]}`;
 
   // Forest: symbols on a jittered grid wherever a second noise field says "wood".
   const waldNoise = rauschen(seed + 101);
