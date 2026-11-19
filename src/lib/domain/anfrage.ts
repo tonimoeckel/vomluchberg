@@ -21,11 +21,25 @@ export const anfrageOptionen = (angebote: readonly Angebot[]): AnfrageOption[] =
 export const vorauswahl = (param: string | null | undefined, optionen: readonly AnfrageOption[]) =>
   optionen.find((o) => o.value === param?.trim())?.value ?? '';
 
+/**
+ * "Do we know each other yet?" New teams always start with a single lesson to get to know each other
+ * (Karo, 2026-11-19); returning teams ask for an offer directly.
+ */
+export const erstkontaktOptionen = [
+  { value: 'neu', label: 'Nein, wir sind neu' },
+  { value: 'bekannt', label: 'Ja, wir hatten schon ein Erstgespräch' },
+] as const satisfies readonly AnfrageOption[];
+
+/** Default of the hint shown to new teams (trainingConfig.anfrage.erstkontakt overrides it). */
+export const erstkontaktHinweis =
+  'Euer erster Termin ist immer eine Einzelstunde zum Kennenlernen. Ich schaue mir euch zwei in Ruhe an, danach entscheiden wir gemeinsam, ob eine Gruppe oder weitere Einzelstunden besser passen.';
+
 /** Preferred time slots (checkboxes). */
 export const wunschzeiten = ['Wochentags vormittags', 'Wochentags nachmittags', 'Wochentags abends', 'Wochenende'] as const;
 
 /** Form field names – the form component and the parsing below must use the same names. */
 export const anfrageFelder = {
+  erstkontakt: 'erstkontakt',
   angebot: 'angebot',
   name: 'name',
   email: 'email',
@@ -39,6 +53,8 @@ export const anfrageFelder = {
 } as const;
 
 export interface AnfrageDaten {
+  /** 'neu', 'bekannt' or '' (not answered) */
+  erstkontakt: string;
   angebot: string;
   name: string;
   email: string;
@@ -59,7 +75,9 @@ const text = (v: unknown) => (typeof v === 'string' ? v.trim() : '');
 /** Reads the submitted form into trimmed strings; empty checkboxes and blank values are dropped from "zeiten". */
 export function anfrageAusFormular(werte: FormularWerte): AnfrageDaten {
   const f = anfrageFelder;
+  const erstkontakt = text(werte.get(f.erstkontakt));
   return {
+    erstkontakt: erstkontaktOptionen.some((o) => o.value === erstkontakt) ? erstkontakt : '',
     angebot: text(werte.get(f.angebot)),
     name: text(werte.get(f.name)),
     email: text(werte.get(f.email)),
@@ -77,11 +95,21 @@ export function anfrageAusFormular(werte: FormularWerte): AnfrageDaten {
 export const angebotLabel = (angebot: string, optionen: readonly AnfrageOption[]) =>
   optionen.find((o) => o.value === angebot)?.label ?? angebot;
 
-/** Mail subject: "Trainingsanfrage: Basistraining – Anna Muster". */
-export function anfrageBetreff(daten: Pick<AnfrageDaten, 'angebot' | 'name'>, optionen: readonly AnfrageOption[]) {
+/**
+ * Mail subject: "Trainingsanfrage: Basistraining – Anna Muster", for new teams
+ * "Kennenlernstunde (Interesse: Basistraining) – Anna Muster", so Karo sees at once who is new.
+ */
+export function anfrageBetreff(daten: Pick<AnfrageDaten, 'angebot' | 'name'> & Partial<Pick<AnfrageDaten, 'erstkontakt'>>, optionen: readonly AnfrageOption[]) {
   const label = angebotLabel(daten.angebot, optionen);
-  return ['Trainingsanfrage' + (label ? `: ${label}` : ''), daten.name].filter(Boolean).join(' – ');
+  const kopf = daten.erstkontakt === 'neu'
+    ? 'Kennenlernstunde' + (label ? ` (Interesse: ${label})` : '')
+    : 'Trainingsanfrage' + (label ? `: ${label}` : '');
+  return [kopf, daten.name].filter(Boolean).join(' – ');
 }
+
+/** The answer to "do we know each other yet?" as a mail line value. */
+export const erstkontaktText = (erstkontakt: string) =>
+  erstkontakt === 'neu' ? 'Noch nicht, wir sind neu' : erstkontakt === 'bekannt' ? 'Ja, schon gehabt' : '';
 
 /** Preferred times as one line: checked slots, then the free text. */
 export const wunschzeitenText = (daten: Pick<AnfrageDaten, 'zeiten' | 'zeitenText'>) =>
@@ -90,6 +118,7 @@ export const wunschzeitenText = (daten: Pick<AnfrageDaten, 'zeiten' | 'zeitenTex
 /** Plain-text mail body (mailto: fallback): labelled lines, empty fields skipped, the message last. */
 export function anfrageMailText(daten: AnfrageDaten, optionen: readonly AnfrageOption[]) {
   const zeilen: [string, string][] = [
+    ['Erstgespräch', erstkontaktText(daten.erstkontakt)],
     ['Angebot', angebotLabel(daten.angebot, optionen)],
     ['Name', daten.name],
     ['E-Mail', daten.email],

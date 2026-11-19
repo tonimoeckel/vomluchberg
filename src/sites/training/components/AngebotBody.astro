@@ -1,11 +1,13 @@
 ---
 // Detail page of an offer: the head (Stage: text on six columns, the photo on six) with facts and
-// price, the description beside a ruled list of what to bring, photos, the inquiry form with this
+// price, the description beside a ruled list of what to bring, photos, the offer's own sections
+// (AngebotAbschnitte.astro: each offer page has its own build-up), the inquiry form with this
 // offer preselected (works without JS, on paper-2) and the other offers as price-list rows.
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from '../../../components/ui/Icon.astro';
 import AngebotKarte from './AngebotKarte.astro';
+import AngebotAbschnitte from './AngebotAbschnitte.astro';
 import AnfrageFormular from './AnfrageFormular.astro';
 import Kontaktliste from './Kontaktliste.astro';
 import { angebotFakten, angebotJsonLd, angeboteListeUrl, artLabel, formatEuro, preisEinheiten, sichtbareAngebote } from '../../../lib/domain/angebot';
@@ -21,7 +23,10 @@ const andere = sichtbareAngebote(angebote).filter((x) => x.slug !== slug);
 const preisSichtbar = a?.preis != null && a.preisAnzeigen !== false;
 const einheit = preisEinheiten.find((e) => e.value === a?.preisEinheit)?.label ?? 'Termin';
 const mitbringen = (a?.mitbringen ?? []).filter(Boolean);
-const seitenleiste = mitbringen.length > 0 || Boolean(a?.voraussetzungen);
+const rahmen = (a?.rahmen ?? []).filter(Boolean);
+const seitenleiste = rahmen.length > 0 || mitbringen.length > 0 || Boolean(a?.voraussetzungen);
+// "Dauer: 45 Minuten" → the label before the colon set in the heading colour.
+const teile = (r: string) => { const i = r.indexOf(':'); return i > 0 ? [r.slice(0, i), r.slice(i + 1).trim()] : ['', r]; };
 const galerie = (a?.galerie ?? []).filter((g) => g?.bild);
 const site = Astro.site?.href ?? Astro.url.origin;
 const jsonLd = a && angebotJsonLd({ ...a, slug }, { name: config?.website?.name ?? training.name, url: site });
@@ -81,24 +86,44 @@ const jsonLd = a && angebotJsonLd({ ...a, slug }, { name: config?.website?.name 
 					</>
 				)}
 				{seitenleiste && (
-					<aside class="self-start lg:col-span-4 lg:col-start-9">
+					<aside class="grid gap-10 self-start lg:col-span-4 lg:col-start-9">
+						{rahmen.length > 0 && (
+							<div>
+								<h2 class="display break-words text-title">Rahmenbedingungen</h2>
+								<dl class="regel mt-5" data-tina-field={tinaField(a, 'rahmen')}>
+									{rahmen.map((r) => { const [k, v] = teile(r!); return (
+										<div class="grid grid-cols-[minmax(0,7.5rem)_minmax(0,1fr)] gap-x-4 border-b border-border py-3">
+											{k && <dt class="font-medium text-heading">{k}</dt>}<dd class:list={[!k && 'col-span-2']}>{v}</dd>
+										</div>
+									); })}
+								</dl>
+							</div>
+						)}
 						{mitbringen.length > 0 && (
-							<>
+							<div>
 								<h2 class="display break-words text-title">Das solltet ihr mitbringen</h2>
 								<ul class="regel mt-5" data-tina-field={tinaField(a, 'mitbringen')}>
 									{mitbringen.map((m) => <li class="flex gap-3 border-b border-border py-3"><Icon name="check" class="mt-0.5 size-5 shrink-0 text-accent" aria-hidden="true" />{m}</li>)}
 								</ul>
-							</>
+							</div>
 						)}
 						{a.voraussetzungen && (
-							<>
-								<h2 class={`display min-w-0 break-words text-title ${mitbringen.length > 0 ? 'mt-10' : ''}`}>Voraussetzungen</h2>
-								<p class="regel mt-5 pt-4 text-muted" data-tina-field={tinaField(a, 'voraussetzungen')}>{a.voraussetzungen}</p>
-							</>
+							<div>
+								<h2 class="display min-w-0 break-words text-title">Für wen es passt</h2>
+								<p class="regel mt-5 pt-4 text-fg" data-tina-field={tinaField(a, 'voraussetzungen')}>{a.voraussetzungen}</p>
+							</div>
 						)}
 					</aside>
 				)}
 			</div>
+			{a.ziel && (
+				<div class="container-page mt-16 sm:mt-20">
+					<figure class="regel grid gap-x-[var(--gap-columns)] gap-y-3 pt-6 lg:grid-cols-12">
+						<figcaption class="text-[0.9375rem] font-medium text-muted lg:col-span-3 lg:pt-2">Unser Ziel</figcaption>
+						<p class="display max-w-[32ch] text-[clamp(1.75rem,1.6vw+1.25rem,2.75rem)] lg:col-span-9" data-tina-field={tinaField(a, 'ziel')}>{a.ziel}</p>
+					</figure>
+				</div>
+			)}
 			{galerie.length > 0 && (
 				<ul class="container-page mt-16 grid gap-x-[var(--gap-columns)] gap-y-8 md:grid-cols-12" data-tina-field={tinaField(a, 'galerie')}>
 					{galerie.map((g, i) => (
@@ -111,6 +136,8 @@ const jsonLd = a && angebotJsonLd({ ...a, slug }, { name: config?.website?.name 
 				</ul>
 			)}
 		</section>
+
+		<AngebotAbschnitte data={a} />
 
 		<section class="sektion bg-surface">
 			<div class="container-page grid items-start gap-x-[var(--gap-columns)] gap-y-12 lg:grid-cols-12">

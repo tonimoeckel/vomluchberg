@@ -1,0 +1,45 @@
+---
+// "So fangen wir an" on the forest field: the steps from the first message as a ruled row of
+// numerals, then the way forks (a small drawn fork) into the ways that follow, each with its link.
+import { tinaField } from '@tinacms/astro/tina-field';
+import SectionHead from '../SectionHead.astro';
+import type { AbschnittOf } from '../../lib/data';
+
+interface Props { data: AbschnittOf<'Einstieg'> }
+const { data } = Astro.props;
+const schritte = (data.schritte ?? []).filter((s) => s !== null);
+const wege = (data.wege ?? []).filter((w) => w !== null);
+const spalten = schritte.length >= 4 ? 'md:grid-cols-4' : schritte.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3';
+---
+<section class="band-field sektion-m">
+	<div class="container-page">
+		<SectionHead data={data} geteilt class="mb-14" />
+		<ol class:list={['regel grid gap-x-[var(--gap-columns)]', spalten]} data-tina-field={tinaField(data, 'schritte')}>
+			{schritte.map((s, i) => (
+				<li class="grid grid-cols-[3.5rem_minmax(0,1fr)] gap-x-4 border-b border-border py-7 md:block md:border-b-0" data-tina-field={tinaField(s)}>
+					<span class="figur text-[clamp(2.75rem,2vw+2rem,4rem)] leading-[0.85] text-[var(--on-dark)]" aria-hidden="true">{i + 1}</span>
+					<span class="md:mt-5 md:block">
+						<h3 class="display text-title">{s.titel}</h3>
+						{s.beschreibung && <p class="mt-2 max-w-[44ch] text-[var(--on-dark-muted)]">{s.beschreibung}</p>}
+					</span>
+				</li>
+			))}
+		</ol>
+		{wege.length > 0 && (
+			<>
+				<svg viewBox="0 0 200 60" class="einstieg-gabel mx-auto my-6 h-14 w-48 md:my-8" aria-hidden="true">
+					<path d="M100 0V24C100 40 60 38 30 60M100 24C100 40 140 38 170 60" />
+				</svg>
+				<ul class:list={['grid gap-x-[var(--gap-columns)] gap-y-8', wege.length > 1 && 'md:grid-cols-2']} data-tina-field={tinaField(data, 'wege')}>
+					{wege.map((w) => (
+						<li class="regel pt-6" data-tina-field={tinaField(w)}>
+							<h3 class="display text-title">{w.titel}</h3>
+							{w.beschreibung && <p class="mt-2 max-w-[52ch] text-[var(--on-dark-muted)]">{w.beschreibung}</p>}
+							{w.link && <a href={w.link} class="btn-hell mt-5">{w.linkText || 'Mehr dazu'}</a>}
+						</li>
+					))}
+				</ul>
+			</>
+		)}
+	</div>
+</section>

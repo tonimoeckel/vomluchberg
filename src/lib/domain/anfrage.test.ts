@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   anfrageAusFormular, anfrageBetreff, anfrageFelder, anfrageMailText, anfrageMailto, anfrageOptionen, angebotLabel,
-  beratungOption, vorauswahl, wunschzeiten, wunschzeitenText, type AnfrageDaten,
+  beratungOption, erstkontaktOptionen, erstkontaktText, vorauswahl, wunschzeiten, wunschzeitenText, type AnfrageDaten,
 } from './anfrage';
 
 const angebote = [
@@ -13,7 +13,7 @@ const angebote = [
 const optionen = anfrageOptionen(angebote);
 
 const leer: AnfrageDaten = {
-  angebot: '', name: '', email: '', telefon: '', hundName: '', hundRasse: '', hundAlter: '', nachricht: '', zeiten: [], zeitenText: '',
+  erstkontakt: '', angebot: '', name: '', email: '', telefon: '', hundName: '', hundRasse: '', hundAlter: '', nachricht: '', zeiten: [], zeitenText: '',
 };
 
 describe('anfrageOptionen', () => {
@@ -68,8 +68,9 @@ describe('anfrageAusFormular', () => {
     fd.append(anfrageFelder.zeiten, 'Wochenende');
     fd.append(anfrageFelder.zeiten, 'Wochentags abends');
     fd.set(anfrageFelder.zeitenText, 'ab Mai');
+    fd.set(anfrageFelder.erstkontakt, 'neu');
     expect(anfrageAusFormular(fd)).toEqual({
-      angebot: 'welpenkurs', name: 'Anna Muster', email: 'anna@example.org', telefon: '0170 123456',
+      erstkontakt: 'neu', angebot: 'welpenkurs', name: 'Anna Muster', email: 'anna@example.org', telefon: '0170 123456',
       hundName: 'Bonnie', hundRasse: 'Rauhaardackel', hundAlter: '4 Monate', nachricht: 'Sie zieht an der Leine.',
       zeiten: ['Wochenende', 'Wochentags abends'], zeitenText: 'ab Mai',
     });
@@ -80,9 +81,14 @@ describe('anfrageAusFormular', () => {
     expect(anfrageAusFormular(fd)).toEqual({ ...leer, name: 'Anna' });
   });
 
+  it('accepts only the known first-contact answers', () => {
+    expect(anfrageAusFormular(new URLSearchParams([['erstkontakt', ' bekannt ']])).erstkontakt).toBe('bekannt');
+    expect(anfrageAusFormular(new URLSearchParams([['erstkontakt', 'vielleicht']])).erstkontakt).toBe('');
+  });
+
   it('uses the field names of the mockup form', () => {
     expect(Object.values(anfrageFelder)).toEqual([
-      'angebot', 'name', 'email', 'telefon', 'hund_name', 'hund_rasse', 'hund_alter', 'nachricht', 'zeiten', 'zeiten_text',
+      'erstkontakt', 'angebot', 'name', 'email', 'telefon', 'hund_name', 'hund_rasse', 'hund_alter', 'nachricht', 'zeiten', 'zeiten_text',
     ]);
   });
 });
@@ -99,6 +105,24 @@ describe('angebotLabel / anfrageBetreff', () => {
     expect(anfrageBetreff({ angebot: '', name: 'Anna Muster' }, optionen)).toBe('Trainingsanfrage – Anna Muster');
     expect(anfrageBetreff({ angebot: 'welpenkurs', name: '' }, optionen)).toBe('Trainingsanfrage: Welpenkurs');
     expect(anfrageBetreff({ angebot: '', name: '' }, optionen)).toBe('Trainingsanfrage');
+    expect(anfrageBetreff({ erstkontakt: 'bekannt', angebot: 'basistraining', name: 'Anna' }, optionen)).toBe('Trainingsanfrage: Basistraining – Anna');
+  });
+
+  it('marks new teams as a first lesson, with the offer they are interested in', () => {
+    expect(anfrageBetreff({ erstkontakt: 'neu', angebot: 'basistraining', name: 'Anna' }, optionen)).toBe('Kennenlernstunde (Interesse: Basistraining) – Anna');
+    expect(anfrageBetreff({ erstkontakt: 'neu', angebot: '', name: 'Anna' }, optionen)).toBe('Kennenlernstunde – Anna');
+  });
+});
+
+describe('erstkontakt', () => {
+  it('offers "new" and "returning"', () => {
+    expect(erstkontaktOptionen.map((o) => o.value)).toEqual(['neu', 'bekannt']);
+  });
+
+  it('turns the answer into a mail line', () => {
+    expect(erstkontaktText('neu')).toBe('Noch nicht, wir sind neu');
+    expect(erstkontaktText('bekannt')).toBe('Ja, schon gehabt');
+    expect(erstkontaktText('')).toBe('');
   });
 });
 
@@ -113,7 +137,7 @@ describe('wunschzeitenText', () => {
 
 describe('anfrageMailText / anfrageMailto', () => {
   const daten: AnfrageDaten = {
-    angebot: 'welpenkurs', name: 'Anna Muster', email: 'anna@example.org', telefon: '', hundName: 'Bonnie',
+    erstkontakt: '', angebot: 'welpenkurs', name: 'Anna Muster', email: 'anna@example.org', telefon: '', hundName: 'Bonnie',
     hundRasse: '', hundAlter: '4 Monate', nachricht: 'Sie zieht an der Leine.', zeiten: ['Wochenende'], zeitenText: '',
   };
 
@@ -122,6 +146,10 @@ describe('anfrageMailText / anfrageMailto', () => {
       'Angebot: Welpenkurs\nName: Anna Muster\nE-Mail: anna@example.org\nHund: Bonnie\nAlter: 4 Monate\nWunschzeiten: Wochenende' +
       '\n\nNachricht:\nSie zieht an der Leine.',
     );
+  });
+
+  it('starts with the first-contact answer', () => {
+    expect(anfrageMailText({ ...leer, erstkontakt: 'neu', name: 'Anna' }, optionen)).toBe('Erstgespräch: Noch nicht, wir sind neu\nName: Anna');
   });
 
   it('works without a message and without any fields', () => {

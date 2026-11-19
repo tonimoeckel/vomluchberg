@@ -1046,6 +1046,101 @@
 	--tw-prose-bullets: var(--on-dark-muted);
 }
 
+/* Offer page sections (AngebotAbschnitte.astro). */
+/* The Luchberg in section (Bergschnitt.astro): moss base, a signal tint on the cone, level lines. */
+.bergschnitt-fundament { fill: var(--lane); }
+.bergschnitt-gipfel { fill: color-mix(in oklab, var(--signal) 30%, var(--bg)); }
+.bergschnitt-linien line { stroke: var(--contour); stroke-width: 1; opacity: 0.55; }
+.bergschnitt-schulter { stroke: var(--copper); stroke-width: 1.25; stroke-dasharray: 5 5; }
+.bergschnitt-umriss { fill: none; stroke: var(--heading); stroke-width: 1.5; stroke-linejoin: round; }
+.bergschnitt-boden { stroke: var(--heading); stroke-width: 1; }
+.bergschnitt-spur use { fill: var(--signal); opacity: 0.55; }
+.bergschnitt-label {
+	position: absolute;
+	display: grid;
+	justify-items: center;
+	translate: -50% -50%;
+	text-align: center;
+	white-space: nowrap;
+	line-height: 1.1;
+	pointer-events: none;
+}
+.bergschnitt-label b {
+	font-family: var(--font-display);
+	font-weight: 600;
+	font-size: clamp(1.125rem, 1vw + 0.8rem, 1.75rem);
+	letter-spacing: -0.02em;
+	color: var(--heading);
+}
+.bergschnitt-label-gross b { font-size: clamp(1.375rem, 1.6vw + 0.9rem, 2.375rem); }
+.bergschnitt-label small {
+	font-size: clamp(0.8125rem, 0.4vw + 0.7rem, 1rem);
+	color: var(--muted);
+}
+.bergschnitt-hoehe {
+	position: absolute;
+	translate: 0.5rem -1.1rem;
+	font-size: 0.8125rem;
+	color: var(--muted);
+	white-space: nowrap;
+}
+
+/* Stages (Etappen.astro): a short static trail from one numeral towards the next (wide screens only). */
+.etappen-spur {
+	display: none;
+	flex: 1;
+	justify-content: space-between;
+	align-items: center;
+	margin-inline-end: calc(var(--gap-columns) * -1);
+	padding-inline: var(--space-xs);
+	color: var(--signal);
+}
+.etappen-spur svg {
+	width: 20px;
+	height: 20px;
+	fill: currentColor;
+	opacity: 0.45;
+	translate: 0 calc(var(--seite) * 5px);
+}
+.etappen-spur-welpe svg { width: 15px; height: 15px; translate: 0 calc(var(--seite) * 3.5px); }
+@media (min-width: 64rem) {
+	.etappen-spur { display: flex; }
+}
+
+/* Outcomes (Vorteile.astro): hairlines between the cells, no boxes. */
+@media (min-width: 40rem) and (max-width: 63.999rem) {
+	.vorteil:nth-child(2n) { border-left: var(--rule-hair) solid var(--border); }
+	.vorteil:nth-child(2n + 1) { padding-left: 0; }
+}
+@media (min-width: 64rem) {
+	.vorteile:not(.vorteile-4) .vorteil:not(:nth-child(3n + 1)) { border-left: var(--rule-hair) solid var(--border); }
+	.vorteile:not(.vorteile-4) .vorteil:nth-child(3n + 1) { padding-left: 0; }
+	.vorteile-4 .vorteil:not(:nth-child(4n + 1)) { border-left: var(--rule-hair) solid var(--border); }
+	.vorteile-4 .vorteil:nth-child(4n + 1) { padding-left: 0; }
+}
+
+/* The fork after the first steps (Einstieg.astro). */
+.einstieg-gabel path { fill: none; stroke: var(--on-dark); stroke-width: 1.5; stroke-linecap: round; opacity: 0.6; }
+
+/* Inquiry form, step 1: a radio dot in the answer key, and the hint for new teams, shown once
+   "Nein, wir sind neu" is checked (CSS only; without :has() it simply stands). */
+.anfrage-punkt {
+	flex: none;
+	width: 18px;
+	height: 18px;
+	border: 1.5px solid var(--muted);
+	border-radius: 50%;
+	background: var(--card);
+}
+:checked + * > .anfrage-punkt {
+	border-color: var(--heading);
+	box-shadow: inset 0 0 0 4px var(--card), inset 0 0 0 9px var(--primary);
+}
+@supports selector(:has(*)) {
+	.anfrage-erstkontakt { display: none; }
+	form:has(input[name='erstkontakt'][value='neu']:checked) .anfrage-erstkontakt { display: block; }
+}
+
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after {
 		transition: none !important;

@@ -47,3 +47,7 @@ export type AngebotListItem = Awaited<ReturnType<typeof listAngeboteMitSlug>>[nu
 export type PageBlock = NonNullable<NonNullable<CmsPage['blocks']>[number]>;
 /** A block by its template name (`BlockOf<'Hero'>`), see blockName() in src/lib/tina-typename.ts. */
 export type BlockOf<N extends string> = Extract<PageBlock, { __typename: `TrainingPageBlocks${N}` }>;
+
+export type AngebotBlock = NonNullable<NonNullable<CmsAngebot['blocks']>[number]>;
+/** A section of an offer page by its template name (`AbschnittOf<'Ebenen'>`), tina/sites/training/abschnitte.ts. */
+export type AbschnittOf<N extends string> = Extract<AngebotBlock, { __typename: `TrainingAngebotBlocks${N}` }>;
