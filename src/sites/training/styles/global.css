@@ -1113,8 +1113,10 @@
 	.vorteil:nth-child(2n + 1) { padding-left: 0; }
 }
 @media (min-width: 64rem) {
-	.vorteil:not(:nth-child(3n + 1)) { border-left: var(--rule-hair) solid var(--border); }
-	.vorteil:nth-child(3n + 1) { padding-left: 0; }
+	.vorteile:not(.vorteile-4) .vorteil:not(:nth-child(3n + 1)) { border-left: var(--rule-hair) solid var(--border); }
+	.vorteile:not(.vorteile-4) .vorteil:nth-child(3n + 1) { padding-left: 0; }
+	.vorteile-4 .vorteil:not(:nth-child(4n + 1)) { border-left: var(--rule-hair) solid var(--border); }
+	.vorteile-4 .vorteil:nth-child(4n + 1) { padding-left: 0; }
 }
 
 /* The fork after the first steps (Einstieg.astro). */

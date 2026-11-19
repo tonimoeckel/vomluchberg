@@ -1,7 +1,7 @@
 ---
 // "Was ihr davon habt": a ruled field of outcomes, three across on wide screens, two on tablets. Each
 // cell has its symbol set large in the signal colour above the title, hairlines between the cells
-// (a survey table, not cards).
+// (a survey table, not cards). Items without a line are fine (a list of topics).
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from '../../../../components/ui/Icon.astro';
 import SectionHead from '../SectionHead.astro';
@@ -10,11 +10,13 @@ import type { AbschnittOf } from '../../lib/data';
 interface Props { data: AbschnittOf<'Vorteile'> }
 const { data } = Astro.props;
 const vorteile = (data.vorteile ?? []).filter((v) => v !== null);
+// Four across when three would leave a lone cell (4, 7, 8 items).
+const vier = [4, 7, 8].includes(vorteile.length);
 ---
 <section class="sektion-m">
 	<div class="container-page">
 		<SectionHead data={data} geteilt class="mb-14" />
-		<ul class="vorteile regel grid sm:grid-cols-2 lg:grid-cols-3" data-tina-field={tinaField(data, 'vorteile')}>
+		<ul class:list={['vorteile regel grid sm:grid-cols-2', vier ? 'vorteile-4 lg:grid-cols-4' : 'lg:grid-cols-3']} data-tina-field={tinaField(data, 'vorteile')}>
 			{vorteile.map((v) => (
 				<li class="vorteil grid content-start gap-3 border-b border-border py-8 sm:px-8" data-tina-field={tinaField(v)}>
 					{v.icon && <Icon name={v.icon} class="size-10 text-[var(--signal)]" aria-hidden="true" />}
