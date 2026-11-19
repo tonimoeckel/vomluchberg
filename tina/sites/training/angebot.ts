@@ -3,6 +3,7 @@ import { angebotArten, angebotUrl, preisEinheiten } from '../../../src/lib/domai
 import { slugify } from '../../../src/lib/domain/slug';
 import { bildFeld, galerieFeld } from '../../collections/fields';
 import { siteRouter } from '../router';
+import { angebotAbschnitte } from './abschnitte';
 
 /** Offers of the training site ("Angebote"), one detail page each at /angebote/<slug> (docs/plan/02-training.md §4.1). */
 export const TrainingAngebotCollection: Collection = {
@@ -26,6 +27,10 @@ export const TrainingAngebotCollection: Collection = {
     { type: 'boolean', name: 'sichtbar', label: 'Auf der Website zeigen', description: 'Aus = das Angebot verschwindet von der Website und aus dem Anfrageformular' },
     { type: 'string', name: 'kurzbeschreibung', label: 'Kurzbeschreibung (Karte, Google)', ui: { component: 'textarea' } },
     { type: 'rich-text', name: 'body', label: 'Beschreibung', isBody: true },
+    {
+      type: 'object', name: 'blocks', label: 'Abschnitte (Aufbau der Seite)', list: true, templates: angebotAbschnitte,
+      description: 'Stehen zwischen der Beschreibung und dem Anfrageformular. So bekommt jedes Angebot seinen eigenen Aufbau.',
+    },
     { type: 'number', name: 'dauerMinuten', label: 'Dauer pro Termin (Minuten)' },
     { type: 'number', name: 'anzahlTermine', label: 'Anzahl Termine', description: 'Leer lassen bei einzelnen Terminen' },
     { type: 'number', name: 'maxTeilnehmer', label: 'Höchstens so viele Hunde pro Gruppe', description: 'Leer lassen beim Einzeltraining' },

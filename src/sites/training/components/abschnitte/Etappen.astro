@@ -1,0 +1,42 @@
+---
+// "Etappen": the stages of a course side by side (stacked on phones), each with its numeral, an
+// optional photo, a title and a line. A short static paw trail leads from one numeral to the next
+// (puppy prints for the Welpenkurs): across on wide screens, down the left edge when stacked.
+// Decorative only, no motion (the sub pages' one scroll-bound piece is the margin trail).
+import { tinaField } from '@tinacms/astro/tina-field';
+import SectionHead from '../SectionHead.astro';
+import { PFOTE } from '../../lib/pfotenspur';
+import type { AbschnittOf } from '../../lib/data';
+
+interface Props { data: AbschnittOf<'Etappen'> }
+const { data } = Astro.props;
+const etappen = (data.etappen ?? []).filter((e) => e !== null);
+const welpe = data.spur !== 'hund';
+const spalten = etappen.length >= 4 ? 'lg:grid-cols-4' : etappen.length === 2 ? 'lg:grid-cols-2' : 'lg:grid-cols-3';
+// Five prints between two stations, alternating left and right of the way.
+const tritte = [0, 1, 2, 3, 4];
+---
+<section class="band-moos sektion-m">
+	<div class="container-page">
+		<SectionHead data={data} geteilt class="mb-14" />
+		<ol class:list={['etappen grid gap-x-[var(--gap-columns)] gap-y-12', spalten]} data-tina-field={tinaField(data, 'etappen')}>
+			{etappen.map((e, i) => (
+				<li class="etappe relative" data-tina-field={tinaField(e)}>
+					<div class="flex items-center gap-4">
+						<span class="figur text-[clamp(3rem,3vw+1.75rem,4.5rem)] leading-[0.85] text-accent" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+						{i < etappen.length - 1 && (
+							<span class:list={['etappen-spur', welpe && 'etappen-spur-welpe']} aria-hidden="true">
+								{tritte.map((t) => (
+									<svg viewBox="-8 -8 17 16" style={`--seite:${t % 2 ? 1 : -1}`}><path d={PFOTE} /></svg>
+								))}
+							</span>
+						)}
+					</div>
+					{e.bild && <img src={e.bild} alt={e.bildBeschreibung ?? ''} width="1200" height="900" loading="lazy" decoding="async" class="foto mt-6 aspect-[4/3]" />}
+					<h3 class="display mt-6 text-title">{e.titel}</h3>
+					{e.beschreibung && <p class="mt-3 max-w-[48ch] text-lg text-fg">{e.beschreibung}</p>}
+				</li>
+			))}
+		</ol>
+	</div>
+</section>

@@ -51,6 +51,10 @@ const anfrage: TinaField = {
   fields: [
     { type: 'string', name: 'hinweis', label: 'Hinweis unter dem Button', ui: textarea },
     { type: 'string', name: 'danke', label: 'Meldung nach dem Absenden', ui: textarea },
+    {
+      type: 'string', name: 'erstkontakt', label: 'Hinweis für neue Teams (erster Termin)', ui: textarea,
+      description: 'Erscheint, wenn jemand ankreuzt, dass ihr euch noch nicht kennt. Leer = Standardtext (erster Termin ist eine Einzelstunde).',
+    },
   ],
 };
 

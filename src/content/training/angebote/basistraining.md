@@ -21,6 +21,19 @@ galerie:
     beschreibung: Rottweilerhündin im Sitz mit Blickkontakt zu Karolin
   - bild: /uploads/training/hundesport/drei-rottweiler-platz.jpg
     beschreibung: Drei Rottweiler liegen im Platz neben Karolin
+blocks:
+  - _template: ebenen
+    ueberschrift: Erst das Fundament, dann der Gipfel
+    text: Für einen entspannten Alltag verbindet das Basistraining zwei Dinge, die zusammengehören. Verständlich erklärt und draußen geübt.
+    fundament:
+      titel: Beziehung
+      zusatz: Kommunikation
+      beschreibung: Ihr lernt Schritt für Schritt, euren Hund zu lesen und eure Körpersprache so einzusetzen, dass er euch versteht. Darauf baut alles andere auf.
+    gipfel:
+      titel: Signale
+      zusatz: Konditionierung
+      beschreibung: 'Sitz, Platz, Rückruf, lockere Leine: Ihr lernt, wie ihr eurem Hund Signale verlässlich beibringt, damit sie auch im Alltag halten.'
+    hinweis: Passt für Junghunde und erwachsene Hunde. Vorkenntnisse braucht ihr keine.
 ---
 
 Darum geht es im Kurs:

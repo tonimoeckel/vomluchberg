@@ -1,0 +1,36 @@
+---
+// "Zwei Ebenen": the Luchberg in section on the left (Bergschnitt.astro), the two levels as ruled
+// rows on the right, read from the ground up (the foundation first, then the summit), and the hint as
+// the notebook card.
+import { tinaField } from '@tinacms/astro/tina-field';
+import Bergschnitt from '../Bergschnitt.astro';
+import SectionHead from '../SectionHead.astro';
+import type { AbschnittOf } from '../../lib/data';
+
+interface Props { data: AbschnittOf<'Ebenen'>; index: number }
+const { data, index } = Astro.props;
+const ebenen = [
+	{ e: data.fundament, feld: 'fundament' as const, wo: 'Das Fundament' },
+	{ e: data.gipfel, feld: 'gipfel' as const, wo: 'Der Gipfel' },
+].filter((x) => x.e?.titel);
+---
+<section class="sektion-m">
+	<div class="container-page">
+		<SectionHead data={data} geteilt class="mb-14" />
+		<div class="grid items-center gap-x-[var(--gap-columns)] gap-y-12 lg:grid-cols-12">
+			<Bergschnitt gipfel={data.gipfel} fundament={data.fundament} kennung={String(index)} class="lg:col-span-6" />
+			<div class="lg:col-span-5 lg:col-start-8">
+				<ol class="regel">
+					{ebenen.map(({ e, feld, wo }) => (
+						<li class="border-b border-border py-6" data-tina-field={tinaField(data, feld)}>
+							<p class="text-[0.9375rem] text-muted">{wo}</p>
+							<h3 class="display mt-1 text-title">{e!.titel}{e!.zusatz && <span class="font-sans text-lg font-normal tracking-normal text-muted"> ({e!.zusatz})</span>}</h3>
+							{e!.beschreibung && <p class="mt-2 text-lg text-fg">{e!.beschreibung}</p>}
+						</li>
+					))}
+				</ol>
+				{data.hinweis && <p class="notiz mt-8 px-6 py-5 text-lg font-medium text-heading" data-tina-field={tinaField(data, 'hinweis')}>{data.hinweis}</p>}
+			</div>
+		</div>
+	</div>
+</section>

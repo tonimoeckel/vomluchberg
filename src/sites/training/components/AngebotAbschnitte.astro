@@ -1,0 +1,28 @@
+---
+// The sections of an offer page (the `blocks` field of trainingAngebot, tina/sites/training/abschnitte.ts):
+// each offer builds its own page from them, between the description and the inquiry form.
+// Dispatch on the template name (blockName), like Blocks.astro.
+import { tinaField } from '@tinacms/astro/tina-field';
+import Ebenen from './abschnitte/Ebenen.astro';
+import Etappen from './abschnitte/Etappen.astro';
+import Vorteile from './abschnitte/Vorteile.astro';
+import Einstieg from './abschnitte/Einstieg.astro';
+import { blockName } from '../../../lib/tina-typename';
+import type { AbschnittOf, CmsAngebot } from '../lib/data';
+
+interface Props { data: CmsAngebot }
+const { data } = Astro.props;
+const abschnitte = (data.blocks ?? []).filter((b) => b !== null);
+---
+{abschnitte.map((b, i) => (
+	<div data-tina-field={tinaField(b)}>
+		{(() => {
+			switch (blockName(b.__typename)) {
+				case 'Ebenen': return <Ebenen data={b as AbschnittOf<'Ebenen'>} index={i} />;
+				case 'Etappen': return <Etappen data={b as AbschnittOf<'Etappen'>} />;
+				case 'Vorteile': return <Vorteile data={b as AbschnittOf<'Vorteile'>} />;
+				case 'Einstieg': return <Einstieg data={b as AbschnittOf<'Einstieg'>} />;
+			}
+		})()}
+	</div>
+))}

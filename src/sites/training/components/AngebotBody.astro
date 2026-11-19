@@ -1,11 +1,13 @@
 ---
 // Detail page of an offer: the head (Stage: text on six columns, the photo on six) with facts and
-// price, the description beside a ruled list of what to bring, photos, the inquiry form with this
+// price, the description beside a ruled list of what to bring, photos, the offer's own sections
+// (AngebotAbschnitte.astro: each offer page has its own build-up), the inquiry form with this
 // offer preselected (works without JS, on paper-2) and the other offers as price-list rows.
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import Icon from '../../../components/ui/Icon.astro';
 import AngebotKarte from './AngebotKarte.astro';
+import AngebotAbschnitte from './AngebotAbschnitte.astro';
 import AnfrageFormular from './AnfrageFormular.astro';
 import Kontaktliste from './Kontaktliste.astro';
 import { angebotFakten, angebotJsonLd, angeboteListeUrl, artLabel, formatEuro, preisEinheiten, sichtbareAngebote } from '../../../lib/domain/angebot';
@@ -111,6 +113,8 @@ const jsonLd = a && angebotJsonLd({ ...a, slug }, { name: config?.website?.name 
 				</ul>
 			)}
 		</section>
+
+		<AngebotAbschnitte data={a} />
 
 		<section class="sektion bg-surface">
 			<div class="container-page grid items-start gap-x-[var(--gap-columns)] gap-y-12 lg:grid-cols-12">

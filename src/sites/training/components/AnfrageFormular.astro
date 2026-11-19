@@ -5,9 +5,11 @@
  * text; without JS: plain POST), otherwise it opens the visitor's mail program (mailto: with all
  * fields). The offer is preselected server-side (`vorausgewaehlt`, detail pages) or from
  * `?angebot=<slug>` in the browser (/anfrage). Field names: anfrageFelder in src/lib/domain/anfrage.ts.
+ * Step 1 asks whether the team has met Karo yet: new teams always start with a single lesson to get
+ * to know each other (the hint shows by CSS :has(), no JS), returning teams ask for an offer directly.
  */
 import { tinaField } from '@tinacms/astro/tina-field';
-import { anfrageFelder as f, anfrageOptionen, vorauswahl, wunschzeiten } from '../../../lib/domain/anfrage';
+import { anfrageFelder as f, anfrageOptionen, erstkontaktHinweis, erstkontaktOptionen, vorauswahl, wunschzeiten } from '../../../lib/domain/anfrage';
 import type { AngebotListItem, CmsConfig } from '../lib/data';
 
 interface Props {
@@ -38,8 +40,19 @@ const label = 'grid gap-2 text-[0.9375rem] font-medium text-heading';
 	<input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
 
 	<fieldset class="grid gap-5">
-		<legend class={legende}><span class={nummer} aria-hidden="true">1</span>Welches Training?</legend>
-		<label class={label}>Angebot *
+		<legend class={legende}><span class={nummer} aria-hidden="true">1</span>Kennen wir uns schon?</legend>
+		<div class="grid gap-2 sm:grid-cols-2" role="radiogroup" aria-label="Hattet ihr schon ein Erstgespräch?">
+			{erstkontaktOptionen.map((o) => (
+				<label class="cursor-pointer">
+					<input required type="radio" name={f.erstkontakt} value={o.value} class="peer sr-only" />
+					<span class="flex min-h-13 items-center gap-3 rounded-[var(--radius)] border border-muted bg-card px-4 py-3 text-[0.9375rem] font-medium text-heading hover:border-heading peer-checked:border-heading peer-checked:shadow-[inset_0_0_0_1px_var(--heading)] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary">
+						<span class="anfrage-punkt" aria-hidden="true"></span>{o.label}
+					</span>
+				</label>
+			))}
+		</div>
+		<p class="anfrage-erstkontakt notiz px-5 py-4 text-[0.9375rem] text-fg" data-tina-field={anfrage ? tinaField(anfrage, 'erstkontakt') : undefined}>{anfrage?.erstkontakt || erstkontaktHinweis}</p>
+		<label class={label}>Welches Training interessiert euch? *
 			<select required name={f.angebot} class="feld">
 				<option value="" selected={!auswahl}>Bitte wählen …</option>
 				{optionen.map((o) => <option value={o.value} selected={o.value === auswahl}>{o.label}</option>)}

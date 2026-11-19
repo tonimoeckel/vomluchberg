@@ -1,0 +1,56 @@
+---
+// The Luchberg in section (lib/bergschnitt.ts): the wide base hatched in moss (the foundation), the
+// cone tinted in the signal green (the summit), level lines like a survey section, a faint static paw
+// trail up the left flank, the real summit height in mono. The labels are HTML over the drawing, so
+// they keep their size on phones; the figure is one image for screen readers (the text beside it
+// says the same in full).
+import { BERG, aufstiegSpur, beschriftung, profilPfad, schraffur } from '../lib/bergschnitt';
+import { PFOTE } from '../lib/pfotenspur';
+
+interface Ebene { titel?: string | null; zusatz?: string | null }
+interface Props { gipfel?: Ebene | null; fundament?: Ebene | null; class?: string; /** unique per page (SVG ids) */ kennung?: string }
+const { gipfel, fundament, class: className, kennung = 'berg' } = Astro.props;
+const { breite, hoehe, schulter, gipfel: spitze, boden } = BERG;
+const pfad = profilPfad();
+const oben = schraffur(spitze, schulter, 11);
+const unten = schraffur(schulter, boden, 15);
+const spur = aufstiegSpur();
+const id = `bergschnitt-${kennung}`;
+const satz = (e?: Ebene | null) => [e?.titel, e?.zusatz].filter(Boolean).join(', ');
+const alt = `Ein Berg im Schnitt: unten breit ${satz(fundament) || 'das Fundament'}, oben auf der Spitze ${satz(gipfel) || 'der Gipfel'}.`;
+const pos = (p: { x: number; y: number }) => `left:${p.x * 100}%;top:${p.y * 100}%`;
+---
+<figure class:list={['bergschnitt relative', className]} role="img" aria-label={alt}>
+	<svg viewBox={`0 0 ${breite} ${hoehe}`} class="block h-auto w-full" aria-hidden="true">
+		<defs>
+			<clipPath id={`${id}-berg`}><path d={pfad} /></clipPath>
+			<path id={`${id}-pfote`} d={PFOTE} />
+		</defs>
+		<g clip-path={`url(#${id}-berg)`}>
+			<rect x="0" y="0" width={breite} height={schulter} class="bergschnitt-gipfel" />
+			<rect x="0" y={schulter} width={breite} height={hoehe - schulter} class="bergschnitt-fundament" />
+			<g class="bergschnitt-linien">
+				{[...oben, ...unten].map((l) => <line x1={l.x1} x2={l.x2} y1={l.y} y2={l.y} />)}
+			</g>
+			<line x1="0" x2={breite} y1={schulter} y2={schulter} class="bergschnitt-schulter" />
+		</g>
+		<path d={pfad} class="bergschnitt-umriss" />
+		<line x1="0" x2={breite} y1={boden} y2={boden} class="bergschnitt-boden" />
+		<g class="bergschnitt-spur">
+			{spur.map((p) => <use href={`#${id}-pfote`} transform={`translate(${p.x} ${p.y}) rotate(${p.winkel}) scale(0.95)`} />)}
+		</g>
+	</svg>
+	<div aria-hidden="true">
+		<span class="bergschnitt-hoehe zahl" style={`left:${(350 / breite) * 100}%;top:${(spitze / hoehe) * 100}%`}>576 m</span>
+		{gipfel?.titel && (
+			<span class="bergschnitt-label" style={pos(beschriftung.gipfel)}>
+				<b>{gipfel.titel}</b>{gipfel.zusatz && <small>{gipfel.zusatz}</small>}
+			</span>
+		)}
+		{fundament?.titel && (
+			<span class="bergschnitt-label bergschnitt-label-gross" style={pos(beschriftung.fundament)}>
+				<b>{fundament.titel}</b>{fundament.zusatz && <small>{fundament.zusatz}</small>}
+			</span>
+		)}
+	</div>
+</figure>
