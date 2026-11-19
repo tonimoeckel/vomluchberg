@@ -98,13 +98,13 @@ Training worker: `SITE_ID=training`, `SITE_URL=https://training.vomluchberg.de` 
 and a Web3Forms key registered for the training e-mail address (`PUBLIC_WEB3FORMS_KEY`; without it the inquiry form opens
 the visitor's mail app).
 
-**Build watch paths** (exclude list; everything else rebuilds all three, `tina/**` always does):
+**Build watch paths** (exclude list; everything else rebuilds all three, `tina/**` always does). The dashboard's `*` matches any characters including `/`, so never exclude `*.md`: that would also skip Karo's content saves in `src/content/**`. Name the root files instead:
 
 | Worker | Exclude |
 | --- | --- |
-| `vomluchberg` | `src/content/dackel/*`, `src/content/training/*`, `public/uploads/dackel/*`, `public/uploads/training/*`, `src/sites/dackel/*`, `src/sites/training/*`, `docs/*`, `migration/*`, `*.md` |
-| `vomluchberg-dackel` | `src/content/{seiten,hunde,wuerfe,aktuelles,config,training}/*`, `public/uploads/training/*`, `src/sites/luchberg/*`, `src/sites/training/*`, `docs/*`, `migration/*`, `*.md` |
-| `vomluchberg-training` | `src/content/{seiten,hunde,wuerfe,aktuelles,config,dackel}/*`, `public/uploads/dackel/*`, `src/sites/luchberg/*`, `src/sites/dackel/*`, `docs/*`, `migration/*`, `*.md` |
+| `vomluchberg` | `src/content/dackel/*`, `src/content/training/*`, `public/uploads/dackel/*`, `public/uploads/training/*`, `src/sites/dackel/*`, `src/sites/training/*`, `docs/*`, `migration/*`, `.claude/*`, `.hallmark/*`, `*.test.ts`, `README.md`, `CLAUDE.md`, `HANDOFF.md` |
+| `vomluchberg-dackel` | `src/content/{seiten,hunde,wuerfe,aktuelles,config,training}/*`, `public/uploads/training/*`, `src/sites/luchberg/*`, `src/sites/training/*`, `docs/*`, `migration/*`, `.claude/*`, `.hallmark/*`, `*.test.ts`, `README.md`, `CLAUDE.md`, `HANDOFF.md` |
+| `vomluchberg-training` | `src/content/{seiten,hunde,wuerfe,aktuelles,config,dackel}/*`, `public/uploads/dackel/*`, `src/sites/luchberg/*`, `src/sites/dackel/*`, `docs/*`, `migration/*`, `.claude/*`, `.hallmark/*`, `*.test.ts`, `README.md`, `CLAUDE.md`, `HANDOFF.md` |
 
 The Rottweiler upload folders are not excluded for the other workers, because every worker ships all of
 `public/uploads` (no per-site pruning). Write `{a,b}` as separate entries if the dashboard does not accept braces. Details and the setup steps:

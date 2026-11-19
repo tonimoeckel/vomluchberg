@@ -104,6 +104,7 @@ Plan and reasoning: `docs/plan/00-multisite.md` (rulings R1–R7 in `docs/plan/R
 ## Pull requests
 
 - After opening a PR (or pushing to one), **subscribe to its activity and watch it without being asked**: failing checks, review comments, merge conflicts. If the cause is in the repo, reproduce it, fix it and push (with the usual checks). If it is not (e.g. a Cloudflare dashboard setting), say so once on the PR and tell Toni what is needed. Keep watching until the PR is merged or closed.
+- **Push rarely.** Every push to any branch queues a build on each Worker whose watch paths it touches, and the free plan runs one build at a time. Commit locally as often as you like, run the checks, and push once when the work is ready for review, not after every step. Fixes after review go out as one push. Watch paths: `docs/plan/03-betrieb.md` §3.3.
 - Base new PRs on `main`. Stacked PRs (base = another PR's branch) get lost when the lower PR is merged first, as happened with #4.
 
 ## Gotchas
