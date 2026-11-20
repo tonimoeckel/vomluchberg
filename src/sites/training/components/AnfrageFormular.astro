@@ -88,6 +88,7 @@ const label = 'grid gap-2 text-[0.9375rem] font-medium text-heading';
 	</label>
 	<div>
 		<button type="submit" class="btn-primary">Anfrage senden</button>
+		<p class="mt-3 text-[0.9375rem] text-muted">Für Trainings, die wir vereinbaren, gelten meine <a href="/agb" class="textlink">AGB</a>.</p>
 		{!web3key && <p class="mt-3 text-[0.9375rem] text-muted">Beim Absenden öffnet sich euer E-Mail-Programm mit der fertigen Nachricht.</p>}
 	</div>
 	{anfrage?.hinweis && <p class="-mt-6 text-[0.9375rem] text-muted" data-tina-field={tinaField(anfrage, 'hinweis')}>{anfrage.hinweis}</p>}
