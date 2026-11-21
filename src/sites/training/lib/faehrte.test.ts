@@ -9,7 +9,7 @@ describe('margin trail pages', () => {
   });
 
   it('stays off the start page (its own motion budget), the legal pages and the 404', () => {
-    for (const p of ['/', '/impressum', '/datenschutz', '/404', '/anfragen', '/angebotene']) expect(faehrteArt(p)).toBeNull();
+    for (const p of ['/', '/impressum', '/datenschutz', '/agb', '/404', '/anfragen', '/angebotene']) expect(faehrteArt(p)).toBeNull();
   });
 });
 
