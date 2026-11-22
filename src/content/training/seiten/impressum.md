@@ -21,13 +21,9 @@ blocks:
 
       **Erlaubnis nach § 11 Abs. 1 Satz 1 Nr. 8 Buchst. f Tierschutzgesetz** (Ausbildung von Hunden für Dritte und Anleitung der Ausbildung durch die Halter)
 
-      Zuständige Aufsichtsbehörde: Landratsamt Sächsische Schweiz-Osterzgebirge, Lebensmittelüberwachungs- und Veterinäramt, Schloßhof 2/4, 01796 Pirna
+      Zuständige Aufsichtsbehörde: Landratsamt Sächsische Schweiz-Osterzgebirge, Geschäftsbereich 2, Lebensmittelüberwachungs- und Veterinäramt, Referat Veterinärdienst, Schloßhof 2/4, 01796 Pirna
 
-      **\[PLATZHALTER – vor dem Start von Karo bestätigen lassen, dass die Erlaubnis von diesem Amt kommt (Bescheid), dann diese Zeile löschen\]**
-
-      **Umsatzsteuer**
-
-      **\[PLATZHALTER – vor dem Start klären: Als Kleinunternehmerin (§ 19 UStG) diesen Abschnitt löschen. Falls es eine Umsatzsteuer-Identifikationsnummer gibt: „Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE …“\]**
+      **\[PLATZHALTER – erst löschen, wenn die Erlaubnis erteilt ist (Karos Abschlussprüfung am 25.11.2026); bis dahin bleibt die Seite für Google gesperrt\]**
 
       **Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV**
 

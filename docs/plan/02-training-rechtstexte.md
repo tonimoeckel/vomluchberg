@@ -4,14 +4,15 @@ Prepared on 2026-11-22 after Karo asked why Google doesn't find the site. Reason
 `vomluchberg-training` is built with `SITE_NOINDEX=true` (`robots.txt` `Disallow: /`, meta
 `noindex, nofollow`), which stays until the marked placeholders are gone (`03-betrieb.md`).
 The blocks below are ready to paste into `src/content/training/seiten/*.md` once Karo answers the
-open questions in `fragen-an-karo.md` (§ 11 TSchG, Umsatzsteuer, Verträge fürs Training).
+open questions in `fragen-an-karo.md` (§ 11 TSchG permit, AGB check by Karo).
 
 ## Go-live checklist
 
-1. **Impressum, authority** (`impressum.md`): already filled in with the Landkreis office that is
-   responsible for Glashütte. Karo confirms from her § 11 permit that it was issued there, then
-   delete the placeholder line below the address.
-2. **Impressum, Umsatzsteuer**: variant A or B below.
+1. **Impressum, authority** (`impressum.md`): filled in with the office Karo named on
+   2026-11-22. Her final exam is on 2026-11-25 and the permit comes after it; delete the
+   placeholder line only once it is granted. Until then the site stays noindex, because `home.md`
+   ("§ 11 TSchG, behördlich genehmigt") and `ueber-mich.md` already state the permit.
+2. **Impressum, Umsatzsteuer**: done 2026-11-22, Karo is a Kleinunternehmerin, section removed.
 3. **AGB § 11 Widerrufsrecht** (`agb.md`): keep the exception only if a lawyer confirms it for
    Einzeltraining and Verhaltensberatung; otherwise variant B below.
 4. **Datenschutz**: done for the current state (form opens the visitor's mail program, no
@@ -26,27 +27,6 @@ open questions in `fragen-an-karo.md` (§ 11 TSchG, Umsatzsteuer, Verträge für
 8. Google Search Console: domain property `alltag-kann-sport.de` (DNS TXT via Cloudflare), submit
    `https://www.alltag-kann-sport.de/sitemap-index.xml`, request indexing of `/`. Karo's Business
    Profile links to `https://www.alltag-kann-sport.de`.
-
-## Impressum: Umsatzsteuer
-
-**A. Kleinunternehmerin (§ 19 UStG), no VAT ID** (the assumption in `fragen-an-karo.md`): delete
-the whole block, heading included:
-
-```md
-      **Umsatzsteuer**
-
-      **\[PLATZHALTER – vor dem Start klären: …\]**
-
-```
-
-Since 2025 the tax office may hand out a business ID (W-IdNr.) to small businesses as well; it
-doesn't have to be in the imprint unless it is a VAT ID.
-
-**B. VAT ID exists:** replace the placeholder line with
-
-```md
-      Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE…
-```
 
 ## AGB § 11: Widerrufsrecht
 
