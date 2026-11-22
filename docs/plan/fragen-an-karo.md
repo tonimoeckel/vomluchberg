@@ -16,8 +16,8 @@ passenden Abschnitt.
   - [ ] Noch offen: Welche Schreibweise steht auf Flyern und Visitenkarten, mit oder ohne Bindestriche? Funktionieren tun beide. *(Annahme: mit Bindestrichen, `www.alltag-kann-sport.de`, weil sie besser lesbar ist.)*
   - [ ] Möchtest du zusätzlich `karolin-riesing.de` als Weiterleitung (sichert deinen Namen)? *(Annahme: nein.)*
 - [x] **Domains bestellen:** Bei INWX bestellt am 08.11.2026, Inhaberin Karo.
-- [ ] **Erlaubnis nach § 11 Tierschutzgesetz:** Hast du sie für das Hundetraining (und ggf. die Zucht)? Welches Veterinäramt hat sie erteilt? Das gehört ins Impressum. Und dürfen diese Angaben öffentlich stehen: „Ausbildung gleichwertig zur Trainer-C-Lizenz“ und „Genehmigung nach § 11 TSchG“? *(Annahme: ja, für das Training. Die Behörde reichst du nach.)*
-- [ ] **Umsatzsteuer:** Bist du Kleinunternehmerin, oder hast du eine USt-IdNr.? *(Annahme: Kleinunternehmerin, keine USt-IdNr. im Impressum.)*
+- [ ] **Erlaubnis nach § 11 Tierschutzgesetz:** Zuständig ist das Landratsamt Sächsische Schweiz-Osterzgebirge, Referat Veterinärdienst in Pirna (Karo, 22.11.2026), das steht jetzt im Impressum. Die Abschlussprüfung ist am 25.11.2026. Sag uns bitte Bescheid, sobald die Erlaubnis erteilt ist: Erst dann schalten wir die Seite für Google frei, denn Startseite und „Über mich“ nennen die Genehmigung schon.
+- [x] **Umsatzsteuer:** Kleinunternehmerin (Karo, 22.11.2026), deshalb steht im Impressum keine Umsatzsteuer-Angabe.
 - [ ] **Verträge fürs Training:** Wie kommt eine Buchung zustande, per Telefon, E-Mail oder erst vor Ort? Bei Verträgen per E-Mail oder Telefon kann ein Widerrufsrecht gelten, das lassen wir prüfen. *(Annahme: Absprache per Telefon/E-Mail, Bezahlung vor Ort.)*
 - [x] **AGB:** Du wolltest AGB. Die Seite `/agb` steht als Entwurf, abgeleitet aus deinem Text und dem Vergleich mit fünf Hundeschulen. Offen: Gilt die Ausnahme vom Widerrufsrecht auch für Einzeltraining und Beratung (fachlich prüfen lassen)? Welche Zahlungswege (Annahme: bar oder Überweisung, Kurse vorab)? Hast du eine Berufshaftpflicht, die Schäden an Kundenhunden abdeckt? Machst du Hausbesuche mit Fahrtkosten?
 - [ ] **Kontaktdaten:** Welche Angaben sollen auf welcher Seite stehen?
@@ -81,7 +81,7 @@ passenden Abschnitt.
 - [ ] **Anrede:** Auf Pfotentermin sprichst du deine Kunden mit „du“ an. Auf deinen Websites schreiben wir einheitlich „ihr/euch“ (Mensch und Hund als Team), z. B. „Schreibt mir gern eine Nachricht“. Passt das? *(Annahme: ja, „ihr/euch“. Dein „ich“ bleibt.)*
 - [ ] **Neue Texte auf der Trainingsseite:** Ein paar kurze Texte haben wir neu geschrieben, weil es sie bei Pfotentermin nicht gab: „So läuft’s ab – Ohne Buchungsstress“ (drei Schritte), der Hinweis „Training nur auf Anfrage“ oben auf der Startseite, „Noch unsicher, was passt?“ auf der Angebotsseite, der zweite Absatz beim Einzeltraining und „Meine Hunde stellen sich auf der Website meiner Rottweiler-Zucht vor“. Bitte einmal lesen und ändern, was nicht nach dir klingt. *(Annahme: passt so.)*
 - [ ] **Satz zur Zucht:** Auf der Über-mich-Seite steht „im Allgemeiner Deutscher Rottweiler-Klub (ADRK) unter dem Dach des Verband für das Deutsche Hundewesen“. Dürfen wir das zu „im Allgemeinen Deutschen Rottweiler-Klub (ADRK) unter dem Dach des Verbands für das Deutsche Hundewesen“ korrigieren? *(Annahme: ja, bis dahin steht dein Original da.)*
-- [ ] **Datenschutz/Impressum Training:** Im Impressum fehlen noch das Veterinäramt, das deine Erlaubnis nach § 11 erteilt hat, und die Angabe zur Umsatzsteuer. Beides ist auf der Seite deutlich als „[PLATZHALTER …]“ markiert. Schick uns bitte die Angaben. *(Annahme: siehe oben, Kleinunternehmerin.)*
+- [ ] **Datenschutz/Impressum Training:** Veterinäramt und Umsatzsteuer sind eingetragen (22.11.2026). Offen sind noch die Erlaubnis nach § 11 (nach der Prüfung) und die Prüfung der AGB zum Widerrufsrecht (machst du).
 
 ## 4. Editor und Ablauf
 

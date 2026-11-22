@@ -21,11 +21,9 @@ blocks:
 
       **Erlaubnis nach § 11 Abs. 1 Satz 1 Nr. 8 Buchst. f Tierschutzgesetz** (Ausbildung von Hunden für Dritte und Anleitung der Ausbildung durch die Halter)
 
-      Zuständige Aufsichtsbehörde: **\[PLATZHALTER – vor dem Start ergänzen: Name und Anschrift des Veterinäramts, das die Erlaubnis erteilt hat\]**
+      Zuständige Aufsichtsbehörde: Landratsamt Sächsische Schweiz-Osterzgebirge, Geschäftsbereich 2, Lebensmittelüberwachungs- und Veterinäramt, Referat Veterinärdienst, Schloßhof 2/4, 01796 Pirna
 
-      **Umsatzsteuer**
-
-      **\[PLATZHALTER – vor dem Start klären: Als Kleinunternehmerin (§ 19 UStG) diesen Abschnitt löschen. Falls es eine Umsatzsteuer-Identifikationsnummer gibt: „Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE …“\]**
+      **\[PLATZHALTER – erst löschen, wenn die Erlaubnis erteilt ist (Karos Abschlussprüfung am 25.11.2026); bis dahin bleibt die Seite für Google gesperrt\]**
 
       **Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV**
 

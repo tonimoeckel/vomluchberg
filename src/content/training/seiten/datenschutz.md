@@ -28,9 +28,7 @@ blocks:
 
       Wenn ihr mir über das Formular eine Anfrage schickt, verarbeite ich eure Angaben (Angebot, Name, E-Mail-Adresse, freiwillig Telefonnummer, Angaben zu eurem Hund, eure Nachricht und Wunschzeiten), um eure Anfrage zu beantworten und das Training mit euch abzustimmen. Rechtsgrundlage sind vorvertragliche Maßnahmen auf eure Anfrage hin (Art. 6 Abs. 1 lit. b DSGVO) und eure Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die ihr jederzeit für die Zukunft widerrufen könnt.
 
-      Für den Versand nutze ich den Formular-Dienst Web3Forms (web3forms.com), der eure Angaben per E-Mail an mich weiterleitet. Dabei können Daten in die USA übertragen werden; Grundlage sind die Standardvertragsklauseln der EU-Kommission. **\[PLATZHALTER – vor dem Start ergänzen: Firmenname und Anschrift des Anbieters von Web3Forms laut Auftragsverarbeitungsvertrag\]**
-
-      Ist der Formular-Dienst nicht eingerichtet, öffnet sich beim Absenden euer eigenes E-Mail-Programm mit der fertigen Nachricht; dann gilt der nächste Abschnitt.
+      Beim Absenden öffnet sich euer eigenes E-Mail-Programm mit der fertigen Nachricht. Eure Angaben erreichen mich erst, wenn ihr diese E-Mail selbst abschickt; dafür gilt der nächste Abschnitt.
 
       ## E-Mail
 
