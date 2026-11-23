@@ -7,8 +7,6 @@ blocks:
     titel: Allgemeine Geschäftsbedingungen
   - _template: text
     inhalt: |
-      *Hinweis: Entwurf. Bitte vor dem Livegang fachlich prüfen lassen, vor allem Abschnitt 11 (Widerrufsrecht).*
-
       ## 1. Geltungsbereich
 
       Diese Allgemeinen Geschäftsbedingungen gelten für alle Trainings, Kurse, Seminare und Workshops von
@@ -23,7 +21,7 @@ blocks:
 
       Eure Anfrage über diese Website, per E-Mail, WhatsApp oder Telefon ist noch keine Buchung. Ich melde mich bei euch, und wir stimmen Termin und Inhalt gemeinsam ab.
 
-      Der Vertrag kommt zustande, wenn ich euch den Termin per E-Mail oder WhatsApp bestätige. Mit der Bestätigung schicke ich euch auch den Link zu diesen AGB.
+      Der Vertrag kommt zustande, wenn ich euch den Termin per E-Mail oder WhatsApp bestätige. Mit der Bestätigung schicke ich euch auch den Link zu diesen AGB und die Widerrufsbelehrung (Abschnitt 11).
 
       Inhalt, Dauer und Preis eines Angebots stehen in der Angebotsbeschreibung auf dieser Website. Für Kurse und Veranstaltungen gelten außerdem die jeweils ausgeschriebenen Termine und Bedingungen.
 
@@ -103,9 +101,51 @@ blocks:
 
       ## 11. Widerrufsrecht
 
-      Trainings, Kurse und Veranstaltungen vereinbaren wir immer für einen festen Termin oder Zeitraum. Für solche Verträge über Dienstleistungen im Zusammenhang mit Freizeitbetätigungen besteht nach § 312g Abs. 2 Nr. 9 BGB kein gesetzliches Widerrufsrecht. Wann ihr kostenfrei absagen könnt, steht in den Abschnitten 7 und 8.
+      Schließt ihr den Vertrag als Verbraucher per E-Mail, WhatsApp oder Telefon oder bei euch zu Hause, habt ihr ein gesetzliches Widerrufsrecht von 14 Tagen. Das gilt für alle meine Angebote, vom Einzeltraining bis zum Kurs. Die Widerrufsbelehrung und das Muster-Widerrufsformular stehen unten; ich schicke sie euch mit der Terminbestätigung auch per E-Mail oder Nachricht.
 
-      **\[PLATZHALTER – vor dem Start prüfen lassen: Gilt diese Ausnahme auch für Einzeltraining und Verhaltensberatung? Falls nicht, hier die Widerrufsbelehrung nach dem gesetzlichen Muster einsetzen.\]**
+      **Training innerhalb der Widerrufsfrist:** Liegt euer Termin oder Kursbeginn innerhalb der 14 Tage, bitte ich euch bei der Buchung um eine kurze ausdrückliche Bestätigung, dass ich schon vorher mit dem Training beginnen soll. Widerruft ihr danach, zahlt ihr nur den Anteil, den ich bis dahin schon erbracht habe. Ist das Training vollständig erbracht, erlischt euer Widerrufsrecht (§ 356 Abs. 4 BGB).
+
+      Die Absageregeln in den Abschnitten 7 und 8 gelten zusätzlich; euer Widerrufsrecht bleibt davon unberührt.
+
+      ### Widerrufsbelehrung
+
+      **Widerrufsrecht**
+
+      Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.
+
+      Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsabschlusses.
+
+      Um Ihr Widerrufsrecht auszuüben, müssen Sie mich (Karolin Riesing, Alltag kann Sport – Hundetraining, Dorfstr. 2d, 01768 Glashütte OT Luchau, Telefon: 0152 28364675, E-Mail: karolinriesing@gmail.com) mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das unten stehende Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.
+
+      Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.
+
+      **Folgen des Widerrufs**
+
+      Wenn Sie diesen Vertrag widerrufen, habe ich Ihnen alle Zahlungen, die ich von Ihnen erhalten habe, unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei mir eingegangen ist. Für diese Rückzahlung verwende ich dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.
+
+      Haben Sie verlangt, dass die Dienstleistungen während der Widerrufsfrist beginnen sollen, so haben Sie mir einen angemessenen Betrag zu zahlen, der dem Anteil der bis zu dem Zeitpunkt, zu dem Sie mich von der Ausübung des Widerrufsrechts hinsichtlich dieses Vertrags unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.
+
+      **Ende der Belehrung**
+
+      ### Muster-Widerrufsformular
+
+      (Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.)
+
+      An Karolin Riesing, Alltag kann Sport – Hundetraining, Dorfstr. 2d, 01768 Glashütte OT Luchau, E-Mail: karolinriesing@gmail.com:
+
+      Hiermit widerrufe(n) ich/wir (\*) den von mir/uns (\*) abgeschlossenen Vertrag über die Erbringung der folgenden Dienstleistung (\*)
+
+      Bestellt am (\*)
+
+      Name des/der Verbraucher(s)
+
+      Anschrift des/der Verbraucher(s)
+
+      Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)
+
+      Datum
+
+      (\*) Unzutreffendes streichen.
 
       ## 12. Datenschutz, Fotos und Videos
 
