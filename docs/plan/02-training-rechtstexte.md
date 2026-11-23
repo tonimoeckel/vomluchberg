@@ -31,6 +31,17 @@ build variables and redeploy.
    from 19.06.2026, for contracts concluded through an online interface) can ever apply; Karo
    concludes by email, WhatsApp or phone, the site only sends inquiries.
 
+## Instruction as PDF
+
+`public/uploads/training/widerrufsbelehrung.pdf` (2026-11-23, linked from AGB § 11), A4, two
+pages in the site's look (scheme `waldweg`, Red Hat fonts, `logo-wald.png`): page 1 a short
+summary box in "ihr" (14 days, how to withdraw, a date within the 14 days), then the instruction; page 2 the
+model form with lines to fill in. The instruction and the form are copied 1:1 from `agb.md` § 11,
+only the summary and the hint "Ihr müsst dieses Formular nicht benutzen" are added outside the
+model. Printed from HTML with Chromium (Playwright `page.pdf`). Karo attaches it to every
+booking confirmation. **If § 11 or Karo's contact details change, make a new PDF**, otherwise the
+two texts differ.
+
 ## Booking confirmation for Karo
 
 The instruction must reach the customer on a durable medium: the full text in the email or
@@ -41,15 +52,12 @@ Hallo [Name],
 
 hiermit bestätige ich euren Termin: [Angebot] am [Datum] um [Uhrzeit], [Ort], [Preis] €.
 Es gelten meine AGB: https://www.alltag-kann-sport.de/agb
+Die Widerrufsbelehrung hänge ich euch als PDF an.
 
 [nur wenn der Termin oder Kursbeginn weniger als 14 Tage entfernt ist:]
 Da euer Termin innerhalb der 14-tägigen Widerrufsfrist liegt, antwortet mir bitte kurz mit:
 „Ich möchte, dass das Training vor Ende der Widerrufsfrist beginnt. Mir ist bekannt, dass mein
 Widerrufsrecht erlischt, sobald das Training vollständig erbracht ist.“
-
-Widerrufsbelehrung
-[Text aus den AGB, Abschnitt 11, von „Widerrufsrecht“ bis „Ende der Belehrung“, und das
-Muster-Widerrufsformular]
 
 Viele Grüße
 Karo
