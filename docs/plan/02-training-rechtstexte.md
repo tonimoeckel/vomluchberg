@@ -38,9 +38,15 @@ pages in the site's look (scheme `waldweg`, Red Hat fonts, `logo-wald.png`): pag
 summary box in "ihr" (14 days, how to withdraw, a date within the 14 days), then the instruction; page 2 the
 model form with lines to fill in. The instruction and the form are copied 1:1 from `agb.md` § 11,
 only the summary and the hint "Ihr müsst dieses Formular nicht benutzen" are added outside the
-model. Printed from HTML with Chromium (Playwright `page.pdf`). Karo attaches it to every
-booking confirmation. **If § 11 or Karo's contact details change, make a new PDF**, otherwise the
-two texts differ.
+model. Printed by `node scripts/widerrufsbelehrung-pdf.mjs` (Chromium via Playwright, which is not a
+dependency of the repo), which reads the instruction and the form from `agb.md`. Karo attaches it
+to every booking confirmation. **If § 11 or Karo's contact details change, run the script
+again**, otherwise the two texts differ.
+
+Checked against the statutory model on 2026-11-23 (Toni's request): the instruction now says
+"das beigefügte Muster-Widerrufsformular" and keeps the model's clause on delivery costs, and
+§ 11 and the summary box ask for both parts of § 356 Abs. 4 BGB (the express request to start
+early and the confirmation that the right ends once the training is fully given).
 
 ## Booking confirmation for Karo
 
