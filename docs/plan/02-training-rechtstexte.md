@@ -1,101 +1,62 @@
-# Training: legal texts for go-live
+# Training: legal texts
 
-Prepared on 2026-11-22 after Karo asked why Google doesn't find the site. Reason: the worker
-`vomluchberg-training` is built with `SITE_NOINDEX=true` (`robots.txt` `Disallow: /`, meta
-`noindex, nofollow`), which stays until the marked placeholders are gone (`03-betrieb.md`).
-The blocks below are ready to paste into `src/content/training/seiten/*.md` once Karo answers the
-open questions in `fragen-an-karo.md` (§ 11 TSchG permit, AGB check by Karo).
+Prepared on 2026-11-22 after Karo asked why Google doesn't find the site. `SITE_NOINDEX` was
+deleted from the production build of the worker `vomluchberg-training` on 2026-11-23 (Toni's
+call, before the § 11 permit), and Google Search Console has the domain property
+`alltag-kann-sport.de` with the sitemap. To lock the site again: set `SITE_NOINDEX=true` in the
+build variables and redeploy.
 
-## Go-live checklist
+## Status
 
-1. **Impressum, authority** (`impressum.md`): filled in with the office Karo named on
-   2026-11-22. Her final exam is on 2026-11-25 and the permit comes after it; delete the
-   placeholder line only once it is granted. Until then the site stays noindex, because `home.md`
-   ("§ 11 TSchG, behördlich genehmigt") and `ueber-mich.md` already state the permit.
-2. **Impressum, Umsatzsteuer**: done 2026-11-22, Karo is a Kleinunternehmerin, section removed.
-3. **AGB § 11 Widerrufsrecht** (`agb.md`): keep the exception only if a lawyer confirms it for
-   Einzeltraining and Verhaltensberatung; otherwise variant B below.
-4. **Datenschutz**: done for the current state (form opens the visitor's mail program, no
-   `PUBLIC_WEB3FORMS_KEY` on the worker). Only if Web3Forms is switched on later: see below.
-5. Remove the draft notes: `*Hinweis: Bitte vor dem Livegang prüfen …*` (Impressum, last line) and
-   `*Hinweis: Entwurf. …*` (Datenschutz, first line), ideally after a check with a generator
-   (e.g. e-recht24, datenschutz-generator.de).
-6. `grep -rn PLATZHALTER src/content/training` is empty.
-7. Cloudflare → worker `vomluchberg-training` → build variables (production): delete
-   `SITE_NOINDEX` (previews keep it), redeploy. Check `https://www.alltag-kann-sport.de/robots.txt`
-   (`Allow: /` + sitemap) and that the meta `noindex` is gone.
-8. Google Search Console: domain property `alltag-kann-sport.de` (DNS TXT via Cloudflare), submit
-   `https://www.alltag-kann-sport.de/sitemap-index.xml`, request indexing of `/`. Karo's Business
-   Profile links to `https://www.alltag-kann-sport.de`.
+1. **Impressum, authority**: the office Karo named on 2026-11-22. Her final exam is on
+   2026-11-25 and the permit comes after it; delete the placeholder line once it is granted.
+   `home.md` ("§ 11 TSchG, behördlich genehmigt") and `ueber-mich.md` already state the permit.
+2. **Impressum, Umsatzsteuer**: Kleinunternehmerin, section removed (2026-11-22).
+3. **Datenschutz**: describes the form as it works (opens the visitor's mail program, no
+   `PUBLIC_WEB3FORMS_KEY`). If Web3Forms is switched on later: see the last section.
+4. **AGB § 11 Widerrufsrecht**: decided 2026-11-23 without a lawyer (Toni). Every offer gets the
+   statutory withdrawal right with the unaltered model instruction and form (Anlage 1/2 zu
+   Art. 246a EGBGB, kept in "Sie" because only the unaltered model counts as a correct
+   instruction), plus the request for an early start. We don't rely on the exception for
+   leisure services (§ 312g Abs. 2 Nr. 9 BGB): whether dog training is a "Freizeitbetätigung" is
+   open, and if it isn't, a missing instruction extends the withdrawal period to 12 months and
+   14 days and Karo can't charge for training already given. The price of the safe variant:
+   someone who books less than 14 days ahead can withdraw free of charge before the first lesson,
+   despite the fees in §§ 7 and 8. Karo's AI draft (2026-11-23, "kann ... ausgeschlossen sein,
+   sofern ...") was not used: it leaves the customer unsure whether the right exists, which
+   is not transparent, and it promises a separate instruction anyway.
+5. Open: the draft notes `*Hinweis: …*` at the end of the Impressum and at the top of the
+   Datenschutz, ideally after a check with a generator (e.g. e-recht24,
+   datenschutz-generator.de). Not checked by anyone: whether the withdrawal button (§ 356a BGB,
+   from 19.06.2026, for contracts concluded through an online interface) can ever apply; Karo
+   concludes by email, WhatsApp or phone, the site only sends inquiries.
 
-## AGB § 11: Widerrufsrecht
+## Booking confirmation for Karo
 
-**A. Exception confirmed:** delete the placeholder paragraph, keep the rest of § 11.
+The instruction must reach the customer on a durable medium: the full text in the email or
+message, a link to `/agb` is not enough. Template (German, for Karo):
 
-**B. Exception not (fully) applicable:** replace the whole § 11 body (both paragraphs below the
-heading) with the statutory model (Anlage 1 zu Art. 246a § 1 Abs. 2 Satz 2 EGBGB, version for
-services). It stays in **"Sie"** on purpose: only the unaltered model gives the legal presumption
-of a correct instruction (Art. 246a § 1 Abs. 2 Satz 2 EGBGB), so don't adapt it to the site's
-"ihr". Check the wording against the current model on gesetze-im-internet.de before pasting (the
-model changed with the EU withdrawal-function rules from 19.06.2026). The withdrawal button
-(§ 356a BGB) applies to contracts concluded through an online interface; the site only sends
-inquiries and Karo concludes by phone or email, so it shouldn't apply. Let the lawyer confirm
-that too.
+```text
+Hallo [Name],
 
-```md
-      Für Verträge, die wir per E-Mail, Telefon oder Nachricht schließen, gilt das folgende Widerrufsrecht. Wann ihr kostenfrei absagen könnt, steht außerdem in den Abschnitten 7 und 8.
+hiermit bestätige ich euren Termin: [Angebot] am [Datum] um [Uhrzeit], [Ort], [Preis] €.
+Es gelten meine AGB: https://www.alltag-kann-sport.de/agb
 
-      ### Widerrufsbelehrung
+[nur wenn der Termin oder Kursbeginn weniger als 14 Tage entfernt ist:]
+Da euer Termin innerhalb der 14-tägigen Widerrufsfrist liegt, antwortet mir bitte kurz mit:
+„Ich möchte, dass das Training vor Ende der Widerrufsfrist beginnt. Mir ist bekannt, dass mein
+Widerrufsrecht erlischt, sobald das Training vollständig erbracht ist.“
 
-      **Widerrufsrecht**
+Widerrufsbelehrung
+[Text aus den AGB, Abschnitt 11, von „Widerrufsrecht“ bis „Ende der Belehrung“, und das
+Muster-Widerrufsformular]
 
-      Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.
-
-      Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag des Vertragsabschlusses.
-
-      Um Ihr Widerrufsrecht auszuüben, müssen Sie mich (Karolin Riesing, Alltag kann Sport – Hundetraining, Dorfstr. 2d, 01768 Glashütte OT Luchau, Telefon: 0152 28364675, E-Mail: karolinriesing@gmail.com) mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das unten stehende Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist.
-
-      Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.
-
-      **Folgen des Widerrufs**
-
-      Wenn Sie diesen Vertrag widerrufen, habe ich Ihnen alle Zahlungen, die ich von Ihnen erhalten habe, unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei mir eingegangen ist. Für diese Rückzahlung verwende ich dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet.
-
-      Haben Sie verlangt, dass die Dienstleistungen während der Widerrufsfrist beginnen sollen, so haben Sie mir einen angemessenen Betrag zu zahlen, der dem Anteil der bis zu dem Zeitpunkt, zu dem Sie mich von der Ausübung des Widerrufsrechts hinsichtlich dieses Vertrags unterrichten, bereits erbrachten Dienstleistungen im Vergleich zum Gesamtumfang der im Vertrag vorgesehenen Dienstleistungen entspricht.
-
-      **Ende der Belehrung**
-
-      ### Muster-Widerrufsformular
-
-      (Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.)
-
-      An Karolin Riesing, Alltag kann Sport – Hundetraining, Dorfstr. 2d, 01768 Glashütte OT Luchau, E-Mail: karolinriesing@gmail.com:
-
-      Hiermit widerrufe(n) ich/wir (\*) den von mir/uns (\*) abgeschlossenen Vertrag über die Erbringung der folgenden Dienstleistung (\*)
-
-      Bestellt am (\*)
-
-      Name des/der Verbraucher(s)
-
-      Anschrift des/der Verbraucher(s)
-
-      Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)
-
-      Datum
-
-      (\*) Unzutreffendes streichen.
+Viele Grüße
+Karo
 ```
 
-Notes on B:
-
-- The model switches "uns/wir" to "mich/ich" (sole trader). The goods-only clause about delivery
-  costs is left out because no goods are delivered. Both are the kind of adaptation the model's
-  design notes allow, but have them checked with the rest.
-- Consequence for Karo's practice: if a training starts within the 14 days, she needs the
-  customer's explicit request for that (e.g. a line in the confirmation email: "Ihr möchtet, dass
-  das Training vor Ende der Widerrufsfrist beginnt"), otherwise she can't charge for the part
-  already given (§ 357a Abs. 2 BGB). She also has to send the instruction with the confirmation
-  (durable medium, e.g. as text in the email or a link to `/agb`).
+Without that reply Karo may still give the training, but if the customer withdraws she can't
+charge for it.
 
 ## Datenschutz: only if Web3Forms is switched on
 
