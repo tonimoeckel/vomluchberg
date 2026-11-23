@@ -103,7 +103,7 @@ blocks:
 
       Schließt ihr den Vertrag als Verbraucher per E-Mail, WhatsApp oder Telefon oder bei euch zu Hause, habt ihr ein gesetzliches Widerrufsrecht von 14 Tagen. Das gilt für alle meine Angebote, vom Einzeltraining bis zum Kurs. Die Widerrufsbelehrung und das Muster-Widerrufsformular stehen unten und als [PDF zum Herunterladen](/uploads/training/widerrufsbelehrung.pdf); ich schicke sie euch mit der Terminbestätigung auch per E-Mail oder Nachricht.
 
-      **Training innerhalb der Widerrufsfrist:** Liegt euer Termin oder Kursbeginn innerhalb der 14 Tage, bitte ich euch bei der Buchung um eine kurze ausdrückliche Bestätigung, dass ich schon vorher mit dem Training beginnen soll. Widerruft ihr danach, zahlt ihr nur den Anteil, den ich bis dahin schon erbracht habe. Ist das Training vollständig erbracht, erlischt euer Widerrufsrecht (§ 356 Abs. 4 BGB).
+      **Termin innerhalb der 14 Tage:** Liegt euer Termin oder Kursbeginn innerhalb der Widerrufsfrist, bitte ich euch bei der Buchung um eine kurze ausdrückliche Bestätigung, dass das Training trotzdem schon stattfinden soll. Widerruft ihr danach, zahlt ihr nur den Teil, der bis dahin schon stattgefunden hat, zum Beispiel die ersten Stunden eines Kurses. Ist das Training vollständig erbracht, erlischt euer Widerrufsrecht (§ 356 Abs. 4 BGB).
 
       Die Absageregeln in den Abschnitten 7 und 8 gelten zusätzlich; euer Widerrufsrecht bleibt davon unberührt.
 

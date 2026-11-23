@@ -35,7 +35,7 @@ build variables and redeploy.
 
 `public/uploads/training/widerrufsbelehrung.pdf` (2026-11-23, linked from AGB § 11), A4, two
 pages in the site's look (scheme `waldweg`, Red Hat fonts, `logo-wald.png`): page 1 a short
-summary box in "ihr" (14 days, how to withdraw, early start), then the instruction; page 2 the
+summary box in "ihr" (14 days, how to withdraw, a date within the 14 days), then the instruction; page 2 the
 model form with lines to fill in. The instruction and the form are copied 1:1 from `agb.md` § 11,
 only the summary and the hint "Ihr müsst dieses Formular nicht benutzen" are added outside the
 model. Printed from HTML with Chromium (Playwright `page.pdf`). Karo attaches it to every
