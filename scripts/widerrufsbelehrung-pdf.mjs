@@ -29,11 +29,17 @@ const kurzfassung = [
 		text: 'Eine kurze E-Mail, Nachricht oder ein Brief an mich reicht. Gründe braucht ihr nicht.',
 	},
 	{
-		titel: 'Termin bald?',
-		label: 'Training in den 14 Tagen',
-		text: 'Liegt euer Termin in den 14 Tagen, bestätigt mir kurz, dass er trotzdem stattfinden soll und dass ihr wisst: Ist das Training vorbei, endet euer Widerrufsrecht. Bei einem Kurs zahlt ihr nur die Stunden, die schon waren.',
+		titel: 'Anteilig',
+		label: 'Wenn schon Training war',
+		text: 'Bei einem Widerruf zahlt ihr nur die Stunden, die bis dahin stattgefunden haben.',
 	},
 ];
+
+// The one case that needs an answer from the customer gets its own line under the three facts.
+const terminBald = {
+	label: 'Termin in den 14 Tagen?',
+	text: 'Dann bestätigt mir bitte kurz, dass das Training trotzdem schon stattfinden soll und dass ihr wisst: Ist es vollständig vorbei, endet euer Widerrufsrecht.',
+};
 
 const html = (text) =>
 	text.replaceAll('\\*', '*').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
@@ -85,7 +91,7 @@ ${schrift('Red Hat Display', 'red-hat-display', 600)}
 ${schrift('Red Hat Text', 'red-hat-text', 400)}
 ${schrift('Red Hat Text', 'red-hat-text', 500)}
 /* Scheme "waldweg" of src/sites/training/styles/global.css */
-:root { --fg: #1a2a1f; --heading: #16291d; --muted: #4a5848; --border: #d4cdb5; --signal: #356226; --copper: #a5532a; --lane: #dfe2c8; }
+:root { --fg: #1a2a1f; --heading: #16291d; --muted: #4a5848; --border: #d4cdb5; --signal: #356226; --copper: #a5532a; --lane: #dfe2c8; --linie: #c3c8a6; }
 @page { size: A4; margin: 0; }
 * { box-sizing: border-box; margin: 0; }
 body { font: 400 9.4pt/1.5 'Red Hat Text', sans-serif; color: var(--fg); }
@@ -97,10 +103,17 @@ header strong { font-weight: 500; font-size: 10.5pt; color: var(--heading); }
 main { flex: 1; padding-top: 7mm; }
 h1 { font: 600 21pt/1.2 'Red Hat Display', sans-serif; color: var(--heading); }
 .unter { color: var(--muted); margin-top: 3mm; }
-.kurz { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7mm; background: var(--lane); border-radius: 6px; padding: 4.5mm 6mm; margin: 5.5mm 0; }
-.kurz h3 { font: 500 15pt/1.2 'Red Hat Text', sans-serif; color: var(--signal); }
-.kurz strong { font-weight: 500; display: block; }
+.kurz { background: var(--lane); border-radius: 6px; padding: 5mm 6mm; margin: 5.5mm 0; }
+.fakten { display: grid; grid-template-columns: repeat(3, 1fr); }
+.fakten > div { padding: 0 5mm; border-left: 1px solid var(--linie); }
+.fakten > div:first-child { padding-left: 0; border-left: 0; }
+.fakten > div:last-child { padding-right: 0; }
+.kurz h3 { font: 600 15pt/1.2 'Red Hat Display', sans-serif; color: var(--signal); margin-bottom: 1.5mm; }
+.kurz strong { font-weight: 500; display: block; color: var(--heading); }
 .kurz p { margin: 0; }
+.bald { display: grid; grid-template-columns: 1fr 2fr; margin-top: 4.5mm; padding-top: 4mm; border-top: 1px solid var(--linie); }
+.bald strong { padding-right: 5mm; }
+.bald p { padding-left: 5mm; }
 .regel { border-top: 1px solid var(--border); padding-top: 5mm; }
 h2 { font: 500 11pt/1.3 'Red Hat Text', sans-serif; color: var(--heading); margin: 5mm 0 2mm; }
 .regel > h2:first-child { margin-top: 0; }
@@ -121,7 +134,10 @@ ${kopf}
 	<h1>Widerrufsbelehrung</h1>
 	<p class="unter">für Trainings, Kurse und Seminare, die ihr per E-Mail, WhatsApp oder Telefon bucht</p>
 	<div class="kurz">
+		<div class="fakten">
 		${kurzfassung.map((k) => `<div><h3>${k.titel}</h3><strong>${k.label}</strong><p>${k.text}</p></div>`).join('\n\t\t')}
+		</div>
+		<div class="bald"><strong>${terminBald.label}</strong><p>${terminBald.text}</p></div>
 	</div>
 	<div class="regel">
 ${belehrung}
