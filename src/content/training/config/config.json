@@ -2,11 +2,11 @@
   "website": {
     "name": "Alltag kann Sport",
     "untertitel": "Hundetraining Karolin Riesing",
-    "beschreibung": "Hundetraining für echte Alltagssituationen in Glashütte und Umgebung (Sachsen): Einzeltraining, Basistraining und Welpenkurs bei Karolin Riesing – klar, fair, verständlich. Nur auf Anfrage.",
+    "beschreibung": "Hundeschule und Hundetraining in Glashütte, Altenberg, Dippoldiswalde und Umgebung (Osterzgebirge): Einzeltraining, Basistraining und Welpenkurs. Klar, fair, verständlich, nur auf Anfrage.",
     "logo": "/uploads/training/logo/logo-wald.png",
     "logoDunkel": "/uploads/training/logo/logo-wald-dunkel.png",
     "teilenBild": "/uploads/training/start/spaziergang-feldweg.jpg",
-    "fusszeile": "Hundetraining für echte Alltagssituationen in Glashütte, Sachsen und Umgebung."
+    "fusszeile": "Hundeschule und Hundetraining für echte Alltagssituationen in Glashütte, Altenberg, Dippoldiswalde und Umgebung im Osterzgebirge."
   },
   "farbschema": "waldweg",
   "kontakt": {
@@ -14,7 +14,7 @@
     "ortName": "Trainingsort: nach Absprache",
     "ort": "Glashütte",
     "region": "Osterzgebirge, Sachsen",
-    "ortText": "Ich trainiere in Glashütte, Sachsen und Umgebung – mal auf dem Hundeplatz, mal auf einem ruhigen Waldparkplatz oder auch bei euch vor Ort. Wo wir uns treffen, sprechen wir gemeinsam ab.",
+    "ortText": "Ich trainiere in Glashütte, Altenberg, Dippoldiswalde und Umgebung, zum Beispiel im Müglitztal, in Liebstadt, Dohna, Kreischa oder Pirna – mal auf dem Hundeplatz, mal auf einem ruhigen Waldparkplatz oder auch bei euch vor Ort. Wo wir uns treffen, sprechen wir gemeinsam ab.",
     "telefon": "0152 28364675",
     "email": "karolinriesing@gmail.com",
     "orte": {

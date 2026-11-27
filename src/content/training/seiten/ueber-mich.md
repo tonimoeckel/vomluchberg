@@ -1,6 +1,6 @@
 ---
-titel: Karolin Riesing – Hundetrainerin in Glashütte
-beschreibung: 'Karolin Riesing: Übungsleiterin im Hundesportverein seit 2019, Ausbildung gleichwertig zur Trainer-C-Lizenz, Genehmigung nach § 11 TSchG, FCI-Prüfungen bis zur höchsten Klasse.'
+titel: Karolin Riesing – Hundetrainerin in Glashütte und Umgebung
+beschreibung: 'Karolin Riesing: Übungsleiterin im Hundesportverein seit 2019, Ausbildung gleichwertig zur Trainer-C-Lizenz, FCI-Prüfungen bis zur höchsten Klasse.'
 blocks:
   - _template: hero
     variante: schmal
@@ -63,9 +63,6 @@ blocks:
       - icon: certificate
         titel: Trainer-C-Lizenz (gleichwertig)
         text: Fundierte Grund-, Basis- und fachspezifische Ausbildung im Hundesportverein
-      - icon: shield-check
-        titel: Genehmigung nach § 11 TSchG
-        text: Behördliche Genehmigung für gewerbliches Hundetraining
       - icon: trophy
         titel: FCI Prüfungen
         text: Von der Begleithundeprüfung bis zur höchsten Klasse im Gebrauchshundesport

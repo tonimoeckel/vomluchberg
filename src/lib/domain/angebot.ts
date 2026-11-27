@@ -92,7 +92,7 @@ export const angebotSeo = (angebot: SeoAngaben): Seo => ({
   title: angebot.titel,
   description:
     angebot.kurzbeschreibung ||
-    `${angebot.kurztitel || angebot.titel}: Hundetraining in Glashütte (Osterzgebirge) bei Karolin Riesing – auf Anfrage.`,
+    `${angebot.kurztitel || angebot.titel}: Hundetraining in Glashütte, Altenberg, Dippoldiswalde und Umgebung (Osterzgebirge), auf Anfrage.`,
   image: angebot.bild ?? null,
 });
 

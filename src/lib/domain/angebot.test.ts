@@ -127,7 +127,7 @@ describe('angebotSeo', () => {
 
   it('falls back to a local description built from the short name', () => {
     const seo = angebotSeo({ titel: 'Basistraining – Hör auf damit, mach was mir gefällt', kurztitel: 'Basistraining' });
-    expect(seo.description).toBe('Basistraining: Hundetraining in Glashütte (Osterzgebirge) bei Karolin Riesing – auf Anfrage.');
+    expect(seo.description).toBe('Basistraining: Hundetraining in Glashütte, Altenberg, Dippoldiswalde und Umgebung (Osterzgebirge), auf Anfrage.');
     expect(seo.image).toBeNull();
   });
 });
