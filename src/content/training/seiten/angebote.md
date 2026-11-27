@@ -1,6 +1,6 @@
 ---
 titel: 'Angebote: Einzeltraining, Basistraining, Welpenkurs'
-beschreibung: Einzeltraining ab 50 €, Basistraining und Welpenkurs in kleinen Gruppen bis 6 Hunde – Hundetraining in Glashütte, Sachsen und Umgebung. Jetzt unverbindlich anfragen.
+beschreibung: Einzeltraining ab 50 €, Basistraining und Welpenkurs in kleinen Gruppen bis 6 Hunde – Hundeschule in Glashütte, Altenberg, Dippoldiswalde und Umgebung. Jetzt unverbindlich anfragen.
 blocks:
   - _template: hero
     variante: schmal
@@ -24,7 +24,7 @@ blocks:
       - titel: Wir sprechen uns
         text: Ich melde mich bei euch, wir klären Ziele, Termin und Treffpunkt.
       - titel: Los geht’s
-        text: Wir trainieren draußen in Glashütte und Umgebung, am vereinbarten Treffpunkt – im echten Alltag, mit sportlichen Übungen.
+        text: Wir trainieren draußen in Glashütte, Altenberg, Dippoldiswalde und Umgebung, am vereinbarten Treffpunkt – im echten Alltag, mit sportlichen Übungen.
   - _template: cta
     titel: Noch unsicher, was passt?
     text: Schreibt mir einfach, was ihr euch wünscht – ich berate euch gern, und wir finden gemeinsam das passende Training.

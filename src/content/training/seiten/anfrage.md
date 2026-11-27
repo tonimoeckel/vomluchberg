@@ -1,6 +1,6 @@
 ---
 titel: Training anfragen
-beschreibung: Schreibt mir, was ihr und euer Hund braucht – ich melde mich persönlich. Training in Glashütte, Sachsen und Umgebung – Treffpunkt nach Absprache.
+beschreibung: Schreibt mir, was ihr und euer Hund braucht – ich melde mich persönlich. Hundetraining in Glashütte, Altenberg, Dippoldiswalde und Umgebung – Treffpunkt nach Absprache.
 blocks:
   - _template: hero
     variante: schmal

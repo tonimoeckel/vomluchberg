@@ -1,5 +1,5 @@
 ---
-titel: Karolin Riesing – Hundetrainerin in Glashütte
+titel: Karolin Riesing – Hundetrainerin in Glashütte und Umgebung
 beschreibung: 'Karolin Riesing: Übungsleiterin im Hundesportverein seit 2019, Ausbildung gleichwertig zur Trainer-C-Lizenz, FCI-Prüfungen bis zur höchsten Klasse.'
 blocks:
   - _template: hero
