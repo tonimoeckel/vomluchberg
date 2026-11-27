@@ -25,9 +25,9 @@ blocks:
       - icon: users
         titel: Kleine Gruppen
         text: bis zu 6 Hunde
-      - icon: shield-check
-        titel: § 11 TSchG
-        text: behördlich genehmigt
+      - icon: paw
+        titel: ADRK-Züchterin
+        text: seit 2021
       - icon: award
         titel: Trainer-C-Lizenz
         text: gleichwertige Ausbildung

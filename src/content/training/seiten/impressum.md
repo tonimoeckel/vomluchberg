@@ -19,11 +19,7 @@ blocks:
       E-Mail: karolinriesing@gmail.com\
       Kontaktformular: [Training anfragen](/anfrage)
 
-      **Erlaubnis nach § 11 Abs. 1 Satz 1 Nr. 8 Buchst. f Tierschutzgesetz** (Ausbildung von Hunden für Dritte und Anleitung der Ausbildung durch die Halter)
-
-      Zuständige Aufsichtsbehörde: Landratsamt Sächsische Schweiz-Osterzgebirge, Geschäftsbereich 2, Lebensmittelüberwachungs- und Veterinäramt, Referat Veterinärdienst, Schloßhof 2/4, 01796 Pirna
-
-      **\[PLATZHALTER – erst löschen, wenn die Erlaubnis erteilt ist (Karos Abschlussprüfung am 25.11.2026); bis dahin bleibt die Seite für Google gesperrt\]**
+      **\[PLATZHALTER – Angaben zur Erlaubnis nach § 11 TSchG und zur Aufsichtsbehörde folgen, sobald die Erlaubnis erteilt ist\]**
 
       **Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV**
 
